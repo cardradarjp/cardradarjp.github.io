@@ -4,127 +4,300 @@
 
 <head>
 <meta charset="UTF-8">
-<title>大阪ポケカ買取まとめ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardRadar</title>
 
 <style>
-
-body{
-    font-family:sans-serif;
-    background:#f5f5f5;
-    padding:20px;
+body {
+    font-family: system-ui, sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+    color: #111827;
 }
 
-h1{
-    margin-bottom:40px;
+header {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: white;
+    padding: 34px 20px;
 }
 
-h2{
-    margin-top:60px;
-    border-bottom:2px solid #ccc;
-    padding-bottom:10px;
+.header-inner {
+    max-width: 980px;
+    margin: 0 auto;
 }
 
-.tweet{
-    margin-bottom:40px;
+.logo {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin: 0;
 }
 
+.lead {
+    margin: 10px 0 0;
+    color: #d1d5db;
+    font-size: 15px;
+}
+
+.meta {
+    margin-top: 16px;
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    color: #e5e7eb;
+}
+
+main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 26px 14px 40px;
+}
+
+.summary {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 24px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+}
+
+.summary h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.summary p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.shop {
+    background: white;
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 28px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.shop-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+}
+
+.shop h2 {
+    margin: 0;
+    font-size: 21px;
+}
+
+.badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 13px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.count {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.tweet {
+    margin: 0 auto 28px;
+    max-width: 560px;
+}
+
+.empty {
+    color: #6b7280;
+    background: #f9fafb;
+    padding: 14px;
+    border-radius: 12px;
+}
+
+footer {
+    text-align: center;
+    color: #6b7280;
+    padding: 34px 20px;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 28px 16px;
+    }
+
+    .logo {
+        font-size: 28px;
+    }
+
+    .shop-head {
+        display: block;
+    }
+
+    .count {
+        display: inline-block;
+        margin-top: 10px;
+    }
+}
 </style>
 
 </head>
 
 <body>
 
-<h1>大阪ポケカ買取まとめ</h1>
-<h2>ドラスタ オタロード中央</h2>
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_otaroad_chuo/status/2054763570500411449"></a>
-</blockquote>
-</div>
+<header>
+    <div class="header-inner">
+        <h1 class="logo">CardRadar</h1>
+        <p class="lead">大阪のカードショップ買取情報をまとめてチェック</p>
+        <div class="meta">最終更新：2026/05/24 00:04</div>
+    </div>
+</header>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_otaroad_chuo/status/2054764048546193708"></a>
-</blockquote>
-</div>
+<main>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_otaroad_chuo/status/2054764290385572213"></a>
-</blockquote>
-</div>
+<section class="summary">
+    <h2>最新の買取投稿まとめ</h2>
+    <p>各カードショップのX投稿から、画像付きの買取情報を店舗別に表示しています。</p>
+</section>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_otaroad_chuo/status/2052901512028774735"></a>
-</blockquote>
-</div>
+<section class="shop">
+    <div class="shop-head">
+        <div>
+            <span class="badge">ポケカ買取</span>
+            <h2>ドラスタ オタロード中央</h2>
+        </div>
+        <div class="count">3件表示</div>
+    </div>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_otaroad_chuo/status/2054763898260136186"></a>
-</blockquote>
-</div>
-<h2>ドラスタ 日本橋2号店</h2>
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_nipponbashi2/status/2057657730962198596"></a>
-</blockquote>
-</div>
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_otaroad_chuo/status/2054763570500411449"></a>
+        </blockquote>
+    </div>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_nipponbashi2/status/2053443080070545774"></a>
-</blockquote>
-</div>
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_otaroad_chuo/status/2052901512028774735"></a>
+        </blockquote>
+    </div>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_nipponbashi2/status/2053841265016369331"></a>
-</blockquote>
-</div>
-<h2>ドラスタ 日本橋3号店</h2>
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_nipponbashi3/status/2057368159061958940"></a>
-</blockquote>
-</div>
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_otaroad_chuo/status/2057675263354507466"></a>
+        </blockquote>
+    </div>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_nipponbashi3/status/2052261001198801387"></a>
-</blockquote>
-</div>
+</section>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_nipponbashi3/status/2054908888562954364"></a>
-</blockquote>
-</div>
+<section class="shop">
+    <div class="shop-head">
+        <div>
+            <span class="badge">ポケカ買取</span>
+            <h2>ドラスタ 日本橋2号店</h2>
+        </div>
+        <div class="count">3件表示</div>
+    </div>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/ds_nipponbashi3/status/2055156353883140225"></a>
-</blockquote>
-</div>
-<h2>晴れる屋2なんば</h2>
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/hareruya2namba/status/2048979756037861525"></a>
-</blockquote>
-</div>
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_nipponbashi2/status/2057657730962198596"></a>
+        </blockquote>
+    </div>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/hareruya2namba/status/2048980140554871137"></a>
-</blockquote>
-</div>
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_nipponbashi2/status/2058104601140711768"></a>
+        </blockquote>
+    </div>
 
-<div class="tweet">
-<blockquote class="twitter-tweet">
-<a href="https://x.com/hareruya2namba/status/2052246452492222690"></a>
-</blockquote>
-</div>
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_nipponbashi2/status/2053841265016369331"></a>
+        </blockquote>
+    </div>
+
+</section>
+
+<section class="shop">
+    <div class="shop-head">
+        <div>
+            <span class="badge">ポケカ買取</span>
+            <h2>ドラスタ 日本橋3号店</h2>
+        </div>
+        <div class="count">3件表示</div>
+    </div>
+
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_nipponbashi3/status/2057368159061958940"></a>
+        </blockquote>
+    </div>
+
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_nipponbashi3/status/2052261001198801387"></a>
+        </blockquote>
+    </div>
+
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/ds_nipponbashi3/status/2052260611174637870"></a>
+        </blockquote>
+    </div>
+
+</section>
+
+<section class="shop">
+    <div class="shop-head">
+        <div>
+            <span class="badge">ポケカ買取</span>
+            <h2>晴れる屋2なんば</h2>
+        </div>
+        <div class="count">3件表示</div>
+    </div>
+
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/hareruya2namba/status/2048979756037861525"></a>
+        </blockquote>
+    </div>
+
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/hareruya2namba/status/2048980140554871137"></a>
+        </blockquote>
+    </div>
+
+    <div class="tweet">
+        <blockquote class="twitter-tweet">
+            <a href="https://x.com/hareruya2namba/status/2057665798425260140"></a>
+        </blockquote>
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    CardRadar - TCG買取情報まとめ
+</footer>
 
 <script async src="https://platform.twitter.com/widgets.js"></script>
 
