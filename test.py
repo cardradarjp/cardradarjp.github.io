@@ -4,10 +4,10 @@ import re
 from datetime import datetime
 import html as html_lib
 
-# userdataをGit管理フォルダの外に出している場合
+# userdataをGitHub管理フォルダの外に置いている場合
 USER_DATA_DIR = "../userdata"
 
-# もしログインが外れる・動かない場合は、下に変更してください
+# もし動かない・ログインが外れる場合はこちらに変更
 # USER_DATA_DIR = "userdata"
 
 MAX_TWEETS_PER_SHOP = 3
@@ -17,52 +17,156 @@ SEARCHES = [
     {
         "name": "ドラスタ オタロード中央",
         "short": "オタ中",
+        "id": "otachu",
         "tag": "ポケカ買取",
         "icon": "D",
         "color": "#2563eb",
-        "url": "https://x.com/search?q=from%3Ads_otaroad_chuo%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
+        "url": "https://x.com/search?q=from%3Ads_otaroad_chuo%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
+    },
+    {
+        "name": "ドラスタ 日本橋本店",
+        "short": "本店",
+        "id": "honten",
+        "tag": "ポケカ買取",
+        "icon": "DH",
+        "color": "#1d4ed8",
+        "url": "https://x.com/search?q=from%3Ads_nipponbashi%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
         "name": "ドラスタ 日本橋2号店",
         "short": "ドラ2",
+        "id": "dora2",
         "tag": "ポケカ買取",
         "icon": "D2",
         "color": "#7c3aed",
-        "url": "https://x.com/search?q=from%3Ads_nipponbashi2%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
+        "url": "https://x.com/search?q=from%3Ads_nipponbashi2%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
         "name": "ドラスタ 日本橋3号店",
         "short": "ドラ3",
+        "id": "dora3",
         "tag": "ポケカ買取",
         "icon": "D3",
         "color": "#dc2626",
-        "url": "https://x.com/search?q=from%3Ads_nipponbashi3%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
+        "url": "https://x.com/search?q=from%3Ads_nipponbashi3%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
-        "name": "ドラスタ くずはモール",
-        "short": "くずは",
+        "name": "ドラスタ なんさん通り店",
+        "short": "なんさん",
+        "id": "nansan",
         "tag": "ポケカ買取",
-        "icon": "K",
+        "icon": "DN",
         "color": "#0891b2",
-        "url": "https://x.com/search?q=from%3Ads_kuzuhamall%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
+        "url": "https://x.com/search?q=from%3Ads_namba_nansan%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
         "name": "晴れる屋2なんば",
         "short": "晴れる屋2",
+        "id": "hareruya2",
         "tag": "ポケカ買取",
         "icon": "H",
         "color": "#059669",
-        "url": "https://x.com/search?q=from%3Ahareruya2namba%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
+        "url": "https://x.com/search?q=from%3Ahareruya2namba%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
-        "name": "BIG MAGICなんば",
-        "short": "BMなんば",
+        "name": "カードラボなんば店",
+        "short": "ラボなんば",
+        "id": "labo-namba",
         "tag": "ポケカ買取",
-        "icon": "B",
+        "icon": "L",
+        "color": "#f59e0b",
+        "url": "https://x.com/search?q=from%3Anamba_clabo%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
+    },
+    {
+        "name": "カードラボ大阪日本橋店",
+        "short": "ラボ日本橋",
+        "id": "labo-nihonbashi",
+        "tag": "ポケカ買取",
+        "icon": "LN",
+        "color": "#ec4899",
+        "url": "https://x.com/search?q=from%3Anipponbashi_lab%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
+    },
+    {
+        "name": "カードラボ販売買取センターNAMBA",
+        "short": "ラボ買取",
+        "id": "labo-kaitori",
+        "tag": "ポケカ買取",
+        "icon": "LC",
+        "color": "#14b8a6",
+        "url": "https://x.com/search?q=from%3Ananba2_labo%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
+    },
+    {
+        "name": "GIRAFULLなんば店",
+        "short": "ジラなんば",
+        "id": "gira-namba",
+        "tag": "ポケカ買取",
+        "icon": "G",
         "color": "#ea580c",
-        "url": "https://x.com/search?q=from%3ABM_NAMBA%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
+        "url": "https://x.com/search?q=from%3AGIRAFULL_Namba%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
+    },
+    {
+        "name": "GIRAFULL大阪日本橋店",
+        "short": "ジラ日本橋",
+        "id": "gira-nihonbashi",
+        "tag": "ポケカ買取",
+        "icon": "GN",
+        "color": "#f97316",
+        "url": "https://x.com/search?q=from%3Agirafull_o_n%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
+    },
+    {
+        "name": "GIRAFULLオタロード店",
+        "short": "ジラオタ",
+        "id": "gira-otaroad",
+        "tag": "ポケカ買取",
+        "icon": "GO",
+        "color": "#fb923c",
+        "url": "https://x.com/search?q=from%3AGIRAFULLOTARODO%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
 ]
+
+
+def is_pokemon_buy_post(text):
+    pokemon_words = [
+        "ポケカ",
+        "ポケモンカード",
+        "ﾎﾟｹﾓﾝｶｰﾄﾞ",
+        "pokemon",
+        "Pokemon",
+        "POKEMON",
+    ]
+
+    buy_words = [
+        "買取",
+        "高価買取",
+        "買取表",
+        "WANTED",
+        "募集",
+        "取扱強化",
+        "お持ち込み",
+    ]
+
+    ng_words = [
+        "大会情報",
+        "大会",
+        "優勝",
+        "ショップバトル",
+        "プレリリース",
+        "ワンピース",
+        "ワンピ",
+        "バトスピ",
+        "デジカ",
+        "ガンダム",
+        "MTG",
+    ]
+
+    if any(word in text for word in ng_words):
+        return False
+
+    has_pokemon = any(word in text for word in pokemon_words)
+    has_buy = any(word in text for word in buy_words)
+
+    return has_pokemon and has_buy
+
 
 def clean_tweet_text(text):
     lines = text.splitlines()
@@ -89,25 +193,27 @@ def clean_tweet_text(text):
         if any(word in line for word in skip_words):
             continue
 
-        # 数字だけ、いいね数・表示数っぽい行を除外
+        # 数字だけの行、表示数・いいね数っぽい行を除外
         if re.fullmatch(r"[0-9,\.万]+", line):
             continue
 
-        # 店舗名だけの行は説明には不要
+        # 店舗名だけっぽい行を除外
         if "ドラゴンスター" in line and len(line) < 25:
             continue
 
         if "晴れる屋2" in line and len(line) < 30:
             continue
 
-        if "BIG MAGIC" in line and len(line) < 30:
+        if "カードラボ" in line and len(line) < 30:
+            continue
+
+        if "GIRAFULL" in line and len(line) < 30:
             continue
 
         cleaned.append(line)
 
     summary = " ".join(cleaned)
 
-    # 長すぎると見づらいので短くする
     if len(summary) > 180:
         summary = summary[:180] + "..."
 
@@ -468,7 +574,7 @@ footer {{
             <div class="site-icon">CR</div>
             <h1 class="logo">CardRadar</h1>
         </div>
-        <p class="lead">大阪のカードショップ買取情報をまとめてチェック。Xの画像付きポケカ買取投稿を店舗別に表示しています。</p>
+        <p class="lead">大阪・日本橋周辺のカードショップ買取情報をまとめてチェック。Xの画像付きポケカ買取投稿を店舗別に表示しています。</p>
         <div class="meta">最終更新：{updated_at}</div>
     </div>
 </header>
@@ -478,7 +584,7 @@ footer {{
 """
 
 for shop in SEARCHES:
-    html_doc += f'<a href="#{shop["short"]}">{shop["short"]}</a>\n'
+    html_doc += f'<a href="#{shop["id"]}">{shop["short"]}</a>\n'
 
 html_doc += """
     </div>
@@ -488,7 +594,7 @@ html_doc += """
 
 <section class="summary">
     <h2>最新のポケカ買取投稿まとめ</h2>
-    <p>各カードショップのX投稿から、画像付きのポケカ買取情報を店舗別にまとめています。投稿本文の一部も表示することで、どんな買取表か分かりやすくしています。</p>
+    <p>日本橋・なんば周辺のカードショップX投稿から、画像付きのポケカ買取情報を店舗別にまとめています。投稿本文の一部も表示することで、どんな買取表か分かりやすくしています。</p>
     <div class="notice">表示される投稿はXの埋め込み機能を利用しています。投稿が削除された場合やX側の仕様変更により表示されない場合があります。</div>
 </section>
 """
@@ -528,6 +634,10 @@ with sync_playwright() as p:
                     continue
 
                 text = tweet.inner_text()
+
+                if not is_pokemon_buy_post(text):
+                    continue
+
                 summary = clean_tweet_text(text)
 
                 seen_urls.add(url)
@@ -546,7 +656,7 @@ with sync_playwright() as p:
             print("取得エラー:", e)
 
         html_doc += f"""
-<section class="shop" id="{shop["short"]}">
+<section class="shop" id="{shop["id"]}">
     <div class="shop-head">
         <div class="shop-title">
             <div class="shop-icon" style="background:{shop["color"]};">{shop["icon"]}</div>
@@ -614,4 +724,3 @@ with sync_playwright() as p:
     input("終了するにはEnter")
 
     browser.close()
-    
