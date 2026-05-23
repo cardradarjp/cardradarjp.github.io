@@ -3,11 +3,12 @@ import time
 import re
 from datetime import datetime
 import html as html_lib
+import json
 
 # userdataをGitHub管理フォルダの外に置いている場合
 USER_DATA_DIR = "../userdata"
 
-# もし動かない・ログインが外れる場合はこちらに変更
+# ログインが外れる・動かない場合だけこちらに変更
 # USER_DATA_DIR = "userdata"
 
 MAX_TWEETS_PER_SHOP = 3
@@ -157,6 +158,8 @@ def is_pokemon_buy_post(text):
         "デジカ",
         "ガンダム",
         "MTG",
+        "遊戯王",
+        "デュエマ",
     ]
 
     if any(word in text for word in ng_words):
@@ -193,11 +196,9 @@ def clean_tweet_text(text):
         if any(word in line for word in skip_words):
             continue
 
-        # 数字だけの行、表示数・いいね数っぽい行を除外
         if re.fullmatch(r"[0-9,\.万]+", line):
             continue
 
-        # 店舗名だけっぽい行を除外
         if "ドラゴンスター" in line and len(line) < 25:
             continue
 
@@ -240,52 +241,73 @@ def get_status_url(tweet):
     return None
 
 
-updated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
+def get_image_urls(tweet):
+    image_urls = []
+    images = tweet.locator("img")
+    image_count = images.count()
 
-html_doc = f"""
+    for i in range(image_count):
+        src = images.nth(i).get_attribute("src")
+
+        if not src:
+            continue
+
+        if "pbs.twimg.com/media" in src:
+            src = src.replace("name=small", "name=large")
+            src = src.replace("name=medium", "name=large")
+
+            if src not in image_urls:
+                image_urls.append(src)
+
+    return image_urls
+
+
+def build_html_start(updated_at):
+    html_doc = """
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CardRadar</title>
+<meta name="description" content="大阪・日本橋周辺のカードショップのポケカ買取情報をまとめて確認できるサイトです。">
 
 <style>
-* {{
+* {
     box-sizing: border-box;
-}}
+}
 
-html {{
+html {
     scroll-behavior: smooth;
-}}
+}
 
-body {{
+body {
     margin: 0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     background: #0f172a;
     color: #111827;
-}}
+}
 
-header {{
+header {
     background:
         radial-gradient(circle at top left, rgba(59,130,246,0.38), transparent 34%),
         linear-gradient(135deg, #020617, #111827 55%, #1e293b);
     color: white;
     padding: 40px 20px 30px;
-}}
+}
 
-.header-inner {{
+.header-inner {
     max-width: 1080px;
     margin: 0 auto;
-}}
+}
 
-.logo-row {{
+.logo-row {
     display: flex;
     align-items: center;
     gap: 12px;
-}}
+}
 
-.site-icon {{
+.site-icon {
     width: 46px;
     height: 46px;
     border-radius: 15px;
@@ -294,22 +316,22 @@ header {{
     place-items: center;
     font-weight: 900;
     box-shadow: 0 10px 24px rgba(37,99,235,0.35);
-}}
+}
 
-.logo {{
+.logo {
     font-size: 35px;
     font-weight: 850;
     margin: 0;
-}}
+}
 
-.lead {{
+.lead {
     margin: 12px 0 0;
     color: #cbd5e1;
     font-size: 15px;
     line-height: 1.7;
-}}
+}
 
-.meta {{
+.meta {
     margin-top: 16px;
     display: inline-block;
     background: rgba(255,255,255,0.12);
@@ -318,18 +340,18 @@ header {{
     border-radius: 999px;
     font-size: 13px;
     color: #e5e7eb;
-}}
+}
 
-nav {{
+nav {
     max-width: 1080px;
     margin: -18px auto 0;
     padding: 0 14px;
     position: sticky;
     top: 0;
     z-index: 10;
-}}
+}
 
-.nav-inner {{
+.nav-inner {
     background: rgba(255,255,255,0.96);
     backdrop-filter: blur(10px);
     border-radius: 16px;
@@ -338,9 +360,9 @@ nav {{
     gap: 8px;
     overflow-x: auto;
     box-shadow: 0 10px 26px rgba(0,0,0,0.18);
-}}
+}
 
-.nav-inner a {{
+.nav-inner a {
     color: #111827;
     text-decoration: none;
     background: #f3f4f6;
@@ -350,40 +372,40 @@ nav {{
     white-space: nowrap;
     border: 1px solid #e5e7eb;
     font-weight: 600;
-}}
+}
 
-.nav-inner a:hover {{
+.nav-inner a:hover {
     background: #dbeafe;
     color: #1d4ed8;
-}}
+}
 
-main {{
+main {
     max-width: 1080px;
     margin: 0 auto;
     padding: 26px 14px 44px;
-}}
+}
 
-.summary {{
+.summary {
     background: white;
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 24px;
     box-shadow: 0 10px 28px rgba(0,0,0,0.16);
-}}
+}
 
-.summary h2 {{
+.summary h2 {
     margin: 0 0 8px;
     font-size: 21px;
-}}
+}
 
-.summary p {{
+.summary p {
     margin: 0;
     color: #6b7280;
     font-size: 14px;
     line-height: 1.8;
-}}
+}
 
-.notice {{
+.notice {
     margin-top: 14px;
     background: #f8fafc;
     border: 1px solid #e5e7eb;
@@ -391,18 +413,18 @@ main {{
     border-radius: 14px;
     color: #475569;
     font-size: 13px;
-}}
+}
 
-.shop {{
+.shop {
     background: white;
     border-radius: 22px;
     padding: 18px;
     margin-bottom: 30px;
     box-shadow: 0 10px 28px rgba(0,0,0,0.18);
     scroll-margin-top: 90px;
-}}
+}
 
-.shop-head {{
+.shop-head {
     display: flex;
     justify-content: space-between;
     gap: 14px;
@@ -410,15 +432,15 @@ main {{
     border-bottom: 1px solid #e5e7eb;
     padding-bottom: 15px;
     margin-bottom: 18px;
-}}
+}
 
-.shop-title {{
+.shop-title {
     display: flex;
     align-items: center;
     gap: 12px;
-}}
+}
 
-.shop-icon {{
+.shop-icon {
     width: 46px;
     height: 46px;
     border-radius: 16px;
@@ -427,14 +449,14 @@ main {{
     color: white;
     font-weight: 900;
     flex: 0 0 auto;
-}}
+}
 
-.shop h2 {{
+.shop h2 {
     margin: 0;
     font-size: 21px;
-}}
+}
 
-.badge {{
+.badge {
     display: inline-block;
     background: #dbeafe;
     color: #1d4ed8;
@@ -443,9 +465,9 @@ main {{
     font-size: 13px;
     margin-bottom: 7px;
     font-weight: 700;
-}}
+}
 
-.count {{
+.count {
     background: #f9fafb;
     border: 1px solid #e5e7eb;
     color: #374151;
@@ -453,29 +475,29 @@ main {{
     padding: 8px 13px;
     font-size: 13px;
     white-space: nowrap;
-}}
+}
 
-.tweet-list {{
+.tweet-list {
     display: grid;
     grid-template-columns: 1fr;
     gap: 26px;
     justify-items: center;
-}}
+}
 
-.post-card {{
+.post-card {
     width: 100%;
     max-width: 620px;
     background: #f8fafc;
     border: 1px solid #e5e7eb;
     border-radius: 18px;
     padding: 14px;
-}}
+}
 
-.post-summary {{
+.post-summary {
     margin-bottom: 12px;
-}}
+}
 
-.post-summary-title {{
+.post-summary-title {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -483,86 +505,95 @@ main {{
     color: #111827;
     font-size: 14px;
     margin-bottom: 7px;
-}}
+    flex-wrap: wrap;
+}
 
-.hot {{
+.hot {
     background: #fee2e2;
     color: #b91c1c;
     padding: 3px 8px;
     border-radius: 999px;
     font-size: 12px;
-}}
+}
 
-.post-summary p {{
+.image-count {
+    background: #dcfce7;
+    color: #166534;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.post-summary p {
     margin: 0;
     color: #374151;
     font-size: 14px;
     line-height: 1.7;
-}}
+}
 
-.tweet {{
+.tweet {
     width: 100%;
     max-width: 560px;
     margin: 0 auto;
-}}
+}
 
-.empty {{
+.empty {
     color: #6b7280;
     background: #f9fafb;
     padding: 14px;
     border-radius: 12px;
-}}
+}
 
-footer {{
+footer {
     text-align: center;
     color: #cbd5e1;
     padding: 34px 20px;
     font-size: 13px;
-}}
+}
 
-@media (max-width: 640px) {{
-    header {{
+@media (max-width: 640px) {
+    header {
         padding: 30px 16px 26px;
-    }}
+    }
 
-    .logo {{
+    .logo {
         font-size: 29px;
-    }}
+    }
 
-    .lead {{
+    .lead {
         font-size: 14px;
-    }}
+    }
 
-    nav {{
+    nav {
         margin-top: -14px;
-    }}
+    }
 
-    .shop {{
+    .shop {
         border-radius: 18px;
         padding: 14px;
-    }}
+    }
 
-    .shop-head {{
+    .shop-head {
         display: block;
-    }}
+    }
 
-    .shop-title {{
+    .shop-title {
         align-items: flex-start;
-    }}
+    }
 
-    .count {{
+    .count {
         display: inline-block;
         margin-top: 12px;
-    }}
+    }
 
-    .shop h2 {{
+    .shop h2 {
         font-size: 18px;
-    }}
+    }
 
-    .post-card {{
+    .post-card {
         padding: 12px;
-    }}
-}}
+    }
+}
 </style>
 </head>
 
@@ -575,13 +606,36 @@ footer {{
             <h1 class="logo">CardRadar</h1>
         </div>
         <p class="lead">大阪・日本橋周辺のカードショップ買取情報をまとめてチェック。Xの画像付きポケカ買取投稿を店舗別に表示しています。</p>
-        <div class="meta">最終更新：{updated_at}</div>
+        <div class="meta">最終更新：__UPDATED_AT__</div>
     </div>
 </header>
 
 <nav>
     <div class="nav-inner">
 """
+    html_doc = html_doc.replace("__UPDATED_AT__", updated_at)
+    return html_doc
+
+
+def build_html_end():
+    return """
+</main>
+
+<footer>
+    CardRadar - TCG買取情報まとめ
+</footer>
+
+<script async src="https://platform.twitter.com/widgets.js"></script>
+
+</body>
+</html>
+"""
+
+
+updated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
+all_posts_data = []
+
+html_doc = build_html_start(updated_at)
 
 for shop in SEARCHES:
     html_doc += f'<a href="#{shop["id"]}">{shop["short"]}</a>\n'
@@ -595,7 +649,7 @@ html_doc += """
 <section class="summary">
     <h2>最新のポケカ買取投稿まとめ</h2>
     <p>日本橋・なんば周辺のカードショップX投稿から、画像付きのポケカ買取情報を店舗別にまとめています。投稿本文の一部も表示することで、どんな買取表か分かりやすくしています。</p>
-    <div class="notice">表示される投稿はXの埋め込み機能を利用しています。投稿が削除された場合やX側の仕様変更により表示されない場合があります。</div>
+    <div class="notice">表示される投稿はXの埋め込み機能を利用しています。画像URLはOCR準備用としてdata.jsonに保存しますが、サイト上では再配布しません。</div>
 </section>
 """
 
@@ -616,7 +670,7 @@ with sync_playwright() as p:
         seen_urls = set()
 
         try:
-            page.goto(shop["url"])
+            page.goto(shop["url"], wait_until="domcontentloaded", timeout=60000)
             time.sleep(8)
 
             tweets = page.locator("article")
@@ -638,16 +692,32 @@ with sync_playwright() as p:
                 if not is_pokemon_buy_post(text):
                     continue
 
+                image_urls = get_image_urls(tweet)
+
+                if not image_urls:
+                    continue
+
                 summary = clean_tweet_text(text)
 
                 seen_urls.add(url)
 
-                posts.append({
-                    "url": url,
-                    "summary": summary
-                })
+                post = {
+                    "shop_name": shop["name"],
+                    "shop_id": shop["id"],
+                    "shop_short": shop["short"],
+                    "tag": shop["tag"],
+                    "tweet_url": url,
+                    "summary": summary,
+                    "image_urls": image_urls,
+                    "image_count": len(image_urls),
+                    "collected_at": updated_at,
+                }
+
+                posts.append(post)
+                all_posts_data.append(post)
 
                 print(url)
+                print("画像数:", len(image_urls))
 
                 if len(posts) >= MAX_TWEETS_PER_SHOP:
                     break
@@ -656,13 +726,13 @@ with sync_playwright() as p:
             print("取得エラー:", e)
 
         html_doc += f"""
-<section class="shop" id="{shop["id"]}">
+<section class="shop" id="{shop['id']}">
     <div class="shop-head">
         <div class="shop-title">
-            <div class="shop-icon" style="background:{shop["color"]};">{shop["icon"]}</div>
+            <div class="shop-icon" style="background:{shop['color']};">{shop['icon']}</div>
             <div>
-                <span class="badge">{shop["tag"]}</span>
-                <h2>{shop["name"]}</h2>
+                <span class="badge">{shop['tag']}</span>
+                <h2>{shop['name']}</h2>
             </div>
         </div>
         <div class="count">{len(posts)}件表示</div>
@@ -680,6 +750,7 @@ with sync_playwright() as p:
             <div class="post-summary">
                 <div class="post-summary-title">
                     <span class="hot">買取情報</span>
+                    <span class="image-count">画像{post['image_count']}枚</span>
                     <span>投稿内容</span>
                 </div>
                 <p>{safe_summary}</p>
@@ -687,7 +758,7 @@ with sync_playwright() as p:
 
             <div class="tweet">
                 <blockquote class="twitter-tweet">
-                    <a href="{post["url"]}"></a>
+                    <a href="{post['tweet_url']}"></a>
                 </blockquote>
             </div>
         </div>
@@ -702,24 +773,18 @@ with sync_playwright() as p:
 </section>
 """
 
-    html_doc += """
-</main>
-
-<footer>
-    CardRadar - TCG買取情報まとめ
-</footer>
-
-<script async src="https://platform.twitter.com/widgets.js"></script>
-
-</body>
-</html>
-"""
+    html_doc += build_html_end()
 
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_doc)
 
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(all_posts_data, f, ensure_ascii=False, indent=2)
+
     print("")
     print("index.html を生成しました")
+    print("data.json を生成しました")
+    print("取得投稿数:", len(all_posts_data))
 
     input("終了するにはEnter")
 
