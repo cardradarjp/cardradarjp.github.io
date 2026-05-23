@@ -5,121 +5,228 @@ from datetime import datetime
 SEARCHES = [
     {
         "name": "ドラスタ オタロード中央",
+        "short": "オタ中",
         "tag": "ポケカ買取",
-        "url": "https://x.com/search?q=from%3Ads_otaroad_chuo%20ポケカ%20買取%20filter%3Aimages&src=typed_query"
+        "icon": "D",
+        "color": "#2563eb",
+        "url": "https://x.com/search?q=from%3Ads_otaroad_chuo%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
     },
     {
         "name": "ドラスタ 日本橋2号店",
+        "short": "ドラ2",
         "tag": "ポケカ買取",
-        "url": "https://x.com/search?q=from%3Ads_nipponbashi2%20ポケカ%20買取%20filter%3Aimages&src=typed_query"
+        "icon": "D2",
+        "color": "#7c3aed",
+        "url": "https://x.com/search?q=from%3Ads_nipponbashi2%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
     },
     {
         "name": "ドラスタ 日本橋3号店",
+        "short": "ドラ3",
         "tag": "ポケカ買取",
-        "url": "https://x.com/search?q=from%3Ads_nipponbashi3%20ポケカ%20買取%20filter%3Aimages&src=typed_query"
+        "icon": "D3",
+        "color": "#dc2626",
+        "url": "https://x.com/search?q=from%3Ads_nipponbashi3%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
     },
     {
         "name": "晴れる屋2なんば",
+        "short": "晴れる屋2",
         "tag": "ポケカ買取",
-        "url": "https://x.com/search?q=from%3Ahareruya2namba%20ポケカ%20買取%20filter%3Aimages&src=typed_query"
-    }
+        "icon": "H",
+        "color": "#059669",
+        "url": "https://x.com/search?q=from%3Ahareruya2namba%20ポケカ%20買取%20filter%3Aimages&src=typed_query",
+    },
 ]
+
+MAX_TWEETS_PER_SHOP = 3
+CHECK_TWEETS_PER_SHOP = 10
 
 updated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
 
 html = f"""
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CardRadar</title>
 
 <style>
+* {{
+    box-sizing: border-box;
+}}
+
+html {{
+    scroll-behavior: smooth;
+}}
+
 body {{
-    font-family: system-ui, sans-serif;
-    background: #f3f4f6;
     margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0f172a;
     color: #111827;
 }}
 
 header {{
-    background: linear-gradient(135deg, #111827, #1f2937);
+    background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.38), transparent 34%),
+        linear-gradient(135deg, #020617, #111827 55%, #1e293b);
     color: white;
-    padding: 34px 20px;
+    padding: 40px 20px 30px;
 }}
 
 .header-inner {{
-    max-width: 980px;
+    max-width: 1080px;
     margin: 0 auto;
 }}
 
+.logo-row {{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}}
+
+.site-icon {{
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
+    background: #2563eb;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    box-shadow: 0 10px 24px rgba(37,99,235,0.35);
+}}
+
 .logo {{
-    font-size: 34px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
+    font-size: 35px;
+    font-weight: 850;
     margin: 0;
 }}
 
 .lead {{
-    margin: 10px 0 0;
-    color: #d1d5db;
+    margin: 12px 0 0;
+    color: #cbd5e1;
     font-size: 15px;
+    line-height: 1.7;
 }}
 
 .meta {{
     margin-top: 16px;
     display: inline-block;
     background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.16);
     padding: 7px 12px;
     border-radius: 999px;
     font-size: 13px;
     color: #e5e7eb;
 }}
 
+nav {{
+    max-width: 1080px;
+    margin: -18px auto 0;
+    padding: 0 14px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}}
+
+.nav-inner {{
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 10px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+}}
+
+.nav-inner a {{
+    color: #111827;
+    text-decoration: none;
+    background: #f3f4f6;
+    padding: 9px 13px;
+    border-radius: 999px;
+    font-size: 13px;
+    white-space: nowrap;
+    border: 1px solid #e5e7eb;
+    font-weight: 600;
+}}
+
+.nav-inner a:hover {{
+    background: #dbeafe;
+    color: #1d4ed8;
+}}
+
 main {{
-    max-width: 980px;
+    max-width: 1080px;
     margin: 0 auto;
-    padding: 26px 14px 40px;
+    padding: 26px 14px 44px;
 }}
 
 .summary {{
     background: white;
-    border-radius: 16px;
-    padding: 18px;
+    border-radius: 20px;
+    padding: 20px;
     margin-bottom: 24px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.16);
 }}
 
 .summary h2 {{
     margin: 0 0 8px;
-    font-size: 20px;
+    font-size: 21px;
 }}
 
 .summary p {{
     margin: 0;
     color: #6b7280;
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.8;
+}}
+
+.notice {{
+    margin-top: 14px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    padding: 12px;
+    border-radius: 14px;
+    color: #475569;
+    font-size: 13px;
 }}
 
 .shop {{
     background: white;
-    border-radius: 18px;
+    border-radius: 22px;
     padding: 18px;
-    margin-bottom: 28px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+    scroll-margin-top: 90px;
 }}
 
 .shop-head {{
     display: flex;
     justify-content: space-between;
-    gap: 12px;
-    align-items: flex-start;
+    gap: 14px;
+    align-items: center;
     border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 14px;
+    padding-bottom: 15px;
     margin-bottom: 18px;
+}}
+
+.shop-title {{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}}
+
+.shop-icon {{
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-weight: 900;
+    flex: 0 0 auto;
 }}
 
 .shop h2 {{
@@ -134,8 +241,8 @@ main {{
     padding: 5px 11px;
     border-radius: 999px;
     font-size: 13px;
-    margin-bottom: 8px;
-    font-weight: 600;
+    margin-bottom: 7px;
+    font-weight: 700;
 }}
 
 .count {{
@@ -143,13 +250,20 @@ main {{
     border: 1px solid #e5e7eb;
     color: #374151;
     border-radius: 999px;
-    padding: 7px 12px;
+    padding: 8px 13px;
     font-size: 13px;
     white-space: nowrap;
 }}
 
+.tweet-list {{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    justify-items: center;
+}}
+
 .tweet {{
-    margin: 0 auto 28px;
+    width: 100%;
     max-width: 560px;
 }}
 
@@ -162,54 +276,89 @@ main {{
 
 footer {{
     text-align: center;
-    color: #6b7280;
+    color: #cbd5e1;
     padding: 34px 20px;
     font-size: 13px;
 }}
 
-@media (max-width: 600px) {{
+@media (max-width: 640px) {{
     header {{
-        padding: 28px 16px;
+        padding: 30px 16px 26px;
     }}
 
     .logo {{
-        font-size: 28px;
+        font-size: 29px;
+    }}
+
+    .lead {{
+        font-size: 14px;
+    }}
+
+    nav {{
+        margin-top: -14px;
+    }}
+
+    .shop {{
+        border-radius: 18px;
+        padding: 14px;
     }}
 
     .shop-head {{
         display: block;
     }}
 
+    .shop-title {{
+        align-items: flex-start;
+    }}
+
     .count {{
         display: inline-block;
-        margin-top: 10px;
+        margin-top: 12px;
+    }}
+
+    .shop h2 {{
+        font-size: 18px;
     }}
 }}
 </style>
-
 </head>
 
 <body>
 
 <header>
     <div class="header-inner">
-        <h1 class="logo">CardRadar</h1>
-        <p class="lead">大阪のカードショップ買取情報をまとめてチェック</p>
+        <div class="logo-row">
+            <div class="site-icon">CR</div>
+            <h1 class="logo">CardRadar</h1>
+        </div>
+        <p class="lead">大阪のカードショップ買取情報をまとめてチェック。Xの画像付き買取投稿を店舗別に表示しています。</p>
         <div class="meta">最終更新：{updated_at}</div>
     </div>
 </header>
+
+<nav>
+    <div class="nav-inner">
+"""
+
+for shop in SEARCHES:
+    html += f'<a href="#{shop["short"]}">{shop["short"]}</a>\n'
+
+html += """
+    </div>
+</nav>
 
 <main>
 
 <section class="summary">
     <h2>最新の買取投稿まとめ</h2>
-    <p>各カードショップのX投稿から、画像付きの買取情報を店舗別に表示しています。</p>
+    <p>各カードショップのX投稿から、画像付きの買取情報を店舗別にまとめています。まずはポケカ中心に掲載中です。</p>
+    <div class="notice">表示される投稿はXの埋め込み機能を利用しています。投稿が削除された場合やX側の仕様変更により表示されない場合があります。</div>
 </section>
 """
 
 with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
-        user_data_dir="userdata",
+        user_data_dir="../userdata",
         headless=False
     )
 
@@ -220,60 +369,70 @@ with sync_playwright() as p:
         print(shop["name"])
         print("==============")
 
-        page.goto(shop["url"])
-        time.sleep(8)
-
-        tweets = page.locator("article")
-        count = tweets.count()
-
         added_urls = []
 
-        for i in range(min(count, 8)):
-            tweet = tweets.nth(i)
-            links = tweet.locator("a")
-            link_count = links.count()
+        try:
+            page.goto(shop["url"])
+            time.sleep(8)
 
-            for j in range(link_count):
-                href = links.nth(j).get_attribute("href")
+            tweets = page.locator("article")
+            count = tweets.count()
 
-                if href and "/status/" in href and "/photo/" not in href and "/analytics" not in href:
-                    full_url = "https://x.com" + href if href.startswith("/") else href
+            for i in range(min(count, CHECK_TWEETS_PER_SHOP)):
+                tweet = tweets.nth(i)
+                links = tweet.locator("a")
+                link_count = links.count()
 
-                    if full_url not in added_urls:
-                        added_urls.append(full_url)
-                        print(full_url)
+                for j in range(link_count):
+                    href = links.nth(j).get_attribute("href")
 
+                    if href and "/status/" in href and "/photo/" not in href and "/analytics" not in href:
+                        full_url = "https://x.com" + href if href.startswith("/") else href
+
+                        if full_url not in added_urls:
+                            added_urls.append(full_url)
+                            print(full_url)
+
+                        break
+
+                if len(added_urls) >= MAX_TWEETS_PER_SHOP:
                     break
 
-            if len(added_urls) >= 3:
-                break
+        except Exception as e:
+            print("取得エラー:", e)
 
         html += f"""
-<section class="shop">
+<section class="shop" id="{shop["short"]}">
     <div class="shop-head">
-        <div>
-            <span class="badge">{shop["tag"]}</span>
-            <h2>{shop["name"]}</h2>
+        <div class="shop-title">
+            <div class="shop-icon" style="background:{shop["color"]};">{shop["icon"]}</div>
+            <div>
+                <span class="badge">{shop["tag"]}</span>
+                <h2>{shop["name"]}</h2>
+            </div>
         </div>
         <div class="count">{len(added_urls)}件表示</div>
     </div>
+
+    <div class="tweet-list">
 """
 
         if added_urls:
             for url in added_urls:
                 html += f"""
-    <div class="tweet">
-        <blockquote class="twitter-tweet">
-            <a href="{url}"></a>
-        </blockquote>
-    </div>
+        <div class="tweet">
+            <blockquote class="twitter-tweet">
+                <a href="{url}"></a>
+            </blockquote>
+        </div>
 """
         else:
             html += """
-    <div class="empty">該当する投稿が見つかりませんでした。</div>
+        <div class="empty">該当する投稿が見つかりませんでした。</div>
 """
 
         html += """
+    </div>
 </section>
 """
 
@@ -299,3 +458,4 @@ with sync_playwright() as p:
     input("終了するにはEnter")
 
     browser.close()
+    
