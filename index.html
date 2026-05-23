@@ -214,13 +214,52 @@ main {
 .tweet-list {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 26px;
     justify-items: center;
+}
+
+.post-card {
+    width: 100%;
+    max-width: 620px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 14px;
+}
+
+.post-summary {
+    margin-bottom: 12px;
+}
+
+.post-summary-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    color: #111827;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+.hot {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.post-summary p {
+    margin: 0;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.7;
 }
 
 .tweet {
     width: 100%;
     max-width: 560px;
+    margin: 0 auto;
 }
 
 .empty {
@@ -275,6 +314,10 @@ footer {
     .shop h2 {
         font-size: 18px;
     }
+
+    .post-card {
+        padding: 12px;
+    }
 }
 </style>
 </head>
@@ -287,8 +330,8 @@ footer {
             <div class="site-icon">CR</div>
             <h1 class="logo">CardRadar</h1>
         </div>
-        <p class="lead">大阪のカードショップ買取情報をまとめてチェック。Xの画像付き買取投稿を店舗別に表示しています。</p>
-        <div class="meta">最終更新：2026/05/24 00:16</div>
+        <p class="lead">大阪のカードショップ買取情報をまとめてチェック。Xの画像付きポケカ買取投稿を店舗別に表示しています。</p>
+        <div class="meta">最終更新：2026/05/24 00:26</div>
     </div>
 </header>
 
@@ -297,7 +340,9 @@ footer {
 <a href="#オタ中">オタ中</a>
 <a href="#ドラ2">ドラ2</a>
 <a href="#ドラ3">ドラ3</a>
+<a href="#くずは">くずは</a>
 <a href="#晴れる屋2">晴れる屋2</a>
+<a href="#BMなんば">BMなんば</a>
 
     </div>
 </nav>
@@ -305,8 +350,8 @@ footer {
 <main>
 
 <section class="summary">
-    <h2>最新の買取投稿まとめ</h2>
-    <p>各カードショップのX投稿から、画像付きの買取情報を店舗別にまとめています。まずはポケカ中心に掲載中です。</p>
+    <h2>最新のポケカ買取投稿まとめ</h2>
+    <p>各カードショップのX投稿から、画像付きのポケカ買取情報を店舗別にまとめています。投稿本文の一部も表示することで、どんな買取表か分かりやすくしています。</p>
     <div class="notice">表示される投稿はXの埋め込み機能を利用しています。投稿が削除された場合やX側の仕様変更により表示されない場合があります。</div>
 </section>
 
@@ -324,22 +369,52 @@ footer {
 
     <div class="tweet-list">
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_otaroad_chuo/status/2054763570500411449"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月14日 #ポケカ #ポケモンカード /更新買取表 ポケカ買取募集中です 今回は担当もびっくりなタイトル更新してます 詳しい価格は続く告知をチェック 本日時OPEN お持ち込みお待ちしております</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_otaroad_chuo/status/2054763570500411449"></a>
+                </blockquote>
+            </div>
         </div>
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_otaroad_chuo/status/2057675263354507466"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月14日 #ポケカ #ポケモンカード /更新買取表 ポケカ買取募集中です 今回は担当もびっくりなタイトル更新してます 詳しい価格は続く告知をチェック 本日時OPEN お持ち込みお待ちしております</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_otaroad_chuo/status/2054763898260136186"></a>
+                </blockquote>
+            </div>
         </div>
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_otaroad_chuo/status/2058064851256451550"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月22日 #ポケカ ポケカ　訳アリ特価コーナー 展開中です 気になる商品ございましたら ぜひお気軽にお声掛けください ご来店お待ちしてます #ドラスタオタ中</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_otaroad_chuo/status/2057675263354507466"></a>
+                </blockquote>
+            </div>
         </div>
 
     </div>
@@ -359,22 +434,52 @@ footer {
 
     <div class="tweet-list">
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_nipponbashi2/status/2058104601140711768"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月22日 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_nipponbashi2/status/2057657730962198596"></a>
+                </blockquote>
+            </div>
         </div>
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_nipponbashi2/status/2057657730962198596"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月11日 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_nipponbashi2/status/2053841265016369331"></a>
+                </blockquote>
+            </div>
         </div>
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_nipponbashi2/status/2053841265016369331"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>6時間 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_nipponbashi2/status/2058104601140711768"></a>
+                </blockquote>
+            </div>
         </div>
 
     </div>
@@ -394,22 +499,117 @@ footer {
 
     <div class="tweet-list">
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_nipponbashi3/status/2057368159061958940"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月21日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/21　更新Ver. エクストラ更新致しました お持ち込みお待ちしております ※商品の状態や、在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_nipponbashi3/status/2057368159061958940"></a>
+                </blockquote>
+            </div>
         </div>
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_nipponbashi3/status/2052261001198801387"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月7日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/7　更新Ver. 本日のみの高額帯買取表です お気軽にお持ち込み下さい ※商品の状態や、在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_nipponbashi3/status/2052261001198801387"></a>
+                </blockquote>
+            </div>
         </div>
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/ds_nipponbashi3/status/2052260611174637870"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月21日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/21　更新Ver. 明日は新弾 #アビスアイ 発売 旧弾のAR買取表更新致しました お持ち込みお待ちしております</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_nipponbashi3/status/2057367943411867840"></a>
+                </blockquote>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="shop" id="くずは">
+    <div class="shop-head">
+        <div class="shop-title">
+            <div class="shop-icon" style="background:#0891b2;">K</div>
+            <div>
+                <span class="badge">ポケカ買取</span>
+                <h2>ドラスタ くずはモール</h2>
+            </div>
+        </div>
+        <div class="count">3件表示</div>
+    </div>
+
+    <div class="tweet-list">
+
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>2時間 ホロライブOCG買取表更新 ハイレアセレクト100 超本気買取です！！！ 持ち込みお待ちしております ※商品の状態や在庫状況により減額の可能性があり、 表示価格の適用外となる場合がございます。</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_kuzuhamall/status/2058171218474209719"></a>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月7日 #ポケカ 高価買取情報 ノココッチex　￥１００ カミツオロチex　￥５０ モモワロウ　￥３０ ※商品の状態や在庫状況により減額の可能性があり、 表示価格の適用外となる場合がございます。</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_kuzuhamall/status/2052373127603040632"></a>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月20日 #DBSFW #フュージョンワールド 孫悟飯:幼年期(PR★) かめはめ波(C★) それぞれ買取させて頂きました どちらもコレクションにピッタリ</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/ds_kuzuhamall/status/2056970564989010114"></a>
+                </blockquote>
+            </div>
         </div>
 
     </div>
@@ -429,22 +629,117 @@ footer {
 
     <div class="tweet-list">
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/hareruya2namba/status/2048979756037861525"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>4月28日 /／ #ハレツーなんば店 買取情報 \＼ MEGAシリーズの 汎用カードたち お手元に使ってないカードがあれば ぜひハレツーなんば店にお持ちください ハレツーなんば店では 全てのシリーズ、レギュレーションの ポケモンカードをお取り扱いしております 持ち込みお待ちしております</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/hareruya2namba/status/2048979756037861525"></a>
+                </blockquote>
+            </div>
         </div>
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/hareruya2namba/status/2048980140554871137"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月22日 【買取情報】(2026/5/22　12:30時点) アビスアイ 現在の買取金額はこちらです ハイレアもデッキパーツも ぜひハレツーなんば店へ お持ちください #ハレツーなんば店 #ポケカ #大阪日本橋</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/hareruya2namba/status/2057665798425260140"></a>
+                </blockquote>
+            </div>
         </div>
 
-        <div class="tweet">
-            <blockquote class="twitter-tweet">
-                <a href="https://x.com/hareruya2namba/status/2057665798425260140"></a>
-            </blockquote>
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>4月28日 /／ #ハレツーなんば店 買取情報 \＼ こちらもMEGAシリーズです スタートデッキのカードを 探しております… お手元に使ってないカードがあれば ぜひハレツーなんば店にお持ちください ハレツーなんば店では 全てのシリーズ、レギュレーションの</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/hareruya2namba/status/2048980140554871137"></a>
+                </blockquote>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="shop" id="BMなんば">
+    <div class="shop-head">
+        <div class="shop-title">
+            <div class="shop-icon" style="background:#ea580c;">B</div>
+            <div>
+                <span class="badge">ポケカ買取</span>
+                <h2>BIG MAGICなんば</h2>
+            </div>
+        </div>
+        <div class="count">3件表示</div>
+    </div>
+
+    <div class="tweet-list">
+
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>6時間 【DM販売情報】 よく見るやつをショーケースに出しました #デュエルマスターズ #デュエマ #BMデュエマ</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/BM_NAMBA/status/2058103285719150969"></a>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月22日 #ZX_TCG #BMなんば買取 全体的に買取額を見直しました 今熱いカードを幅広く大募集 あなたの1枚、今が売りどきかもしれません ぜひぜひBMなんばにお越しくださいませ〜〜 その他の買取リストはこちら https:// stores.bigmagic.net/namba</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/BM_NAMBA/status/2057669751401484704"></a>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="post-card">
+            <div class="post-summary">
+                <div class="post-summary-title">
+                    <span class="hot">買取情報</span>
+                    <span>投稿内容</span>
+                </div>
+                <p>5月18日 【5/18 #mtgjp 入荷情報】 本日の入荷はこちら こちらは通販サイトBIGWEB( http:// mtg.bigweb.co.jp)でも購入出来ます #BMなんば</p>
+            </div>
+
+            <div class="tweet">
+                <blockquote class="twitter-tweet">
+                    <a href="https://x.com/BM_NAMBA/status/2056274777946685759"></a>
+                </blockquote>
+            </div>
         </div>
 
     </div>
