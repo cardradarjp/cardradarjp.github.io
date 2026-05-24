@@ -6,21 +6,15 @@ import html as html_lib
 import json
 
 
-# userdataをGitHub管理フォルダの外に置いている場合
 USER_DATA_DIR = "../userdata"
-
-# もし動かない・ログインが外れる場合はこちらに変更
+# 動かない場合だけこちらに変更
 # USER_DATA_DIR = "userdata"
-
 
 MAX_TWEETS_PER_SHOP = 3
 CHECK_TWEETS_PER_SHOP = 30
 
 
 SOURCES = [
-    # =========================
-    # 大阪・日本橋・なんば / ドラゴンスター
-    # =========================
     {
         "source_type": "x_post",
         "name": "ドラスタ オタロード中央",
@@ -106,10 +100,6 @@ SOURCES = [
         "description": "ドラゴンスター なんさん通り店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ads_namba_nansan%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
-
-    # =========================
-    # 大阪・日本橋・なんば / 晴れる屋2
-    # =========================
     {
         "source_type": "x_post",
         "name": "晴れる屋2なんば",
@@ -127,10 +117,6 @@ SOURCES = [
         "description": "晴れる屋2なんば店のポケカ買取表・買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ahareruya2namba%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
-
-    # =========================
-    # 大阪・日本橋・なんば / カードラボ
-    # =========================
     {
         "source_type": "x_post",
         "name": "カードラボなんば店",
@@ -182,10 +168,6 @@ SOURCES = [
         "description": "カードラボ販売買取センターNAMBAのポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ananba2_labo%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
-
-    # =========================
-    # 大阪・日本橋・なんば / GIRAFULL
-    # =========================
     {
         "source_type": "x_post",
         "name": "GIRAFULLなんば店",
@@ -237,10 +219,6 @@ SOURCES = [
         "description": "GIRAFULLオタロード店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3AGIRAFULLOTARODO%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
-
-    # =========================
-    # オンライン買取表
-    # =========================
     {
         "source_type": "online_price_list",
         "name": "Clove Base",
@@ -324,10 +302,7 @@ def is_pokemon_buy_post(text):
     if any(word in text for word in ng_words):
         return False
 
-    has_pokemon = any(word in text for word in pokemon_words)
-    has_buy = any(word in text for word in buy_words)
-
-    return has_pokemon and has_buy
+    return any(word in text for word in pokemon_words) and any(word in text for word in buy_words)
 
 
 def clean_tweet_text(text):
@@ -394,8 +369,7 @@ def get_status_url(tweet):
             continue
 
         if "/status/" in href and "/photo/" not in href and "/analytics" not in href:
-            full_url = "https://x.com" + href if href.startswith("/") else href
-            return full_url
+            return "https://x.com" + href if href.startswith("/") else href
 
     return None
 
@@ -434,12 +408,10 @@ def get_unique_areas():
     areas = []
 
     for source in SOURCES:
-        area_id = source["area_id"]
-
-        if not any(area["area_id"] == area_id for area in areas):
+        if not any(area["area_id"] == source["area_id"] for area in areas):
             areas.append({
                 "area": source["area"],
-                "area_id": area_id,
+                "area_id": source["area_id"],
             })
 
     return areas
@@ -453,15 +425,40 @@ def get_brands_by_area(area_sources):
     brands = []
 
     for source in area_sources:
-        brand_id = source["brand_id"]
-
-        if not any(brand["brand_id"] == brand_id for brand in brands):
+        if not any(brand["brand_id"] == source["brand_id"] for brand in brands):
             brands.append({
                 "brand": source["brand"],
-                "brand_id": brand_id,
+                "brand_id": source["brand_id"],
             })
 
     return brands
+
+
+def get_unique_brands():
+    brands = []
+
+    for source in SOURCES:
+        if not any(brand["brand_id"] == source["brand_id"] for brand in brands):
+            brands.append({
+                "brand": source["brand"],
+                "brand_id": source["brand_id"],
+            })
+
+    return brands
+
+
+def make_search_text(source):
+    values = [
+        source.get("name", ""),
+        source.get("short", ""),
+        source.get("area", ""),
+        source.get("prefecture", ""),
+        source.get("brand", ""),
+        source.get("game", ""),
+        source.get("tag", ""),
+        source.get("description", ""),
+    ]
+    return " ".join(values)
 
 
 def build_html_start(updated_at):
@@ -578,18 +575,15 @@ nav {
     font-weight: 700;
 }
 
-.nav-inner a:hover {
-    background: #dbeafe;
-    color: #1d4ed8;
-}
-
 main {
     max-width: 1120px;
     margin: 0 auto;
     padding: 28px 14px 44px;
 }
 
-.summary {
+.summary,
+.filter-box,
+.contact-box {
     background: white;
     border-radius: 22px;
     padding: 22px;
@@ -597,12 +591,15 @@ main {
     box-shadow: 0 10px 28px rgba(0,0,0,0.16);
 }
 
-.summary h2 {
+.summary h2,
+.filter-box h2,
+.contact-box h2 {
     margin: 0 0 8px;
     font-size: 22px;
 }
 
-.summary p {
+.summary p,
+.contact-box p {
     margin: 0;
     color: #4b5563;
     font-size: 14px;
@@ -618,6 +615,67 @@ main {
     color: #475569;
     font-size: 13px;
     line-height: 1.7;
+}
+
+.search-input {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 14px;
+    border: 1px solid #d1d5db;
+    font-size: 15px;
+    margin: 12px 0 16px;
+}
+
+.filter-group {
+    margin-top: 14px;
+}
+
+.filter-title {
+    font-weight: 800;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    color: #111827;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.filter-button.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+.filter-status {
+    margin-top: 16px;
+    color: #4b5563;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.reset-button {
+    margin-top: 14px;
+    border: none;
+    background: #111827;
+    color: white;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 800;
+    cursor: pointer;
 }
 
 .area-section {
@@ -807,10 +865,6 @@ main {
     font-size: 14px;
 }
 
-.online-button:hover {
-    background: #2563eb;
-}
-
 .empty {
     color: #6b7280;
     background: #f9fafb;
@@ -818,31 +872,15 @@ main {
     border-radius: 12px;
 }
 
-.contact-box {
-    background: #ffffff;
-    border-radius: 22px;
-    padding: 20px;
-    margin-top: 34px;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.16);
-}
-
-.contact-box h2 {
-    margin: 0 0 8px;
-    font-size: 22px;
-}
-
-.contact-box p {
-    margin: 0;
-    color: #4b5563;
-    font-size: 14px;
-    line-height: 1.8;
-}
-
 footer {
     text-align: center;
     color: #cbd5e1;
     padding: 34px 20px;
     font-size: 13px;
+}
+
+.hidden-by-filter {
+    display: none !important;
 }
 
 @media (max-width: 640px) {
@@ -924,6 +962,93 @@ def build_html_end():
 
 <script async src="https://platform.twitter.com/widgets.js"></script>
 
+<script>
+const filters = {
+    area: "all",
+    brand: "all",
+    source: "all",
+    search: ""
+};
+
+function setFilter(type, value) {
+    filters[type] = value;
+
+    document.querySelectorAll(`[data-filter-type="${type}"]`).forEach(button => {
+        button.classList.remove("active");
+        if (button.dataset.filterValue === value) {
+            button.classList.add("active");
+        }
+    });
+
+    applyFilters();
+}
+
+function resetFilters() {
+    filters.area = "all";
+    filters.brand = "all";
+    filters.source = "all";
+    filters.search = "";
+
+    document.getElementById("shopSearch").value = "";
+
+    document.querySelectorAll(".filter-button").forEach(button => {
+        button.classList.remove("active");
+        if (button.dataset.filterValue === "all") {
+            button.classList.add("active");
+        }
+    });
+
+    applyFilters();
+}
+
+function applyFilters() {
+    const searchInput = document.getElementById("shopSearch");
+    filters.search = searchInput.value.trim().toLowerCase();
+
+    const shops = document.querySelectorAll(".shop");
+    let visibleCount = 0;
+
+    shops.forEach(shop => {
+        const area = shop.dataset.area;
+        const brand = shop.dataset.brand;
+        const source = shop.dataset.source;
+        const searchText = shop.dataset.search.toLowerCase();
+
+        const areaOk = filters.area === "all" || filters.area === area;
+        const brandOk = filters.brand === "all" || filters.brand === brand;
+        const sourceOk = filters.source === "all" || filters.source === source;
+        const searchOk = !filters.search || searchText.includes(filters.search);
+
+        if (areaOk && brandOk && sourceOk && searchOk) {
+            shop.classList.remove("hidden-by-filter");
+            visibleCount++;
+        } else {
+            shop.classList.add("hidden-by-filter");
+        }
+    });
+
+    updateGroupVisibility();
+    document.getElementById("visibleCount").textContent = visibleCount;
+}
+
+function updateGroupVisibility() {
+    document.querySelectorAll(".brand-section").forEach(section => {
+        const visibleShops = section.querySelectorAll(".shop:not(.hidden-by-filter)");
+        section.style.display = visibleShops.length > 0 ? "" : "none";
+    });
+
+    document.querySelectorAll(".area-section").forEach(section => {
+        const visibleShops = section.querySelectorAll(".shop:not(.hidden-by-filter)");
+        section.style.display = visibleShops.length > 0 ? "" : "none";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("shopSearch").addEventListener("input", applyFilters);
+    applyFilters();
+});
+</script>
+
 </body>
 </html>
 """
@@ -952,6 +1077,62 @@ html_doc += """
     <div class="notice">
         表示されるX投稿はXの埋め込み機能を利用しています。画像URLはOCR準備用としてdata.jsonに保存しますが、サイト上では画像を再配布しません。
         掲載内容は各店舗の投稿・公式ページを必ずご確認ください。
+    </div>
+</section>
+
+<section class="filter-box">
+    <h2>店舗を探す</h2>
+
+    <input
+        id="shopSearch"
+        class="search-input"
+        type="text"
+        placeholder="店舗名・ブランド名・地域名で検索（例：ドラスタ、日本橋、Clove）"
+    >
+
+    <div class="filter-group">
+        <div class="filter-title">地域で絞る</div>
+        <div class="filter-buttons">
+            <button class="filter-button active" data-filter-type="area" data-filter-value="all" onclick="setFilter('area', 'all')">すべて</button>
+"""
+
+for area in get_unique_areas():
+    html_doc += f"""
+            <button class="filter-button" data-filter-type="area" data-filter-value="{area["area_id"]}" onclick="setFilter('area', '{area["area_id"]}')">{area["area"]}</button>
+"""
+
+html_doc += """
+        </div>
+    </div>
+
+    <div class="filter-group">
+        <div class="filter-title">ブランドで絞る</div>
+        <div class="filter-buttons">
+            <button class="filter-button active" data-filter-type="brand" data-filter-value="all" onclick="setFilter('brand', 'all')">すべて</button>
+"""
+
+for brand in get_unique_brands():
+    html_doc += f"""
+            <button class="filter-button" data-filter-type="brand" data-filter-value="{brand["brand_id"]}" onclick="setFilter('brand', '{brand["brand_id"]}')">{brand["brand"]}</button>
+"""
+
+html_doc += """
+        </div>
+    </div>
+
+    <div class="filter-group">
+        <div class="filter-title">種別で絞る</div>
+        <div class="filter-buttons">
+            <button class="filter-button active" data-filter-type="source" data-filter-value="all" onclick="setFilter('source', 'all')">すべて</button>
+            <button class="filter-button" data-filter-type="source" data-filter-value="x_post" onclick="setFilter('source', 'x_post')">X買取表</button>
+            <button class="filter-button" data-filter-type="source" data-filter-value="online_price_list" onclick="setFilter('source', 'online_price_list')">オンライン買取表</button>
+        </div>
+    </div>
+
+    <button class="reset-button" onclick="resetFilters()">条件をリセット</button>
+
+    <div class="filter-status">
+        表示中：<span id="visibleCount">0</span>件
     </div>
 </section>
 """
@@ -994,6 +1175,9 @@ with sync_playwright() as p:
                 print(source["name"])
                 print("==============")
 
+                safe_description = html_lib.escape(source["description"])
+                search_text = html_lib.escape(make_search_text(source))
+
                 if source["source_type"] == "online_price_list":
                     data_item = {
                         "source_type": source["source_type"],
@@ -1010,10 +1194,14 @@ with sync_playwright() as p:
 
                     all_posts_data.append(data_item)
 
-                    safe_description = html_lib.escape(source["description"])
-
                     html_doc += f"""
-        <article class="shop">
+        <article
+            class="shop"
+            data-area="{source["area_id"]}"
+            data-brand="{source["brand_id"]}"
+            data-source="{source["source_type"]}"
+            data-search="{search_text}"
+        >
             <div class="shop-head">
                 <div class="shop-title">
                     <div class="shop-icon" style="background:{source["color"]};">{source["icon"]}</div>
@@ -1042,7 +1230,6 @@ with sync_playwright() as p:
                     page.goto(source["url"], wait_until="domcontentloaded", timeout=60000)
                     time.sleep(10)
 
-                    # X検索結果の読み込みを増やす
                     for _ in range(3):
                         page.mouse.wheel(0, 1200)
                         time.sleep(2)
@@ -1076,7 +1263,6 @@ with sync_playwright() as p:
                             continue
 
                         summary = clean_tweet_text(text)
-
                         seen_urls.add(url)
 
                         post = {
@@ -1112,10 +1298,14 @@ with sync_playwright() as p:
                 except Exception as e:
                     print("取得エラー:", e)
 
-                safe_description = html_lib.escape(source["description"])
-
                 html_doc += f"""
-        <article class="shop">
+        <article
+            class="shop"
+            data-area="{source["area_id"]}"
+            data-brand="{source["brand_id"]}"
+            data-source="{source["source_type"]}"
+            data-search="{search_text}"
+        >
             <div class="shop-head">
                 <div class="shop-title">
                     <div class="shop-icon" style="background:{source["color"]};">{source["icon"]}</div>
