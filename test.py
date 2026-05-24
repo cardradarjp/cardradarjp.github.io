@@ -5,123 +5,275 @@ from datetime import datetime
 import html as html_lib
 import json
 
+
 # userdataをGitHub管理フォルダの外に置いている場合
 USER_DATA_DIR = "../userdata"
 
-# ログインが外れる・動かない場合だけこちらに変更
+# もし動かない・ログインが外れる場合はこちらに変更
 # USER_DATA_DIR = "userdata"
 
-MAX_TWEETS_PER_SHOP = 3
-CHECK_TWEETS_PER_SHOP = 12
 
-SEARCHES = [
+MAX_TWEETS_PER_SHOP = 3
+CHECK_TWEETS_PER_SHOP = 30
+
+
+SOURCES = [
+    # =========================
+    # 大阪・日本橋・なんば / ドラゴンスター
+    # =========================
     {
+        "source_type": "x_post",
         "name": "ドラスタ オタロード中央",
         "short": "オタ中",
         "id": "otachu",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "ドラゴンスター",
+        "brand_id": "dragonstar",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "D",
         "color": "#2563eb",
+        "description": "ドラゴンスター オタロード中央店のポケカ買取表・高価買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ads_otaroad_chuo%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
+        "source_type": "x_post",
         "name": "ドラスタ 日本橋本店",
         "short": "本店",
         "id": "honten",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "ドラゴンスター",
+        "brand_id": "dragonstar",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "DH",
         "color": "#1d4ed8",
+        "description": "ドラゴンスター 日本橋本店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ads_nipponbashi%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
+        "source_type": "x_post",
         "name": "ドラスタ 日本橋2号店",
         "short": "ドラ2",
         "id": "dora2",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "ドラゴンスター",
+        "brand_id": "dragonstar",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "D2",
         "color": "#7c3aed",
+        "description": "ドラゴンスター 日本橋2号店のポケカ買取表・WANTED情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ads_nipponbashi2%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
+        "source_type": "x_post",
         "name": "ドラスタ 日本橋3号店",
         "short": "ドラ3",
         "id": "dora3",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "ドラゴンスター",
+        "brand_id": "dragonstar",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "D3",
         "color": "#dc2626",
+        "description": "ドラゴンスター 日本橋3号店のポケカ高価買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ads_nipponbashi3%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
+        "source_type": "x_post",
         "name": "ドラスタ なんさん通り店",
         "short": "なんさん",
         "id": "nansan",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "ドラゴンスター",
+        "brand_id": "dragonstar",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "DN",
         "color": "#0891b2",
+        "description": "ドラゴンスター なんさん通り店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ads_namba_nansan%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
+
+    # =========================
+    # 大阪・日本橋・なんば / 晴れる屋2
+    # =========================
     {
+        "source_type": "x_post",
         "name": "晴れる屋2なんば",
         "short": "晴れる屋2",
         "id": "hareruya2",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "晴れる屋2",
+        "brand_id": "hareruya2",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "H",
         "color": "#059669",
+        "description": "晴れる屋2なんば店のポケカ買取表・買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ahareruya2namba%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
+
+    # =========================
+    # 大阪・日本橋・なんば / カードラボ
+    # =========================
     {
+        "source_type": "x_post",
         "name": "カードラボなんば店",
         "short": "ラボなんば",
         "id": "labo-namba",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "カードラボ",
+        "brand_id": "cardlabo",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "L",
         "color": "#f59e0b",
+        "description": "カードラボなんば店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Anamba_clabo%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
+        "source_type": "x_post",
         "name": "カードラボ大阪日本橋店",
         "short": "ラボ日本橋",
         "id": "labo-nihonbashi",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "カードラボ",
+        "brand_id": "cardlabo",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "LN",
         "color": "#ec4899",
+        "description": "カードラボ大阪日本橋店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Anipponbashi_lab%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
+        "source_type": "x_post",
         "name": "カードラボ販売買取センターNAMBA",
         "short": "ラボ買取",
         "id": "labo-kaitori",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "カードラボ",
+        "brand_id": "cardlabo",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "LC",
         "color": "#14b8a6",
+        "description": "カードラボ販売買取センターNAMBAのポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Ananba2_labo%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
+
+    # =========================
+    # 大阪・日本橋・なんば / GIRAFULL
+    # =========================
     {
+        "source_type": "x_post",
         "name": "GIRAFULLなんば店",
         "short": "ジラなんば",
         "id": "gira-namba",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "GIRAFULL",
+        "brand_id": "girafull",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "G",
         "color": "#ea580c",
+        "description": "GIRAFULLなんば店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3AGIRAFULL_Namba%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
+        "source_type": "x_post",
         "name": "GIRAFULL大阪日本橋店",
         "short": "ジラ日本橋",
         "id": "gira-nihonbashi",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "GIRAFULL",
+        "brand_id": "girafull",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "GN",
         "color": "#f97316",
+        "description": "GIRAFULL大阪日本橋店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3Agirafull_o_n%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
     },
     {
+        "source_type": "x_post",
         "name": "GIRAFULLオタロード店",
         "short": "ジラオタ",
         "id": "gira-otaroad",
+        "area": "大阪・日本橋・なんば",
+        "area_id": "osaka-nihonbashi",
+        "prefecture": "大阪",
+        "brand": "GIRAFULL",
+        "brand_id": "girafull",
+        "game": "ポケカ",
         "tag": "ポケカ買取",
         "icon": "GO",
         "color": "#fb923c",
+        "description": "GIRAFULLオタロード店のポケカ買取情報を確認できます。",
         "url": "https://x.com/search?q=from%3AGIRAFULLOTARODO%20ポケカ%20買取%20filter%3Aimages&src=typed_query&f=live",
+    },
+
+    # =========================
+    # オンライン買取表
+    # =========================
+    {
+        "source_type": "online_price_list",
+        "name": "Clove Base",
+        "short": "Clove",
+        "id": "clove-base",
+        "area": "オンライン",
+        "area_id": "online",
+        "prefecture": "オンライン",
+        "brand": "Clove",
+        "brand_id": "clove",
+        "game": "ポケカ",
+        "tag": "オンライン買取表",
+        "icon": "C",
+        "color": "#6366f1",
+        "official_url": "https://base.clove.jp/prices/pokemon",
+        "description": "ポケモンカードのオンライン買取価格表。カード名や買取価格を確認できます。",
+    },
+    {
+        "source_type": "online_price_list",
+        "name": "フルアヘッド",
+        "short": "フルアヘッド",
+        "id": "fullahead",
+        "area": "オンライン",
+        "area_id": "online",
+        "prefecture": "オンライン",
+        "brand": "フルアヘッド",
+        "brand_id": "fullahead",
+        "game": "ポケカ",
+        "tag": "オンライン買取表",
+        "icon": "F",
+        "color": "#16a34a",
+        "official_url": "https://fullahead-buy.com/",
+        "description": "ポケモンカードゲームを含む各種TCGの高価買取リストを確認できます。",
     },
 ]
 
@@ -130,6 +282,7 @@ def is_pokemon_buy_post(text):
     pokemon_words = [
         "ポケカ",
         "ポケモンカード",
+        "ポケモンカードゲーム",
         "ﾎﾟｹﾓﾝｶｰﾄﾞ",
         "pokemon",
         "Pokemon",
@@ -140,10 +293,15 @@ def is_pokemon_buy_post(text):
         "買取",
         "高価買取",
         "買取表",
+        "買取表ダ",
         "WANTED",
         "募集",
         "取扱強化",
         "お持ち込み",
+        "超本気買取",
+        "買取情報",
+        "更新Ver",
+        "更新ver",
     ]
 
     ng_words = [
@@ -160,6 +318,7 @@ def is_pokemon_buy_post(text):
         "MTG",
         "遊戯王",
         "デュエマ",
+        "ヴァイス",
     ]
 
     if any(word in text for word in ng_words):
@@ -215,8 +374,8 @@ def clean_tweet_text(text):
 
     summary = " ".join(cleaned)
 
-    if len(summary) > 180:
-        summary = summary[:180] + "..."
+    if len(summary) > 200:
+        summary = summary[:200] + "..."
 
     if not summary:
         summary = "画像付きのポケカ買取投稿です。"
@@ -241,6 +400,15 @@ def get_status_url(tweet):
     return None
 
 
+def get_status_id(url):
+    match = re.search(r"/status/(\d+)", url)
+
+    if match:
+        return int(match.group(1))
+
+    return 0
+
+
 def get_image_urls(tweet):
     image_urls = []
     images = tweet.locator("img")
@@ -262,6 +430,40 @@ def get_image_urls(tweet):
     return image_urls
 
 
+def get_unique_areas():
+    areas = []
+
+    for source in SOURCES:
+        area_id = source["area_id"]
+
+        if not any(area["area_id"] == area_id for area in areas):
+            areas.append({
+                "area": source["area"],
+                "area_id": area_id,
+            })
+
+    return areas
+
+
+def get_sources_by_area(area_id):
+    return [source for source in SOURCES if source["area_id"] == area_id]
+
+
+def get_brands_by_area(area_sources):
+    brands = []
+
+    for source in area_sources:
+        brand_id = source["brand_id"]
+
+        if not any(brand["brand_id"] == brand_id for brand in brands):
+            brands.append({
+                "brand": source["brand"],
+                "brand_id": brand_id,
+            })
+
+    return brands
+
+
 def build_html_start(updated_at):
     html_doc = """
 <!DOCTYPE html>
@@ -269,8 +471,9 @@ def build_html_start(updated_at):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CardRadar</title>
-<meta name="description" content="大阪・日本橋周辺のカードショップのポケカ買取情報をまとめて確認できるサイトです。">
+
+<title>CardRadar｜大阪日本橋・なんばのポケカ買取表まとめ</title>
+<meta name="description" content="CardRadarは、大阪・日本橋・なんば周辺のカードショップがXに投稿しているポケカ買取表を店舗別にまとめて確認できるサイトです。ドラゴンスター、晴れる屋2、カードラボ、GIRAFULL、オンライン買取表も掲載。">
 
 <style>
 * {
@@ -293,11 +496,11 @@ header {
         radial-gradient(circle at top left, rgba(59,130,246,0.38), transparent 34%),
         linear-gradient(135deg, #020617, #111827 55%, #1e293b);
     color: white;
-    padding: 40px 20px 30px;
+    padding: 42px 20px 32px;
 }
 
 .header-inner {
-    max-width: 1080px;
+    max-width: 1120px;
     margin: 0 auto;
 }
 
@@ -308,9 +511,9 @@ header {
 }
 
 .site-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 15px;
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
     background: #2563eb;
     display: grid;
     place-items: center;
@@ -319,7 +522,7 @@ header {
 }
 
 .logo {
-    font-size: 35px;
+    font-size: 36px;
     font-weight: 850;
     margin: 0;
 }
@@ -328,7 +531,8 @@ header {
     margin: 12px 0 0;
     color: #cbd5e1;
     font-size: 15px;
-    line-height: 1.7;
+    line-height: 1.8;
+    max-width: 880px;
 }
 
 .meta {
@@ -343,7 +547,7 @@ header {
 }
 
 nav {
-    max-width: 1080px;
+    max-width: 1120px;
     margin: -18px auto 0;
     padding: 0 14px;
     position: sticky;
@@ -371,7 +575,7 @@ nav {
     font-size: 13px;
     white-space: nowrap;
     border: 1px solid #e5e7eb;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .nav-inner a:hover {
@@ -380,29 +584,29 @@ nav {
 }
 
 main {
-    max-width: 1080px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 26px 14px 44px;
+    padding: 28px 14px 44px;
 }
 
 .summary {
     background: white;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 24px;
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 26px;
     box-shadow: 0 10px 28px rgba(0,0,0,0.16);
 }
 
 .summary h2 {
     margin: 0 0 8px;
-    font-size: 21px;
+    font-size: 22px;
 }
 
 .summary p {
     margin: 0;
-    color: #6b7280;
+    color: #4b5563;
     font-size: 14px;
-    line-height: 1.8;
+    line-height: 1.9;
 }
 
 .notice {
@@ -413,15 +617,49 @@ main {
     border-radius: 14px;
     color: #475569;
     font-size: 13px;
+    line-height: 1.7;
+}
+
+.area-section {
+    margin-bottom: 40px;
+    scroll-margin-top: 90px;
+}
+
+.area-title {
+    color: white;
+    margin: 34px 0 16px;
+}
+
+.area-title h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.area-title p {
+    color: #cbd5e1;
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.brand-section {
+    margin-bottom: 30px;
+}
+
+.brand-title {
+    color: #e5e7eb;
+    font-size: 20px;
+    margin: 0 0 14px;
+    padding-left: 10px;
+    border-left: 5px solid #60a5fa;
 }
 
 .shop {
     background: white;
     border-radius: 22px;
     padding: 18px;
-    margin-bottom: 30px;
+    margin-bottom: 22px;
     box-shadow: 0 10px 28px rgba(0,0,0,0.18);
-    scroll-margin-top: 90px;
 }
 
 .shop-head {
@@ -451,9 +689,16 @@ main {
     flex: 0 0 auto;
 }
 
-.shop h2 {
+.shop h3 {
     margin: 0;
     font-size: 21px;
+}
+
+.shop-description {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 .badge {
@@ -486,7 +731,7 @@ main {
 
 .post-card {
     width: 100%;
-    max-width: 620px;
+    max-width: 640px;
     background: #f8fafc;
     border: 1px solid #e5e7eb;
     border-radius: 18px;
@@ -537,11 +782,60 @@ main {
     margin: 0 auto;
 }
 
+.online-card {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 16px;
+}
+
+.online-card p {
+    margin: 0 0 14px;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.online-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #111827;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.online-button:hover {
+    background: #2563eb;
+}
+
 .empty {
     color: #6b7280;
     background: #f9fafb;
     padding: 14px;
     border-radius: 12px;
+}
+
+.contact-box {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 20px;
+    margin-top: 34px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.16);
+}
+
+.contact-box h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+}
+
+.contact-box p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.8;
 }
 
 footer {
@@ -586,7 +880,7 @@ footer {
         margin-top: 12px;
     }
 
-    .shop h2 {
+    .shop h3 {
         font-size: 18px;
     }
 
@@ -605,7 +899,10 @@ footer {
             <div class="site-icon">CR</div>
             <h1 class="logo">CardRadar</h1>
         </div>
-        <p class="lead">大阪・日本橋周辺のカードショップ買取情報をまとめてチェック。Xの画像付きポケカ買取投稿を店舗別に表示しています。</p>
+        <p class="lead">
+            大阪・日本橋・なんば周辺のカードショップがXに投稿しているポケカ買取表を、地域別・ブランド別・店舗別にまとめて確認できます。
+            ドラゴンスター、晴れる屋2、カードラボ、GIRAFULLのX買取情報に加えて、Clove Baseやフルアヘッドなどのオンライン買取表も掲載しています。
+        </p>
         <div class="meta">最終更新：__UPDATED_AT__</div>
     </div>
 </header>
@@ -637,8 +934,8 @@ all_posts_data = []
 
 html_doc = build_html_start(updated_at)
 
-for shop in SEARCHES:
-    html_doc += f'<a href="#{shop["id"]}">{shop["short"]}</a>\n'
+for area in get_unique_areas():
+    html_doc += f'<a href="#{area["area_id"]}">{area["area"]}</a>\n'
 
 html_doc += """
     </div>
@@ -647,11 +944,18 @@ html_doc += """
 <main>
 
 <section class="summary">
-    <h2>最新のポケカ買取投稿まとめ</h2>
-    <p>日本橋・なんば周辺のカードショップX投稿から、画像付きのポケカ買取情報を店舗別にまとめています。投稿本文の一部も表示することで、どんな買取表か分かりやすくしています。</p>
-    <div class="notice">表示される投稿はXの埋め込み機能を利用しています。画像URLはOCR準備用としてdata.jsonに保存しますが、サイト上では再配布しません。</div>
+    <h2>ポケカ買取表を地域別・店舗別にチェック</h2>
+    <p>
+        CardRadarは、日本橋・なんば周辺を中心に、カードショップが公開しているポケモンカードの買取表をまとめて確認できるサイトです。
+        Xに投稿された画像付き買取表と、オンライン買取価格表へのリンクを分けて掲載しています。
+    </p>
+    <div class="notice">
+        表示されるX投稿はXの埋め込み機能を利用しています。画像URLはOCR準備用としてdata.jsonに保存しますが、サイト上では画像を再配布しません。
+        掲載内容は各店舗の投稿・公式ページを必ずご確認ください。
+    </div>
 </section>
 """
+
 
 with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
@@ -661,115 +965,219 @@ with sync_playwright() as p:
 
     page = browser.new_page()
 
-    for shop in SEARCHES:
-        print("==============")
-        print(shop["name"])
-        print("==============")
-
-        posts = []
-        seen_urls = set()
-
-        try:
-            page.goto(shop["url"], wait_until="domcontentloaded", timeout=60000)
-            time.sleep(8)
-
-            tweets = page.locator("article")
-            count = tweets.count()
-
-            for i in range(min(count, CHECK_TWEETS_PER_SHOP)):
-                tweet = tweets.nth(i)
-
-                url = get_status_url(tweet)
-
-                if not url:
-                    continue
-
-                if url in seen_urls:
-                    continue
-
-                text = tweet.inner_text()
-
-                if not is_pokemon_buy_post(text):
-                    continue
-
-                image_urls = get_image_urls(tweet)
-
-                if not image_urls:
-                    continue
-
-                summary = clean_tweet_text(text)
-
-                seen_urls.add(url)
-
-                post = {
-                    "shop_name": shop["name"],
-                    "shop_id": shop["id"],
-                    "shop_short": shop["short"],
-                    "tag": shop["tag"],
-                    "tweet_url": url,
-                    "summary": summary,
-                    "image_urls": image_urls,
-                    "image_count": len(image_urls),
-                    "collected_at": updated_at,
-                }
-
-                posts.append(post)
-                all_posts_data.append(post)
-
-                print(url)
-                print("画像数:", len(image_urls))
-
-                if len(posts) >= MAX_TWEETS_PER_SHOP:
-                    break
-
-        except Exception as e:
-            print("取得エラー:", e)
+    for area in get_unique_areas():
+        area_sources = get_sources_by_area(area["area_id"])
 
         html_doc += f"""
-<section class="shop" id="{shop['id']}">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:{shop['color']};">{shop['icon']}</div>
-            <div>
-                <span class="badge">{shop['tag']}</span>
-                <h2>{shop['name']}</h2>
-            </div>
-        </div>
-        <div class="count">{len(posts)}件表示</div>
+<section class="area-section" id="{area["area_id"]}">
+    <div class="area-title">
+        <h2>{area["area"]}</h2>
+        <p>{area["area"]}のポケカ買取表・オンライン買取情報をまとめています。</p>
     </div>
-
-    <div class="tweet-list">
 """
 
-        if posts:
-            for post in posts:
-                safe_summary = html_lib.escape(post["summary"])
+        brands = get_brands_by_area(area_sources)
+
+        for brand in brands:
+            brand_sources = [
+                source for source in area_sources
+                if source["brand_id"] == brand["brand_id"]
+            ]
+
+            html_doc += f"""
+    <section class="brand-section">
+        <h2 class="brand-title">{brand["brand"]}</h2>
+"""
+
+            for source in brand_sources:
+                print("==============")
+                print(source["name"])
+                print("==============")
+
+                if source["source_type"] == "online_price_list":
+                    data_item = {
+                        "source_type": source["source_type"],
+                        "name": source["name"],
+                        "area": source["area"],
+                        "area_id": source["area_id"],
+                        "brand": source["brand"],
+                        "brand_id": source["brand_id"],
+                        "game": source["game"],
+                        "official_url": source["official_url"],
+                        "description": source["description"],
+                        "collected_at": updated_at,
+                    }
+
+                    all_posts_data.append(data_item)
+
+                    safe_description = html_lib.escape(source["description"])
+
+                    html_doc += f"""
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:{source["color"]};">{source["icon"]}</div>
+                    <div>
+                        <span class="badge">{source["tag"]}</span>
+                        <h3>{source["name"]}</h3>
+                        <p class="shop-description">{safe_description}</p>
+                    </div>
+                </div>
+                <div class="count">公式リンク</div>
+            </div>
+
+            <div class="online-card">
+                <p>{safe_description}</p>
+                <a class="online-button" href="{source["official_url"]}" target="_blank" rel="noopener noreferrer">公式買取表を見る</a>
+            </div>
+        </article>
+"""
+                    continue
+
+                posts = []
+                seen_urls = set()
+                candidate_posts = []
+
+                try:
+                    page.goto(source["url"], wait_until="domcontentloaded", timeout=60000)
+                    time.sleep(10)
+
+                    # X検索結果の読み込みを増やす
+                    for _ in range(3):
+                        page.mouse.wheel(0, 1200)
+                        time.sleep(2)
+
+                    tweets = page.locator("article")
+                    count = tweets.count()
+
+                    print("検出article数:", count)
+
+                    for i in range(min(count, CHECK_TWEETS_PER_SHOP)):
+                        tweet = tweets.nth(i)
+
+                        url = get_status_url(tweet)
+
+                        if not url:
+                            continue
+
+                        if url in seen_urls:
+                            continue
+
+                        text = tweet.inner_text()
+
+                        if not is_pokemon_buy_post(text):
+                            print("除外:", url)
+                            continue
+
+                        image_urls = get_image_urls(tweet)
+
+                        if not image_urls:
+                            print("画像なし除外:", url)
+                            continue
+
+                        summary = clean_tweet_text(text)
+
+                        seen_urls.add(url)
+
+                        post = {
+                            "source_type": source["source_type"],
+                            "shop_name": source["name"],
+                            "shop_id": source["id"],
+                            "shop_short": source["short"],
+                            "area": source["area"],
+                            "area_id": source["area_id"],
+                            "prefecture": source["prefecture"],
+                            "brand": source["brand"],
+                            "brand_id": source["brand_id"],
+                            "game": source["game"],
+                            "tag": source["tag"],
+                            "tweet_url": url,
+                            "status_id": get_status_id(url),
+                            "summary": summary,
+                            "image_urls": image_urls,
+                            "image_count": len(image_urls),
+                            "collected_at": updated_at,
+                        }
+
+                        candidate_posts.append(post)
+
+                    candidate_posts.sort(key=lambda x: x["status_id"], reverse=True)
+                    posts = candidate_posts[:MAX_TWEETS_PER_SHOP]
+
+                    for post in posts:
+                        all_posts_data.append(post)
+                        print("採用:", post["tweet_url"])
+                        print("画像数:", post["image_count"])
+
+                except Exception as e:
+                    print("取得エラー:", e)
+
+                safe_description = html_lib.escape(source["description"])
 
                 html_doc += f"""
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像{post['image_count']}枚</span>
-                    <span>投稿内容</span>
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:{source["color"]};">{source["icon"]}</div>
+                    <div>
+                        <span class="badge">{source["tag"]}</span>
+                        <h3>{source["name"]}</h3>
+                        <p class="shop-description">{safe_description}</p>
+                    </div>
                 </div>
-                <p>{safe_summary}</p>
+                <div class="count">{len(posts)}件表示</div>
             </div>
 
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="{post['tweet_url']}"></a>
-                </blockquote>
-            </div>
-        </div>
+            <div class="tweet-list">
 """
-        else:
+
+                if posts:
+                    for post in posts:
+                        safe_summary = html_lib.escape(post["summary"])
+
+                        html_doc += f"""
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像{post["image_count"]}枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>{safe_summary}</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="{post["tweet_url"]}"></a>
+                        </blockquote>
+                    </div>
+                </div>
+"""
+                else:
+                    html_doc += """
+                <div class="empty">該当する投稿が見つかりませんでした。</div>
+"""
+
+                html_doc += """
+            </div>
+        </article>
+"""
+
             html_doc += """
-        <div class="empty">該当する投稿が見つかりませんでした。</div>
+    </section>
 """
 
         html_doc += """
-    </div>
+</section>
+"""
+
+    html_doc += """
+<section class="contact-box">
+    <h2>掲載店舗・買取表情報を募集中</h2>
+    <p>
+        CardRadarでは、ポケカ買取表を定期的に投稿しているカードショップや、オンライン買取表を掲載しているサービスを順次追加予定です。
+        今後は地域別ページ、カード名検索、買取価格比較、更新通知にも対応していきます。
+    </p>
 </section>
 """
 
@@ -784,8 +1192,9 @@ with sync_playwright() as p:
     print("")
     print("index.html を生成しました")
     print("data.json を生成しました")
-    print("取得投稿数:", len(all_posts_data))
+    print("取得データ数:", len(all_posts_data))
 
     input("終了するにはEnter")
 
     browser.close()
+    

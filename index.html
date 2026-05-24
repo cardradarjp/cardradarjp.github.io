@@ -4,8 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CardRadar</title>
-<meta name="description" content="大阪・日本橋周辺のカードショップのポケカ買取情報をまとめて確認できるサイトです。">
+
+<title>CardRadar｜大阪日本橋・なんばのポケカ買取表まとめ</title>
+<meta name="description" content="CardRadarは、大阪・日本橋・なんば周辺のカードショップがXに投稿しているポケカ買取表を店舗別にまとめて確認できるサイトです。ドラゴンスター、晴れる屋2、カードラボ、GIRAFULL、オンライン買取表も掲載。">
 
 <style>
 * {
@@ -28,11 +29,11 @@ header {
         radial-gradient(circle at top left, rgba(59,130,246,0.38), transparent 34%),
         linear-gradient(135deg, #020617, #111827 55%, #1e293b);
     color: white;
-    padding: 40px 20px 30px;
+    padding: 42px 20px 32px;
 }
 
 .header-inner {
-    max-width: 1080px;
+    max-width: 1120px;
     margin: 0 auto;
 }
 
@@ -43,9 +44,9 @@ header {
 }
 
 .site-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 15px;
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
     background: #2563eb;
     display: grid;
     place-items: center;
@@ -54,7 +55,7 @@ header {
 }
 
 .logo {
-    font-size: 35px;
+    font-size: 36px;
     font-weight: 850;
     margin: 0;
 }
@@ -63,7 +64,8 @@ header {
     margin: 12px 0 0;
     color: #cbd5e1;
     font-size: 15px;
-    line-height: 1.7;
+    line-height: 1.8;
+    max-width: 880px;
 }
 
 .meta {
@@ -78,7 +80,7 @@ header {
 }
 
 nav {
-    max-width: 1080px;
+    max-width: 1120px;
     margin: -18px auto 0;
     padding: 0 14px;
     position: sticky;
@@ -106,7 +108,7 @@ nav {
     font-size: 13px;
     white-space: nowrap;
     border: 1px solid #e5e7eb;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .nav-inner a:hover {
@@ -115,29 +117,29 @@ nav {
 }
 
 main {
-    max-width: 1080px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 26px 14px 44px;
+    padding: 28px 14px 44px;
 }
 
 .summary {
     background: white;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 24px;
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 26px;
     box-shadow: 0 10px 28px rgba(0,0,0,0.16);
 }
 
 .summary h2 {
     margin: 0 0 8px;
-    font-size: 21px;
+    font-size: 22px;
 }
 
 .summary p {
     margin: 0;
-    color: #6b7280;
+    color: #4b5563;
     font-size: 14px;
-    line-height: 1.8;
+    line-height: 1.9;
 }
 
 .notice {
@@ -148,15 +150,49 @@ main {
     border-radius: 14px;
     color: #475569;
     font-size: 13px;
+    line-height: 1.7;
+}
+
+.area-section {
+    margin-bottom: 40px;
+    scroll-margin-top: 90px;
+}
+
+.area-title {
+    color: white;
+    margin: 34px 0 16px;
+}
+
+.area-title h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.area-title p {
+    color: #cbd5e1;
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.brand-section {
+    margin-bottom: 30px;
+}
+
+.brand-title {
+    color: #e5e7eb;
+    font-size: 20px;
+    margin: 0 0 14px;
+    padding-left: 10px;
+    border-left: 5px solid #60a5fa;
 }
 
 .shop {
     background: white;
     border-radius: 22px;
     padding: 18px;
-    margin-bottom: 30px;
+    margin-bottom: 22px;
     box-shadow: 0 10px 28px rgba(0,0,0,0.18);
-    scroll-margin-top: 90px;
 }
 
 .shop-head {
@@ -186,9 +222,16 @@ main {
     flex: 0 0 auto;
 }
 
-.shop h2 {
+.shop h3 {
     margin: 0;
     font-size: 21px;
+}
+
+.shop-description {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 .badge {
@@ -221,7 +264,7 @@ main {
 
 .post-card {
     width: 100%;
-    max-width: 620px;
+    max-width: 640px;
     background: #f8fafc;
     border: 1px solid #e5e7eb;
     border-radius: 18px;
@@ -272,11 +315,60 @@ main {
     margin: 0 auto;
 }
 
+.online-card {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 16px;
+}
+
+.online-card p {
+    margin: 0 0 14px;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.online-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #111827;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.online-button:hover {
+    background: #2563eb;
+}
+
 .empty {
     color: #6b7280;
     background: #f9fafb;
     padding: 14px;
     border-radius: 12px;
+}
+
+.contact-box {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 20px;
+    margin-top: 34px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.16);
+}
+
+.contact-box h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+}
+
+.contact-box p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.8;
 }
 
 footer {
@@ -321,7 +413,7 @@ footer {
         margin-top: 12px;
     }
 
-    .shop h2 {
+    .shop h3 {
         font-size: 18px;
     }
 
@@ -340,25 +432,18 @@ footer {
             <div class="site-icon">CR</div>
             <h1 class="logo">CardRadar</h1>
         </div>
-        <p class="lead">大阪・日本橋周辺のカードショップ買取情報をまとめてチェック。Xの画像付きポケカ買取投稿を店舗別に表示しています。</p>
-        <div class="meta">最終更新：2026/05/24 02:34</div>
+        <p class="lead">
+            大阪・日本橋・なんば周辺のカードショップがXに投稿しているポケカ買取表を、地域別・ブランド別・店舗別にまとめて確認できます。
+            ドラゴンスター、晴れる屋2、カードラボ、GIRAFULLのX買取情報に加えて、Clove Baseやフルアヘッドなどのオンライン買取表も掲載しています。
+        </p>
+        <div class="meta">最終更新：2026/05/24 12:24</div>
     </div>
 </header>
 
 <nav>
     <div class="nav-inner">
-<a href="#otachu">オタ中</a>
-<a href="#honten">本店</a>
-<a href="#dora2">ドラ2</a>
-<a href="#dora3">ドラ3</a>
-<a href="#nansan">なんさん</a>
-<a href="#hareruya2">晴れる屋2</a>
-<a href="#labo-namba">ラボなんば</a>
-<a href="#labo-nihonbashi">ラボ日本橋</a>
-<a href="#labo-kaitori">ラボ買取</a>
-<a href="#gira-namba">ジラなんば</a>
-<a href="#gira-nihonbashi">ジラ日本橋</a>
-<a href="#gira-otaroad">ジラオタ</a>
+<a href="#osaka-nihonbashi">大阪・日本橋・なんば</a>
+<a href="#online">オンライン</a>
 
     </div>
 </nav>
@@ -366,776 +451,901 @@ footer {
 <main>
 
 <section class="summary">
-    <h2>最新のポケカ買取投稿まとめ</h2>
-    <p>日本橋・なんば周辺のカードショップX投稿から、画像付きのポケカ買取情報を店舗別にまとめています。投稿本文の一部も表示することで、どんな買取表か分かりやすくしています。</p>
-    <div class="notice">表示される投稿はXの埋め込み機能を利用しています。画像URLはOCR準備用としてdata.jsonに保存しますが、サイト上では再配布しません。</div>
-</section>
-
-<section class="shop" id="otachu">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#2563eb;">D</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>ドラスタ オタロード中央</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>11時間 #ポケカ #ドラスタオタ中 ポケモンカードゲーム WANTED ポケカ新弾高価買取です ﾒｶﾞﾀﾞｰｸﾗｲex(MUR)(118/081) ￥128,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081) ￥68,000 など ダークライ全力募集です ぜひ当店へお持ち込みください #ポケモンカード</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_otaroad_chuo/status/2058073306440380821"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月21日 #ポケカ　#ポケモンカード /更新買取表 明日はいよいよ新弾発売日 旧弾ハイレアもドドーンとタイトル更新しました メガゲッコウガex　MUR　¥120000/SAR　¥45000 メガゲンガーex　SAR　¥65000 メガカイリューex　MUR　¥42000/SAR　¥36000 ブラッキーex　SAR</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_otaroad_chuo/status/2057466855372030301"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月20日 #ポケカ　#ポケモンカード /更新買取表 ハイレアタイトル更新しました メガゲッコウガex　MUR　¥120000/SAR　¥45000 メガゲンガーex　SAR　¥65000 メガカイリューex　MUR　¥42000/SAR　¥36000 ブラッキーex　SAR　¥60000 リザードン　25th　¥90000</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_otaroad_chuo/status/2057102873633157410"></a>
-                </blockquote>
-            </div>
-        </div>
-
+    <h2>ポケカ買取表を地域別・店舗別にチェック</h2>
+    <p>
+        CardRadarは、日本橋・なんば周辺を中心に、カードショップが公開しているポケモンカードの買取表をまとめて確認できるサイトです。
+        Xに投稿された画像付き買取表と、オンライン買取価格表へのリンクを分けて掲載しています。
+    </p>
+    <div class="notice">
+        表示されるX投稿はXの埋め込み機能を利用しています。画像URLはOCR準備用としてdata.jsonに保存しますが、サイト上では画像を再配布しません。
+        掲載内容は各店舗の投稿・公式ページを必ずご確認ください。
     </div>
 </section>
 
-<section class="shop" id="honten">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#1d4ed8;">DH</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>ドラスタ 日本橋本店</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
+<section class="area-section" id="osaka-nihonbashi">
+    <div class="area-title">
+        <h2>大阪・日本橋・なんば</h2>
+        <p>大阪・日本橋・なんばのポケカ買取表・オンライン買取情報をまとめています。</p>
     </div>
 
-    <div class="tweet-list">
+    <section class="brand-section">
+        <h2 class="brand-title">ドラゴンスター</h2>
 
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#2563eb;">D</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>ドラスタ オタロード中央</h3>
+                        <p class="shop-description">ドラゴンスター オタロード中央店のポケカ買取表・高価買取情報を確認できます。</p>
+                    </div>
                 </div>
-                <p>14時間 ドラ スタ 本店 ORASTA #ポケモンカード高価買取 5/23更新Ver. お待ちしています ‍アビスアイ‍ 買取表更新 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 #ポケカ #ドラスタ本店</p>
+                <div class="count">3件表示</div>
             </div>
 
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi/status/2058027028322926884"></a>
-                </blockquote>
-            </div>
-        </div>
+            <div class="tweet-list">
 
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月21日 #ポケカ　#ポケモンカード /更新買取表 明日はいよいよ新弾発売日 旧弾ハイレアもドドーンとタイトル更新しました メガゲッコウガex　MUR　¥120000/SAR　¥45000 メガゲンガーex　SAR　¥65000 メガカイリューex　MUR　¥42000/SAR　¥36000 ブラッキーex　SAR</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_otaroad_chuo/status/2057466855372030301"></a>
+                        </blockquote>
+                    </div>
                 </div>
-                <p>5月22日 ドラ スタ 本店 ORASTA #ポケモンカード高価買取 5/22更新Ver. お待ちしています ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)　, 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 #ポケカ</p>
-            </div>
 
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi/status/2057717504844210277"></a>
-                </blockquote>
-            </div>
-        </div>
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月20日 #ポケカ　#ポケモンカード /更新買取表 ハイレアタイトル更新しました メガゲッコウガex　MUR　¥120000/SAR　¥45000 メガゲンガーex　SAR　¥65000 メガカイリューex　MUR　¥42000/SAR　¥36000 ブラッキーex　SAR　¥60000 リザードン　25th　¥90000</p>
+                    </div>
 
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_otaroad_chuo/status/2057102873633157410"></a>
+                        </blockquote>
+                    </div>
                 </div>
-                <p>5月22日 ドラ スタ 本店 ORASTA #ポケモンカード高価買取 5/22更新Ver. お待ちしています ‍アビスアイ‍ 買取表更新 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 #ポケカ #ドラスタ本店</p>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月12日 #ドラスタオタ中 #買取 #ポケカ δ種のバイリスト更新しました！！！ リスト以外のδ種もお持ち込みお待ちしております！！ 表示価格は美品のものに限ります。 また、状態により大幅な減額が入る場合もございます。何卒ご了承ください。</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_otaroad_chuo/status/2054061062798856487"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#1d4ed8;">DH</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>ドラスタ 日本橋本店</h3>
+                        <p class="shop-description">ドラゴンスター 日本橋本店のポケカ買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
             </div>
 
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi/status/2057703730615664893"></a>
-                </blockquote>
-            </div>
-        </div>
+            <div class="tweet-list">
 
-    </div>
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 ドラ スタ 本店 ORASTA #ポケモンカード高価買取 5/22更新Ver. お待ちしています ‍アビスアイ‍ 買取表更新 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 #ポケカ #ドラスタ本店</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi/status/2057703730615664893"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 ドラ スタ 本店 ORASTA #ポケモンカード高価買取 5/22更新Ver. お待ちしています ‍アビスアイ‍ 買取表更新 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 #ポケカ #ドラスタ本店</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi/status/2057672427161719179"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像3枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月17日 【ポケカ】5/16(土)・5/17(日)限定 ポケカ買取保証強化 この機会にぜひお持ちこみください SR/UR/HR/CSR/SAR 円買取 グッズ・ポケモンのどうぐ・スタジアム・エネルギーSRは対象外 AR/CHR 円買取 RR/SSR/S/RRR 円買取 RRはレギュレーション【H】以降のみ対象</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi/status/2055891113727119642"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#7c3aed;">D2</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>ドラスタ 日本橋2号店</h3>
+                        <p class="shop-description">ドラゴンスター 日本橋2号店のポケカ買取表・WANTED情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像2枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>3時間 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi2/status/2058342602072605173"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像2枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>18時間 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi2/status/2058114688903217320"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像2枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>18時間 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi2/status/2058104601140711768"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#dc2626;">D3</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>ドラスタ 日本橋3号店</h3>
+                        <p class="shop-description">ドラゴンスター 日本橋3号店のポケカ高価買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>18時間 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/23　更新Ver. 下記４枚大募集 お持ち込みお待ちしております ※商品の状態や、在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi3/status/2058102176413630831"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月23日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/23　更新Ver. ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi3/status/2058006589584392543"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月23日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/23　更新Ver. 朝イチの買取表更新しています お持ち込みお待ちしております ※商品の状態や、在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_nipponbashi3/status/2057989739748200867"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#0891b2;">DN</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>ドラスタ なんさん通り店</h3>
+                        <p class="shop-description">ドラゴンスター なんさん通り店のポケカ買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像4枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月12日 #ポケカ #ポケモンカードゲーム デッキ情報 デッキ３つ買取させていただきました おうのごうれいデッキ　￥ ホップのザシアンデッキ　￥ Nのゾロアークデッキ　￥ デッキ買取UPキャンペーンまだまだ募集中です お持ち込みお待ちしております</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_namba_nansan/status/2054077446568153364"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>4月30日 #ポケカ　#ポケモンカード 4/30更新買取表 ﾋﾟｶﾁｭｳex(SAR仕様)(764/742)　￥350000 ﾐｭｳex(347/190 SAR)　￥80000 ﾘｰﾘｴ(066/060 SR)　￥550000 etc... ハイレアの高価買取更新しております 是非お持ち込み下さい ご来店お待ちしております</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_namba_nansan/status/2049700950542049669"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>4月30日 #ポケカ　#ポケモンカード 4/30更新買取表 ニャース　￥550 ノコッチ　￥100 アンフェスタンプ　￥1500 etc... 汎用の高価買取更新しました ぜひお持ち込みください ご来店お待ちしております</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/ds_namba_nansan/status/2049686618731069912"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+    </section>
+
+    <section class="brand-section">
+        <h2 class="brand-title">晴れる屋2</h2>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#059669;">H</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>晴れる屋2なんば</h3>
+                        <p class="shop-description">晴れる屋2なんば店のポケカ買取表・買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 【買取情報】(2026/5/22　18:00時点) アビスアイ 最新の買取金額はこちら ハイレアもデッキパーツも ぜひハレツーなんば店へ お持ちください #ハレツーなんば店 #ポケカ #大阪日本橋</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/hareruya2namba/status/2057747800407056800"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 【買取情報】(2026/5/22　15:00時点) アビスアイ 現在の買取金額はこちらです ハイレアもデッキパーツも ぜひハレツーなんば店へ お持ちください シングルカードの販売も 随時ご用意しておりますので ご来店の際はご覧ください #ハレツーなんば店 #ポケカ #大阪日本橋</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/hareruya2namba/status/2057704263661555841"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像2枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 【買取情報】(2026/5/22　12:30時点) アビスアイ 現在の買取金額はこちらです ハイレアもデッキパーツも ぜひハレツーなんば店へ お持ちください #ハレツーなんば店 #ポケカ #大阪日本橋</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/hareruya2namba/status/2057665798425260140"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+    </section>
+
+    <section class="brand-section">
+        <h2 class="brand-title">カードラボ</h2>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#f59e0b;">L</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>カードラボなんば店</h3>
+                        <p class="shop-description">カードラボなんば店のポケカ買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月12日 【ポケモンカード　買取情報】 #なんば　#25thプロモ 25thプロモ買取募集中！！ ピカチュウ　25th　￥90,000 リザードン　25th　￥85,000 フシギバナ　25th　￥17,000 カメックス　25th　￥20,000</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/namba_clabo/status/2054165891722674272"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月12日 【ポケモンカードゲーム　買取情報】 ポケカ定額買取 定額買取強化中！！ SR定額300円 RR定額 10円 AR定額100円 ※美品の買取価格になります</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/namba_clabo/status/2054028801898873260"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月12日 【ポケモンカード　買取情報】 #なんば　#25thプロモ 25thプロモ買取募集中！！ ピカチュウ　25th　￥90,000 リザードン　25th　￥85,000 フシギバナ　25th　￥17,000 カメックス　25th　￥20,000</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/namba_clabo/status/2054019154957754560"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#ec4899;">LN</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>カードラボ大阪日本橋店</h3>
+                        <p class="shop-description">カードラボ大阪日本橋店のポケカ買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像4枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月17日 【ポケモンカードゲーム 買取情報】 ピカチュウ買取POP ポケカ　ピカチュウ買取強化中 買取表に記載されてないピカチュウも大募集中です お持ち込みお待ちしています</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/nipponbashi_lab/status/2055989059617796481"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像3枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月17日 【ポケモンカードゲーム 買取情報】 コンセプトパック ピカチュウ　010/032 ¥, ミュウEX　024/020 ¥, などなどCPシリーズ買取強化中！ ポケカ売るなら天空ラボまで！</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/nipponbashi_lab/status/2055988499787268425"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月17日 【ポケモンカードゲーム 買取情報】 メタモン 買取大募集中 メタモン(ピカチュウ)￥80,000 メタモン　061/086　￥ 15,000 ポケカ買取はぜひ 皆様のご来店お待ちしております</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/nipponbashi_lab/status/2055988364428640746"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#14b8a6;">LC</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>カードラボ販売買取センターNAMBA</h3>
+                        <p class="shop-description">カードラボ販売買取センターNAMBAのポケカ買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像3枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>19時間 【#ポケカ　販売情報】 ポケモンカード 最新弾『アビスアイ』の シングルカードを価格更新しました SAR やSR、デッキパーツなどなど！！ ショーケースにて多数展開中です♪ 大阪でポケカをお買い求めはカードラボ販売買取センターNAMBA店まで</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/nanba2_labo/status/2058091539088499197"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像2枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>19時間 【#ポケカ　販売情報】 ポケモンカード以下のカードが入荷しました♪</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/nanba2_labo/status/2058088062652236021"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>23時間 【#ポケカ　販売情報】 ポケカ入荷致しました ルギアGX【RR】 カードは傷ありにつき特価となっています 他にも多数ショーケースにて展開中 大阪でユニアリをお買い求めはカードラボ販売買取センターNAMBA店まで</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/nanba2_labo/status/2058036315703431639"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+    </section>
+
+    <section class="brand-section">
+        <h2 class="brand-title">GIRAFULL</h2>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#ea580c;">G</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>GIRAFULLなんば店</h3>
+                        <p class="shop-description">GIRAFULLなんば店のポケカ買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像2枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月23日 #ポケカ #ポケモンカード 5/23 最新弾 【#アビスアイ】 朝一買取表です 本日も沢山のご来店お待ちしております</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/GIRAFULL_Namba/status/2058016669336035545"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 #ポケカ #ポケモンカード 5/22 最新弾 【#アビスアイ】 メガダークライ買取値段更新</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/GIRAFULL_Namba/status/2057659704835551400"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像2枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 #ポケカ #ポケモンカード 5/22 最新弾 【#アビスアイ】 朝一買取表ですどしどしお持ち込みくださいませ 本日も沢山のご来店お待ちしております</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/GIRAFULL_Namba/status/2057658193271230597"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#f97316;">GN</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>GIRAFULL大阪日本橋店</h3>
+                        <p class="shop-description">GIRAFULL大阪日本橋店のポケカ買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">1件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像3枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月8日 #ポケカ/シングル入荷ご案内 名探偵ピカチュウ(未開封) SARルカリオVSTER SARゼラオラVMAX/VSTER NAGABAイーブイ イロイロ買取させていただきました 状態確認だけでもOKです お求めの方はぜひ</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/girafull_o_n/status/2052693177203929416"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#fb923c;">GO</div>
+                    <div>
+                        <span class="badge">ポケカ買取</span>
+                        <h3>GIRAFULLオタロード店</h3>
+                        <p class="shop-description">GIRAFULLオタロード店のポケカ買取情報を確認できます。</p>
+                    </div>
+                </div>
+                <div class="count">3件表示</div>
+            </div>
+
+            <div class="tweet-list">
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像1枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 #ポケモンカード #ポケカ 高価買取表 メガダークライex【SAR】 メガダークライex【SAR】 メガダークライex【SAR】 沢山のお持ち込みお待ちしております</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/GIRAFULLOTARODO/status/2057670770344833337"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像3枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月22日 #ポケカ アビスアイ買取表 メガダークライ　MUR メガダークライ　SAR ムク　　　　　　SAR メガゼラオラ　　SAR メガシャンデラ　SAR モルペコ　　　　SAR グラジオの決戦　SAR</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/GIRAFULLOTARODO/status/2057657752105968038"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-summary">
+                        <div class="post-summary-title">
+                            <span class="hot">買取情報</span>
+                            <span class="image-count">画像2枚</span>
+                            <span>投稿内容</span>
+                        </div>
+                        <p>5月18日 #ポケモンカード #ポケカ　買取保証 ポケモンカードの買取保証を更新いたしました AR 円買取 沢山のお持ち込みお待ちしております その他買取保証は下記のPOPをチェック</p>
+                    </div>
+
+                    <div class="tweet">
+                        <blockquote class="twitter-tweet">
+                            <a href="https://x.com/GIRAFULLOTARODO/status/2056212183923806495"></a>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+    </section>
+
 </section>
 
-<section class="shop" id="dora2">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#7c3aed;">D2</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>ドラスタ 日本橋2号店</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
+<section class="area-section" id="online">
+    <div class="area-title">
+        <h2>オンライン</h2>
+        <p>オンラインのポケカ買取表・オンライン買取情報をまとめています。</p>
     </div>
 
-    <div class="tweet-list">
+    <section class="brand-section">
+        <h2 class="brand-title">Clove</h2>
 
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像2枚</span>
-                    <span>投稿内容</span>
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#6366f1;">C</div>
+                    <div>
+                        <span class="badge">オンライン買取表</span>
+                        <h3>Clove Base</h3>
+                        <p class="shop-description">ポケモンカードのオンライン買取価格表。カード名や買取価格を確認できます。</p>
+                    </div>
                 </div>
-                <p>8時間 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
+                <div class="count">公式リンク</div>
             </div>
 
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi2/status/2058114688903217320"></a>
-                </blockquote>
+            <div class="online-card">
+                <p>ポケモンカードのオンライン買取価格表。カード名や買取価格を確認できます。</p>
+                <a class="online-button" href="https://base.clove.jp/prices/pokemon" target="_blank" rel="noopener noreferrer">公式買取表を見る</a>
             </div>
-        </div>
+        </article>
 
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像2枚</span>
-                    <span>投稿内容</span>
+    </section>
+
+    <section class="brand-section">
+        <h2 class="brand-title">フルアヘッド</h2>
+
+        <article class="shop">
+            <div class="shop-head">
+                <div class="shop-title">
+                    <div class="shop-icon" style="background:#16a34a;">F</div>
+                    <div>
+                        <span class="badge">オンライン買取表</span>
+                        <h3>フルアヘッド</h3>
+                        <p class="shop-description">ポケモンカードゲームを含む各種TCGの高価買取リストを確認できます。</p>
+                    </div>
                 </div>
-                <p>8時間 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
+                <div class="count">公式リンク</div>
             </div>
 
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi2/status/2058104601140711768"></a>
-                </blockquote>
+            <div class="online-card">
+                <p>ポケモンカードゲームを含む各種TCGの高価買取リストを確認できます。</p>
+                <a class="online-button" href="https://fullahead-buy.com/" target="_blank" rel="noopener noreferrer">公式買取表を見る</a>
             </div>
-        </div>
+        </article>
 
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>11時間 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon</p>
-            </div>
+    </section>
 
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi2/status/2058072777534406702"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
 </section>
 
-<section class="shop" id="dora3">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#dc2626;">D3</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>ドラスタ 日本橋3号店</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>9時間 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/23　更新Ver. 下記４枚大募集 お持ち込みお待ちしております ※商品の状態や、在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi3/status/2058102176413630831"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>15時間 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/23　更新Ver. ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi3/status/2058006589584392543"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>16時間 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/23　更新Ver. 朝イチの買取表更新しています お持ち込みお待ちしております ※商品の状態や、在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_nipponbashi3/status/2057989739748200867"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="shop" id="nansan">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#0891b2;">DN</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>ドラスタ なんさん通り店</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月22日 #ポケカ　#ポケモンカード 5/22更新買取表 メガダークライ【SAR】　￥70000 etc... 新弾のメガダークライを募集しております ぜひお持ち込みください ご来店お待ちしております 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_namba_nansan/status/2057707254460056053"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像2枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月21日 #ポケカ　#ポケモンカード 5/21更新買取表 ニャース　￥600 メガリザードンX　￥800 ロトリぼう　￥800 etc... 汎用の高価買取更新しました ぜひお持ち込みください 明日のご来店お待ちしております</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_namba_nansan/status/2057423954327773336"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像4枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月12日 #ポケカ #ポケモンカードゲーム デッキ情報 デッキ３つ買取させていただきました おうのごうれいデッキ　￥ ホップのザシアンデッキ　￥ Nのゾロアークデッキ　￥ デッキ買取UPキャンペーンまだまだ募集中です お持ち込みお待ちしております</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/ds_namba_nansan/status/2054077446568153364"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="shop" id="hareruya2">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#059669;">H</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>晴れる屋2なんば</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>16時間 【買取情報】(2026/5/23　10:30時点) アビスアイ 最新の買取金額はこちら ハイレアもデッキパーツも ぜひハレツーなんば店へ お持ちください #ハレツーなんば店 #ポケカ #大阪日本橋</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/hareruya2namba/status/2057998444497887425"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月22日 【買取情報】(2026/5/22　18:00時点) アビスアイ 最新の買取金額はこちら ハイレアもデッキパーツも ぜひハレツーなんば店へ お持ちください #ハレツーなんば店 #ポケカ #大阪日本橋</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/hareruya2namba/status/2057747800407056800"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月22日 【買取情報】(2026/5/22　15:00時点) アビスアイ 現在の買取金額はこちらです ハイレアもデッキパーツも ぜひハレツーなんば店へ お持ちください シングルカードの販売も 随時ご用意しておりますので ご来店の際はご覧ください #ハレツーなんば店 #ポケカ #大阪日本橋</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/hareruya2namba/status/2057704263661555841"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="shop" id="labo-namba">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#f59e0b;">L</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>カードラボなんば店</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月21日 【ポケモンカードゲーム　買取情報】 ポケカ定額買取 定額買取強化中！！ SR定額300円 RR定額 10円 AR定額100円 ※美品の買取価格になります</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/namba_clabo/status/2057432056473510065"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月21日 【ポケモンカード　買取情報】 #なんば　#25thプロモ 25thプロモ買取募集中！！ ピカチュウ　25th　￥90,000 リザードン　25th　￥85,000 フシギバナ　25th　￥17,000 カメックス　25th　￥20,000</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/namba_clabo/status/2057429740290777561"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月16日 【ポケモンカードゲーム　買取情報】 #PSA ポケカAR・CHR以上のPSA10を 定額6500円で買取いたします 注意事項をご確認の上、</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/namba_clabo/status/2055623794862223468"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="shop" id="labo-nihonbashi">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#ec4899;">LN</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>カードラボ大阪日本橋店</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像4枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5時間 【ポケモンカードゲーム 買取情報】 ピカチュウ買取POP ポケカ　ピカチュウ買取強化中 買取表に記載されてないピカチュウも大募集中です お持ち込みお待ちしています</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/nipponbashi_lab/status/2058154991404433468"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像4枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月22日 【ポケモンカードゲーム 買取情報】 ピカチュウ買取POP ポケカ　ピカチュウ買取強化中 買取表に記載されてないピカチュウも大募集中です お持ち込みお待ちしています</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/nipponbashi_lab/status/2057799643422171595"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像4枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月18日 【ポケモンカードゲーム 買取情報】 ピカチュウ買取POP ポケカ　ピカチュウ買取強化中 買取表に記載されてないピカチュウも大募集中です お持ち込みお待ちしています</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/nipponbashi_lab/status/2056197259906474048"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="shop" id="labo-kaitori">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#14b8a6;">LC</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>カードラボ販売買取センターNAMBA</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>4時間 【#ポケカ　買取情報】 ポケモンカード 最新弾「アビスアイ」買取表募集中 メガダークライｅｘ【MUR】 ムク【SR】など ※相場の変動や在庫状況によって価格が変動する可能性もございます 明日も12:30から買取受付開始です！！ 大阪でポケカの買取はカードラボ販売買取センターNAMBA店まで</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/nanba2_labo/status/2058178635945721959"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像2枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>6時間 【#ポケカ　販売情報】 ポケモンカード以下の特価品が入荷しました♪ 明日も12:00から営業開始</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/nanba2_labo/status/2058144100839502273"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像3枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>9時間 【#ポケカ　販売情報】 ポケモンカード 最新弾『アビスアイ』の シングルカードを価格更新しました SAR やSR、デッキパーツなどなど！！ ショーケースにて多数展開中です♪ 大阪でポケカをお買い求めはカードラボ販売買取センターNAMBA店まで</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/nanba2_labo/status/2058091539088499197"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="shop" id="gira-namba">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#ea580c;">G</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>GIRAFULLなんば店</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像2枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>4時間 【#買取情報】#ポケカ 汎用ほぢいいい</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/GIRAFULL_Namba/status/2058174336863994182"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像3枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>10時間 #ポケカ #ポケモンカード 5/23 最新弾 【#アビスアイ】 大変お待たせ致しました 買取受付再開しております！ メガドリュウズやばすぎる</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/GIRAFULL_Namba/status/2058080711232639464"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像2枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>14時間 #ポケカ #ポケモンカード 5/23 最新弾 【#アビスアイ】 朝一買取表です 本日も沢山のご来店お待ちしております</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/GIRAFULL_Namba/status/2058016669336035545"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="shop" id="gira-nihonbashi">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#f97316;">GN</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>GIRAFULL大阪日本橋店</h2>
-            </div>
-        </div>
-        <div class="count">0件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="empty">該当する投稿が見つかりませんでした。</div>
-
-    </div>
-</section>
-
-<section class="shop" id="gira-otaroad">
-    <div class="shop-head">
-        <div class="shop-title">
-            <div class="shop-icon" style="background:#fb923c;">GO</div>
-            <div>
-                <span class="badge">ポケカ買取</span>
-                <h2>GIRAFULLオタロード店</h2>
-            </div>
-        </div>
-        <div class="count">3件表示</div>
-    </div>
-
-    <div class="tweet-list">
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像2枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>9時間 #ポケカ アビスアイ買取表 メガダークライ　MUR メガダークライ　SAR ムク　　　　　　SAR メガゼラオラ　　SAR メガシャンデラ　SAR モルペコ　　　　SAR グラジオの決戦　SAR ムク</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/GIRAFULLOTARODO/status/2058097882348269748"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像2枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>14時間 #ポケカ アビスアイ買取表 メガダークライ　MUR メガダークライ　SAR ムク　　　　　　SAR メガゼラオラ　　SAR メガシャンデラ　SAR モルペコ　　　　SAR グラジオの決戦　SAR</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/GIRAFULLOTARODO/status/2058014730938364108"></a>
-                </blockquote>
-            </div>
-        </div>
-
-        <div class="post-card">
-            <div class="post-summary">
-                <div class="post-summary-title">
-                    <span class="hot">買取情報</span>
-                    <span class="image-count">画像1枚</span>
-                    <span>投稿内容</span>
-                </div>
-                <p>5月22日 #ポケモンカード #ポケカ 高価買取表 メガダークライex【SAR】 メガダークライex【SAR】 メガダークライex【SAR】 沢山のお持ち込みお待ちしております</p>
-            </div>
-
-            <div class="tweet">
-                <blockquote class="twitter-tweet">
-                    <a href="https://x.com/GIRAFULLOTARODO/status/2057670770344833337"></a>
-                </blockquote>
-            </div>
-        </div>
-
-    </div>
+<section class="contact-box">
+    <h2>掲載店舗・買取表情報を募集中</h2>
+    <p>
+        CardRadarでは、ポケカ買取表を定期的に投稿しているカードショップや、オンライン買取表を掲載しているサービスを順次追加予定です。
+        今後は地域別ページ、カード名検索、買取価格比較、更新通知にも対応していきます。
+    </p>
 </section>
 
 </main>
