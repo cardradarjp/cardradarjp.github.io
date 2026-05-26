@@ -1,15 +1,8 @@
-# Playwright / Chrome login data
 userdata/
-../userdata/
-**/userdata/
-
-# Python cache
 __pycache__/
 *.pyc
-
-# OS files
+*.log
 .DS_Store
 Thumbs.db
-
-# Logs
-*.log
+ocr_images/
+ocr_result.txt
