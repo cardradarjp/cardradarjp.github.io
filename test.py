@@ -8,12 +8,32 @@ from pathlib import Path
 from urllib.parse import quote
 
 
+# =========================
+# 基本設定
+# =========================
+
 USER_DATA_DIR = "userdata"
 Path(USER_DATA_DIR).mkdir(exist_ok=True)
+
+STORES_DIR = Path("stores")
+STORES_DIR.mkdir(exist_ok=True)
 
 MAX_POSTS_PER_SOURCE = 3
 CHECK_POSTS_PER_SOURCE = 60
 
+
+# =========================
+# 買取タイプ
+# =========================
+
+TYPE_ORDER = [
+    "x_post_single",
+    "x_post_box",
+    "x_post_fixed",
+    "x_post_psa",
+    "official_price_list",
+    "market_price_link",
+]
 
 TYPE_META = {
     "x_post_single": {
@@ -28,7 +48,7 @@ TYPE_META = {
     },
     "x_post_fixed": {
         "label": "定額買取",
-        "en": "FIXED PRICE",
+        "en": "FIXED",
         "desc": "ノーマル・RR・ARなどのまとめ買取",
     },
     "x_post_psa": {
@@ -38,16 +58,20 @@ TYPE_META = {
     },
     "official_price_list": {
         "label": "公式Web買取表",
-        "en": "OFFICIAL LIST",
+        "en": "OFFICIAL",
         "desc": "公式サイト掲載の買取表",
     },
     "market_price_link": {
         "label": "相場確認",
-        "en": "MARKET PRICE",
+        "en": "MARKET",
         "desc": "メルカリ等の相場確認リンク",
     },
 }
 
+
+# =========================
+# X検索URL
+# =========================
 
 def x_search_url(account, words):
     query = f"from:{account} {words} filter:images"
@@ -55,15 +79,22 @@ def x_search_url(account, words):
 
 
 SINGLE_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (買取 OR 高価買取 OR 買取表 OR WANTED OR 募集)"
-BOX_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (BOX OR box OR 未開封 OR シュリンク OR パック OR カートン) (買取 OR 高価買取 OR 募集)"
+BOX_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (BOX OR box OR 未開封 OR シュリンク OR パック OR カートン OR ボックス) (買取 OR 高価買取 OR 募集)"
 FIXED_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (定額 OR 一律 OR まとめ買取 OR 最低保証 OR ノーマル OR RR OR AR OR 汎用 OR ストレージ) (買取 OR 募集)"
 PSA_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (PSA OR PSA10 OR PSA9 OR 鑑定品 OR ARS OR BGS OR 鑑定) (買取 OR 高価買取 OR 募集)"
 
 
+# =========================
+# 店舗・情報源
+# =========================
+
 SOURCES = [
+    # ドラゴンスター
     {
+        "id": "ds-otachu-single",
         "source_type": "x_post_single",
-        "name": "ドラスタ オタロード中央",
+        "shop_name": "ドラスタ オタロード中央",
+        "shop_slug": "dragonstar-otaroad-chuo",
         "brand": "ドラゴンスター",
         "brand_id": "dragonstar",
         "area": "大阪・日本橋",
@@ -72,8 +103,10 @@ SOURCES = [
         "url": x_search_url("ds_otaroad_chuo", SINGLE_WORDS),
     },
     {
+        "id": "ds-honten-single",
         "source_type": "x_post_single",
-        "name": "ドラスタ 日本橋本店",
+        "shop_name": "ドラスタ 日本橋本店",
+        "shop_slug": "dragonstar-nihonbashi-honten",
         "brand": "ドラゴンスター",
         "brand_id": "dragonstar",
         "area": "大阪・日本橋",
@@ -82,8 +115,10 @@ SOURCES = [
         "url": x_search_url("ds_nipponbashi", SINGLE_WORDS),
     },
     {
+        "id": "ds-dora2-single",
         "source_type": "x_post_single",
-        "name": "ドラスタ 日本橋2号店",
+        "shop_name": "ドラスタ 日本橋2号店",
+        "shop_slug": "dragonstar-nihonbashi-2",
         "brand": "ドラゴンスター",
         "brand_id": "dragonstar",
         "area": "大阪・日本橋",
@@ -92,8 +127,10 @@ SOURCES = [
         "url": x_search_url("ds_nipponbashi2", SINGLE_WORDS),
     },
     {
+        "id": "ds-dora3-single",
         "source_type": "x_post_single",
-        "name": "ドラスタ 日本橋3号店",
+        "shop_name": "ドラスタ 日本橋3号店",
+        "shop_slug": "dragonstar-nihonbashi-3",
         "brand": "ドラゴンスター",
         "brand_id": "dragonstar",
         "area": "大阪・日本橋",
@@ -102,8 +139,10 @@ SOURCES = [
         "url": x_search_url("ds_nipponbashi3", SINGLE_WORDS),
     },
     {
+        "id": "ds-nansan-single",
         "source_type": "x_post_single",
-        "name": "ドラスタ なんさん通り店",
+        "shop_name": "ドラスタ なんさん通り店",
+        "shop_slug": "dragonstar-nansan",
         "brand": "ドラゴンスター",
         "brand_id": "dragonstar",
         "area": "大阪・日本橋",
@@ -111,9 +150,13 @@ SOURCES = [
         "description": "ドラゴンスター なんさん通り店のポケカ買取情報。",
         "url": x_search_url("ds_namba_nansan", SINGLE_WORDS),
     },
+
+    # 晴れる屋2
     {
+        "id": "hareruya2-namba-single",
         "source_type": "x_post_single",
-        "name": "晴れる屋2なんば",
+        "shop_name": "晴れる屋2なんば",
+        "shop_slug": "hareruya2-namba",
         "brand": "晴れる屋2",
         "brand_id": "hareruya2",
         "area": "大阪・日本橋",
@@ -121,9 +164,13 @@ SOURCES = [
         "description": "晴れる屋2なんば店のポケカ買取表。",
         "url": x_search_url("hareruya2namba", SINGLE_WORDS),
     },
+
+    # カードラボ
     {
+        "id": "cardlabo-namba-single",
         "source_type": "x_post_single",
-        "name": "カードラボなんば店",
+        "shop_name": "カードラボなんば店",
+        "shop_slug": "cardlabo-namba",
         "brand": "カードラボ",
         "brand_id": "cardlabo",
         "area": "大阪・日本橋",
@@ -132,8 +179,10 @@ SOURCES = [
         "url": x_search_url("namba_clabo", SINGLE_WORDS),
     },
     {
+        "id": "cardlabo-nihonbashi-single",
         "source_type": "x_post_single",
-        "name": "カードラボ大阪日本橋店",
+        "shop_name": "カードラボ大阪日本橋店",
+        "shop_slug": "cardlabo-osaka-nihonbashi",
         "brand": "カードラボ",
         "brand_id": "cardlabo",
         "area": "大阪・日本橋",
@@ -141,9 +190,13 @@ SOURCES = [
         "description": "カードラボ大阪日本橋店のポケカ買取情報。",
         "url": x_search_url("nipponbashi_lab", SINGLE_WORDS),
     },
+
+    # GIRAFULL
     {
+        "id": "girafull-namba-single",
         "source_type": "x_post_single",
-        "name": "GIRAFULLなんば店",
+        "shop_name": "GIRAFULLなんば店",
+        "shop_slug": "girafull-namba",
         "brand": "GIRAFULL",
         "brand_id": "girafull",
         "area": "大阪・日本橋",
@@ -152,8 +205,10 @@ SOURCES = [
         "url": x_search_url("GIRAFULL_Namba", SINGLE_WORDS),
     },
     {
+        "id": "girafull-nihonbashi-single",
         "source_type": "x_post_single",
-        "name": "GIRAFULL大阪日本橋店",
+        "shop_name": "GIRAFULL大阪日本橋店",
+        "shop_slug": "girafull-osaka-nihonbashi",
         "brand": "GIRAFULL",
         "brand_id": "girafull",
         "area": "大阪・日本橋",
@@ -161,10 +216,25 @@ SOURCES = [
         "description": "GIRAFULL大阪日本橋店のポケカ買取情報。",
         "url": x_search_url("girafull_o_n", SINGLE_WORDS),
     },
-
     {
+        "id": "girafull-otaroad-single",
         "source_type": "x_post_single",
-        "name": "アムタフ シングル買取",
+        "shop_name": "GIRAFULLオタロード店",
+        "shop_slug": "girafull-otaroad",
+        "brand": "GIRAFULL",
+        "brand_id": "girafull",
+        "area": "大阪・日本橋",
+        "area_id": "osaka-nihonbashi",
+        "description": "GIRAFULLオタロード店のポケカ買取情報。",
+        "url": x_search_url("GIRAFULLOTARODO", SINGLE_WORDS),
+    },
+
+    # アムタフ
+    {
+        "id": "amtaf-single",
+        "source_type": "x_post_single",
+        "shop_name": "アムタフ",
+        "shop_slug": "amtaf",
         "brand": "アムタフ",
         "brand_id": "amtaf",
         "area": "大阪・日本橋",
@@ -173,8 +243,10 @@ SOURCES = [
         "url": x_search_url("AMTAF_SHOP", SINGLE_WORDS),
     },
     {
+        "id": "amtaf-box",
         "source_type": "x_post_box",
-        "name": "アムタフ BOX買取",
+        "shop_name": "アムタフ",
+        "shop_slug": "amtaf",
         "brand": "アムタフ",
         "brand_id": "amtaf",
         "area": "大阪・日本橋",
@@ -183,8 +255,10 @@ SOURCES = [
         "url": x_search_url("AMTAF_SHOP", BOX_WORDS),
     },
     {
+        "id": "amtaf-fixed",
         "source_type": "x_post_fixed",
-        "name": "アムタフ 定額買取",
+        "shop_name": "アムタフ",
+        "shop_slug": "amtaf",
         "brand": "アムタフ",
         "brand_id": "amtaf",
         "area": "大阪・日本橋",
@@ -192,9 +266,13 @@ SOURCES = [
         "description": "アムタフの定額買取・まとめ買取情報。",
         "url": x_search_url("AMTAF_SHOP", FIXED_WORDS),
     },
+
+    # GOTCHA
     {
+        "id": "gotcha-single",
         "source_type": "x_post_single",
-        "name": "GOTCHA! シングル買取",
+        "shop_name": "GOTCHA!",
+        "shop_slug": "gotcha",
         "brand": "GOTCHA!",
         "brand_id": "gotcha",
         "area": "大阪・日本橋",
@@ -203,8 +281,10 @@ SOURCES = [
         "url": x_search_url("cardshop_gotcha", SINGLE_WORDS),
     },
     {
+        "id": "gotcha-box",
         "source_type": "x_post_box",
-        "name": "GOTCHA! BOX買取",
+        "shop_name": "GOTCHA!",
+        "shop_slug": "gotcha",
         "brand": "GOTCHA!",
         "brand_id": "gotcha",
         "area": "大阪・日本橋",
@@ -212,9 +292,13 @@ SOURCES = [
         "description": "GOTCHA!のポケカ未開封BOX・パック買取情報。",
         "url": x_search_url("cardshop_gotcha", BOX_WORDS),
     },
+
+    # KURO
     {
+        "id": "kuro-single",
         "source_type": "x_post_single",
-        "name": "KURO シングル買取",
+        "shop_name": "KURO",
+        "shop_slug": "kuro",
         "brand": "KURO",
         "brand_id": "kuro",
         "area": "大阪・日本橋",
@@ -223,8 +307,10 @@ SOURCES = [
         "url": x_search_url("kuro_tcg", SINGLE_WORDS),
     },
     {
+        "id": "kuro-box",
         "source_type": "x_post_box",
-        "name": "KURO BOX買取",
+        "shop_name": "KURO",
+        "shop_slug": "kuro",
         "brand": "KURO",
         "brand_id": "kuro",
         "area": "大阪・日本橋",
@@ -232,9 +318,13 @@ SOURCES = [
         "description": "KUROのポケカ未開封BOX・パック・カートン買取情報。",
         "url": x_search_url("kuro_tcg", BOX_WORDS),
     },
+
+    # 買取ミミ
     {
+        "id": "mimi-single",
         "source_type": "x_post_single",
-        "name": "買取ミミ シングル買取",
+        "shop_name": "買取ミミ",
+        "shop_slug": "kaitori-mimi",
         "brand": "買取ミミ",
         "brand_id": "mimi",
         "area": "大阪・日本橋",
@@ -243,8 +333,10 @@ SOURCES = [
         "url": x_search_url("mimi_kaitori", SINGLE_WORDS),
     },
     {
+        "id": "mimi-fixed",
         "source_type": "x_post_fixed",
-        "name": "買取ミミ 定額買取",
+        "shop_name": "買取ミミ",
+        "shop_slug": "kaitori-mimi",
         "brand": "買取ミミ",
         "brand_id": "mimi",
         "area": "大阪・日本橋",
@@ -253,9 +345,12 @@ SOURCES = [
         "url": x_search_url("mimi_kaitori", FIXED_WORDS),
     },
 
+    # 公式Web買取表
     {
+        "id": "clove-official",
         "source_type": "official_price_list",
-        "name": "Clove Base",
+        "shop_name": "Clove Base",
+        "shop_slug": "clove-base",
         "brand": "Clove",
         "brand_id": "clove",
         "area": "公式Web",
@@ -264,8 +359,10 @@ SOURCES = [
         "official_url": "https://base.clove.jp/prices/pokemon",
     },
     {
+        "id": "fullahead-official",
         "source_type": "official_price_list",
-        "name": "フルアヘッド",
+        "shop_name": "フルアヘッド",
+        "shop_slug": "fullahead",
         "brand": "フルアヘッド",
         "brand_id": "fullahead",
         "area": "公式Web",
@@ -273,9 +370,13 @@ SOURCES = [
         "description": "ポケカを含むTCGの公式Web買取表。",
         "official_url": "https://fullahead-buy.com/",
     },
+
+    # 相場確認
     {
+        "id": "mercari-pokemon",
         "source_type": "market_price_link",
-        "name": "メルカリ ポケカ相場",
+        "shop_name": "メルカリ ポケカ相場",
+        "shop_slug": "mercari-pokemon",
         "brand": "メルカリ",
         "brand_id": "mercari",
         "area": "相場確認",
@@ -284,8 +385,10 @@ SOURCES = [
         "official_url": "https://jp.mercari.com/search?keyword=%E3%83%9D%E3%82%B1%E3%82%AB",
     },
     {
+        "id": "mercari-box",
         "source_type": "market_price_link",
-        "name": "メルカリ BOX相場",
+        "shop_name": "メルカリ BOX相場",
+        "shop_slug": "mercari-box",
         "brand": "メルカリ",
         "brand_id": "mercari",
         "area": "相場確認",
@@ -296,70 +399,105 @@ SOURCES = [
 ]
 
 
-def is_target_post(text, source_type):
-    pokemon_words = ["ポケカ", "ポケモンカード", "Pokemon", "pokemon"]
-    buy_words = ["買取", "高価買取", "買取表", "WANTED", "募集"]
+# =========================
+# 共通関数
+# =========================
 
-    if not any(w in text for w in pokemon_words):
-        return False
-    if not any(w in text for w in buy_words):
-        return False
+def h(value):
+    return html_lib.escape(str(value or ""))
 
-    ng_words = [
-        "大会", "優勝", "抽選", "販売開始", "BOX争奪戦", "争奪戦",
-        "ワンピース", "遊戯王", "デュエマ", "MTG", "ヴァイス"
+
+def is_x_source(source):
+    return source["source_type"].startswith("x_post_")
+
+
+def get_source(source_id):
+    for source in SOURCES:
+        if source["id"] == source_id:
+            return source
+    return None
+
+
+def get_sources_by_shop(shop_slug):
+    return [s for s in SOURCES if s["shop_slug"] == shop_slug]
+
+
+def get_physical_shops(area_id):
+    shops = {}
+    for source in SOURCES:
+        if source["area_id"] != area_id:
+            continue
+        if source["source_type"] in ["official_price_list", "market_price_link"]:
+            continue
+
+        slug = source["shop_slug"]
+        if slug not in shops:
+            shops[slug] = {
+                "shop_slug": slug,
+                "shop_name": source["shop_name"],
+                "brand": source["brand"],
+                "brand_id": source["brand_id"],
+                "area": source["area"],
+                "area_id": source["area_id"],
+                "sources": [],
+            }
+
+        shops[slug]["sources"].append(source)
+
+    return list(shops.values())
+
+
+def get_support_sources():
+    return [
+        s for s in SOURCES
+        if s["source_type"] in ["official_price_list", "market_price_link"]
     ]
-    if any(w in text for w in ng_words):
-        return False
-
-    if source_type == "x_post_box":
-        box_words = ["BOX", "box", "未開封", "シュリンク", "パック", "カートン"]
-        box_ng_words = ["BOX買取以外", "BOX以外", "ボックス以外", "未開封BOX以外", "BOX対象外"]
-        single_words = ["SAR", "SR", "UR", "HR", "CSR", "CHR", "AR", "SA", "ex", "EX"]
-
-        if not any(w in text for w in box_words):
-            return False
-        if any(w in text for w in box_ng_words):
-            return False
-        if sum(1 for w in single_words if w in text) >= 4:
-            return False
-        return True
-
-    if source_type == "x_post_fixed":
-        fixed_words = ["定額", "一律", "まとめ買取", "最低保証", "ノーマル", "RR", "AR", "ストレージ"]
-        return any(w in text for w in fixed_words)
-
-    if source_type == "x_post_psa":
-        psa_words = ["PSA", "PSA10", "PSA9", "鑑定品", "鑑定", "ARS", "BGS"]
-        return any(w in text for w in psa_words)
-
-    return True
 
 
-def clean_tweet_text(text):
-    lines = []
-    for line in text.splitlines():
-        line = line.strip()
-        if not line:
+def get_unique_brands(area_id):
+    brands = []
+    seen = set()
+
+    for source in SOURCES:
+        if source["area_id"] != area_id:
             continue
-        if line.startswith("@"):
-            continue
-        if line in ["·", "さらに表示"]:
-            continue
-        lines.append(line)
 
-    summary = " ".join(lines)
-    return summary[:220] + "..." if len(summary) > 220 else summary
+        if source["brand_id"] in seen:
+            continue
+
+        seen.add(source["brand_id"])
+        brands.append({
+            "id": source["brand_id"],
+            "label": source["brand"],
+        })
+
+    return brands
+
+
+def get_shop_types(sources):
+    types = []
+    for source in sources:
+        if source["source_type"] not in types:
+            types.append(source["source_type"])
+    return types
+
+
+def get_type_labels(types):
+    return [TYPE_META[t]["label"] for t in types if t in TYPE_META]
 
 
 def get_status_url(tweet):
     links = tweet.locator("a")
+
     for i in range(links.count()):
         href = links.nth(i).get_attribute("href")
+
         if not href:
             continue
+
         if "/status/" in href and "/photo/" not in href and "/analytics" not in href:
             return "https://x.com" + href if href.startswith("/") else href
+
     return None
 
 
@@ -371,621 +509,1376 @@ def get_status_id(url):
 def get_image_urls(tweet):
     urls = []
     images = tweet.locator("img")
+
     for i in range(images.count()):
         src = images.nth(i).get_attribute("src")
+
         if not src:
             continue
-        if "pbs.twimg.com/media" in src:
-            src = src.replace("name=small", "name=large").replace("name=medium", "name=large")
-            if src not in urls:
-                urls.append(src)
+
+        if "pbs.twimg.com/media" not in src:
+            continue
+
+        src = src.replace("name=small", "name=large")
+        src = src.replace("name=medium", "name=large")
+
+        if src not in urls:
+            urls.append(src)
+
     return urls
 
 
-def unique_values(key, label_key):
-    values = []
-    for s in SOURCES:
-        if not any(v["id"] == s[key] for v in values):
-            values.append({"id": s[key], "label": s[label_key]})
-    return values
+def clean_tweet_text(text):
+    lines = []
+
+    skip_words = [
+        "さらに表示",
+        "返信先:",
+    ]
+
+    for line in text.splitlines():
+        line = line.strip()
+
+        if not line:
+            continue
+
+        if line.startswith("@"):
+            continue
+
+        if line == "·":
+            continue
+
+        if any(word in line for word in skip_words):
+            continue
+
+        lines.append(line)
+
+    summary = " ".join(lines)
+
+    if len(summary) > 240:
+        summary = summary[:240] + "..."
+
+    return summary
 
 
-def search_text(source):
-    return " ".join([
-        source.get("name", ""),
-        source.get("brand", ""),
-        source.get("area", ""),
-        TYPE_META[source["source_type"]]["label"],
-        TYPE_META[source["source_type"]]["en"],
-        source.get("description", ""),
-    ])
+def is_target_post(text, source_type):
+    pokemon_words = [
+        "ポケカ",
+        "ポケモンカード",
+        "ポケモンカードゲーム",
+        "Pokemon",
+        "pokemon",
+    ]
+
+    buy_words = [
+        "買取",
+        "高価買取",
+        "買取表",
+        "WANTED",
+        "募集",
+        "取扱強化",
+        "買取情報",
+    ]
+
+    ng_words = [
+        "大会",
+        "優勝",
+        "抽選",
+        "販売開始",
+        "BOX争奪戦",
+        "争奪戦",
+        "ワンピース",
+        "遊戯王",
+        "デュエマ",
+        "MTG",
+        "ヴァイス",
+        "バトスピ",
+        "デジカ",
+        "ガンダム",
+    ]
+
+    if any(word in text for word in ng_words):
+        return False
+
+    if not any(word in text for word in pokemon_words):
+        return False
+
+    if not any(word in text for word in buy_words):
+        return False
+
+    if source_type == "x_post_box":
+        box_words = [
+            "BOX",
+            "box",
+            "未開封",
+            "シュリンク",
+            "パック",
+            "カートン",
+            "ボックス",
+            "1BOX",
+        ]
+
+        box_ng_words = [
+            "BOX買取以外",
+            "BOX以外",
+            "ボックス以外",
+            "未開封BOX以外",
+            "BOX対象外",
+            "BOXは対象外",
+        ]
+
+        single_words = [
+            "SAR",
+            "SR",
+            "UR",
+            "HR",
+            "CSR",
+            "CHR",
+            "AR",
+            "SA",
+            "ex",
+            "EX",
+        ]
+
+        if not any(word in text for word in box_words):
+            return False
+
+        if any(word in text for word in box_ng_words):
+            return False
+
+        if sum(1 for word in single_words if word in text) >= 4:
+            return False
+
+        return True
+
+    if source_type == "x_post_fixed":
+        fixed_words = [
+            "定額",
+            "一律",
+            "まとめ買取",
+            "最低保証",
+            "保証買取",
+            "ノーマル",
+            "RR",
+            "AR",
+            "ストレージ",
+            "大量",
+        ]
+
+        return any(word in text for word in fixed_words)
+
+    if source_type == "x_post_psa":
+        psa_words = [
+            "PSA",
+            "PSA10",
+            "PSA9",
+            "鑑定品",
+            "鑑定",
+            "ARS",
+            "BGS",
+        ]
+
+        return any(word in text for word in psa_words)
+
+    return True
 
 
-def build_html(posts_by_source, updated_at):
-    all_items = []
+def get_posts_for_shop(posts_by_source, shop_slug):
+    posts = []
 
-    for source in SOURCES:
-        source_id = source["name"] + "_" + source["source_type"]
-        posts = posts_by_source.get(source_id, [])
-        all_items.append((source, posts))
+    for source in get_sources_by_shop(shop_slug):
+        posts.extend(posts_by_source.get(source["id"], []))
 
-    html = f"""<!DOCTYPE html>
+    posts.sort(key=lambda p: p.get("status_id", 0), reverse=True)
+    return posts
+
+
+def get_latest_post(posts):
+    if not posts:
+        return None
+
+    return sorted(posts, key=lambda p: p.get("status_id", 0), reverse=True)[0]
+
+
+def first_image(posts):
+    for post in posts:
+        for image_url in post.get("image_urls", []):
+            return image_url
+    return None
+
+
+def json_for_script(data):
+    return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+
+
+# =========================
+# CSS
+# =========================
+
+COMMON_CSS = """
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #050505;
+  color: #f5f5f5;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 13%, rgba(255,255,255,.13), transparent 17%),
+    radial-gradient(circle at 22% 25%, rgba(255,255,255,.045), transparent 23%),
+    linear-gradient(90deg, rgba(255,255,255,.025), transparent 35%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.012), rgba(255,255,255,.012) 1px, transparent 1px, transparent 5px);
+  opacity: .8;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0%, transparent 70%, rgba(255,255,255,.027) 73%, transparent 77%),
+    linear-gradient(90deg, transparent 0%, transparent 80%, rgba(255,255,255,.02) 82%, transparent 86%),
+    linear-gradient(180deg, #080808 0%, #030303 100%);
+  opacity: .95;
+  z-index: -3;
+}
+
+a {
+  color: inherit;
+}
+
+.page-shell {
+  min-height: 100vh;
+}
+
+.hero {
+  padding: 36px 7vw 30px;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-mark {
+  font-family: "Times New Roman", serif;
+  font-size: 58px;
+  letter-spacing: -.16em;
+  line-height: .85;
+  text-shadow: 0 0 24px rgba(255,255,255,.18);
+}
+
+.logo-text {
+  font-family: "Times New Roman", serif;
+  letter-spacing: .36em;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.logo-sub {
+  margin-top: 5px;
+  color: rgba(255,255,255,.48);
+  letter-spacing: .28em;
+  font-size: 11px;
+}
+
+.hero-large {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 7vw;
+}
+
+.hero-title {
+  margin-top: 42px;
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(36px, 9vw, 76px);
+  letter-spacing: .18em;
+  line-height: 1.1;
+}
+
+.hero-copy {
+  margin-top: 24px;
+  color: rgba(255,255,255,.78);
+  line-height: 2;
+  letter-spacing: .1em;
+}
+
+.selector-grid {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.select-card {
+  display: block;
+  text-decoration: none;
+  background: rgba(8,8,8,.76);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 28px;
+  min-height: 160px;
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.select-card:hover {
+  border-color: rgba(255,255,255,.32);
+  transform: translateY(-2px);
+}
+
+.select-card small {
+  display: block;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .28em;
+  font-size: 11px;
+}
+
+.select-card strong {
+  display: block;
+  margin-top: 18px;
+  font-size: 24px;
+  letter-spacing: .12em;
+  font-weight: 500;
+}
+
+.select-card p {
+  margin: 16px 0 0;
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.breadcrumb {
+  margin-top: 24px;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+
+.breadcrumb a {
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+}
+
+.area-title {
+  margin-top: 32px;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(34px, 9vw, 62px);
+  letter-spacing: .18em;
+  font-weight: 400;
+}
+
+.area-description {
+  max-width: 720px;
+  color: rgba(255,255,255,.72);
+  line-height: 1.9;
+  letter-spacing: .08em;
+}
+
+.sticky-search {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(5,5,5,.92);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  padding: 14px 7vw;
+}
+
+.search-main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-main input {
+  width: 100%;
+  height: 48px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.15);
+  color: white;
+  padding: 0 14px;
+  font-size: 15px;
+  outline: none;
+}
+
+.reset-button {
+  height: 48px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: transparent;
+  color: white;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.chip-row {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.filter-chip {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.82);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.filter-chip.active {
+  background: rgba(255,255,255,.18);
+  border-color: rgba(255,255,255,.36);
+}
+
+.result-line {
+  margin-top: 10px;
+  color: rgba(255,255,255,.52);
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+
+main {
+  padding: 28px 7vw 80px;
+}
+
+.section-head {
+  margin: 34px 0 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: .16em;
+}
+
+.section-head p {
+  margin: 0;
+  color: rgba(255,255,255,.48);
+  font-size: 13px;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.shop-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(8,8,8,.8);
+  border: 1px solid rgba(255,255,255,.105);
+  min-height: 460px;
+  text-decoration: none;
+  transition: border-color .15s ease, transform .15s ease;
+  overflow: hidden;
+}
+
+.shop-card:hover {
+  border-color: rgba(255,255,255,.3);
+  transform: translateY(-2px);
+}
+
+.thumb-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(255,255,255,.045);
+  overflow: hidden;
+}
+
+.thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.no-thumb {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,.32);
+  letter-spacing: .2em;
+  font-size: 12px;
+}
+
+.shop-body {
+  padding: 18px;
+  flex: 1;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: rgba(255,255,255,.48);
+  font-size: 12px;
+}
+
+.shop-body h3 {
+  margin: 22px 0 8px;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
+.shop-brand {
+  color: rgba(255,255,255,.52);
+  font-size: 12px;
+  letter-spacing: .2em;
+}
+
+.badges {
+  margin-top: 16px;
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  border: 1px solid rgba(255,255,255,.14);
+  padding: 5px 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,.72);
+}
+
+.summary {
+  margin-top: 16px;
+  color: rgba(255,255,255,.72);
+  line-height: 1.75;
+  font-size: 13px;
+}
+
+.card-footer {
+  padding: 0 18px 18px;
+  color: rgba(255,255,255,.82);
+  letter-spacing: .12em;
+  font-size: 13px;
+}
+
+.ad-card {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.14);
+  padding: 22px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ad-card small {
+  color: rgba(255,255,255,.42);
+  letter-spacing: .25em;
+  font-size: 11px;
+}
+
+.ad-card strong {
+  margin-top: 12px;
+  font-size: 20px;
+  letter-spacing: .08em;
+}
+
+.ad-card p {
+  color: rgba(255,255,255,.62);
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.store-layout {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.store-header {
+  margin-bottom: 24px;
+}
+
+.store-title {
+  font-size: clamp(34px, 8vw, 60px);
+  letter-spacing: .1em;
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+
+.store-sub {
+  color: rgba(255,255,255,.58);
+  letter-spacing: .16em;
+}
+
+.image-section {
+  margin-top: 34px;
+}
+
+.image-section h2 {
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: .16em;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.image-card {
+  background: rgba(8,8,8,.84);
+  border: 1px solid rgba(255,255,255,.11);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.image-card img {
+  width: 100%;
+  display: block;
+}
+
+.image-info {
+  padding: 14px;
+}
+
+.image-info p {
+  margin: 0;
+  color: rgba(255,255,255,.7);
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.image-info small {
+  display: block;
+  margin-top: 10px;
+  color: rgba(255,255,255,.42);
+}
+
+.link-card {
+  background: rgba(8,8,8,.82);
+  border: 1px solid rgba(255,255,255,.11);
+  padding: 22px;
+}
+
+.link-card a {
+  display: inline-block;
+  margin-top: 16px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 12px 16px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.84);
+  z-index: 100;
+  display: none;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal.open {
+  display: block;
+}
+
+.modal-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  background: #090909;
+  border: 1px solid rgba(255,255,255,.16);
+  padding: 16px;
+}
+
+.modal-close {
+  display: block;
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.18);
+  color: white;
+  padding: 10px 13px;
+  cursor: pointer;
+}
+
+.modal-image {
+  width: 100%;
+  display: block;
+  margin-top: 14px;
+}
+
+.modal-summary {
+  color: rgba(255,255,255,.78);
+  line-height: 1.8;
+  margin-top: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.modal-actions a,
+.modal-actions button {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 11px 13px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tweet-embed {
+  margin-top: 18px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 1100px) {
+  .shop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding: 30px 18px 24px;
+  }
+
+  .hero-large {
+    padding: 30px 18px;
+  }
+
+  .selector-grid,
+  .shop-grid,
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-main {
+    grid-template-columns: 1fr;
+  }
+
+  .reset-button {
+    width: 100%;
+  }
+
+  main {
+    padding: 24px 18px 72px;
+  }
+
+  .section-head {
+    display: block;
+  }
+
+  .shop-card {
+    min-height: auto;
+  }
+
+  .thumb-wrap {
+    aspect-ratio: 16 / 10;
+  }
+
+  .image-grid {
+    gap: 26px;
+  }
+}
+"""
+
+
+def html_shell(title, content, base_prefix=""):
+    return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CardRadar｜ポケカ買取情報を探す</title>
-<meta name="description" content="CardRadarは、ポケカのシングル買取、BOX買取、定額買取、PSA買取、公式Web買取表、相場確認リンクをまとめて探せるサイトです。">
-
+<title>{h(title)}</title>
+<meta name="description" content="CardRadarは、ポケカのシングル買取・BOX買取・定額買取・PSA買取・公式Web買取表・相場確認を探せるサイトです。">
+<link rel="icon" type="image/png" href="{base_prefix}icon-512.png">
+<link rel="apple-touch-icon" href="{base_prefix}icon-512.png">
+<meta name="theme-color" content="#050505">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-* {{
-  box-sizing: border-box;
-}}
-
-html {{
-  scroll-behavior: smooth;
-}}
-
-body {{
-  margin: 0;
-  background: #050505;
-  color: #f5f5f5;
-  font-family: "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", "Times New Roman", serif;
-}}
-
-body::before {{
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 16% 16%, rgba(255,255,255,.17), transparent 18%),
-    radial-gradient(circle at 22% 26%, rgba(255,255,255,.06), transparent 24%),
-    linear-gradient(90deg, rgba(255,255,255,.035), transparent 35%),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.015), rgba(255,255,255,.015) 1px, transparent 1px, transparent 5px);
-  opacity: .75;
-  z-index: -2;
-}}
-
-body::after {{
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, transparent 0%, transparent 70%, rgba(255,255,255,.035) 73%, transparent 76%),
-    linear-gradient(90deg, transparent 0%, transparent 78%, rgba(255,255,255,.03) 80%, transparent 84%),
-    linear-gradient(180deg, #080808 0%, #030303 100%);
-  opacity: .9;
-  z-index: -3;
-}}
-
-.hero {{
-  min-height: 620px;
-  padding: 46px 7vw 32px;
-  position: relative;
-  overflow: hidden;
-}}
-
-.top-nav {{
-  display: flex;
-  justify-content: flex-end;
-  gap: 42px;
-  font-size: 13px;
-  letter-spacing: .28em;
-  color: rgba(255,255,255,.84);
-}}
-
-.brand-block {{
-  margin-top: 70px;
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  align-items: center;
-  gap: 48px;
-}}
-
-.logo-mark {{
-  font-size: 132px;
-  letter-spacing: -.18em;
-  line-height: .82;
-  font-weight: 400;
-  text-shadow: 0 0 28px rgba(255,255,255,.18);
-}}
-
-.brand-name {{
-  font-size: 42px;
-  letter-spacing: .46em;
-  font-weight: 400;
-}}
-
-.brand-sub {{
-  margin-top: 14px;
-  color: rgba(255,255,255,.52);
-  letter-spacing: .48em;
-  font-size: 12px;
-}}
-
-.copy {{
-  margin-top: 46px;
-  line-height: 2.3;
-  letter-spacing: .22em;
-  color: rgba(255,255,255,.92);
-}}
-
-.updated {{
-  margin-top: 24px;
-  color: rgba(255,255,255,.45);
-  font-size: 12px;
-  letter-spacing: .18em;
-}}
-
-.find-title {{
-  margin-top: 82px;
-  font-size: 14px;
-  letter-spacing: .16em;
-  color: rgba(255,255,255,.86);
-}}
-
-.type-tabs {{
-  margin-top: 14px;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.28);
-}}
-
-.type-tab {{
-  border: 0;
-  border-right: 1px solid rgba(255,255,255,.13);
-  background: transparent;
-  color: white;
-  padding: 22px 14px;
-  cursor: pointer;
-  text-align: left;
-}}
-
-.type-tab.active {{
-  background: rgba(255,255,255,.075);
-  box-shadow: inset 0 0 22px rgba(255,255,255,.09);
-}}
-
-.type-tab span {{
-  display: block;
-  font-size: 15px;
-  letter-spacing: .12em;
-}}
-
-.type-tab small {{
-  display: block;
-  margin-top: 7px;
-  color: rgba(255,255,255,.45);
-  letter-spacing: .35em;
-  font-size: 10px;
-}}
-
-.search-row {{
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: 1fr 170px 170px 170px auto;
-  gap: 14px;
-  align-items: center;
-}}
-
-.search-row input,
-.search-row select {{
-  height: 58px;
-  background: rgba(0,0,0,.44);
-  border: 1px solid rgba(255,255,255,.13);
-  color: white;
-  padding: 0 18px;
-  font-family: inherit;
-  letter-spacing: .12em;
-}}
-
-.result-count {{
-  color: rgba(255,255,255,.72);
-  letter-spacing: .16em;
-  white-space: nowrap;
-}}
-
-main {{
-  padding: 0 7vw 70px;
-}}
-
-.card-grid {{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}}
-
-.shop-card {{
-  background: rgba(8,8,8,.78);
-  border: 1px solid rgba(255,255,255,.105);
-  min-height: 310px;
-  padding: 24px;
-  position: relative;
-}}
-
-.shop-card:hover {{
-  border-color: rgba(255,255,255,.25);
-}}
-
-.card-meta {{
-  display: flex;
-  justify-content: space-between;
-  color: rgba(255,255,255,.46);
-  font-size: 12px;
-  letter-spacing: .14em;
-}}
-
-.shop-card h3 {{
-  margin: 26px 0 7px;
-  font-size: 21px;
-  font-weight: 400;
-  letter-spacing: .13em;
-}}
-
-.brand-en {{
-  color: rgba(255,255,255,.45);
-  letter-spacing: .38em;
-  font-size: 11px;
-}}
-
-.badges {{
-  margin-top: 18px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}}
-
-.badge {{
-  border: 1px solid rgba(255,255,255,.14);
-  padding: 5px 9px;
-  font-size: 11px;
-  color: rgba(255,255,255,.75);
-  letter-spacing: .11em;
-}}
-
-.summary {{
-  margin-top: 18px;
-  min-height: 78px;
-  color: rgba(255,255,255,.78);
-  line-height: 1.8;
-  font-size: 13px;
-}}
-
-.post-info {{
-  margin-top: 18px;
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}}
-
-.post-num {{
-  font-size: 34px;
-}}
-
-.post-label {{
-  color: rgba(255,255,255,.5);
-  font-size: 12px;
-  letter-spacing: .15em;
-}}
-
-.detail-button,
-.link-button {{
-  margin-top: 18px;
-  width: 100%;
-  height: 48px;
-  background: transparent;
-  color: white;
-  border: 1px solid rgba(255,255,255,.15);
-  font-family: inherit;
-  letter-spacing: .2em;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  text-decoration: none;
-}}
-
-.post-details {{
-  display: none;
-  margin-top: 18px;
-  border-top: 1px solid rgba(255,255,255,.1);
-  padding-top: 16px;
-}}
-
-.post-details.open {{
-  display: block;
-}}
-
-.post-item {{
-  margin-top: 14px;
-  padding: 14px;
-  border: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.025);
-}}
-
-.post-item p {{
-  color: rgba(255,255,255,.76);
-  font-size: 13px;
-  line-height: 1.8;
-}}
-
-.post-item a {{
-  color: white;
-}}
-
-.hidden {{
-  display: none !important;
-}}
-
-@media (max-width: 980px) {{
-  .brand-block {{
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }}
-
-  .logo-mark {{
-    font-size: 92px;
-  }}
-
-  .brand-name {{
-    font-size: 30px;
-    letter-spacing: .32em;
-  }}
-
-  .type-tabs {{
-    display: flex;
-    overflow-x: auto;
-  }}
-
-  .type-tab {{
-    min-width: 165px;
-  }}
-
-  .search-row {{
-    grid-template-columns: 1fr;
-  }}
-
-  .card-grid {{
-    grid-template-columns: 1fr;
-  }}
-
-  .top-nav {{
-    display: none;
-  }}
-}}
-
-@media (max-width: 520px) {{
-  .hero,
-  main {{
-    padding-left: 18px;
-    padding-right: 18px;
-  }}
-
-  .brand-name {{
-    font-size: 24px;
-    letter-spacing: .22em;
-  }}
-
-  .copy {{
-    font-size: 14px;
-  }}
-}}
+{COMMON_CSS}
 </style>
 </head>
-
 <body>
-
-<section class="hero">
-  <nav class="top-nav">
-    <span>ABOUT</span>
-    <span>FAQ</span>
-    <span>CONTACT</span>
-  </nav>
-
-  <div class="brand-block">
-    <div class="logo-mark">CR</div>
-    <div>
-      <div class="brand-name">CARDRADAR</div>
-      <div class="brand-sub">TRADING CARD PRICE RADAR</div>
-      <div class="copy">すべてのカードに、<br>いまの価値を。</div>
-      <div class="updated">LAST UPDATE : {updated_at}</div>
-    </div>
-  </div>
-
-  <div class="find-title">何を探す？</div>
-
-  <div class="type-tabs">
-    <button class="type-tab active" data-filter-type="source" data-filter-value="all" onclick="setFilter('source','all')"><span>すべて</span><small>ALL</small></button>
-"""
-
-    for st, meta in TYPE_META.items():
-        html += f"""
-    <button class="type-tab" data-filter-type="source" data-filter-value="{st}" onclick="setFilter('source','{st}')"><span>{meta["label"]}</span><small>{meta["en"]}</small></button>
-"""
-
-    html += """
-  </div>
-
-  <div class="search-row">
-    <input id="searchInput" type="text" placeholder="店舗名・カード名・ブランド名で検索">
-
-    <select id="brandFilter" onchange="setFilter('brand', this.value)">
-      <option value="all">ブランド</option>
-"""
-
-    for b in unique_values("brand_id", "brand"):
-        html += f'<option value="{b["id"]}">{b["label"]}</option>\n'
-
-    html += """
-    </select>
-
-    <select id="areaFilter" onchange="setFilter('area', this.value)">
-      <option value="all">地域</option>
-"""
-
-    for a in unique_values("area_id", "area"):
-        html += f'<option value="{a["id"]}">{a["label"]}</option>\n'
-
-    html += """
-    </select>
-
-    <select id="typeFilter" onchange="setFilter('source', this.value)">
-      <option value="all">買取タイプ</option>
-"""
-
-    for st, meta in TYPE_META.items():
-        html += f'<option value="{st}">{meta["label"]}</option>\n'
-
-    html += """
-    </select>
-
-    <div class="result-count">検索結果：<span id="resultCount">0</span>件</div>
-  </div>
-</section>
-
-<main>
-  <div class="card-grid">
-"""
-
-    for source, posts in all_items:
-        st = source["source_type"]
-        meta = TYPE_META[st]
-        safe_desc = html_lib.escape(source.get("description", ""))
-        safe_search = html_lib.escape(search_text(source))
-        source_id = re.sub(r"[^a-zA-Z0-9_-]", "_", source["name"] + "_" + st)
-
-        html += f"""
-    <article class="shop-card"
-      data-source="{st}"
-      data-brand="{source["brand_id"]}"
-      data-area="{source["area_id"]}"
-      data-search="{safe_search}"
-    >
-      <div class="card-meta">
-        <span>{source["area"]}</span>
-        <span>{meta["label"]}</span>
-      </div>
-
-      <h3>{source["name"]}</h3>
-      <div class="brand-en">{source["brand"]}</div>
-
-      <div class="badges">
-        <span class="badge">{meta["label"]}</span>
-        <span class="badge">{source["area"]}</span>
-        <span class="badge">{source["brand"]}</span>
-      </div>
-
-      <div class="summary">{safe_desc}</div>
-"""
-
-        if st in ["official_price_list", "market_price_link"]:
-            html += f"""
-      <a class="link-button" href="{source["official_url"]}" target="_blank" rel="noopener noreferrer">ページを開く →</a>
-"""
-        else:
-            html += f"""
-      <div class="post-info">
-        <span class="post-num">{len(posts)}</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('{source_id}')">詳細を見る →</button>
-
-      <div class="post-details" id="{source_id}">
-"""
-            if posts:
-                for post in posts:
-                    safe_summary = html_lib.escape(post["summary"])
-                    html += f"""
-        <div class="post-item">
-          <p>{safe_summary}</p>
-          <a href="{post["tweet_url"]}" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-"""
-            else:
-                html += '<div class="post-item"><p>該当する投稿が見つかりませんでした。</p></div>'
-
-            html += """
-      </div>
-"""
-
-        html += """
-    </article>
-"""
-
-    html += """
-  </div>
-</main>
-
-<script>
-const filters = {
-  source: "all",
-  brand: "all",
-  area: "all",
-  search: ""
-};
-
-function setFilter(type, value) {
-  filters[type] = value;
-
-  if (type === "source") {
-    document.querySelectorAll('[data-filter-type="source"]').forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.filterValue === value);
-    });
-
-    const typeFilter = document.getElementById("typeFilter");
-    if (typeFilter) typeFilter.value = value;
-  }
-
-  applyFilters();
-}
-
-function applyFilters() {
-  filters.search = document.getElementById("searchInput").value.trim().toLowerCase();
-
-  const cards = document.querySelectorAll(".shop-card");
-  let count = 0;
-
-  cards.forEach(card => {
-    const sourceOk = filters.source === "all" || card.dataset.source === filters.source;
-    const brandOk = filters.brand === "all" || card.dataset.brand === filters.brand;
-    const areaOk = filters.area === "all" || card.dataset.area === filters.area;
-    const searchOk = !filters.search || card.dataset.search.toLowerCase().includes(filters.search);
-
-    if (sourceOk && brandOk && areaOk && searchOk) {
-      card.classList.remove("hidden");
-      count++;
-    } else {
-      card.classList.add("hidden");
-    }
-  });
-
-  document.getElementById("resultCount").textContent = count;
-}
-
-function toggleDetails(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle("open");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("searchInput").addEventListener("input", applyFilters);
-  applyFilters();
-});
-</script>
-
+{content}
 </body>
 </html>
 """
-    return html
 
 
-def main():
-    updated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
+def logo_html(base_prefix=""):
+    return f"""
+<div class="logo-row">
+  <div class="logo-mark">CR</div>
+  <div>
+    <div class="logo-text">CARDRADAR</div>
+    <div class="logo-sub">TRADING CARD PRICE RADAR</div>
+  </div>
+</div>
+"""
+
+
+# =========================
+# ページ生成：トップ
+# =========================
+
+def build_index_page(updated_at):
+    content = f"""
+<div class="page-shell">
+  <section class="hero-large">
+    {logo_html()}
+
+    <div class="hero-title">AREA<br>SELECT</div>
+
+    <p class="hero-copy">
+      ポケカ買取情報を、地域・店舗・買取タイプ別に。<br>
+      X買取表、BOX買取、定額買取、PSA買取、公式Web買取表、相場確認まで。
+    </p>
+
+    <div class="selector-grid">
+      <a class="select-card" href="osaka.html">
+        <small>KANSAI</small>
+        <strong>大阪</strong>
+        <p>日本橋エリアのポケカ買取表・BOX買取・定額買取を確認。</p>
+      </a>
+
+      <a class="select-card" href="#">
+        <small>KANTO</small>
+        <strong>東京</strong>
+        <p>秋葉原など、今後追加予定。</p>
+      </a>
+
+      <a class="select-card" href="#">
+        <small>CHUBU</small>
+        <strong>愛知</strong>
+        <p>大須など、今後追加予定。</p>
+      </a>
+    </div>
+
+    <div class="updated">LAST UPDATE : {h(updated_at)}</div>
+  </section>
+</div>
+"""
+    return html_shell("CardRadar｜ポケカ買取情報を探す", content)
+
+
+# =========================
+# ページ生成：大阪
+# =========================
+
+def build_osaka_page(updated_at):
+    content = f"""
+<div class="page-shell">
+  <section class="hero-large">
+    {logo_html()}
+
+    <div class="breadcrumb">
+      <a href="index.html">TOP</a> / OSAKA
+    </div>
+
+    <div class="hero-title">OSAKA</div>
+
+    <p class="hero-copy">
+      大阪エリアのカードショップ買取情報。<br>
+      まずは日本橋エリアから対応中です。
+    </p>
+
+    <div class="selector-grid">
+      <a class="select-card" href="osaka-nihonbashi.html">
+        <small>OSAKA</small>
+        <strong>日本橋</strong>
+        <p>ポケカ買取表、BOX買取、定額買取、公式Web買取表、相場確認。</p>
+      </a>
+
+      <a class="select-card" href="#">
+        <small>COMING SOON</small>
+        <strong>梅田</strong>
+        <p>今後追加予定。</p>
+      </a>
+
+      <a class="select-card" href="#">
+        <small>COMING SOON</small>
+        <strong>天王寺</strong>
+        <p>今後追加予定。</p>
+      </a>
+    </div>
+
+    <div class="updated">LAST UPDATE : {h(updated_at)}</div>
+  </section>
+</div>
+"""
+    return html_shell("CardRadar｜大阪エリア", content)
+
+
+# =========================
+# ページ生成：日本橋
+# =========================
+
+def build_area_page(posts_by_source, updated_at):
+    shops = get_physical_shops("osaka-nihonbashi")
+    support_sources = get_support_sources()
+    brands = get_unique_brands("osaka-nihonbashi")
+
+    cards_html = ""
+    visible_index = 0
+
+    for shop in shops:
+        posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
+        latest = get_latest_post(posts)
+        thumb = first_image(posts)
+        types = get_shop_types(shop["sources"])
+        type_labels = get_type_labels(types)
+
+        latest_summary = latest["summary"] if latest else "最新投稿はまだ取得できていません。"
+        latest_count = len(posts)
+
+        thumb_html = (
+            f'<img src="{h(thumb)}" alt="{h(shop["shop_name"])}の最新買取表画像">'
+            if thumb
+            else '<div class="no-thumb">NO IMAGE</div>'
+        )
+
+        badges = "".join([f'<span class="badge">{h(label)}</span>' for label in type_labels])
+
+        cards_html += f"""
+<a class="shop-card"
+   href="stores/{h(shop["shop_slug"])}.html"
+   data-types="{' '.join(types)}"
+   data-brand="{h(shop["brand_id"])}"
+   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + ' '.join(type_labels) + ' ' + latest_summary)}"
+>
+  <div class="thumb-wrap">
+    {thumb_html}
+  </div>
+
+  <div class="shop-body">
+    <div class="card-meta">
+      <span>{h(shop["area"])}</span>
+      <span>最新{latest_count}件</span>
+    </div>
+
+    <h3>{h(shop["shop_name"])}</h3>
+    <div class="shop-brand">{h(shop["brand"])}</div>
+
+    <div class="badges">
+      {badges}
+    </div>
+
+    <div class="summary">{h(latest_summary)}</div>
+  </div>
+
+  <div class="card-footer">店舗ページを見る →</div>
+</a>
+"""
+        visible_index += 1
+
+        if visible_index == 6:
+            cards_html += """
+<div class="ad-card">
+  <small>SPONSORED</small>
+  <strong>広告掲載枠</strong>
+  <p>カードショップ、BOX買取、PSA買取、サプライ関連の掲載枠を想定しています。</p>
+</div>
+"""
+
+    support_html = ""
+
+    for source in support_sources:
+        meta = TYPE_META[source["source_type"]]
+        support_html += f"""
+<div class="link-card">
+  <div class="card-meta">
+    <span>{h(source["area"])}</span>
+    <span>{h(meta["label"])}</span>
+  </div>
+  <h3>{h(source["shop_name"])}</h3>
+  <p class="summary">{h(source["description"])}</p>
+  <a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">ページを開く →</a>
+</div>
+"""
+
+    type_buttons = """
+<button class="filter-chip active" onclick="toggleType('all', this)">すべて</button>
+"""
+
+    for type_key in TYPE_ORDER:
+        meta = TYPE_META[type_key]
+        type_buttons += f"""
+<button class="filter-chip" onclick="toggleType('{h(type_key)}', this)">{h(meta["label"])}</button>
+"""
+
+    brand_buttons = ""
+
+    for brand in brands:
+        brand_buttons += f"""
+<button class="filter-chip" onclick="toggleBrand('{h(brand["id"])}', this)">{h(brand["label"])}</button>
+"""
+
+    content = f"""
+<div class="page-shell">
+  <section class="hero">
+    {logo_html()}
+
+    <div class="breadcrumb">
+      <a href="index.html">TOP</a> / <a href="osaka.html">OSAKA</a> / NIHONBASHI
+    </div>
+
+    <h1 class="area-title">NIHONBASHI</h1>
+
+    <p class="area-description">
+      大阪・日本橋エリアのポケカ買取情報を、店舗別・買取タイプ別に整理。
+      一覧では画像付きカードで軽く確認し、店舗ページでは買取表画像を大きく表示します。
+    </p>
+
+    <div class="updated">LAST UPDATE : {h(updated_at)}</div>
+  </section>
+
+  <div class="sticky-search">
+    <div class="search-main">
+      <input id="searchInput" type="text" placeholder="店舗名・ブランド名・買取タイプで検索">
+      <button class="reset-button" onclick="resetFilters()">リセット</button>
+    </div>
+
+    <div class="chip-row">
+      {type_buttons}
+    </div>
+
+    <div class="chip-row">
+      {brand_buttons}
+    </div>
+
+    <div class="result-line">
+      表示中：<span id="resultCount">0</span>件
+    </div>
+  </div>
+
+  <main>
+    <div class="section-head">
+      <h2>STORE LIST</h2>
+      <p>画像付き軽量一覧</p>
+    </div>
+
+    <div class="shop-grid" id="shopGrid">
+      {cards_html}
+    </div>
+
+    <div class="section-head">
+      <h2>SUPPORT LINKS</h2>
+      <p>公式Web買取表・相場確認</p>
+    </div>
+
+    <div class="shop-grid">
+      {support_html}
+    </div>
+  </main>
+</div>
+
+<script>
+const selectedTypes = new Set();
+const selectedBrands = new Set();
+
+function toggleType(type, button) {{
+  if (type === "all") {{
+    selectedTypes.clear();
+    document.querySelectorAll(".chip-row:first-of-type .filter-chip").forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+    applyFilters();
+    return;
+  }}
+
+  document.querySelector(".chip-row:first-of-type .filter-chip").classList.remove("active");
+
+  if (selectedTypes.has(type)) {{
+    selectedTypes.delete(type);
+    button.classList.remove("active");
+  }} else {{
+    selectedTypes.add(type);
+    button.classList.add("active");
+  }}
+
+  if (selectedTypes.size === 0) {{
+    document.querySelector(".chip-row:first-of-type .filter-chip").classList.add("active");
+  }}
+
+  applyFilters();
+}}
+
+function toggleBrand(brand, button) {{
+  if (selectedBrands.has(brand)) {{
+    selectedBrands.delete(brand);
+    button.classList.remove("active");
+  }} else {{
+    selectedBrands.add(brand);
+    button.classList.add("active");
+  }}
+
+  applyFilters();
+}}
+
+function resetFilters() {{
+  selectedTypes.clear();
+  selectedBrands.clear();
+  document.getElementById("searchInput").value = "";
+
+  document.querySelectorAll(".filter-chip").forEach(btn => btn.classList.remove("active"));
+  document.querySelector(".chip-row:first-of-type .filter-chip").classList.add("active");
+
+  applyFilters();
+}}
+
+function applyFilters() {{
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
+  const cards = document.querySelectorAll(".shop-card");
+  let count = 0;
+
+  cards.forEach(card => {{
+    const typeList = card.dataset.types.split(" ");
+    const brand = card.dataset.brand;
+    const searchText = card.dataset.search.toLowerCase();
+
+    const typeOk = selectedTypes.size === 0 || typeList.some(t => selectedTypes.has(t));
+    const brandOk = selectedBrands.size === 0 || selectedBrands.has(brand);
+    const searchOk = !search || searchText.includes(search);
+
+    if (typeOk && brandOk && searchOk) {{
+      card.classList.remove("hidden");
+      count++;
+    }} else {{
+      card.classList.add("hidden");
+    }}
+  }});
+
+  document.getElementById("resultCount").textContent = count;
+}}
+
+document.addEventListener("DOMContentLoaded", () => {{
+  document.getElementById("searchInput").addEventListener("input", applyFilters);
+  applyFilters();
+}});
+</script>
+"""
+    return html_shell("CardRadar｜大阪日本橋のポケカ買取情報", content)
+
+
+# =========================
+# ページ生成：店舗ページ
+# =========================
+
+def build_store_page(shop, posts_by_source, updated_at):
+    sources = get_sources_by_shop(shop["shop_slug"])
+    posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
+
+    media_items = {}
+    sections_html = ""
+
+    for source in sources:
+        if not is_x_source(source):
+            continue
+
+        source_posts = posts_by_source.get(source["id"], [])
+        meta = TYPE_META[source["source_type"]]
+
+        images_html = ""
+
+        media_index = 0
+
+        for post in source_posts:
+            image_urls = post.get("image_urls", [])
+
+            for image_url in image_urls:
+                media_id = f'{source["id"]}_{post["status_id"]}_{media_index}'
+                media_index += 1
+
+                media_items[media_id] = {
+                    "image_url": image_url,
+                    "tweet_url": post["tweet_url"],
+                    "summary": post["summary"],
+                    "type_label": meta["label"],
+                }
+
+                images_html += f"""
+<div class="image-card" onclick="openMedia('{h(media_id)}')">
+  <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像">
+  <div class="image-info">
+    <p>{h(post["summary"])}</p>
+    <small>{h(meta["label"])} / 画像{len(image_urls)}枚</small>
+  </div>
+</div>
+"""
+
+        if not images_html:
+            images_html = """
+<div class="link-card">
+  <p class="summary">該当する画像付き投稿が見つかりませんでした。</p>
+</div>
+"""
+
+        sections_html += f"""
+<section class="image-section">
+  <h2>{h(meta["label"])}</h2>
+  <div class="image-grid">
+    {images_html}
+  </div>
+</section>
+"""
+
+    support_html = ""
+
+    for source in sources:
+        if source["source_type"] not in ["official_price_list", "market_price_link"]:
+            continue
+
+        meta = TYPE_META[source["source_type"]]
+
+        support_html += f"""
+<section class="image-section">
+  <h2>{h(meta["label"])}</h2>
+  <div class="link-card">
+    <h3>{h(source["shop_name"])}</h3>
+    <p class="summary">{h(source["description"])}</p>
+    <a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">ページを開く →</a>
+  </div>
+</section>
+"""
+
+    media_json = json_for_script(media_items)
+
+    content = f"""
+<div class="page-shell">
+  <section class="hero">
+    {logo_html("../")}
+
+    <div class="breadcrumb">
+      <a href="../index.html">TOP</a> /
+      <a href="../osaka.html">OSAKA</a> /
+      <a href="../osaka-nihonbashi.html">NIHONBASHI</a> /
+      STORE
+    </div>
+  </section>
+
+  <main class="store-layout">
+    <div class="store-header">
+      <h1 class="store-title">{h(shop["shop_name"])}</h1>
+      <div class="store-sub">{h(shop["brand"])} / {h(shop["area"])}</div>
+      <p class="area-description">
+        この店舗の買取表画像を大きく表示しています。
+        画像をタップすると拡大表示し、必要な場合のみX埋め込みを読み込みます。
+      </p>
+      <div class="updated">LAST UPDATE : {h(updated_at)}</div>
+    </div>
+
+    {sections_html}
+    {support_html}
+  </main>
+</div>
+
+<div class="modal" id="mediaModal">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeMedia()">閉じる</button>
+
+    <img class="modal-image" id="modalImage" src="" alt="買取表画像">
+
+    <div class="modal-summary" id="modalSummary"></div>
+
+    <div class="modal-actions">
+      <a id="modalTweetLink" href="#" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
+      <button onclick="loadTweetEmbed()">X埋め込みを表示</button>
+    </div>
+
+    <div class="tweet-embed" id="tweetEmbed"></div>
+  </div>
+</div>
+
+<script async src="https://platform.twitter.com/widgets.js"></script>
+
+<script>
+const MEDIA_ITEMS = {media_json};
+let currentTweetUrl = "";
+
+function openMedia(id) {{
+  const item = MEDIA_ITEMS[id];
+
+  if (!item) return;
+
+  currentTweetUrl = item.tweet_url;
+
+  document.getElementById("modalImage").src = item.image_url;
+  document.getElementById("modalSummary").textContent = item.summary;
+  document.getElementById("modalTweetLink").href = item.tweet_url;
+  document.getElementById("tweetEmbed").innerHTML = "";
+
+  document.getElementById("mediaModal").classList.add("open");
+}}
+
+function closeMedia() {{
+  document.getElementById("mediaModal").classList.remove("open");
+  document.getElementById("tweetEmbed").innerHTML = "";
+}}
+
+function loadTweetEmbed() {{
+  if (!currentTweetUrl) return;
+
+  const embed = document.getElementById("tweetEmbed");
+
+  embed.innerHTML = `
+    <blockquote class="twitter-tweet">
+      <a href="${{currentTweetUrl}}"></a>
+    </blockquote>
+  `;
+
+  if (window.twttr && window.twttr.widgets) {{
+    window.twttr.widgets.load(embed);
+  }}
+}}
+</script>
+"""
+    return html_shell(f"CardRadar｜{shop['shop_name']}", content, base_prefix="../")
+
+
+# =========================
+# X取得
+# =========================
+
+def collect_posts():
     posts_by_source = {}
     all_data = []
+    updated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
 
     with sync_playwright() as p:
         browser = p.chromium.launch_persistent_context(
@@ -1001,28 +1894,30 @@ def main():
         page = browser.new_page()
 
         for source in SOURCES:
-            source_id = source["name"] + "_" + source["source_type"]
-            posts_by_source[source_id] = []
+            posts_by_source[source["id"]] = []
 
             print("")
-            print("===================")
-            print(source["name"])
-            print("===================")
+            print("==============================")
+            print(source["shop_name"], "/", TYPE_META[source["source_type"]]["label"])
+            print("==============================")
 
-            if source["source_type"] in ["official_price_list", "market_price_link"]:
-                all_data.append({
+            if not is_x_source(source):
+                data_item = {
                     **source,
                     "buy_type_label": TYPE_META[source["source_type"]]["label"],
                     "collected_at": updated_at,
-                })
+                }
+                all_data.append(data_item)
+                print("リンク情報として保存")
                 continue
 
             candidates = []
-            seen = set()
+            seen_urls = set()
 
             try:
                 page.goto(source["url"], wait_until="domcontentloaded", timeout=60000)
                 time.sleep(10)
+
                 page.wait_for_selector("article", timeout=30000)
 
                 for _ in range(6):
@@ -1031,14 +1926,19 @@ def main():
 
                 tweets = page.locator("article")
                 count = tweets.count()
-                print("検出:", count)
+
+                print("検出article数:", count)
 
                 for i in range(min(count, CHECK_POSTS_PER_SOURCE)):
                     tweet = tweets.nth(i)
+
                     text = tweet.inner_text()
                     url = get_status_url(tweet)
 
-                    if not url or url in seen:
+                    if not url:
+                        continue
+
+                    if url in seen_urls:
                         continue
 
                     if not is_target_post(text, source["source_type"]):
@@ -1049,12 +1949,14 @@ def main():
                     if not image_urls and "買取" not in text:
                         continue
 
-                    seen.add(url)
+                    seen_urls.add(url)
 
                     post = {
+                        "source_id": source["id"],
                         "source_type": source["source_type"],
                         "buy_type_label": TYPE_META[source["source_type"]]["label"],
-                        "shop_name": source["name"],
+                        "shop_name": source["shop_name"],
+                        "shop_slug": source["shop_slug"],
                         "brand": source["brand"],
                         "brand_id": source["brand_id"],
                         "area": source["area"],
@@ -1071,7 +1973,8 @@ def main():
 
                 candidates.sort(key=lambda x: x["status_id"], reverse=True)
                 posts = candidates[:MAX_POSTS_PER_SOURCE]
-                posts_by_source[source_id] = posts
+
+                posts_by_source[source["id"]] = posts
                 all_data.extend(posts)
 
                 print("採用:", len(posts))
@@ -1081,18 +1984,47 @@ def main():
 
         browser.close()
 
-    html = build_html(posts_by_source, updated_at)
+    return posts_by_source, all_data, updated_at
 
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(html)
+
+# =========================
+# ファイル保存
+# =========================
+
+def write_file(path, content):
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
+def build_all_pages(posts_by_source, updated_at):
+    write_file("index.html", build_index_page(updated_at))
+    write_file("osaka.html", build_osaka_page(updated_at))
+    write_file("osaka-nihonbashi.html", build_area_page(posts_by_source, updated_at))
+
+    shops = get_physical_shops("osaka-nihonbashi")
+
+    for shop in shops:
+        store_html = build_store_page(shop, posts_by_source, updated_at)
+        write_file(STORES_DIR / f"{shop['shop_slug']}.html", store_html)
+
+
+def main():
+    posts_by_source, all_data, updated_at = collect_posts()
+
+    build_all_pages(posts_by_source, updated_at)
 
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(all_data, f, ensure_ascii=False, indent=2)
 
     print("")
-    print("index.html を生成しました")
-    print("data.json を生成しました")
-    print("データ件数:", len(all_data))
+    print("================================")
+    print("生成完了")
+    print("index.html")
+    print("osaka.html")
+    print("osaka-nihonbashi.html")
+    print("stores/*.html")
+    print("data.json")
+    print("================================")
 
     input("Enterで終了")
 

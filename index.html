@@ -4,9 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CardRadar｜ポケカ買取情報を探す</title>
-<meta name="description" content="CardRadarは、ポケカのシングル買取、BOX買取、定額買取、PSA買取、公式Web買取表、相場確認リンクをまとめて探せるサイトです。">
-
+<meta name="description" content="CardRadarは、ポケカのシングル買取・BOX買取・定額買取・PSA買取・公式Web買取表・相場確認を探せるサイトです。">
+<link rel="icon" type="image/png" href="icon-512.png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<meta name="theme-color" content="#050505">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -19,7 +24,7 @@ body {
   margin: 0;
   background: #050505;
   color: #f5f5f5;
-  font-family: "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", "Times New Roman", serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
 }
 
 body::before {
@@ -28,11 +33,11 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 16% 16%, rgba(255,255,255,.17), transparent 18%),
-    radial-gradient(circle at 22% 26%, rgba(255,255,255,.06), transparent 24%),
-    linear-gradient(90deg, rgba(255,255,255,.035), transparent 35%),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.015), rgba(255,255,255,.015) 1px, transparent 1px, transparent 5px);
-  opacity: .75;
+    radial-gradient(circle at 15% 13%, rgba(255,255,255,.13), transparent 17%),
+    radial-gradient(circle at 22% 25%, rgba(255,255,255,.045), transparent 23%),
+    linear-gradient(90deg, rgba(255,255,255,.025), transparent 35%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.012), rgba(255,255,255,.012) 1px, transparent 1px, transparent 5px);
+  opacity: .8;
   z-index: -2;
 }
 
@@ -42,1469 +47,617 @@ body::after {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, transparent 0%, transparent 70%, rgba(255,255,255,.035) 73%, transparent 76%),
-    linear-gradient(90deg, transparent 0%, transparent 78%, rgba(255,255,255,.03) 80%, transparent 84%),
+    linear-gradient(90deg, transparent 0%, transparent 70%, rgba(255,255,255,.027) 73%, transparent 77%),
+    linear-gradient(90deg, transparent 0%, transparent 80%, rgba(255,255,255,.02) 82%, transparent 86%),
     linear-gradient(180deg, #080808 0%, #030303 100%);
-  opacity: .9;
+  opacity: .95;
   z-index: -3;
 }
 
+a {
+  color: inherit;
+}
+
+.page-shell {
+  min-height: 100vh;
+}
+
 .hero {
-  min-height: 620px;
-  padding: 46px 7vw 32px;
-  position: relative;
-  overflow: hidden;
+  padding: 36px 7vw 30px;
 }
 
-.top-nav {
+.logo-row {
   display: flex;
-  justify-content: flex-end;
-  gap: 42px;
-  font-size: 13px;
-  letter-spacing: .28em;
-  color: rgba(255,255,255,.84);
-}
-
-.brand-block {
-  margin-top: 70px;
-  display: grid;
-  grid-template-columns: 220px 1fr;
   align-items: center;
-  gap: 48px;
+  gap: 16px;
 }
 
 .logo-mark {
-  font-size: 132px;
-  letter-spacing: -.18em;
-  line-height: .82;
+  font-family: "Times New Roman", serif;
+  font-size: 58px;
+  letter-spacing: -.16em;
+  line-height: .85;
+  text-shadow: 0 0 24px rgba(255,255,255,.18);
+}
+
+.logo-text {
+  font-family: "Times New Roman", serif;
+  letter-spacing: .36em;
+  font-size: 24px;
   font-weight: 400;
-  text-shadow: 0 0 28px rgba(255,255,255,.18);
 }
 
-.brand-name {
-  font-size: 42px;
-  letter-spacing: .46em;
+.logo-sub {
+  margin-top: 5px;
+  color: rgba(255,255,255,.48);
+  letter-spacing: .28em;
+  font-size: 11px;
+}
+
+.hero-large {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 7vw;
+}
+
+.hero-title {
+  margin-top: 42px;
+  font-family: "Times New Roman", serif;
   font-weight: 400;
-}
-
-.brand-sub {
-  margin-top: 14px;
-  color: rgba(255,255,255,.52);
-  letter-spacing: .48em;
-  font-size: 12px;
-}
-
-.copy {
-  margin-top: 46px;
-  line-height: 2.3;
-  letter-spacing: .22em;
-  color: rgba(255,255,255,.92);
-}
-
-.updated {
-  margin-top: 24px;
-  color: rgba(255,255,255,.45);
-  font-size: 12px;
+  font-size: clamp(36px, 9vw, 76px);
   letter-spacing: .18em;
+  line-height: 1.1;
 }
 
-.find-title {
-  margin-top: 82px;
-  font-size: 14px;
-  letter-spacing: .16em;
-  color: rgba(255,255,255,.86);
+.hero-copy {
+  margin-top: 24px;
+  color: rgba(255,255,255,.78);
+  line-height: 2;
+  letter-spacing: .1em;
 }
 
-.type-tabs {
-  margin-top: 14px;
+.selector-grid {
+  margin-top: 44px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(0,0,0,.28);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 }
 
-.type-tab {
-  border: 0;
-  border-right: 1px solid rgba(255,255,255,.13);
-  background: transparent;
-  color: white;
-  padding: 22px 14px;
-  cursor: pointer;
-  text-align: left;
-}
-
-.type-tab.active {
-  background: rgba(255,255,255,.075);
-  box-shadow: inset 0 0 22px rgba(255,255,255,.09);
-}
-
-.type-tab span {
+.select-card {
   display: block;
-  font-size: 15px;
+  text-decoration: none;
+  background: rgba(8,8,8,.76);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 28px;
+  min-height: 160px;
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.select-card:hover {
+  border-color: rgba(255,255,255,.32);
+  transform: translateY(-2px);
+}
+
+.select-card small {
+  display: block;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .28em;
+  font-size: 11px;
+}
+
+.select-card strong {
+  display: block;
+  margin-top: 18px;
+  font-size: 24px;
+  letter-spacing: .12em;
+  font-weight: 500;
+}
+
+.select-card p {
+  margin: 16px 0 0;
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.breadcrumb {
+  margin-top: 24px;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
   letter-spacing: .12em;
 }
 
-.type-tab small {
-  display: block;
-  margin-top: 7px;
-  color: rgba(255,255,255,.45);
-  letter-spacing: .35em;
-  font-size: 10px;
+.breadcrumb a {
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
 }
 
-.search-row {
-  margin-top: 24px;
+.area-title {
+  margin-top: 32px;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(34px, 9vw, 62px);
+  letter-spacing: .18em;
+  font-weight: 400;
+}
+
+.area-description {
+  max-width: 720px;
+  color: rgba(255,255,255,.72);
+  line-height: 1.9;
+  letter-spacing: .08em;
+}
+
+.sticky-search {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(5,5,5,.92);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  padding: 14px 7vw;
+}
+
+.search-main {
   display: grid;
-  grid-template-columns: 1fr 170px 170px 170px auto;
-  gap: 14px;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
   align-items: center;
 }
 
-.search-row input,
-.search-row select {
-  height: 58px;
-  background: rgba(0,0,0,.44);
-  border: 1px solid rgba(255,255,255,.13);
+.search-main input {
+  width: 100%;
+  height: 48px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.15);
   color: white;
-  padding: 0 18px;
-  font-family: inherit;
-  letter-spacing: .12em;
+  padding: 0 14px;
+  font-size: 15px;
+  outline: none;
 }
 
-.result-count {
-  color: rgba(255,255,255,.72);
-  letter-spacing: .16em;
+.reset-button {
+  height: 48px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: transparent;
+  color: white;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.chip-row {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.filter-chip {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.82);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
   white-space: nowrap;
 }
 
-main {
-  padding: 0 7vw 70px;
+.filter-chip.active {
+  background: rgba(255,255,255,.18);
+  border-color: rgba(255,255,255,.36);
 }
 
-.card-grid {
+.result-line {
+  margin-top: 10px;
+  color: rgba(255,255,255,.52);
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+
+main {
+  padding: 28px 7vw 80px;
+}
+
+.section-head {
+  margin: 34px 0 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: .16em;
+}
+
+.section-head p {
+  margin: 0;
+  color: rgba(255,255,255,.48);
+  font-size: 13px;
+}
+
+.shop-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 }
 
 .shop-card {
-  background: rgba(8,8,8,.78);
+  display: flex;
+  flex-direction: column;
+  background: rgba(8,8,8,.8);
   border: 1px solid rgba(255,255,255,.105);
-  min-height: 310px;
-  padding: 24px;
-  position: relative;
+  min-height: 460px;
+  text-decoration: none;
+  transition: border-color .15s ease, transform .15s ease;
+  overflow: hidden;
 }
 
 .shop-card:hover {
-  border-color: rgba(255,255,255,.25);
+  border-color: rgba(255,255,255,.3);
+  transform: translateY(-2px);
+}
+
+.thumb-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(255,255,255,.045);
+  overflow: hidden;
+}
+
+.thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.no-thumb {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,.32);
+  letter-spacing: .2em;
+  font-size: 12px;
+}
+
+.shop-body {
+  padding: 18px;
+  flex: 1;
 }
 
 .card-meta {
   display: flex;
   justify-content: space-between;
-  color: rgba(255,255,255,.46);
+  gap: 12px;
+  color: rgba(255,255,255,.48);
   font-size: 12px;
-  letter-spacing: .14em;
 }
 
-.shop-card h3 {
-  margin: 26px 0 7px;
+.shop-body h3 {
+  margin: 22px 0 8px;
   font-size: 21px;
-  font-weight: 400;
-  letter-spacing: .13em;
+  font-weight: 600;
+  letter-spacing: .06em;
 }
 
-.brand-en {
-  color: rgba(255,255,255,.45);
-  letter-spacing: .38em;
-  font-size: 11px;
+.shop-brand {
+  color: rgba(255,255,255,.52);
+  font-size: 12px;
+  letter-spacing: .2em;
 }
 
 .badges {
-  margin-top: 18px;
+  margin-top: 16px;
   display: flex;
-  gap: 8px;
+  gap: 7px;
   flex-wrap: wrap;
 }
 
 .badge {
   border: 1px solid rgba(255,255,255,.14);
-  padding: 5px 9px;
+  padding: 5px 8px;
   font-size: 11px;
-  color: rgba(255,255,255,.75);
-  letter-spacing: .11em;
+  color: rgba(255,255,255,.72);
 }
 
 .summary {
-  margin-top: 18px;
-  min-height: 78px;
-  color: rgba(255,255,255,.78);
-  line-height: 1.8;
+  margin-top: 16px;
+  color: rgba(255,255,255,.72);
+  line-height: 1.75;
   font-size: 13px;
 }
 
-.post-info {
-  margin-top: 18px;
+.card-footer {
+  padding: 0 18px 18px;
+  color: rgba(255,255,255,.82);
+  letter-spacing: .12em;
+  font-size: 13px;
+}
+
+.ad-card {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.14);
+  padding: 22px;
+  min-height: 190px;
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.post-num {
-  font-size: 34px;
+.ad-card small {
+  color: rgba(255,255,255,.42);
+  letter-spacing: .25em;
+  font-size: 11px;
 }
 
-.post-label {
-  color: rgba(255,255,255,.5);
-  font-size: 12px;
-  letter-spacing: .15em;
+.ad-card strong {
+  margin-top: 12px;
+  font-size: 20px;
+  letter-spacing: .08em;
 }
 
-.detail-button,
-.link-button {
-  margin-top: 18px;
-  width: 100%;
-  height: 48px;
-  background: transparent;
-  color: white;
-  border: 1px solid rgba(255,255,255,.15);
-  font-family: inherit;
-  letter-spacing: .2em;
-  cursor: pointer;
+.ad-card p {
+  color: rgba(255,255,255,.62);
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.store-layout {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.store-header {
+  margin-bottom: 24px;
+}
+
+.store-title {
+  font-size: clamp(34px, 8vw, 60px);
+  letter-spacing: .1em;
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+
+.store-sub {
+  color: rgba(255,255,255,.58);
+  letter-spacing: .16em;
+}
+
+.image-section {
+  margin-top: 34px;
+}
+
+.image-section h2 {
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: .16em;
+}
+
+.image-grid {
   display: grid;
-  place-items: center;
-  text-decoration: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
 }
 
-.post-details {
-  display: none;
-  margin-top: 18px;
-  border-top: 1px solid rgba(255,255,255,.1);
-  padding-top: 16px;
+.image-card {
+  background: rgba(8,8,8,.84);
+  border: 1px solid rgba(255,255,255,.11);
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.post-details.open {
+.image-card img {
+  width: 100%;
   display: block;
 }
 
-.post-item {
-  margin-top: 14px;
+.image-info {
   padding: 14px;
-  border: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.025);
 }
 
-.post-item p {
-  color: rgba(255,255,255,.76);
+.image-info p {
+  margin: 0;
+  color: rgba(255,255,255,.7);
+  line-height: 1.7;
   font-size: 13px;
-  line-height: 1.8;
 }
 
-.post-item a {
+.image-info small {
+  display: block;
+  margin-top: 10px;
+  color: rgba(255,255,255,.42);
+}
+
+.link-card {
+  background: rgba(8,8,8,.82);
+  border: 1px solid rgba(255,255,255,.11);
+  padding: 22px;
+}
+
+.link-card a {
+  display: inline-block;
+  margin-top: 16px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 12px 16px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.84);
+  z-index: 100;
+  display: none;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal.open {
+  display: block;
+}
+
+.modal-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  background: #090909;
+  border: 1px solid rgba(255,255,255,.16);
+  padding: 16px;
+}
+
+.modal-close {
+  display: block;
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.18);
   color: white;
+  padding: 10px 13px;
+  cursor: pointer;
+}
+
+.modal-image {
+  width: 100%;
+  display: block;
+  margin-top: 14px;
+}
+
+.modal-summary {
+  color: rgba(255,255,255,.78);
+  line-height: 1.8;
+  margin-top: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.modal-actions a,
+.modal-actions button {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 11px 13px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tweet-embed {
+  margin-top: 18px;
 }
 
 .hidden {
   display: none !important;
 }
 
-@media (max-width: 980px) {
-  .brand-block {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .logo-mark {
-    font-size: 92px;
-  }
-
-  .brand-name {
-    font-size: 30px;
-    letter-spacing: .32em;
-  }
-
-  .type-tabs {
-    display: flex;
-    overflow-x: auto;
-  }
-
-  .type-tab {
-    min-width: 165px;
-  }
-
-  .search-row {
-    grid-template-columns: 1fr;
-  }
-
-  .card-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .top-nav {
-    display: none;
+@media (max-width: 1100px) {
+  .shop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 520px) {
-  .hero,
+@media (max-width: 760px) {
+  .hero {
+    padding: 30px 18px 24px;
+  }
+
+  .hero-large {
+    padding: 30px 18px;
+  }
+
+  .selector-grid,
+  .shop-grid,
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-main {
+    grid-template-columns: 1fr;
+  }
+
+  .reset-button {
+    width: 100%;
+  }
+
   main {
-    padding-left: 18px;
-    padding-right: 18px;
+    padding: 24px 18px 72px;
   }
 
-  .brand-name {
-    font-size: 24px;
-    letter-spacing: .22em;
+  .section-head {
+    display: block;
   }
 
-  .copy {
-    font-size: 14px;
+  .shop-card {
+    min-height: auto;
+  }
+
+  .thumb-wrap {
+    aspect-ratio: 16 / 10;
+  }
+
+  .image-grid {
+    gap: 26px;
   }
 }
+
 </style>
 </head>
-
 <body>
 
-<section class="hero">
-  <nav class="top-nav">
-    <span>ABOUT</span>
-    <span>FAQ</span>
-    <span>CONTACT</span>
-  </nav>
+<div class="page-shell">
+  <section class="hero-large">
+    
+<div class="logo-row">
+  <div class="logo-mark">CR</div>
+  <div>
+    <div class="logo-text">CARDRADAR</div>
+    <div class="logo-sub">TRADING CARD PRICE RADAR</div>
+  </div>
+</div>
 
-  <div class="brand-block">
-    <div class="logo-mark">CR</div>
-    <div>
-      <div class="brand-name">CARDRADAR</div>
-      <div class="brand-sub">TRADING CARD PRICE RADAR</div>
-      <div class="copy">すべてのカードに、<br>いまの価値を。</div>
-      <div class="updated">LAST UPDATE : 2026/05/27 00:10</div>
+
+    <div class="hero-title">AREA<br>SELECT</div>
+
+    <p class="hero-copy">
+      ポケカ買取情報を、地域・店舗・買取タイプ別に。<br>
+      X買取表、BOX買取、定額買取、PSA買取、公式Web買取表、相場確認まで。
+    </p>
+
+    <div class="selector-grid">
+      <a class="select-card" href="osaka.html">
+        <small>KANSAI</small>
+        <strong>大阪</strong>
+        <p>日本橋エリアのポケカ買取表・BOX買取・定額買取を確認。</p>
+      </a>
+
+      <a class="select-card" href="#">
+        <small>KANTO</small>
+        <strong>東京</strong>
+        <p>秋葉原など、今後追加予定。</p>
+      </a>
+
+      <a class="select-card" href="#">
+        <small>CHUBU</small>
+        <strong>愛知</strong>
+        <p>大須など、今後追加予定。</p>
+      </a>
     </div>
-  </div>
 
-  <div class="find-title">何を探す？</div>
-
-  <div class="type-tabs">
-    <button class="type-tab active" data-filter-type="source" data-filter-value="all" onclick="setFilter('source','all')"><span>すべて</span><small>ALL</small></button>
-
-    <button class="type-tab" data-filter-type="source" data-filter-value="x_post_single" onclick="setFilter('source','x_post_single')"><span>シングル買取</span><small>SINGLE</small></button>
-
-    <button class="type-tab" data-filter-type="source" data-filter-value="x_post_box" onclick="setFilter('source','x_post_box')"><span>BOX買取</span><small>BOX</small></button>
-
-    <button class="type-tab" data-filter-type="source" data-filter-value="x_post_fixed" onclick="setFilter('source','x_post_fixed')"><span>定額買取</span><small>FIXED PRICE</small></button>
-
-    <button class="type-tab" data-filter-type="source" data-filter-value="x_post_psa" onclick="setFilter('source','x_post_psa')"><span>PSA買取</span><small>PSA</small></button>
-
-    <button class="type-tab" data-filter-type="source" data-filter-value="official_price_list" onclick="setFilter('source','official_price_list')"><span>公式Web買取表</span><small>OFFICIAL LIST</small></button>
-
-    <button class="type-tab" data-filter-type="source" data-filter-value="market_price_link" onclick="setFilter('source','market_price_link')"><span>相場確認</span><small>MARKET PRICE</small></button>
-
-  </div>
-
-  <div class="search-row">
-    <input id="searchInput" type="text" placeholder="店舗名・カード名・ブランド名で検索">
-
-    <select id="brandFilter" onchange="setFilter('brand', this.value)">
-      <option value="all">ブランド</option>
-<option value="dragonstar">ドラゴンスター</option>
-<option value="hareruya2">晴れる屋2</option>
-<option value="cardlabo">カードラボ</option>
-<option value="girafull">GIRAFULL</option>
-<option value="amtaf">アムタフ</option>
-<option value="gotcha">GOTCHA!</option>
-<option value="kuro">KURO</option>
-<option value="mimi">買取ミミ</option>
-<option value="clove">Clove</option>
-<option value="fullahead">フルアヘッド</option>
-<option value="mercari">メルカリ</option>
-
-    </select>
-
-    <select id="areaFilter" onchange="setFilter('area', this.value)">
-      <option value="all">地域</option>
-<option value="osaka-nihonbashi">大阪・日本橋</option>
-<option value="official-web">公式Web</option>
-<option value="market">相場確認</option>
-
-    </select>
-
-    <select id="typeFilter" onchange="setFilter('source', this.value)">
-      <option value="all">買取タイプ</option>
-<option value="x_post_single">シングル買取</option>
-<option value="x_post_box">BOX買取</option>
-<option value="x_post_fixed">定額買取</option>
-<option value="x_post_psa">PSA買取</option>
-<option value="official_price_list">公式Web買取表</option>
-<option value="market_price_link">相場確認</option>
-
-    </select>
-
-    <div class="result-count">検索結果：<span id="resultCount">0</span>件</div>
-  </div>
-</section>
-
-<main>
-  <div class="card-grid">
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="dragonstar"
-      data-area="osaka-nihonbashi"
-      data-search="ドラスタ オタロード中央 ドラゴンスター 大阪・日本橋 シングル買取 SINGLE ドラゴンスター オタロード中央店のポケカシングル買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>ドラスタ オタロード中央</h3>
-      <div class="brand-en">ドラゴンスター</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">ドラゴンスター</span>
-      </div>
-
-      <div class="summary">ドラゴンスター オタロード中央店のポケカシングル買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('_____________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="_____________x_post_single">
-
-        <div class="post-item">
-          <p>ドラゴンスターオタロード中央店 5月22日 #ポケカ アビスアイ WANTED更新しました ﾒｶﾞﾀﾞｰｸﾗｲex(MUR)(118/081) ￥110,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081) ￥72,000 ﾑｸ(SAR)(117/081) ￥17,000 ぜひ当店へお持ち込みください #ドラスタオタ中 1 2,628</p>
-          <a href="https://x.com/ds_otaroad_chuo/status/2057700611970224160" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスターオタロード中央店 5月22日 #ポケカ アビスアイ WANTED更新しました ﾒｶﾞﾀﾞｰｸﾗｲex(MUR)(118/081) ￥110,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081) ￥70,000 ﾑｸ(SAR)(117/081) ￥17,000 ぜひ当店へお持ち込みください #ドラスタオタ中 2,262</p>
-          <a href="https://x.com/ds_otaroad_chuo/status/2057690460806680773" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスターオタロード中央店 5月22日 #ポケカ アビスアイ WANTED更新しました ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081) ￥70,000 ﾑｸ(SAR)(117/081) ￥17,000 ﾒｶﾞﾀﾞｰｸﾗｲex(MUR)(118/081) ￥110,000 ぜひ当店へお持ち込みください #ドラスタオタ中 2,596</p>
-          <a href="https://x.com/ds_otaroad_chuo/status/2057682557739639004" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="dragonstar"
-      data-area="osaka-nihonbashi"
-      data-search="ドラスタ 日本橋本店 ドラゴンスター 大阪・日本橋 シングル買取 SINGLE ドラゴンスター 日本橋本店のポケカシングル買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>ドラスタ 日本橋本店</h3>
-      <div class="brand-en">ドラゴンスター</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">ドラゴンスター</span>
-      </div>
-
-      <div class="summary">ドラゴンスター 日本橋本店のポケカシングル買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('___________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="___________x_post_single">
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋本店 5月11日 ドラ スタ 本店 ORASTA #ポケモンカード高価買取 5/11更新Ver. お待ちしています 151マスターボールミラー 買取大募集 2 35 1.9万</p>
-          <a href="https://x.com/ds_nipponbashi/status/2053687873317036455" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋本店 5月8日 ドラ スタ 本店 ORASTA #ポケモンカード高価買取 5/8更新Ver. お待ちしています タイトル 買取表更新 まだまだ買取募集中です 1 45 1.7万</p>
-          <a href="https://x.com/ds_nipponbashi/status/2052565562044162243" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋本店 5月6日 ドラ スタ 本店 ORASTA #ポケカ高価買取 5/6更新Ver. 今流行のデッキパーツ大募集中です！！ お持ち込みお待ちしています (^^♪ 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 # # #ドラスタ本店 3,130</p>
-          <a href="https://x.com/ds_nipponbashi/status/2051889752517816450" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="dragonstar"
-      data-area="osaka-nihonbashi"
-      data-search="ドラスタ 日本橋2号店 ドラゴンスター 大阪・日本橋 シングル買取 SINGLE ドラゴンスター 日本橋2号店のポケカ買取表・WANTED情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>ドラスタ 日本橋2号店</h3>
-      <div class="brand-en">ドラゴンスター</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">ドラゴンスター</span>
-      </div>
-
-      <div class="summary">ドラゴンスター 日本橋2号店のポケカ買取表・WANTED情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('________2___x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="________2___x_post_single">
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋2号店 5月22日 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon 2 2,798</p>
-          <a href="https://x.com/ds_nipponbashi2/status/2057717780284064047" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋2号店 5月22日 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム新弾超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン 4,283</p>
-          <a href="https://x.com/ds_nipponbashi2/status/2057699169096065448" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋2号店 5月22日 ドラ スタ 2号店 ORA2! WANTED #ポケカ ╰( &#x27;ω&#x27;)╮=͟͟͞͞◒ 取扱強化 買取表ダ 2号店はポケモンカードゲーム超本気買取!! ※商品の状態や在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 #ドラ2 #ポケモン #pokemon 1 37 1.8万</p>
-          <a href="https://x.com/ds_nipponbashi2/status/2057657730962198596" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="dragonstar"
-      data-area="osaka-nihonbashi"
-      data-search="ドラスタ 日本橋3号店 ドラゴンスター 大阪・日本橋 シングル買取 SINGLE ドラゴンスター 日本橋3号店のポケカシングル買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>ドラスタ 日本橋3号店</h3>
-      <div class="brand-en">ドラゴンスター</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">ドラゴンスター</span>
-      </div>
-
-      <div class="summary">ドラゴンスター 日本橋3号店のポケカシングル買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('________3___x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="________3___x_post_single">
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋3号店 5月24日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/24　更新Ver. 朝イチ新弾の買取表です お持ち込みお待ちしております ※商品の状態や、在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 6 3,558</p>
-          <a href="https://x.com/ds_nipponbashi3/status/2058352825004855639" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋3号店 5月23日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/23　更新Ver. 下記４枚大募集 お持ち込みお待ちしております ※商品の状態や、在庫状況により減額の可能性があり、表示価格の適用外となる場合がございます。 3 1,966</p>
-          <a href="https://x.com/ds_nipponbashi3/status/2058102176413630831" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスター日本橋3号店 5月23日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/23　更新Ver. ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000 ﾒｶﾞﾀﾞｰｸﾗｲex(SAR)(114/081)￥68,000 1,946</p>
-          <a href="https://x.com/ds_nipponbashi3/status/2058006589584392543" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="dragonstar"
-      data-area="osaka-nihonbashi"
-      data-search="ドラスタ なんさん通り店 ドラゴンスター 大阪・日本橋 シングル買取 SINGLE ドラゴンスター なんさん通り店のポケカ買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>ドラスタ なんさん通り店</h3>
-      <div class="brand-en">ドラゴンスター</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">ドラゴンスター</span>
-      </div>
-
-      <div class="summary">ドラゴンスター なんさん通り店のポケカ買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('_____________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="_____________x_post_single">
-
-        <div class="post-item">
-          <p>ドラゴンスターなんば なんさん通り店 5月22日 #ポケカ　#ポケモンカード 5/22更新買取表 メガダークライ【SAR】　￥70000 etc... 新弾のメガダークライを募集しております ぜひお持ち込みください ご来店お待ちしております 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 1 2,436</p>
-          <a href="https://x.com/ds_namba_nansan/status/2057707254460056053" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスターなんば なんさん通り店 5月22日 【#ポケモンカード】 最新弾 ‍#アビスアイ‍ 高価買取表更新 #メガダークライex(MUR) 買取￥ #ムク(SAR) 買取￥ #ヤドラン(AR) 買取￥ #ボルト雷エネルギー 買取￥ ...etc ぜひ #ドラスタなんさん へお持ち込みください 8 4,492</p>
-          <a href="https://x.com/ds_namba_nansan/status/2057677204809490687" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>ドラゴンスターなんば なんさん通り店 5月21日 【#ポケモンカード】【その⑥】 ハイレア高価買取表更新 #ナンジャモ(SR) 買取￥ #ベルのまごころ(SAR) 買取￥ #リーリエの決心(SAR) 買取￥ #ルチアのアピール(SAR) 買取￥ ...etc ぜひ 6 4,077</p>
-          <a href="https://x.com/ds_namba_nansan/status/2057438864952701099" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="hareruya2"
-      data-area="osaka-nihonbashi"
-      data-search="晴れる屋2なんば 晴れる屋2 大阪・日本橋 シングル買取 SINGLE 晴れる屋2なんば店のポケカ買取表。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>晴れる屋2なんば</h3>
-      <div class="brand-en">晴れる屋2</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">晴れる屋2</span>
-      </div>
-
-      <div class="summary">晴れる屋2なんば店のポケカ買取表。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('____2____x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="____2____x_post_single">
-
-        <div class="post-item">
-          <p>晴れる屋2 なんば店（ハレツーなんば店/ポケカ専門店） 5月22日 【買取情報】(2026/5/22　12:30時点) アビスアイ 現在の買取金額はこちらです ハイレアもデッキパーツも ぜひハレツーなんば店へ お持ちください #ハレツーなんば店 #ポケカ #大阪日本橋 3 4,565</p>
-          <a href="https://x.com/hareruya2namba/status/2057665798425260140" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>晴れる屋2 なんば店（ハレツーなんば店/ポケカ専門店） 5月22日 ハレツーなんば店買取情報 本日の #ハレツー本気の買取強化 はこちらです ラインナップが新たに更新されました ぜひお持ちください ハレツーなんば店では 全てのシリーズ、レギュレーションの ポケモンカードをお取り扱いしております その他の買取情報はこちら 1,620</p>
-          <a href="https://x.com/hareruya2namba/status/2057630994807898449" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>晴れる屋2 なんば店（ハレツーなんば店/ポケカ専門店） 5月22日 【買取情報】(2026/5/22　10:00時点) 待ちに待った アビスアイの発売日ですね ハレツーなんば店も オープンいたしております たくさんの買取持ち込みを お待ちしております #ポケカ #大阪日本橋 #ハレツーなんば店 1 1 2,330</p>
-          <a href="https://x.com/hareruya2namba/status/2057630505013768386" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="cardlabo"
-      data-area="osaka-nihonbashi"
-      data-search="カードラボなんば店 カードラボ 大阪・日本橋 シングル買取 SINGLE カードラボなんば店のポケカ買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>カードラボなんば店</h3>
-      <div class="brand-en">カードラボ</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">カードラボ</span>
-      </div>
-
-      <div class="summary">カードラボなんば店のポケカ買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('__________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="__________x_post_single">
-
-        <div class="post-item">
-          <p>カードラボなんば店@新規スタッフ募集中♪ 5月25日 返信先: さん 【ポケモンカード　買取情報】 #乱戦スクランブル 乱戦スクランブルシリーズ買取募集中！！ ミュウLv.39　￥200,000 ミュウツーLv.65　￥150,000 ※完品の買取金額となります。 お持ち込みはカードラボなんば店まで！！ 1,392</p>
-          <a href="https://x.com/namba_clabo/status/2058871005515551137" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>カードラボなんば店@新規スタッフ募集中♪ 5月25日 返信先: さん 【ポケモンカードゲーム　買取情報】 ポケカ定額買取 定額買取強化中！！ SR定額300円 RR定額 10円 AR定額100円 ※美品の買取価格になります ぜひカードラボなんば店までお持ち込みください 1 1,534</p>
-          <a href="https://x.com/namba_clabo/status/2058870927761518898" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>カードラボなんば店@新規スタッフ募集中♪ 5月25日 返信先: さん 【ポケモンカード　買取情報】 厳選アートレア買取表 イーブイ AR ￥100,000 エリカのモンジャラ ￥20,000 フシギダネ プロモ ￥17,000 ゼニガメ プロモ ￥20,000 ヒトカゲ プロモ ￥28,000 お持ち込みはカードラボなんば店まで！！ 1 532</p>
-          <a href="https://x.com/namba_clabo/status/2058868674677940374" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="cardlabo"
-      data-area="osaka-nihonbashi"
-      data-search="カードラボ大阪日本橋店 カードラボ 大阪・日本橋 シングル買取 SINGLE カードラボ大阪日本橋店のポケカ買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>カードラボ大阪日本橋店</h3>
-      <div class="brand-en">カードラボ</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">カードラボ</span>
-      </div>
-
-      <div class="summary">カードラボ大阪日本橋店のポケカ買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('____________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="____________x_post_single">
-
-        <div class="post-item">
-          <p>カードラボ大阪日本橋店@新規スタッフ募集中♪ 5月12日 【ポケモンカードゲーム 買取情報】 ブイズ買取表 ブラッキーVMAX SA ¥, ブラッキー ナイトバトル ¥, ポケカ買取はぜひ カードラボ大阪日本橋店までお越しください 849</p>
-          <a href="https://x.com/nipponbashi_lab/status/2054162664268689675" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>カードラボ大阪日本橋店@新規スタッフ募集中♪ 5月12日 【ポケモンカードゲーム 買取情報】 リザードン買取表 リザードン☆ δ-デルタ種 ¥,, リザードン クリスタルタイプ ¥,, ポケカ買取はぜひ カードラボ大阪日本橋店までお越しください 689</p>
-          <a href="https://x.com/nipponbashi_lab/status/2054162600708264246" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>カードラボ大阪日本橋店@新規スタッフ募集中♪ 5月12日 【ポケモンカードゲーム 買取情報】 GX時代のTAG TEAM　買取大募集中 掲載されていないカードも大歓迎 ポケカの買取はぜひ、天空ラボまで!! 697</p>
-          <a href="https://x.com/nipponbashi_lab/status/2054162538456355157" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="girafull"
-      data-area="osaka-nihonbashi"
-      data-search="GIRAFULLなんば店 GIRAFULL 大阪・日本橋 シングル買取 SINGLE GIRAFULLなんば店のポケカ買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>GIRAFULLなんば店</h3>
-      <div class="brand-en">GIRAFULL</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">GIRAFULL</span>
-      </div>
-
-      <div class="summary">GIRAFULLなんば店のポケカ買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('GIRAFULL_____x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="GIRAFULL_____x_post_single">
-
-        <div class="post-item">
-          <p>トレカ専門店GIRAFULLなんば店(ビル一棟) 5月23日 #ポケカ #ポケモンカード 5/23 最新弾 【#アビスアイ】 大変お待たせ致しました 買取受付再開しております！ メガドリュウズやばすぎる #GIRAFULLなんば店 2 4 36 2.3万</p>
-          <a href="https://x.com/GIRAFULL_Namba/status/2058080711232639464" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>トレカ専門店GIRAFULLなんば店(ビル一棟) 5月23日 #ポケカ #ポケモンカード 5/23 最新弾 【#アビスアイ】 朝一買取表です 本日も沢山のご来店お待ちしております #GIRAFULLなんば店 7 8,634</p>
-          <a href="https://x.com/GIRAFULL_Namba/status/2058016669336035545" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>トレカ専門店GIRAFULLなんば店(ビル一棟) 5月22日 #ポケカ #ポケモンカード 5/22 最新弾 【#アビスアイ】 メガダークライ買取値段更新 1 3,172</p>
-          <a href="https://x.com/GIRAFULL_Namba/status/2057659704835551400" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="girafull"
-      data-area="osaka-nihonbashi"
-      data-search="GIRAFULL大阪日本橋店 GIRAFULL 大阪・日本橋 シングル買取 SINGLE GIRAFULL大阪日本橋店のポケカ買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>GIRAFULL大阪日本橋店</h3>
-      <div class="brand-en">GIRAFULL</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">GIRAFULL</span>
-      </div>
-
-      <div class="summary">GIRAFULL大阪日本橋店のポケカ買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('GIRAFULL_______x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="GIRAFULL_______x_post_single">
-
-        <div class="post-item">
-          <p>トレカ専門店　GIRAFULL大阪日本橋店 5月1日 #ポケモンカード WANTED ～5/1（金）更新～ 汎用、デッキパーツ買取強化中です！ たくさんのお持込みお待ちしております！ ※在庫数・相場により 価格は変動いたします #GIRAFULL大阪日本橋店買取 1 28 1.8万</p>
-          <a href="https://x.com/girafull_o_n/status/2050073323699335655" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>トレカ専門店　GIRAFULL大阪日本橋店 5月1日 #ポケモンカード WANTED ～5/1（金）更新～ ACESPEC買取大募集です！ たくさんのお持込みお待ちしております！ ※在庫数・相場により 価格は変動いたします #GIRAFULL大阪日本橋店買取 1 15 1万</p>
-          <a href="https://x.com/girafull_o_n/status/2050073074792644651" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>トレカ専門店　GIRAFULL大阪日本橋店 4月22日 #ポケカ/シングル入荷ご案内 25thプロモブラッキー、 他イロイロ買取させていただきました 状態確認だけでもOKです お求めの方はぜひ 「#GIRAFULL大阪日本橋店」まで 1,470</p>
-          <a href="https://x.com/girafull_o_n/status/2046861892216639687" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="amtaf"
-      data-area="osaka-nihonbashi"
-      data-search="アムタフ シングル買取 アムタフ 大阪・日本橋 シングル買取 SINGLE アムタフのポケカシングル買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>アムタフ シングル買取</h3>
-      <div class="brand-en">アムタフ</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">アムタフ</span>
-      </div>
-
-      <div class="summary">アムタフのポケカシングル買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('____________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="____________x_post_single">
-
-        <div class="post-item">
-          <p>トレカ・フィギュア買取アムタフ日本橋店 5月10日 アムタフはBOX以外にも PSA鑑定品、シングルカード強化買取 買取強化中 是非お持ち込みください シングルカード、 PSA全力買取 買取表にないカードも高価買取します 是非お持ち込みください #ポケモンカード #ポケカ #ポケカ買取 1 8,473</p>
-          <a href="https://x.com/AMTAF_SHOP/status/2053304670135955661" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>トレカ・フィギュア買取アムタフ日本橋店 5月9日 アムタフはBOX以外にも PSA鑑定品、シングルカード強化買取 買取強化中 是非お持ち込みください シングルカード、 PSA全力買取 買取表にないカードも高価買取します 是非お持ち込みください #ポケモンカード #ポケカ #ポケカ買取 1 8,639</p>
-          <a href="https://x.com/AMTAF_SHOP/status/2052946747761328612" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>トレカ・フィギュア買取アムタフ日本橋店 5月8日 WANTED 是非お持ち込みください シングルカード、 PSA全力買取 買取表にないカードも高価買取します 是非お持ち込みください #ポケモンカード #ポケカ #ポケカ買取 1 4,602</p>
-          <a href="https://x.com/AMTAF_SHOP/status/2052608013924696073" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_box"
-      data-brand="amtaf"
-      data-area="osaka-nihonbashi"
-      data-search="アムタフ BOX買取 アムタフ 大阪・日本橋 BOX買取 BOX アムタフのポケカ未開封BOX・パック買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>BOX買取</span>
-      </div>
-
-      <h3>アムタフ BOX買取</h3>
-      <div class="brand-en">アムタフ</div>
-
-      <div class="badges">
-        <span class="badge">BOX買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">アムタフ</span>
-      </div>
-
-      <div class="summary">アムタフのポケカ未開封BOX・パック買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">0</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('_____BOX___x_post_box')">詳細を見る →</button>
-
-      <div class="post-details" id="_____BOX___x_post_box">
-<div class="post-item"><p>該当する投稿が見つかりませんでした。</p></div>
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_fixed"
-      data-brand="amtaf"
-      data-area="osaka-nihonbashi"
-      data-search="アムタフ 定額買取 アムタフ 大阪・日本橋 定額買取 FIXED PRICE アムタフの定額買取・まとめ買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>定額買取</span>
-      </div>
-
-      <h3>アムタフ 定額買取</h3>
-      <div class="brand-en">アムタフ</div>
-
-      <div class="badges">
-        <span class="badge">定額買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">アムタフ</span>
-      </div>
-
-      <div class="summary">アムタフの定額買取・まとめ買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">0</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('__________x_post_fixed')">詳細を見る →</button>
-
-      <div class="post-details" id="__________x_post_fixed">
-<div class="post-item"><p>該当する投稿が見つかりませんでした。</p></div>
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="gotcha"
-      data-area="osaka-nihonbashi"
-      data-search="GOTCHA! シングル買取 GOTCHA! 大阪・日本橋 シングル買取 SINGLE GOTCHA!のポケカシングル買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>GOTCHA! シングル買取</h3>
-      <div class="brand-en">GOTCHA!</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">GOTCHA!</span>
-      </div>
-
-      <div class="summary">GOTCHA!のポケカシングル買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('GOTCHA_________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="GOTCHA_________x_post_single">
-
-        <div class="post-item">
-          <p>カードショップ GOTCHA! 5月24日 【#ポケカ #PSA #最低保証】 ポケカ PSA10 買取 最低保証 数量限定 1枚 ¥ 6,000- 買取 1枚 ¥ 6,000- 買取 1枚 ¥ 6,000- 買取 (対象レアリティ : AR/CHR/CSR/HR/SR/SSR/SAR) 本日もたくさんの持ち込みお待ちしております 1,489</p>
-          <a href="https://x.com/cardshop_gotcha/status/2058390250872074527" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>カードショップ GOTCHA! 5月23日 【ポケカBOX買取強化】 アビスアイ → 15,000円 アビスアイ → 15,000円 アビスアイ → 15,000円 数量限定買取価格です！！ ※シュリンク付きのみ ※上記は満額買取時の買取金額です たくさんのお持ち込みお待ちしております #ポケモンカード #ポケモン #BOX #買取 引用 カードショップ GOTCHA! 5月23日 【カードショップGOTCHA!買取価格情報】 ポケモン...</p>
-          <a href="https://x.com/cardshop_gotcha/status/2058033006363947337" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>カードショップ GOTCHA! 5月23日 【カードショップGOTCHA!買取価格情報】 ポケモンカードBOX 強化買取 5/23　更新 アビスアイ ▷▷15,000円 ニンジャスピナー ▷▷11,000円 MEGAドリームex ▷▷15,100円 メガシンフォニア ▷▷10,600円 ロケット団の栄光 ▷▷25,000円 1 1 1 2.4万</p>
-          <a href="https://x.com/cardshop_gotcha/status/2058032295421055432" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_box"
-      data-brand="gotcha"
-      data-area="osaka-nihonbashi"
-      data-search="GOTCHA! BOX買取 GOTCHA! 大阪・日本橋 BOX買取 BOX GOTCHA!のポケカ未開封BOX・パック買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>BOX買取</span>
-      </div>
-
-      <h3>GOTCHA! BOX買取</h3>
-      <div class="brand-en">GOTCHA!</div>
-
-      <div class="badges">
-        <span class="badge">BOX買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">GOTCHA!</span>
-      </div>
-
-      <div class="summary">GOTCHA!のポケカ未開封BOX・パック買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('GOTCHA__BOX___x_post_box')">詳細を見る →</button>
-
-      <div class="post-details" id="GOTCHA__BOX___x_post_box">
-
-        <div class="post-item">
-          <p>カードショップ GOTCHA! 5月22日 【カードショップGOTCHA!買取価格情報】 ポケモンカードBOX 強化買取 5/22　更新 ニンジャスピナー ▷▷10,200円 MEGAドリームex ▷▷15,200円 メガシンフォニア ▷▷10,600円 ロケット団の栄光 ▷▷27,500円 ※シュリンク付きのみ 1 1 1 1.3万</p>
-          <a href="https://x.com/cardshop_gotcha/status/2057666348051005642" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>カードショップ GOTCHA! 5月21日 【カードショップGOTCHA!買取価格情報】 ポケモンカードBOX 強化買取 5/21　更新 ニンジャスピナー ▷▷10,200円 MEGAドリームex ▷▷16,000円 メガシンフォニア ▷▷10,600円 ロケット団の栄光 ▷▷27,500円 ※シュリンク付きのみ 1 1,820</p>
-          <a href="https://x.com/cardshop_gotcha/status/2057310080484397429" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>カードショップ GOTCHA! 5月19日 【カードショップGOTCHA!買取価格情報】 ポケモンカードBOX 強化買取 5/18　更新 ニンジャスピナー ▷▷10,500円 MEGAドリームex ▷▷16,400円 メガシンフォニア ▷▷11,300円 ロケット団の栄光 ▷▷27,500円 ※シュリンク付きのみ 1 3 2,356</p>
-          <a href="https://x.com/cardshop_gotcha/status/2056582273886249216" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="kuro"
-      data-area="osaka-nihonbashi"
-      data-search="KURO シングル買取 KURO 大阪・日本橋 シングル買取 SINGLE KUROのポケカシングル買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>KURO シングル買取</h3>
-      <div class="brand-en">KURO</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">KURO</span>
-      </div>
-
-      <div class="summary">KUROのポケカシングル買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('KURO________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="KURO________x_post_single">
-
-        <div class="post-item">
-          <p>トレカショップKURO大阪日本橋店 5月25日 【5/25ポケカ買取価格】 〔数量限定買取強化〕 スタートデッキ100 バトルコレクション：3000 スターターセットMEGA ゲンガーex：1800 スターターセットex「マリィのモルペコ＆オーロンゲex」 1800 横浜ピカチュウデッキセット：54000 ハイクラスデッキゲンガーVMAX：65000 3 9,037</p>
-          <a href="https://x.com/kuro_tcg/status/2058759199010767325" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>トレカショップKURO大阪日本橋店 5月25日 【5/25ポケカ買取価格】 アビスアイ：14000 ニンジャスピナー：11500 ムニキスゼロ：8000 メガドリームex：15300 インフェルノX：23500 メガブレイブ：11500 メガシンフォニア：10200 ブラックボルト：22000 ホワイトフレア：21000 ブラックボルト デラックス：27000 1 11 1.4万</p>
-          <a href="https://x.com/kuro_tcg/status/2058758914553028912" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>トレカショップKURO大阪日本橋店 5月25日 本日5月25日（日）の買取価格はこちら 新弾ポケカ アビスアイ BOXシュリンクあり 14,000円 BOXシュリンクなし 12,000円 カートン【未開封】170,000円 パック 140円 新弾BOXは大きな凹み、シュリンク破れ以外の減額なし みなさまのご来店お待ちしております 7 6,791</p>
-          <a href="https://x.com/kuro_tcg/status/2058758539334811900" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_box"
-      data-brand="kuro"
-      data-area="osaka-nihonbashi"
-      data-search="KURO BOX買取 KURO 大阪・日本橋 BOX買取 BOX KUROのポケカ未開封BOX・パック・カートン買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>BOX買取</span>
-      </div>
-
-      <h3>KURO BOX買取</h3>
-      <div class="brand-en">KURO</div>
-
-      <div class="badges">
-        <span class="badge">BOX買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">KURO</span>
-      </div>
-
-      <div class="summary">KUROのポケカ未開封BOX・パック・カートン買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">1</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('KURO_BOX___x_post_box')">詳細を見る →</button>
-
-      <div class="post-details" id="KURO_BOX___x_post_box">
-
-        <div class="post-item">
-          <p>トレカショップKURO大阪日本橋店 5月24日 本日5月24日（日）の買取価格はこちら 新弾ポケカ アビスアイ BOXシュリンクあり 15,300円 BOXシュリンクなし 13,000円 カートン【未開封】188,000円 パック 140円 新弾BOXは大きな凹み、シュリンク破れ以外の減額なし みなさまのご来店お待ちしております 6 6,226</p>
-          <a href="https://x.com/kuro_tcg/status/2058395432930390459" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_single"
-      data-brand="mimi"
-      data-area="osaka-nihonbashi"
-      data-search="買取ミミ シングル買取 買取ミミ 大阪・日本橋 シングル買取 SINGLE 買取ミミのポケカシングル買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>シングル買取</span>
-      </div>
-
-      <h3>買取ミミ シングル買取</h3>
-      <div class="brand-en">買取ミミ</div>
-
-      <div class="badges">
-        <span class="badge">シングル買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">買取ミミ</span>
-      </div>
-
-      <div class="summary">買取ミミのポケカシングル買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">3</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('____________x_post_single')">詳細を見る →</button>
-
-      <div class="post-details" id="____________x_post_single">
-
-        <div class="post-item">
-          <p>買取ミミ【大阪日本橋・カードショップ】 4月29日 04/29(水) ポケモンカードWANTED ニンジャスピナー 13,400 ブラックボルト 29,000円 シャイニートレジャー 20,700円 VSTARユニバース 33,500円 5,470</p>
-          <a href="https://x.com/mimi_kaitori/status/2049320649253093862" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>買取ミミ【大阪日本橋・カードショップ】 4月28日 04/28(火) ポケモンカードWANTED メガドリーム 17,700円 インフェルノX 28,500円 シャイニートレジャー 20,700円 VSTARユニバース 33,500円 5,022</p>
-          <a href="https://x.com/mimi_kaitori/status/2048955703281451439" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-        <div class="post-item">
-          <p>買取ミミ【大阪日本橋・カードショップ】 4月26日 04/26(日) ポケモンカードWANTED メガドリーム 17,700円 テラスタルフェス 24,500円 黒炎の支配者 24,000円 シャイニートレジャー 20,700円 1 5,950</p>
-          <a href="https://x.com/mimi_kaitori/status/2048230854946894209" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
-        </div>
-
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="x_post_fixed"
-      data-brand="mimi"
-      data-area="osaka-nihonbashi"
-      data-search="買取ミミ 定額買取 買取ミミ 大阪・日本橋 定額買取 FIXED PRICE 買取ミミの定額買取・まとめ買取情報。"
-    >
-      <div class="card-meta">
-        <span>大阪・日本橋</span>
-        <span>定額買取</span>
-      </div>
-
-      <h3>買取ミミ 定額買取</h3>
-      <div class="brand-en">買取ミミ</div>
-
-      <div class="badges">
-        <span class="badge">定額買取</span>
-        <span class="badge">大阪・日本橋</span>
-        <span class="badge">買取ミミ</span>
-      </div>
-
-      <div class="summary">買取ミミの定額買取・まとめ買取情報。</div>
-
-      <div class="post-info">
-        <span class="post-num">0</span>
-        <span class="post-label">最新投稿</span>
-      </div>
-
-      <button class="detail-button" onclick="toggleDetails('__________x_post_fixed')">詳細を見る →</button>
-
-      <div class="post-details" id="__________x_post_fixed">
-<div class="post-item"><p>該当する投稿が見つかりませんでした。</p></div>
-      </div>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="official_price_list"
-      data-brand="clove"
-      data-area="official-web"
-      data-search="Clove Base Clove 公式Web 公式Web買取表 OFFICIAL LIST ポケモンカードの公式Web買取表。"
-    >
-      <div class="card-meta">
-        <span>公式Web</span>
-        <span>公式Web買取表</span>
-      </div>
-
-      <h3>Clove Base</h3>
-      <div class="brand-en">Clove</div>
-
-      <div class="badges">
-        <span class="badge">公式Web買取表</span>
-        <span class="badge">公式Web</span>
-        <span class="badge">Clove</span>
-      </div>
-
-      <div class="summary">ポケモンカードの公式Web買取表。</div>
-
-      <a class="link-button" href="https://base.clove.jp/prices/pokemon" target="_blank" rel="noopener noreferrer">ページを開く →</a>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="official_price_list"
-      data-brand="fullahead"
-      data-area="official-web"
-      data-search="フルアヘッド フルアヘッド 公式Web 公式Web買取表 OFFICIAL LIST ポケカを含むTCGの公式Web買取表。"
-    >
-      <div class="card-meta">
-        <span>公式Web</span>
-        <span>公式Web買取表</span>
-      </div>
-
-      <h3>フルアヘッド</h3>
-      <div class="brand-en">フルアヘッド</div>
-
-      <div class="badges">
-        <span class="badge">公式Web買取表</span>
-        <span class="badge">公式Web</span>
-        <span class="badge">フルアヘッド</span>
-      </div>
-
-      <div class="summary">ポケカを含むTCGの公式Web買取表。</div>
-
-      <a class="link-button" href="https://fullahead-buy.com/" target="_blank" rel="noopener noreferrer">ページを開く →</a>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="market_price_link"
-      data-brand="mercari"
-      data-area="market"
-      data-search="メルカリ ポケカ相場 メルカリ 相場確認 相場確認 MARKET PRICE メルカリでポケカ相場を確認する検索リンク。"
-    >
-      <div class="card-meta">
-        <span>相場確認</span>
-        <span>相場確認</span>
-      </div>
-
-      <h3>メルカリ ポケカ相場</h3>
-      <div class="brand-en">メルカリ</div>
-
-      <div class="badges">
-        <span class="badge">相場確認</span>
-        <span class="badge">相場確認</span>
-        <span class="badge">メルカリ</span>
-      </div>
-
-      <div class="summary">メルカリでポケカ相場を確認する検索リンク。</div>
-
-      <a class="link-button" href="https://jp.mercari.com/search?keyword=%E3%83%9D%E3%82%B1%E3%82%AB" target="_blank" rel="noopener noreferrer">ページを開く →</a>
-
-    </article>
-
-    <article class="shop-card"
-      data-source="market_price_link"
-      data-brand="mercari"
-      data-area="market"
-      data-search="メルカリ BOX相場 メルカリ 相場確認 相場確認 MARKET PRICE メルカリでポケカ未開封BOX相場を確認する検索リンク。"
-    >
-      <div class="card-meta">
-        <span>相場確認</span>
-        <span>相場確認</span>
-      </div>
-
-      <h3>メルカリ BOX相場</h3>
-      <div class="brand-en">メルカリ</div>
-
-      <div class="badges">
-        <span class="badge">相場確認</span>
-        <span class="badge">相場確認</span>
-        <span class="badge">メルカリ</span>
-      </div>
-
-      <div class="summary">メルカリでポケカ未開封BOX相場を確認する検索リンク。</div>
-
-      <a class="link-button" href="https://jp.mercari.com/search?keyword=%E3%83%9D%E3%82%B1%E3%82%AB%20BOX%20%E6%9C%AA%E9%96%8B%E5%B0%81" target="_blank" rel="noopener noreferrer">ページを開く →</a>
-
-    </article>
-
-  </div>
-</main>
-
-<script>
-const filters = {
-  source: "all",
-  brand: "all",
-  area: "all",
-  search: ""
-};
-
-function setFilter(type, value) {
-  filters[type] = value;
-
-  if (type === "source") {
-    document.querySelectorAll('[data-filter-type="source"]').forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.filterValue === value);
-    });
-
-    const typeFilter = document.getElementById("typeFilter");
-    if (typeFilter) typeFilter.value = value;
-  }
-
-  applyFilters();
-}
-
-function applyFilters() {
-  filters.search = document.getElementById("searchInput").value.trim().toLowerCase();
-
-  const cards = document.querySelectorAll(".shop-card");
-  let count = 0;
-
-  cards.forEach(card => {
-    const sourceOk = filters.source === "all" || card.dataset.source === filters.source;
-    const brandOk = filters.brand === "all" || card.dataset.brand === filters.brand;
-    const areaOk = filters.area === "all" || card.dataset.area === filters.area;
-    const searchOk = !filters.search || card.dataset.search.toLowerCase().includes(filters.search);
-
-    if (sourceOk && brandOk && areaOk && searchOk) {
-      card.classList.remove("hidden");
-      count++;
-    } else {
-      card.classList.add("hidden");
-    }
-  });
-
-  document.getElementById("resultCount").textContent = count;
-}
-
-function toggleDetails(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle("open");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("searchInput").addEventListener("input", applyFilters);
-  applyFilters();
-});
-</script>
+    <div class="updated">LAST UPDATE : 2026/05/27 01:25</div>
+  </section>
+</div>
 
 </body>
 </html>

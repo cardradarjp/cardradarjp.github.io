@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardRadar｜ドラスタ なんさん通り店</title>
+<meta name="description" content="CardRadarは、ポケカのシングル買取・BOX買取・定額買取・PSA買取・公式Web買取表・相場確認を探せるサイトです。">
+<link rel="icon" type="image/png" href="../icon-512.png">
+<link rel="apple-touch-icon" href="../icon-512.png">
+<meta name="theme-color" content="#050505">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #050505;
+  color: #f5f5f5;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 13%, rgba(255,255,255,.13), transparent 17%),
+    radial-gradient(circle at 22% 25%, rgba(255,255,255,.045), transparent 23%),
+    linear-gradient(90deg, rgba(255,255,255,.025), transparent 35%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.012), rgba(255,255,255,.012) 1px, transparent 1px, transparent 5px);
+  opacity: .8;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0%, transparent 70%, rgba(255,255,255,.027) 73%, transparent 77%),
+    linear-gradient(90deg, transparent 0%, transparent 80%, rgba(255,255,255,.02) 82%, transparent 86%),
+    linear-gradient(180deg, #080808 0%, #030303 100%);
+  opacity: .95;
+  z-index: -3;
+}
+
+a {
+  color: inherit;
+}
+
+.page-shell {
+  min-height: 100vh;
+}
+
+.hero {
+  padding: 36px 7vw 30px;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-mark {
+  font-family: "Times New Roman", serif;
+  font-size: 58px;
+  letter-spacing: -.16em;
+  line-height: .85;
+  text-shadow: 0 0 24px rgba(255,255,255,.18);
+}
+
+.logo-text {
+  font-family: "Times New Roman", serif;
+  letter-spacing: .36em;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.logo-sub {
+  margin-top: 5px;
+  color: rgba(255,255,255,.48);
+  letter-spacing: .28em;
+  font-size: 11px;
+}
+
+.hero-large {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 7vw;
+}
+
+.hero-title {
+  margin-top: 42px;
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(36px, 9vw, 76px);
+  letter-spacing: .18em;
+  line-height: 1.1;
+}
+
+.hero-copy {
+  margin-top: 24px;
+  color: rgba(255,255,255,.78);
+  line-height: 2;
+  letter-spacing: .1em;
+}
+
+.selector-grid {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.select-card {
+  display: block;
+  text-decoration: none;
+  background: rgba(8,8,8,.76);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 28px;
+  min-height: 160px;
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.select-card:hover {
+  border-color: rgba(255,255,255,.32);
+  transform: translateY(-2px);
+}
+
+.select-card small {
+  display: block;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .28em;
+  font-size: 11px;
+}
+
+.select-card strong {
+  display: block;
+  margin-top: 18px;
+  font-size: 24px;
+  letter-spacing: .12em;
+  font-weight: 500;
+}
+
+.select-card p {
+  margin: 16px 0 0;
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.breadcrumb {
+  margin-top: 24px;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+
+.breadcrumb a {
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+}
+
+.area-title {
+  margin-top: 32px;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(34px, 9vw, 62px);
+  letter-spacing: .18em;
+  font-weight: 400;
+}
+
+.area-description {
+  max-width: 720px;
+  color: rgba(255,255,255,.72);
+  line-height: 1.9;
+  letter-spacing: .08em;
+}
+
+.sticky-search {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(5,5,5,.92);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  padding: 14px 7vw;
+}
+
+.search-main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-main input {
+  width: 100%;
+  height: 48px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.15);
+  color: white;
+  padding: 0 14px;
+  font-size: 15px;
+  outline: none;
+}
+
+.reset-button {
+  height: 48px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: transparent;
+  color: white;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.chip-row {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.filter-chip {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.82);
+  padding: 9px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.filter-chip.active {
+  background: rgba(255,255,255,.18);
+  border-color: rgba(255,255,255,.36);
+}
+
+.result-line {
+  margin-top: 10px;
+  color: rgba(255,255,255,.52);
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+
+main {
+  padding: 28px 7vw 80px;
+}
+
+.section-head {
+  margin: 34px 0 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: .16em;
+}
+
+.section-head p {
+  margin: 0;
+  color: rgba(255,255,255,.48);
+  font-size: 13px;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.shop-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(8,8,8,.8);
+  border: 1px solid rgba(255,255,255,.105);
+  min-height: 460px;
+  text-decoration: none;
+  transition: border-color .15s ease, transform .15s ease;
+  overflow: hidden;
+}
+
+.shop-card:hover {
+  border-color: rgba(255,255,255,.3);
+  transform: translateY(-2px);
+}
+
+.thumb-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(255,255,255,.045);
+  overflow: hidden;
+}
+
+.thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.no-thumb {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,.32);
+  letter-spacing: .2em;
+  font-size: 12px;
+}
+
+.shop-body {
+  padding: 18px;
+  flex: 1;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: rgba(255,255,255,.48);
+  font-size: 12px;
+}
+
+.shop-body h3 {
+  margin: 22px 0 8px;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
+.shop-brand {
+  color: rgba(255,255,255,.52);
+  font-size: 12px;
+  letter-spacing: .2em;
+}
+
+.badges {
+  margin-top: 16px;
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  border: 1px solid rgba(255,255,255,.14);
+  padding: 5px 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,.72);
+}
+
+.summary {
+  margin-top: 16px;
+  color: rgba(255,255,255,.72);
+  line-height: 1.75;
+  font-size: 13px;
+}
+
+.card-footer {
+  padding: 0 18px 18px;
+  color: rgba(255,255,255,.82);
+  letter-spacing: .12em;
+  font-size: 13px;
+}
+
+.ad-card {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.14);
+  padding: 22px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ad-card small {
+  color: rgba(255,255,255,.42);
+  letter-spacing: .25em;
+  font-size: 11px;
+}
+
+.ad-card strong {
+  margin-top: 12px;
+  font-size: 20px;
+  letter-spacing: .08em;
+}
+
+.ad-card p {
+  color: rgba(255,255,255,.62);
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.store-layout {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.store-header {
+  margin-bottom: 24px;
+}
+
+.store-title {
+  font-size: clamp(34px, 8vw, 60px);
+  letter-spacing: .1em;
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+
+.store-sub {
+  color: rgba(255,255,255,.58);
+  letter-spacing: .16em;
+}
+
+.image-section {
+  margin-top: 34px;
+}
+
+.image-section h2 {
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: .16em;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.image-card {
+  background: rgba(8,8,8,.84);
+  border: 1px solid rgba(255,255,255,.11);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.image-card img {
+  width: 100%;
+  display: block;
+}
+
+.image-info {
+  padding: 14px;
+}
+
+.image-info p {
+  margin: 0;
+  color: rgba(255,255,255,.7);
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.image-info small {
+  display: block;
+  margin-top: 10px;
+  color: rgba(255,255,255,.42);
+}
+
+.link-card {
+  background: rgba(8,8,8,.82);
+  border: 1px solid rgba(255,255,255,.11);
+  padding: 22px;
+}
+
+.link-card a {
+  display: inline-block;
+  margin-top: 16px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 12px 16px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.84);
+  z-index: 100;
+  display: none;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal.open {
+  display: block;
+}
+
+.modal-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  background: #090909;
+  border: 1px solid rgba(255,255,255,.16);
+  padding: 16px;
+}
+
+.modal-close {
+  display: block;
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.18);
+  color: white;
+  padding: 10px 13px;
+  cursor: pointer;
+}
+
+.modal-image {
+  width: 100%;
+  display: block;
+  margin-top: 14px;
+}
+
+.modal-summary {
+  color: rgba(255,255,255,.78);
+  line-height: 1.8;
+  margin-top: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.modal-actions a,
+.modal-actions button {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 11px 13px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tweet-embed {
+  margin-top: 18px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 1100px) {
+  .shop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding: 30px 18px 24px;
+  }
+
+  .hero-large {
+    padding: 30px 18px;
+  }
+
+  .selector-grid,
+  .shop-grid,
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-main {
+    grid-template-columns: 1fr;
+  }
+
+  .reset-button {
+    width: 100%;
+  }
+
+  main {
+    padding: 24px 18px 72px;
+  }
+
+  .section-head {
+    display: block;
+  }
+
+  .shop-card {
+    min-height: auto;
+  }
+
+  .thumb-wrap {
+    aspect-ratio: 16 / 10;
+  }
+
+  .image-grid {
+    gap: 26px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="page-shell">
+  <section class="hero">
+    
+<div class="logo-row">
+  <div class="logo-mark">CR</div>
+  <div>
+    <div class="logo-text">CARDRADAR</div>
+    <div class="logo-sub">TRADING CARD PRICE RADAR</div>
+  </div>
+</div>
+
+
+    <div class="breadcrumb">
+      <a href="../index.html">TOP</a> /
+      <a href="../osaka.html">OSAKA</a> /
+      <a href="../osaka-nihonbashi.html">NIHONBASHI</a> /
+      STORE
+    </div>
+  </section>
+
+  <main class="store-layout">
+    <div class="store-header">
+      <h1 class="store-title">ドラスタ なんさん通り店</h1>
+      <div class="store-sub">ドラゴンスター / 大阪・日本橋</div>
+      <p class="area-description">
+        この店舗の買取表画像を大きく表示しています。
+        画像をタップすると拡大表示し、必要な場合のみX埋め込みを読み込みます。
+      </p>
+      <div class="updated">LAST UPDATE : 2026/05/27 01:25</div>
+    </div>
+
+    
+<section class="image-section">
+  <h2>シングル買取</h2>
+  <div class="image-grid">
+    
+<div class="image-card" onclick="openMedia('ds-nansan-single_2057707254460056053_0')">
+  <img src="https://pbs.twimg.com/media/HI5x195XcAAsonC?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像">
+  <div class="image-info">
+    <p>ドラゴンスターなんば なんさん通り店 5月22日 #ポケカ　#ポケモンカード 5/22更新買取表 メガダークライ【SAR】　￥70000 etc... 新弾のメガダークライを募集しております ぜひお持ち込みください ご来店お待ちしております 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 1 2,441</p>
+    <small>シングル買取 / 画像1枚</small>
+  </div>
+</div>
+
+<div class="image-card" onclick="openMedia('ds-nansan-single_2057677204809490687_1')">
+  <img src="https://pbs.twimg.com/media/HI5Wg01WgAESDr5?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像">
+  <div class="image-info">
+    <p>ドラゴンスターなんば なんさん通り店 5月22日 【#ポケモンカード】 最新弾 ‍#アビスアイ‍ 高価買取表更新 #メガダークライex(MUR) 買取￥ #ムク(SAR) 買取￥ #ヤドラン(AR) 買取￥ #ボルト雷エネルギー 買取￥ ...etc ぜひ #ドラスタなんさん へお持ち込みください 8 4,496</p>
+    <small>シングル買取 / 画像1枚</small>
+  </div>
+</div>
+
+<div class="image-card" onclick="openMedia('ds-nansan-single_2057438864952701099_2')">
+  <img src="https://pbs.twimg.com/media/HI19vmnWoAAc88M?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像">
+  <div class="image-info">
+    <p>ドラゴンスターなんば なんさん通り店 5月21日 【#ポケモンカード】【その⑥】 ハイレア高価買取表更新 #ナンジャモ(SR) 買取￥ #ベルのまごころ(SAR) 買取￥ #リーリエの決心(SAR) 買取￥ #ルチアのアピール(SAR) 買取￥ ...etc ぜひ 6 4,079</p>
+    <small>シングル買取 / 画像1枚</small>
+  </div>
+</div>
+
+  </div>
+</section>
+
+    
+  </main>
+</div>
+
+<div class="modal" id="mediaModal">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeMedia()">閉じる</button>
+
+    <img class="modal-image" id="modalImage" src="" alt="買取表画像">
+
+    <div class="modal-summary" id="modalSummary"></div>
+
+    <div class="modal-actions">
+      <a id="modalTweetLink" href="#" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
+      <button onclick="loadTweetEmbed()">X埋め込みを表示</button>
+    </div>
+
+    <div class="tweet-embed" id="tweetEmbed"></div>
+  </div>
+</div>
+
+<script async src="https://platform.twitter.com/widgets.js"></script>
+
+<script>
+const MEDIA_ITEMS = {"ds-nansan-single_2057707254460056053_0": {"image_url": "https://pbs.twimg.com/media/HI5x195XcAAsonC?format=jpg&name=large", "tweet_url": "https://x.com/ds_namba_nansan/status/2057707254460056053", "summary": "ドラゴンスターなんば なんさん通り店 5月22日 #ポケカ　#ポケモンカード 5/22更新買取表 メガダークライ【SAR】　￥70000 etc... 新弾のメガダークライを募集しております ぜひお持ち込みください ご来店お待ちしております 商品の状態や在庫状況により減額の可能性があり表示価格の適用外となる場合がございます。 1 2,441", "type_label": "シングル買取"}, "ds-nansan-single_2057677204809490687_1": {"image_url": "https://pbs.twimg.com/media/HI5Wg01WgAESDr5?format=jpg&name=large", "tweet_url": "https://x.com/ds_namba_nansan/status/2057677204809490687", "summary": "ドラゴンスターなんば なんさん通り店 5月22日 【#ポケモンカード】 最新弾 ‍#アビスアイ‍ 高価買取表更新 #メガダークライex(MUR) 買取￥ #ムク(SAR) 買取￥ #ヤドラン(AR) 買取￥ #ボルト雷エネルギー 買取￥ ...etc ぜひ #ドラスタなんさん へお持ち込みください 8 4,496", "type_label": "シングル買取"}, "ds-nansan-single_2057438864952701099_2": {"image_url": "https://pbs.twimg.com/media/HI19vmnWoAAc88M?format=jpg&name=large", "tweet_url": "https://x.com/ds_namba_nansan/status/2057438864952701099", "summary": "ドラゴンスターなんば なんさん通り店 5月21日 【#ポケモンカード】【その⑥】 ハイレア高価買取表更新 #ナンジャモ(SR) 買取￥ #ベルのまごころ(SAR) 買取￥ #リーリエの決心(SAR) 買取￥ #ルチアのアピール(SAR) 買取￥ ...etc ぜひ 6 4,079", "type_label": "シングル買取"}};
+let currentTweetUrl = "";
+
+function openMedia(id) {
+  const item = MEDIA_ITEMS[id];
+
+  if (!item) return;
+
+  currentTweetUrl = item.tweet_url;
+
+  document.getElementById("modalImage").src = item.image_url;
+  document.getElementById("modalSummary").textContent = item.summary;
+  document.getElementById("modalTweetLink").href = item.tweet_url;
+  document.getElementById("tweetEmbed").innerHTML = "";
+
+  document.getElementById("mediaModal").classList.add("open");
+}
+
+function closeMedia() {
+  document.getElementById("mediaModal").classList.remove("open");
+  document.getElementById("tweetEmbed").innerHTML = "";
+}
+
+function loadTweetEmbed() {
+  if (!currentTweetUrl) return;
+
+  const embed = document.getElementById("tweetEmbed");
+
+  embed.innerHTML = `
+    <blockquote class="twitter-tweet">
+      <a href="${currentTweetUrl}"></a>
+    </blockquote>
+  `;
+
+  if (window.twttr && window.twttr.widgets) {
+    window.twttr.widgets.load(embed);
+  }
+}
+</script>
+
+</body>
+</html>
