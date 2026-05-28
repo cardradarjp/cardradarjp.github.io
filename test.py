@@ -904,6 +904,64 @@ a {
   padding: 14px 7vw;
 }
 
+
+.compact-search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: none;
+  background: rgba(5,5,5,.96);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  padding: 8px 7vw;
+  padding-top: calc(8px + env(safe-area-inset-top));
+}
+
+.compact-search input {
+  width: 100%;
+  height: 40px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  padding: 0 10px;
+  font-size: 16px;
+}
+
+.compact-search.visible {
+  display: block;
+}
+
+.menu-toggle {
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.05);
+  color: #fff;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.menu-panel {
+  display: none;
+  margin-top: 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(8,8,8,.95);
+}
+
+.menu-panel.open {
+  display: block;
+}
+
+.menu-panel a {
+  display: block;
+  padding: 11px 14px;
+  text-decoration: none;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.menu-panel a:first-child {
+  border-top: 0;
+}
+
 .search-main {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1274,11 +1332,29 @@ main {
 
 @media (max-width: 760px) {
   .hero {
-    padding: 30px 18px 24px;
+    padding: 20px 12px 16px;
   }
 
   .hero-large {
-    padding: 30px 18px;
+    padding: 20px 12px;
+  }
+
+  .sticky-search {
+    padding: 10px 12px;
+  }
+
+  .compact-search {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .chip-row {
+    gap: 6px;
+  }
+
+  .filter-chip {
+    padding: 8px 10px;
+    font-size: 12px;
   }
 
   .selector-grid,
@@ -1296,7 +1372,7 @@ main {
   }
 
   main {
-    padding: 24px 18px 72px;
+    padding: 20px 12px 72px;
   }
 
   .section-head {
@@ -1456,7 +1532,7 @@ def build_area_page(posts_by_source, updated_at):
     brands = get_unique_brands("osaka-nihonbashi")
 
     cards_html = ""
-    visible_index = 0
+    timeline_items = []
 
     for shop in shops:
         posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
@@ -1483,212 +1559,294 @@ def build_area_page(posts_by_source, updated_at):
    data-brand="{h(shop["brand_id"])}"
    data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + ' '.join(type_labels) + ' ' + latest_summary)}"
 >
-  <div class="thumb-wrap">
-    {thumb_html}
-  </div>
-
+  <div class="thumb-wrap">{thumb_html}</div>
   <div class="shop-body">
-    <div class="card-meta">
-      <span>{h(shop["area"])}</span>
-      <span>最新{latest_count}件</span>
-    </div>
-
+    <div class="card-meta"><span>{h(shop["area"])}</span><span>最新{latest_count}件</span></div>
     <h3>{h(shop["shop_name"])}</h3>
     <div class="shop-brand">{h(shop["brand"])}</div>
-
-    <div class="badges">
-      {badges}
-    </div>
-
+    <div class="badges">{badges}</div>
     <div class="summary">{h(latest_summary)}</div>
   </div>
-
   <div class="card-footer">店舗ページを見る →</div>
 </a>
 """
-        visible_index += 1
 
-        if visible_index == 6:
-            cards_html += """
-<div class="ad-card">
-  <small>SPONSORED</small>
-  <strong>広告掲載枠</strong>
-  <p>カードショップ、BOX買取、PSA買取、サプライ関連の掲載枠を想定しています。</p>
-</div>
-"""
+        for source in shop["sources"]:
+            if not is_x_source(source):
+                continue
+            meta = TYPE_META[source["source_type"]]
+            for post in posts_by_source.get(source["id"], []):
+                timeline_items.append({
+                    "status_id": post.get("status_id", 0),
+                    "brand_id": shop["brand_id"],
+                    "shop_name": shop["shop_name"],
+                    "shop_slug": shop["shop_slug"],
+                    "type_key": source["source_type"],
+                    "type_label": meta["label"],
+                    "updated_info": post.get("date_text", ""),
+                    "summary": post.get("summary", ""),
+                    "tweet_url": post.get("tweet_url", ""),
+                    "image_url": post.get("image_urls", [None])[0] if post.get("image_urls") else None,
+                    "search": f'{shop["shop_name"]} {meta["label"]} {post.get("summary", "")}',
+                })
 
     support_html = ""
-
     for source in support_sources:
         meta = TYPE_META[source["source_type"]]
         support_html += f"""
 <div class="link-card">
-  <div class="card-meta">
-    <span>{h(source["area"])}</span>
-    <span>{h(meta["label"])}</span>
-  </div>
+  <div class="card-meta"><span>{h(source["area"])}</span><span>{h(meta["label"])}</span></div>
   <h3>{h(source["shop_name"])}</h3>
   <p class="summary">{h(source["description"])}</p>
   <a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">ページを開く →</a>
 </div>
 """
 
-    type_buttons = """
-<button class="filter-chip active" onclick="toggleType('all', this)">すべて</button>
-"""
-
+    type_buttons = "<button class=\"filter-chip active\" onclick=\"toggleType('all', this)\">すべて</button>"
     for type_key in TYPE_ORDER:
         meta = TYPE_META[type_key]
-        type_buttons += f"""
-<button class="filter-chip" onclick="toggleType('{h(type_key)}', this)">{h(meta["label"])}</button>
-"""
+        type_buttons += f"<button class=\"filter-chip\" onclick=\"toggleType('{h(type_key)}', this)\">{h(meta['label'])}</button>"
 
-    brand_buttons = ""
-
-    for brand in brands:
-        brand_buttons += f"""
-<button class="filter-chip" onclick="toggleBrand('{h(brand["id"])}', this)">{h(brand["label"])}</button>
-"""
+    brand_buttons = "".join([f"<button class=\"filter-chip\" onclick=\"toggleBrand('{h(b['id'])}', this)\">{h(b['label'])}</button>" for b in brands])
 
     content = f"""
 <div class="page-shell">
-  <section class="hero">
-    {logo_html()}
-
-    <div class="breadcrumb">
-      <a href="index.html">TOP</a> / <a href="osaka.html">OSAKA</a> / NIHONBASHI
-    </div>
-
-    <h1 class="area-title">NIHONBASHI</h1>
-
-    <p class="area-description">
-      大阪・日本橋エリアのポケカ買取情報を、店舗別・買取タイプ別に整理。
-      一覧では画像付きカードで軽く確認し、店舗ページでは買取表画像を大きく表示します。
-    </p>
-
+  <section class="hero" id="heroArea" style="padding-bottom:14px;">{logo_html()}
+    <div style="margin-top:10px;"><button class="menu-toggle" onclick="toggleMenu()">☰ メニュー</button><div class="menu-panel" id="menuPanel"><a href="index.html">トップ</a><a href="osaka-nihonbashi.html">大阪・日本橋</a><a href="#shopGrid">店舗一覧</a><a href="#supportLinks">公式Web買取表</a><a href="#supportLinks">相場確認</a><a href="#">掲載について</a></div></div>
+    <div class="breadcrumb"><a href="index.html">TOP</a> / <a href="osaka.html">OSAKA</a> / NIHONBASHI</div>
+    <h1 class="area-title" style="margin-top:16px;font-size:clamp(28px,6vw,46px);">NIHONBASHI</h1>
+    <p class="area-description">大阪・日本橋エリアのポケカ買取TLを、買取タイプ別に確認できます。</p>
     <div class="updated">LAST UPDATE : {h(updated_at)}</div>
   </section>
 
+  <div id="compactSearch" class="compact-search"><input id="compactSearchInput" type="text" placeholder="検索"></div>
+
   <div class="sticky-search">
     <div class="search-main">
-      <input id="searchInput" type="text" placeholder="店舗名・ブランド名・買取タイプで検索">
+      <input id="searchInput" type="text" placeholder="店舗名・買取タイプ・概要で検索">
       <button class="reset-button" onclick="resetFilters()">リセット</button>
     </div>
-
-    <div class="chip-row">
-      {type_buttons}
+    <div class="chip-row" id="typeRow">{type_buttons}</div>
+    <div class="chip-row" id="brandRow">{brand_buttons}</div>
+    <div class="chip-row" id="sortRow">
+      <button class="filter-chip active" onclick="setSort('latest', this)">新着順</button>
+      <button class="filter-chip" onclick="setSort('x_post_box', this)">BOX優先</button>
+      <button class="filter-chip" onclick="setSort('x_post_fixed', this)">定額優先</button>
+      <button class="filter-chip" onclick="setSort('x_post_psa', this)">PSA優先</button>
+      <button class="filter-chip" onclick="setSort('x_post_single', this)">シングル優先</button>
+      <button class="filter-chip" onclick="setSort('shop_name', this)">店舗名順</button>
     </div>
-
-    <div class="chip-row">
-      {brand_buttons}
-    </div>
-
-    <div class="result-line">
-      表示中：<span id="resultCount">0</span>件
-    </div>
+    <div class="result-line">表示中：<span id="resultCount">0</span>件</div>
   </div>
 
   <main>
-    <div class="section-head">
-      <h2>STORE LIST</h2>
-      <p>画像付き軽量一覧</p>
-    </div>
+    <div class="section-head"><h2>BUYBACK TL</h2><p>投稿タイムライン</p></div>
+    <div class="shop-grid" id="timelineGrid"></div>
 
-    <div class="shop-grid" id="shopGrid">
-      {cards_html}
-    </div>
+    <div class="section-head"><h2>STORE LIST</h2><p>簡易一覧</p></div>
+    <div class="shop-grid" id="shopGrid">{cards_html}</div>
 
-    <div class="section-head">
-      <h2>SUPPORT LINKS</h2>
-      <p>公式Web買取表・相場確認</p>
-    </div>
-
-    <div class="shop-grid">
-      {support_html}
-    </div>
+    <div class="section-head" id="supportLinks"><h2>SUPPORT LINKS</h2><p>公式Web買取表・相場確認</p></div>
+    <div class="shop-grid">{support_html}</div>
   </main>
 </div>
 
 <script>
-const selectedTypes = new Set();
-const selectedBrands = new Set();
+var selectedTypes = [];
+var selectedBrands = [];
+var selectedSort = 'latest';
+var timelineItems = {json_for_script(timeline_items)};
+
+function hasValue(list, value) {{
+  return list.indexOf(value) !== -1;
+}}
+
+function addValue(list, value) {{
+  if (!hasValue(list, value)) list.push(value);
+}}
+
+function removeValue(list, value) {{
+  var index = list.indexOf(value);
+  if (index !== -1) list.splice(index, 1);
+}}
+
+function eachNode(selector, callback) {{
+  var nodes = document.querySelectorAll(selector);
+  for (var i = 0; i < nodes.length; i++) callback(nodes[i], i);
+}}
+
+function escapeHtml(value) {{
+  return String(value || '').replace(/[&<>"']/g, function (char) {{
+    return {{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[char];
+  }});
+}}
 
 function toggleType(type, button) {{
-  if (type === "all") {{
-    selectedTypes.clear();
-    document.querySelectorAll(".chip-row:first-of-type .filter-chip").forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
+  var allTypeButton = document.querySelector('#typeRow .filter-chip');
+  if (type === 'all') {{
+    selectedTypes = [];
+    eachNode('#typeRow .filter-chip', function (btn) {{ btn.classList.remove('active'); }});
+    button.classList.add('active');
     applyFilters();
     return;
   }}
 
-  document.querySelector(".chip-row:first-of-type .filter-chip").classList.remove("active");
+  if (allTypeButton) allTypeButton.classList.remove('active');
 
-  if (selectedTypes.has(type)) {{
-    selectedTypes.delete(type);
-    button.classList.remove("active");
+  if (hasValue(selectedTypes, type)) {{
+    removeValue(selectedTypes, type);
+    button.classList.remove('active');
   }} else {{
-    selectedTypes.add(type);
-    button.classList.add("active");
+    addValue(selectedTypes, type);
+    button.classList.add('active');
   }}
 
-  if (selectedTypes.size === 0) {{
-    document.querySelector(".chip-row:first-of-type .filter-chip").classList.add("active");
-  }}
-
+  if (selectedTypes.length === 0 && allTypeButton) allTypeButton.classList.add('active');
   applyFilters();
 }}
 
 function toggleBrand(brand, button) {{
-  if (selectedBrands.has(brand)) {{
-    selectedBrands.delete(brand);
-    button.classList.remove("active");
+  if (hasValue(selectedBrands, brand)) {{
+    removeValue(selectedBrands, brand);
+    button.classList.remove('active');
   }} else {{
-    selectedBrands.add(brand);
-    button.classList.add("active");
+    addValue(selectedBrands, brand);
+    button.classList.add('active');
   }}
-
   applyFilters();
 }}
 
+function setSort(mode, button) {{
+  selectedSort = mode;
+  eachNode('#sortRow .filter-chip', function (btn) {{ btn.classList.remove('active'); }});
+  button.classList.add('active');
+  renderTimeline();
+}}
+
 function resetFilters() {{
-  selectedTypes.clear();
-  selectedBrands.clear();
-  document.getElementById("searchInput").value = "";
-
-  document.querySelectorAll(".filter-chip").forEach(btn => btn.classList.remove("active"));
-  document.querySelector(".chip-row:first-of-type .filter-chip").classList.add("active");
-
+  selectedTypes = [];
+  selectedBrands = [];
+  selectedSort = 'latest';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('compactSearchInput').value = '';
+  eachNode('.sticky-search .filter-chip', function (btn) {{ btn.classList.remove('active'); }});
+  var allTypeButton = document.querySelector('#typeRow .filter-chip');
+  var latestButton = document.querySelector('#sortRow .filter-chip');
+  if (allTypeButton) allTypeButton.classList.add('active');
+  if (latestButton) latestButton.classList.add('active');
   applyFilters();
 }}
 
 function applyFilters() {{
-  const search = document.getElementById("searchInput").value.trim().toLowerCase();
-  const cards = document.querySelectorAll(".shop-card");
-  let count = 0;
+  var search = document.getElementById('searchInput').value.replace(/^\\s+|\\s+$/g, '').toLowerCase();
+  var cards = document.querySelectorAll('#shopGrid .shop-card');
+  var count = 0;
 
-  cards.forEach(card => {{
-    const typeList = card.dataset.types.split(" ");
-    const brand = card.dataset.brand;
-    const searchText = card.dataset.search.toLowerCase();
+  for (var i = 0; i < cards.length; i++) {{
+    var card = cards[i];
+    var typeList = (card.getAttribute('data-types') || '').split(' ');
+    var brand = card.getAttribute('data-brand') || '';
+    var searchText = (card.getAttribute('data-search') || '').toLowerCase();
+    var typeOk = selectedTypes.length === 0;
 
-    const typeOk = selectedTypes.size === 0 || typeList.some(t => selectedTypes.has(t));
-    const brandOk = selectedBrands.size === 0 || selectedBrands.has(brand);
-    const searchOk = !search || searchText.includes(search);
+    for (var t = 0; t < typeList.length; t++) {{
+      if (hasValue(selectedTypes, typeList[t])) typeOk = true;
+    }}
+
+    var brandOk = selectedBrands.length === 0 || hasValue(selectedBrands, brand);
+    var searchOk = !search || searchText.indexOf(search) !== -1;
 
     if (typeOk && brandOk && searchOk) {{
-      card.classList.remove("hidden");
+      card.classList.remove('hidden');
       count++;
     }} else {{
-      card.classList.add("hidden");
+      card.classList.add('hidden');
     }}
-  }});
+  }}
 
-  document.getElementById("resultCount").textContent = count;
+  document.getElementById('resultCount').textContent = count;
+  renderTimeline();
 }}
 
-document.addEventListener("DOMContentLoaded", () => {{
-  document.getElementById("searchInput").addEventListener("input", applyFilters);
+function renderTimeline() {{
+  var search = document.getElementById('searchInput').value.replace(/^\\s+|\\s+$/g, '').toLowerCase();
+  var items = [];
+
+  for (var i = 0; i < timelineItems.length; i++) {{
+    var item = timelineItems[i];
+    var brandOk = selectedBrands.length === 0 || hasValue(selectedBrands, item.brand_id);
+    var typeOk = selectedTypes.length === 0 || hasValue(selectedTypes, item.type_key);
+    var searchOk = !search || String(item.search || '').toLowerCase().indexOf(search) !== -1;
+    if (brandOk && typeOk && searchOk) items.push(item);
+  }}
+
+  if (selectedSort === 'shop_name') {{
+    items.sort(function (a, b) {{ return String(a.shop_name || '').localeCompare(String(b.shop_name || ''), 'ja'); }});
+  }} else if (selectedSort === 'latest') {{
+    items.sort(function (a, b) {{ return Number(b.status_id || 0) - Number(a.status_id || 0); }});
+  }} else {{
+    items.sort(function (a, b) {{
+      var priority = (b.type_key === selectedSort ? 1 : 0) - (a.type_key === selectedSort ? 1 : 0);
+      return priority || (Number(b.status_id || 0) - Number(a.status_id || 0));
+    }});
+  }}
+
+  if (items.length === 0) {{
+    document.getElementById('timelineGrid').innerHTML = '<div class="link-card"><p class="summary">該当投稿はありません。</p></div>';
+    return;
+  }}
+
+  var html = '';
+  for (var j = 0; j < items.length; j++) {{
+    var row = items[j];
+    var shopName = escapeHtml(row.shop_name);
+    var imagePart = row.image_url
+      ? '<img src="' + escapeHtml(row.image_url) + '" alt="' + shopName + '">'
+      : '<div class="no-thumb">NO IMAGE</div>';
+    html += '<article class="shop-card">'
+      + '<div class="thumb-wrap">' + imagePart + '</div>'
+      + '<div class="shop-body">'
+      + '<div class="card-meta"><span>𝕏</span><span>' + escapeHtml(row.type_label) + '</span></div>'
+      + '<h3>' + shopName + '</h3>'
+      + '<div class="summary">' + escapeHtml(row.updated_info || '更新情報なし') + ' / ' + escapeHtml(row.summary) + '</div>'
+      + '<div class="badges"><span class="badge">' + escapeHtml(row.type_label) + '</span></div>'
+      + '</div>'
+      + '<div class="card-footer"><a href="stores/' + encodeURIComponent(row.shop_slug) + '.html">店舗ページ</a> / <a href="' + escapeHtml(row.tweet_url) + '" target="_blank" rel="noopener noreferrer">元投稿</a></div>'
+      + '</article>';
+  }}
+  document.getElementById('timelineGrid').innerHTML = html;
+}}
+
+function toggleMenu() {{
+  var panel = document.getElementById('menuPanel');
+  if (panel) panel.classList.toggle('open');
+}}
+
+function updateCompactSearch() {{
+  var compact = document.getElementById('compactSearch');
+  var hero = document.getElementById('heroArea');
+  if (!compact || !hero) return;
+  if (hero.getBoundingClientRect().bottom < 0) compact.classList.add('visible');
+  else compact.classList.remove('visible');
+}}
+
+document.addEventListener('DOMContentLoaded', function () {{
+  var searchInput = document.getElementById('searchInput');
+  var compactInput = document.getElementById('compactSearchInput');
+  if (searchInput) {{
+    searchInput.addEventListener('input', function () {{
+      if (compactInput) compactInput.value = searchInput.value;
+      applyFilters();
+    }});
+  }}
+  if (compactInput) {{
+    compactInput.addEventListener('input', function () {{
+      if (searchInput) searchInput.value = compactInput.value;
+      applyFilters();
+    }});
+  }}
+  window.addEventListener('scroll', updateCompactSearch);
+  updateCompactSearch();
   applyFilters();
 }});
 </script>
