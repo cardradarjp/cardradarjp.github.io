@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright
+﻿from playwright.sync_api import sync_playwright
 import time
 import re
 import json
@@ -706,6 +706,19 @@ def first_image(posts):
             return image_url
     return None
 
+def get_timeline_posts(posts_by_source, area_id):
+    posts = []
+
+    for source_posts in posts_by_source.values():
+        for post in source_posts:
+            if post.get("area_id") != area_id:
+                continue
+            if not post.get("tweet_url"):
+                continue
+            posts.append(post)
+
+    posts.sort(key=lambda post: post.get("status_id", 0), reverse=True)
+    return posts
 
 def json_for_script(data):
     return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
@@ -963,6 +976,151 @@ a {
   letter-spacing: .12em;
 }
 
+.tool-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tool-button,
+.sort-button {
+  height: 40px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.045);
+  color: white;
+  padding: 0 13px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.tool-button.menu-button {
+  width: 42px;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.sort-button.active {
+  background: rgba(255,255,255,.18);
+  border-color: rgba(255,255,255,.34);
+}
+
+.search-panel {
+  display: none;
+  margin-top: 12px;
+}
+
+.sticky-search.search-open .search-panel {
+  display: block;
+}
+
+.timeline-list {
+  max-width: 760px;
+  display: grid;
+  gap: 18px;
+}
+
+.timeline-post {
+  background: rgba(8,8,8,.82);
+  border: 1px solid rgba(255,255,255,.11);
+  padding: 16px;
+}
+
+.timeline-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.timeline-store {
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: .04em;
+}
+
+.timeline-meta {
+  margin-top: 6px;
+  color: rgba(255,255,255,.52);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.timeline-type {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.72);
+  padding: 5px 8px;
+  font-size: 11px;
+}
+
+.timeline-image {
+  display: block;
+  margin-top: 14px;
+  background: rgba(255,255,255,.045);
+  overflow: hidden;
+}
+
+.timeline-image img {
+  width: 100%;
+  display: block;
+}
+
+.timeline-summary {
+  margin: 14px 0 0;
+  color: rgba(255,255,255,.74);
+  line-height: 1.75;
+  font-size: 13px;
+}
+
+.timeline-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.timeline-actions a {
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.16);
+  padding: 10px 12px;
+  font-size: 13px;
+  color: rgba(255,255,255,.86);
+}
+
+.simple-store-list {
+  max-width: 760px;
+  display: grid;
+  gap: 10px;
+}
+
+.simple-store-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  text-decoration: none;
+  background: rgba(8,8,8,.72);
+  border: 1px solid rgba(255,255,255,.10);
+  padding: 14px 16px;
+}
+
+.simple-store-name {
+  font-weight: 650;
+}
+
+.simple-store-meta {
+  margin-top: 5px;
+  color: rgba(255,255,255,.50);
+  font-size: 12px;
+}
+
+.simple-store-date {
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+  white-space: nowrap;
+}
 main {
   padding: 28px 7vw 80px;
 }
@@ -1303,6 +1461,30 @@ main {
     display: block;
   }
 
+  .sticky-search {
+    padding: 10px 18px;
+  }
+
+  .tool-row {
+    gap: 8px;
+  }
+
+  .timeline-post {
+    padding: 13px;
+  }
+
+  .timeline-head,
+  .simple-store-card {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-head {
+    display: grid;
+  }
+
+  .simple-store-date {
+    white-space: normal;
+  }
   .shop-card {
     min-height: auto;
   }
@@ -1454,67 +1636,71 @@ def build_area_page(posts_by_source, updated_at):
     shops = get_physical_shops("osaka-nihonbashi")
     support_sources = get_support_sources()
     brands = get_unique_brands("osaka-nihonbashi")
+    timeline_posts = get_timeline_posts(posts_by_source, "osaka-nihonbashi")
 
-    cards_html = ""
-    visible_index = 0
+    timeline_html = ""
+
+    for post in timeline_posts:
+        image_urls = post.get("image_urls", [])
+        image_html = ""
+
+        if image_urls:
+            image_html = f"""
+  <a class="timeline-image" href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">
+    <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取投稿画像">
+  </a>
+"""
+
+        timeline_html += f"""
+<article class="timeline-post"
+  data-status="{h(post.get("status_id", 0))}"
+  data-store="{h(post.get("shop_name", ""))}"
+  data-types="{h(post.get("source_type", ""))}"
+  data-brand="{h(post.get("brand_id", ""))}"
+  data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + post.get("summary", ""))}"
+>
+  <div class="timeline-head">
+    <div>
+      <div class="timeline-store">{h(post["shop_name"])}</div>
+      <div class="timeline-meta">{h(post["area"])} / 取得 {h(post.get("collected_at", updated_at))}</div>
+    </div>
+    <div class="timeline-type">{h(post.get("buy_type_label", "買取投稿"))}</div>
+  </div>
+
+{image_html}
+
+  <p class="timeline-summary">{h(post.get("summary", ""))}</p>
+
+  <div class="timeline-actions">
+    <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
+    <a href="stores/{h(post["shop_slug"])}.html">店舗ページ</a>
+  </div>
+</article>
+"""
+
+    stores_html = ""
 
     for shop in shops:
         posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
         latest = get_latest_post(posts)
-        thumb = first_image(posts)
         types = get_shop_types(shop["sources"])
         type_labels = get_type_labels(types)
-
-        latest_summary = latest["summary"] if latest else "最新投稿はまだ取得できていません。"
+        latest_date = latest.get("collected_at", updated_at) if latest else "未取得"
         latest_count = len(posts)
 
-        thumb_html = (
-            f'<img src="{h(thumb)}" alt="{h(shop["shop_name"])}の最新買取表画像">'
-            if thumb
-            else '<div class="no-thumb">NO IMAGE</div>'
-        )
-
-        badges = "".join([f'<span class="badge">{h(label)}</span>' for label in type_labels])
-
-        cards_html += f"""
-<a class="shop-card"
+        stores_html += f"""
+<a class="simple-store-card"
    href="stores/{h(shop["shop_slug"])}.html"
    data-types="{' '.join(types)}"
    data-brand="{h(shop["brand_id"])}"
-   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + ' '.join(type_labels) + ' ' + latest_summary)}"
+   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + ' '.join(type_labels))}"
 >
-  <div class="thumb-wrap">
-    {thumb_html}
+  <div>
+    <div class="simple-store-name">{h(shop["shop_name"])}</div>
+    <div class="simple-store-meta">{h(shop["brand"])} / {h('・'.join(type_labels))} / 投稿{latest_count}件</div>
   </div>
-
-  <div class="shop-body">
-    <div class="card-meta">
-      <span>{h(shop["area"])}</span>
-      <span>最新{latest_count}件</span>
-    </div>
-
-    <h3>{h(shop["shop_name"])}</h3>
-    <div class="shop-brand">{h(shop["brand"])}</div>
-
-    <div class="badges">
-      {badges}
-    </div>
-
-    <div class="summary">{h(latest_summary)}</div>
-  </div>
-
-  <div class="card-footer">店舗ページを見る →</div>
+  <div class="simple-store-date">更新 {h(latest_date)}</div>
 </a>
-"""
-        visible_index += 1
-
-        if visible_index == 6:
-            cards_html += """
-<div class="ad-card">
-  <small>SPONSORED</small>
-  <strong>広告掲載枠</strong>
-  <p>カードショップ、BOX買取、PSA買取、サプライ関連の掲載枠を想定しています。</p>
-</div>
 """
 
     support_html = ""
@@ -1562,40 +1748,55 @@ def build_area_page(posts_by_source, updated_at):
     <h1 class="area-title">NIHONBASHI</h1>
 
     <p class="area-description">
-      大阪・日本橋エリアのポケカ買取情報を、店舗別・買取タイプ別に整理。
-      一覧では画像付きカードで軽く確認し、店舗ページでは買取表画像を大きく表示します。
+      大阪・日本橋周辺のポケカ買取投稿を、新しい順に眺められるタイムラインです。
+      店舗別の詳細は各投稿または店舗一覧から確認できます。
     </p>
 
     <div class="updated">LAST UPDATE : {h(updated_at)}</div>
   </section>
 
-  <div class="sticky-search">
-    <div class="search-main">
-      <input id="searchInput" type="text" placeholder="店舗名・ブランド名・買取タイプで検索">
-      <button class="reset-button" onclick="resetFilters()">リセット</button>
+  <div class="sticky-search" id="stickySearch">
+    <div class="tool-row">
+      <button class="tool-button menu-button" type="button" aria-label="メニュー">☰</button>
+      <button class="tool-button" type="button" onclick="toggleSearch()">検索</button>
+      <button class="sort-button active" type="button" onclick="setSort('new', this)">新着順</button>
+      <button class="sort-button" type="button" onclick="setSort('store', this)">店舗順</button>
+      <div class="result-line">表示中：<span id="resultCount">0</span>件</div>
     </div>
 
-    <div class="chip-row">
-      {type_buttons}
-    </div>
+    <div class="search-panel" id="searchPanel">
+      <div class="search-main">
+        <input id="searchInput" type="text" placeholder="店舗名・ブランド名・買取タイプで検索">
+        <button class="reset-button" onclick="resetFilters()">リセット</button>
+      </div>
 
-    <div class="chip-row">
-      {brand_buttons}
-    </div>
+      <div class="chip-row">
+        {type_buttons}
+      </div>
 
-    <div class="result-line">
-      表示中：<span id="resultCount">0</span>件
+      <div class="chip-row">
+        {brand_buttons}
+      </div>
     </div>
   </div>
 
   <main>
     <div class="section-head">
-      <h2>STORE LIST</h2>
-      <p>画像付き軽量一覧</p>
+      <h2>TIMELINE</h2>
+      <p>買取投稿を新着順に表示</p>
     </div>
 
-    <div class="shop-grid" id="shopGrid">
-      {cards_html}
+    <div class="timeline-list" id="timelineList">
+      {timeline_html}
+    </div>
+
+    <div class="section-head">
+      <h2>STORE LIST</h2>
+      <p>店舗名と更新日の簡易一覧</p>
+    </div>
+
+    <div class="simple-store-list" id="storeList">
+      {stores_html}
     </div>
 
     <div class="section-head">
@@ -1612,6 +1813,17 @@ def build_area_page(posts_by_source, updated_at):
 <script>
 const selectedTypes = new Set();
 const selectedBrands = new Set();
+let currentSort = "new";
+
+function toggleSearch(forceOpen) {{
+  const bar = document.getElementById("stickySearch");
+  const shouldOpen = forceOpen === true || !bar.classList.contains("search-open");
+  bar.classList.toggle("search-open", shouldOpen);
+
+  if (shouldOpen) {{
+    document.getElementById("searchInput").focus();
+  }}
+}}
 
 function toggleType(type, button) {{
   if (type === "all") {{
@@ -1662,26 +1874,57 @@ function resetFilters() {{
   applyFilters();
 }}
 
+function setSort(sort, button) {{
+  currentSort = sort;
+  document.querySelectorAll(".sort-button").forEach(btn => btn.classList.remove("active"));
+  button.classList.add("active");
+  sortTimeline();
+}}
+
+function sortTimeline() {{
+  const list = document.getElementById("timelineList");
+  const posts = Array.from(list.querySelectorAll(".timeline-post"));
+
+  posts.sort((a, b) => {{
+    if (currentSort === "store") {{
+      return a.dataset.store.localeCompare(b.dataset.store, "ja") || Number(b.dataset.status) - Number(a.dataset.status);
+    }}
+
+    return Number(b.dataset.status) - Number(a.dataset.status);
+  }});
+
+  posts.forEach(post => list.appendChild(post));
+}}
+
 function applyFilters() {{
   const search = document.getElementById("searchInput").value.trim().toLowerCase();
-  const cards = document.querySelectorAll(".shop-card");
+  const posts = document.querySelectorAll(".timeline-post");
+  const stores = document.querySelectorAll(".simple-store-card");
   let count = 0;
 
-  cards.forEach(card => {{
-    const typeList = card.dataset.types.split(" ");
-    const brand = card.dataset.brand;
-    const searchText = card.dataset.search.toLowerCase();
+  function matches(item) {{
+    const typeList = item.dataset.types.split(" ");
+    const brand = item.dataset.brand;
+    const searchText = item.dataset.search.toLowerCase();
 
     const typeOk = selectedTypes.size === 0 || typeList.some(t => selectedTypes.has(t));
     const brandOk = selectedBrands.size === 0 || selectedBrands.has(brand);
     const searchOk = !search || searchText.includes(search);
 
-    if (typeOk && brandOk && searchOk) {{
-      card.classList.remove("hidden");
+    return typeOk && brandOk && searchOk;
+  }}
+
+  posts.forEach(post => {{
+    if (matches(post)) {{
+      post.classList.remove("hidden");
       count++;
     }} else {{
-      card.classList.add("hidden");
+      post.classList.add("hidden");
     }}
+  }});
+
+  stores.forEach(store => {{
+    store.classList.toggle("hidden", !matches(store));
   }});
 
   document.getElementById("resultCount").textContent = count;
@@ -1689,12 +1932,17 @@ function applyFilters() {{
 
 document.addEventListener("DOMContentLoaded", () => {{
   document.getElementById("searchInput").addEventListener("input", applyFilters);
+  window.addEventListener("scroll", () => {{
+    if (window.scrollY > 180) {{
+      document.getElementById("stickySearch").classList.add("search-open");
+    }}
+  }}, {{ passive: true }});
+  sortTimeline();
   applyFilters();
 }});
 </script>
 """
-    return html_shell("CardRadar｜大阪日本橋のポケカ買取情報", content)
-
+    return html_shell("CardRadar｜大阪日本橋のポケカ買取タイムライン", content)
 
 # =========================
 # ページ生成：店舗ページ
@@ -2031,3 +2279,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
