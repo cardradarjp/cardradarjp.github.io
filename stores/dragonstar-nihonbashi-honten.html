@@ -66,6 +66,33 @@ a {
   padding: 36px 7vw 30px;
 }
 
+.area-hero {
+  padding-top: 18px;
+  padding-bottom: 12px;
+}
+
+.area-hero .logo-mark {
+  font-size: 44px;
+}
+
+.area-hero .logo-text {
+  font-size: 20px;
+}
+
+.area-hero .breadcrumb {
+  margin-top: 12px;
+}
+
+.area-hero .area-title {
+  margin-top: 12px;
+  font-size: clamp(28px, 6vw, 44px);
+}
+
+.area-hero .area-description {
+  margin: 10px 0 0;
+  line-height: 1.65;
+}
+
 .logo-row {
   display: flex;
   align-items: center;
@@ -200,6 +227,65 @@ a {
   padding: 14px 7vw;
 }
 
+
+.compact-search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: none;
+  background: rgba(5,5,5,.96);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  padding: 8px 7vw;
+  padding-top: calc(8px + env(safe-area-inset-top));
+}
+
+.compact-search input {
+  width: 100%;
+  height: 40px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  padding: 0 10px;
+  font-size: 16px;
+}
+
+.compact-search.visible {
+  display: block;
+}
+
+.menu-toggle {
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.05);
+  color: #fff;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.menu-panel {
+  display: none;
+  margin-top: 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(8,8,8,.95);
+}
+
+.menu-panel.open {
+  display: block;
+}
+
+.menu-panel a {
+  display: block;
+  padding: 14px 16px;
+  line-height: 1.5;
+  text-decoration: none;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.menu-panel a:first-child {
+  border-top: 0;
+}
+
 .search-main {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -216,6 +302,25 @@ a {
   padding: 0 14px;
   font-size: 15px;
   outline: none;
+}
+
+
+.filter-toggle {
+  height: 48px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  color: white;
+  padding: 0 16px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-panel {
+  display: none;
+}
+
+.filter-panel.open {
+  display: block;
 }
 
 .reset-button {
@@ -237,6 +342,8 @@ a {
 
 .filter-chip {
   flex: 0 0 auto;
+  margin-right: 8px;
+  margin-bottom: 6px;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.04);
   color: rgba(255,255,255,.82);
@@ -288,6 +395,66 @@ main {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+}
+
+.support-quick {
+  margin-bottom: 28px;
+}
+
+.empty-tl-notice {
+  margin-bottom: 28px;
+  padding: 18px;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.11);
+}
+
+.empty-tl-notice p {
+  margin: 0;
+  color: rgba(255,255,255,.72);
+  line-height: 1.8;
+}
+
+.store-list {
+  display: grid;
+  gap: 10px;
+}
+
+.store-row {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+}
+
+.store-row.waiting {
+  opacity: .72;
+}
+
+.store-row .shop-body {
+  padding: 0;
+}
+
+.store-row .shop-body h3 {
+  margin: 8px 0 6px;
+  font-size: 18px;
+}
+
+.store-row .card-footer {
+  border-top: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.62);
+  padding: 4px 8px;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .shop-card {
@@ -570,11 +737,42 @@ main {
 
 @media (max-width: 760px) {
   .hero {
-    padding: 30px 18px 24px;
+    padding: 20px 12px 16px;
+  }
+
+  .area-hero {
+    padding-top: 14px;
+    padding-bottom: 10px;
   }
 
   .hero-large {
-    padding: 30px 18px;
+    padding: 20px 12px;
+  }
+
+  .sticky-search {
+    padding: 10px 12px;
+  }
+
+  .compact-search {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .chip-row {
+    gap: 6px;
+  }
+
+  .filter-chip {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .store-row {
+    grid-template-columns: 1fr;
+  }
+
+  .store-row .card-footer {
+    margin-top: 4px;
   }
 
   .selector-grid,
@@ -584,15 +782,20 @@ main {
   }
 
   .search-main {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
+  .search-main input {
+    grid-column: 1 / -1;
+  }
+
+  .filter-toggle,
   .reset-button {
     width: 100%;
   }
 
   main {
-    padding: 24px 18px 72px;
+    padding: 20px 12px 72px;
   }
 
   .section-head {
@@ -644,7 +847,7 @@ main {
         この店舗の買取表画像を大きく表示しています。
         画像をタップすると拡大表示し、必要な場合のみX埋め込みを読み込みます。
       </p>
-      <div class="updated">LAST UPDATE : 2026/05/27 01:25</div>
+      <div class="updated">LAST UPDATE : 2026-05-28 15:13:03 UTC</div>
     </div>
 
     
