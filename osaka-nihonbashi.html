@@ -627,13 +627,13 @@ a {
 
 .simple-store-card {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 8px;
   align-items: center;
   text-decoration: none;
-  background: rgba(8,8,8,.72);
-  border: 1px solid rgba(255,255,255,.10);
-  padding: 14px 16px;
+  background: rgba(10,10,10,.82);
+  border: 1px solid rgba(255,255,255,.13);
+  padding: 15px 16px;
 }
 
 .simple-store-card.is-waiting {
@@ -641,8 +641,8 @@ a {
   border-style: dashed;
 }
 
-.simple-store-name { font-weight: 650; }
-.simple-store-meta { margin-top: 5px; color: rgba(255,255,255,.50); font-size: 12px; }
+.simple-store-name { font-weight: 650; font-size: 15px; }
+.simple-store-meta { margin-top: 6px; color: rgba(255,255,255,.56); font-size: 12px; line-height: 1.6; }
 .simple-store-date { color: rgba(255,255,255,.58); font-size: 12px; white-space: nowrap; }
 
 .image-count {
@@ -727,6 +727,10 @@ a {
 .store-panel-link {
   color: rgba(255,255,255,.58);
   font-size: 12px;
+}
+
+.store-panel-link {
+  margin-top: 2px;
 }
 
 .support-groups {
@@ -3762,8 +3766,18 @@ function getVisibleStorePostCards() {
   });
 }
 
+function getVisibleStoreGroups() {
+  const list = document.getElementById("storeGroupList");
+  if (!list) return [];
+  return Array.from(list.querySelectorAll(":scope > .store-group")).filter(group => {
+    if (group.classList.contains("hidden")) return false;
+    if (group.closest(".view-panel.hidden")) return false;
+    return !!(group.offsetWidth || group.offsetHeight || group.getClientRects().length);
+  });
+}
+
 function getVisibleActiveCards() {
-  return currentView === "store" ? getVisibleStorePostCards() : getVisibleTimelineCards();
+  return currentView === "store" ? getVisibleStoreGroups() : getVisibleTimelineCards();
 }
 
 function updateNoResult(count) {
