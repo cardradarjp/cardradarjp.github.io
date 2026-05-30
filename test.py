@@ -1313,6 +1313,10 @@ a {
   margin-top: 10px;
 }
 
+.store-post-images {
+  grid-template-columns: 1fr;
+}
+
 .timeline-image {
   position: relative;
   display: block;
@@ -1446,6 +1450,10 @@ a {
 }
 
 @media (min-width: 820px) {
+  .store-post-images {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .store-post-card {
     flex-basis: min(48%, 520px);
   }
@@ -2286,7 +2294,7 @@ def build_area_page(posts_by_source, updated_at):
         data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + type_label + ' ' + post.get("summary", ""))}"
       >
         <div class="store-post-meta">{h(type_label)} / 画像 {image_count}枚</div>
-        <div class="timeline-images">
+        <div class="timeline-images store-post-images">
 {''.join(store_image_buttons)}
         </div>
         <div class="store-post-actions">
