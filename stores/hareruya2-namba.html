@@ -507,6 +507,35 @@ a {
   display: block;
 }
 
+.timeline-image.is-landscape,
+.image-card.is-landscape {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline-image.is-landscape img,
+.image-card.is-landscape img {
+  width: 150%;
+  max-width: none;
+}
+
+.landscape-hint {
+  display: none;
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(255,255,255,.24);
+  color: rgba(255,255,255,.9);
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+.is-landscape .landscape-hint {
+  display: inline-block;
+}
+
 .zoom-badge {
   position: absolute;
   top: 8px;
@@ -1024,6 +1053,10 @@ main {
   display: block;
 }
 
+.image-card {
+  position: relative;
+}
+
 .image-info {
   padding: 14px;
 }
@@ -1087,10 +1120,21 @@ main {
   cursor: pointer;
 }
 
+.modal-image-wrap {
+  position: relative;
+  margin-top: 14px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .modal-image {
   width: 100%;
   display: block;
-  margin-top: 14px;
+}
+
+.modal-image-wrap.is-landscape .modal-image {
+  width: 170vw;
+  max-width: none;
 }
 
 .modal-summary {
@@ -1264,6 +1308,7 @@ main {
     
 <div class="image-card" onclick="openMedia('hareruya2-namba-single_2060219738110959742_0')">
   <img src="https://pbs.twimg.com/media/HJdeWMJbUAAZtAw?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>シングル / 確認 05/29 13:40 / 画像1枚</small>
   </div>
@@ -1280,11 +1325,15 @@ main {
   <div class="modal-inner">
     <button class="modal-close" onclick="closeMedia()">閉じる</button>
 
-    <img class="modal-image" id="modalImage" src="" alt="買取表画像">
+    <div class="modal-image-wrap" id="modalImageWrap">
+      <img class="modal-image" id="modalImage" src="" alt="買取表画像">
+      <span class="landscape-hint">横スクロールで確認</span>
+    </div>
 
     <div class="modal-summary" id="modalSummary"></div>
 
     <div class="modal-actions">
+      <a id="modalImageLink" href="#" target="_blank" rel="noopener noreferrer">画像だけ開く</a>
       <a id="modalTweetLink" href="#" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
       <button onclick="loadTweetEmbed()">X埋め込みを表示</button>
     </div>
@@ -1299,6 +1348,21 @@ main {
 const MEDIA_ITEMS = {"hareruya2-namba-single_2060219738110959742_0": {"image_url": "https://pbs.twimg.com/media/HJdeWMJbUAAZtAw?format=jpg&name=large", "tweet_url": "https://x.com/hareruya2namba/status/2060219738110959742", "summary": "晴れる屋2 なんば店（ハレツーなんば店/ポケカ専門店） 5月29日 ハレツーなんば店買取情報 本日の #ハレツー本気の買取強化 はこちらです ぜひお持ちください ハレツーなんば店では 全てのシリーズ、レギュレーションの ポケモンカードをお取り扱いしております その他の買取情報はこちら https:// hareruya2.com/pages/buyin 1 1,512", "type_label": "シングル"}};
 let currentTweetUrl = "";
 
+function markLandscapeImage(img) {
+  if (!img || !img.naturalWidth || !img.naturalHeight) return;
+  const ratio = img.naturalWidth / img.naturalHeight;
+  const target = img.closest(".timeline-image, .image-card, .modal-image-wrap");
+  if (!target) return;
+  target.classList.toggle("is-landscape", ratio >= 1.35);
+}
+
+function bindLandscapeImages(root = document) {
+  root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {
+    img.addEventListener("load", () => markLandscapeImage(img));
+    if (img.complete) markLandscapeImage(img);
+  });
+}
+
 function openMedia(id) {
   const item = MEDIA_ITEMS[id];
 
@@ -1306,8 +1370,14 @@ function openMedia(id) {
 
   currentTweetUrl = item.tweet_url;
 
-  document.getElementById("modalImage").src = item.image_url;
+  const modalImage = document.getElementById("modalImage");
+  const modalWrap = document.getElementById("modalImageWrap");
+  if (modalWrap) modalWrap.classList.remove("is-landscape");
+  modalImage.src = item.image_url;
+  modalImage.onload = () => markLandscapeImage(modalImage);
+  if (modalImage.complete) markLandscapeImage(modalImage);
   document.getElementById("modalSummary").textContent = item.summary;
+  document.getElementById("modalImageLink").href = item.image_url;
   document.getElementById("modalTweetLink").href = item.tweet_url;
   document.getElementById("tweetEmbed").innerHTML = "";
 
@@ -1334,6 +1404,10 @@ function loadTweetEmbed() {
     window.twttr.widgets.load(embed);
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  bindLandscapeImages();
+});
 </script>
 
 </body>

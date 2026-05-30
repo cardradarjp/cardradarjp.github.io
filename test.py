@@ -1354,6 +1354,35 @@ a {
   display: block;
 }
 
+.timeline-image.is-landscape,
+.image-card.is-landscape {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline-image.is-landscape img,
+.image-card.is-landscape img {
+  width: 150%;
+  max-width: none;
+}
+
+.landscape-hint {
+  display: none;
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(255,255,255,.24);
+  color: rgba(255,255,255,.9);
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+.is-landscape .landscape-hint {
+  display: inline-block;
+}
+
 .zoom-badge {
   position: absolute;
   top: 8px;
@@ -1871,6 +1900,10 @@ main {
   display: block;
 }
 
+.image-card {
+  position: relative;
+}
+
 .image-info {
   padding: 14px;
 }
@@ -1934,10 +1967,21 @@ main {
   cursor: pointer;
 }
 
+.modal-image-wrap {
+  position: relative;
+  margin-top: 14px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .modal-image {
   width: 100%;
   display: block;
-  margin-top: 14px;
+}
+
+.modal-image-wrap.is-landscape .modal-image {
+  width: 170vw;
+  max-width: none;
 }
 
 .modal-summary {
@@ -2244,6 +2288,7 @@ def build_area_page(posts_by_source, updated_at):
       <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 {image_index + 1} / {image_count}</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 """)
             image_html = f"""
@@ -2313,6 +2358,7 @@ def build_area_page(posts_by_source, updated_at):
           <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 {image_index + 1} / {image_count}</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 """)
 
@@ -2598,7 +2644,10 @@ def build_area_page(posts_by_source, updated_at):
 <div class="modal" id="timelineMediaModal">
   <div class="modal-inner">
     <button class="modal-close" onclick="closeTimelineMedia()">閉じる</button>
-    <img class="modal-image" id="timelineModalImage" src="" alt="買取表画像">
+    <div class="modal-image-wrap" id="timelineModalImageWrap">
+      <img class="modal-image" id="timelineModalImage" src="" alt="買取表画像">
+      <span class="landscape-hint">横スクロールで確認</span>
+    </div>
     <div class="modal-nav">
       <button type="button" onclick="showTimelineImage(-1)">前へ</button>
       <span class="modal-counter" id="timelineModalCounter">画像 1 / 1</span>
@@ -2606,6 +2655,7 @@ def build_area_page(posts_by_source, updated_at):
     </div>
     <div class="modal-summary" id="timelineModalSummary"></div>
     <div class="modal-actions">
+      <a id="timelineModalImageLink" href="#" target="_blank" rel="noopener noreferrer">画像だけ開く</a>
       <a id="timelineModalTweetLink" href="#" target="_blank" rel="noopener noreferrer">Xで開く</a>
     </div>
   </div>
@@ -2647,11 +2697,17 @@ function renderTimelineMedia() {{
   if (!currentMediaItem) return;
   const images = currentMediaItem.image_urls || [];
   const image = images[currentMediaIndex];
+  const modalImage = document.getElementById("timelineModalImage");
+  const modalWrap = document.getElementById("timelineModalImageWrap");
 
-  document.getElementById("timelineModalImage").src = image || "";
+  if (modalWrap) modalWrap.classList.remove("is-landscape");
+  modalImage.src = image || "";
+  modalImage.onload = () => markLandscapeImage(modalImage);
   document.getElementById("timelineModalCounter").textContent = `画像 ${{currentMediaIndex + 1}} / ${{Math.max(images.length, 1)}}`;
   document.getElementById("timelineModalSummary").textContent = `${{currentMediaItem.shop_name}} / ${{currentMediaItem.type_label}} / 確認：${{currentMediaItem.checked_at}}${{currentMediaItem.summary ? " / " + currentMediaItem.summary : ""}}`;
+  document.getElementById("timelineModalImageLink").href = image || "#";
   document.getElementById("timelineModalTweetLink").href = currentMediaItem.tweet_url;
+  if (modalImage.complete) markLandscapeImage(modalImage);
 }}
 
 function openTimelineMedia(id, startIndex = 0) {{
@@ -2673,6 +2729,21 @@ function showTimelineImage(step) {{
 
 function closeTimelineMedia() {{
   document.getElementById("timelineMediaModal").classList.remove("open");
+}}
+
+function markLandscapeImage(img) {{
+  if (!img || !img.naturalWidth || !img.naturalHeight) return;
+  const ratio = img.naturalWidth / img.naturalHeight;
+  const target = img.closest(".timeline-image, .image-card, .modal-image-wrap");
+  if (!target) return;
+  target.classList.toggle("is-landscape", ratio >= 1.35);
+}}
+
+function bindLandscapeImages(root = document) {{
+  root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {{
+    img.addEventListener("load", () => markLandscapeImage(img));
+    if (img.complete) markLandscapeImage(img);
+  }});
 }}
 
 function syncTypeButtons() {{
@@ -2874,6 +2945,7 @@ document.addEventListener("DOMContentLoaded", () => {{
   compactSearchBar.addEventListener("focusin", updateCompactSearchBar);
   compactSearchBar.addEventListener("focusout", () => setTimeout(updateCompactSearchBar, 0));
   updateCompactSearchBar();
+  bindLandscapeImages();
   syncTypeButtons();
   sortTimeline();
   applyFilters();
@@ -2924,6 +2996,7 @@ def build_store_page(shop, posts_by_source, updated_at):
                 images_html += f"""
 <div class="image-card" onclick="openMedia('{h(media_id)}')">
   <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>{h(post.get("display_type_label") or short_type_label(meta["label"]))} / 確認 {h(format_update_label(post.get("posted_at") or post.get("collected_at", updated_at)))} / 画像{len(image_urls)}枚</small>
   </div>
@@ -2993,11 +3066,15 @@ def build_store_page(shop, posts_by_source, updated_at):
   <div class="modal-inner">
     <button class="modal-close" onclick="closeMedia()">閉じる</button>
 
-    <img class="modal-image" id="modalImage" src="" alt="買取表画像">
+    <div class="modal-image-wrap" id="modalImageWrap">
+      <img class="modal-image" id="modalImage" src="" alt="買取表画像">
+      <span class="landscape-hint">横スクロールで確認</span>
+    </div>
 
     <div class="modal-summary" id="modalSummary"></div>
 
     <div class="modal-actions">
+      <a id="modalImageLink" href="#" target="_blank" rel="noopener noreferrer">画像だけ開く</a>
       <a id="modalTweetLink" href="#" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
       <button onclick="loadTweetEmbed()">X埋め込みを表示</button>
     </div>
@@ -3012,6 +3089,21 @@ def build_store_page(shop, posts_by_source, updated_at):
 const MEDIA_ITEMS = {media_json};
 let currentTweetUrl = "";
 
+function markLandscapeImage(img) {{
+  if (!img || !img.naturalWidth || !img.naturalHeight) return;
+  const ratio = img.naturalWidth / img.naturalHeight;
+  const target = img.closest(".timeline-image, .image-card, .modal-image-wrap");
+  if (!target) return;
+  target.classList.toggle("is-landscape", ratio >= 1.35);
+}}
+
+function bindLandscapeImages(root = document) {{
+  root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {{
+    img.addEventListener("load", () => markLandscapeImage(img));
+    if (img.complete) markLandscapeImage(img);
+  }});
+}}
+
 function openMedia(id) {{
   const item = MEDIA_ITEMS[id];
 
@@ -3019,8 +3111,14 @@ function openMedia(id) {{
 
   currentTweetUrl = item.tweet_url;
 
-  document.getElementById("modalImage").src = item.image_url;
+  const modalImage = document.getElementById("modalImage");
+  const modalWrap = document.getElementById("modalImageWrap");
+  if (modalWrap) modalWrap.classList.remove("is-landscape");
+  modalImage.src = item.image_url;
+  modalImage.onload = () => markLandscapeImage(modalImage);
+  if (modalImage.complete) markLandscapeImage(modalImage);
   document.getElementById("modalSummary").textContent = item.summary;
+  document.getElementById("modalImageLink").href = item.image_url;
   document.getElementById("modalTweetLink").href = item.tweet_url;
   document.getElementById("tweetEmbed").innerHTML = "";
 
@@ -3047,6 +3145,10 @@ function loadTweetEmbed() {{
     window.twttr.widgets.load(embed);
   }}
 }}
+
+document.addEventListener("DOMContentLoaded", () => {{
+  bindLandscapeImages();
+}});
 </script>
 """
     return html_shell(f"CardRadar｜{shop['shop_name']}", content, base_prefix="../")

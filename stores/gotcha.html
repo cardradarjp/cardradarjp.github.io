@@ -507,6 +507,35 @@ a {
   display: block;
 }
 
+.timeline-image.is-landscape,
+.image-card.is-landscape {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline-image.is-landscape img,
+.image-card.is-landscape img {
+  width: 150%;
+  max-width: none;
+}
+
+.landscape-hint {
+  display: none;
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(255,255,255,.24);
+  color: rgba(255,255,255,.9);
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+.is-landscape .landscape-hint {
+  display: inline-block;
+}
+
 .zoom-badge {
   position: absolute;
   top: 8px;
@@ -1024,6 +1053,10 @@ main {
   display: block;
 }
 
+.image-card {
+  position: relative;
+}
+
 .image-info {
   padding: 14px;
 }
@@ -1087,10 +1120,21 @@ main {
   cursor: pointer;
 }
 
+.modal-image-wrap {
+  position: relative;
+  margin-top: 14px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .modal-image {
   width: 100%;
   display: block;
-  margin-top: 14px;
+}
+
+.modal-image-wrap.is-landscape .modal-image {
+  width: 170vw;
+  max-width: none;
 }
 
 .modal-summary {
@@ -1264,6 +1308,7 @@ main {
     
 <div class="image-card" onclick="openMedia('gotcha-single_2060580083413487665_0')">
   <img src="https://pbs.twimg.com/media/HJimiFCbEAAoAo2?format=jpg&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>PSA / 確認 05/30 13:32 / 画像1枚</small>
   </div>
@@ -1271,6 +1316,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-single_2060572506436882602_1')">
   <img src="https://pbs.twimg.com/media/HJifdk0bcAApD4v?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>PSA / 確認 05/30 13:02 / 画像1枚</small>
   </div>
@@ -1285,6 +1331,7 @@ main {
     
 <div class="image-card" onclick="openMedia('gotcha-single_2060608992997704020_0')">
   <img src="https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 15:27 / 画像1枚</small>
   </div>
@@ -1292,6 +1339,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-box_2060608992997704020_1')">
   <img src="https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 15:27 / 画像1枚</small>
   </div>
@@ -1299,6 +1347,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-single_2060572324274045303_2')">
   <img src="https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 13:01 / 画像2枚</small>
   </div>
@@ -1306,6 +1355,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-single_2060572324274045303_3')">
   <img src="https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 13:01 / 画像2枚</small>
   </div>
@@ -1313,6 +1363,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-box_2060572324274045303_4')">
   <img src="https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 13:01 / 画像2枚</small>
   </div>
@@ -1320,6 +1371,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-box_2060572324274045303_5')">
   <img src="https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 13:01 / 画像2枚</small>
   </div>
@@ -1327,6 +1379,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-single_2060570546635682142_6')">
   <img src="https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 12:54 / 画像1枚</small>
   </div>
@@ -1334,6 +1387,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-box_2060570546635682142_7')">
   <img src="https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 12:54 / 画像1枚</small>
   </div>
@@ -1341,6 +1395,7 @@ main {
 
 <div class="image-card" onclick="openMedia('gotcha-box_2060568057123086839_8')">
   <img src="https://pbs.twimg.com/media/HJibfdJagAAMtcx?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
+  <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
     <small>BOX / 確認 05/30 12:44 / 画像1枚</small>
   </div>
@@ -1357,11 +1412,15 @@ main {
   <div class="modal-inner">
     <button class="modal-close" onclick="closeMedia()">閉じる</button>
 
-    <img class="modal-image" id="modalImage" src="" alt="買取表画像">
+    <div class="modal-image-wrap" id="modalImageWrap">
+      <img class="modal-image" id="modalImage" src="" alt="買取表画像">
+      <span class="landscape-hint">横スクロールで確認</span>
+    </div>
 
     <div class="modal-summary" id="modalSummary"></div>
 
     <div class="modal-actions">
+      <a id="modalImageLink" href="#" target="_blank" rel="noopener noreferrer">画像だけ開く</a>
       <a id="modalTweetLink" href="#" target="_blank" rel="noopener noreferrer">元投稿をXで開く</a>
       <button onclick="loadTweetEmbed()">X埋め込みを表示</button>
     </div>
@@ -1376,6 +1435,21 @@ main {
 const MEDIA_ITEMS = {"gotcha-single_2060580083413487665_0": {"image_url": "https://pbs.twimg.com/media/HJimiFCbEAAoAo2?format=jpg&name=large", "tweet_url": "https://x.com/cardshop_gotcha/status/2060580083413487665", "summary": "カードショップ GOTCHA! 2時間 【#ポケカ #PSA #最低保証】 ポケカ PSA10 買取 最低保証 1枚 ¥ 6,500- 買取 1枚 ¥ 6,500- 買取 1枚 ¥ 6,500- 買取 (対象レアリティ : AR/CHR/CSR/HR/SR/SSR/SAR/MA) 本日もたくさんの持ち込みお待ちしております 数量限定なのでお早めに 678", "type_label": "PSA"}, "gotcha-single_2060572506436882602_1": {"image_url": "https://pbs.twimg.com/media/HJifdk0bcAApD4v?format=png&name=large", "tweet_url": "https://x.com/cardshop_gotcha/status/2060572506436882602", "summary": "カードショップ GOTCHA! 3時間 ポケカPSA10 超強化買取 超大量募集中!! 買取表に記載のないPSA10も高額買取中 お見積りだけでもお気軽にお越しください オタロードより徒歩1分 買取受付時間12：00～19：30 たくさんのお持ち込み、お待ちしております ナッティー 1 1 1,628", "type_label": "PSA"}, "gotcha-single_2060608992997704020_0": {"image_url": "https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&name=large", "tweet_url": "https://x.com/cardshop_gotcha/status/2060608992997704020", "summary": "カードショップ GOTCHA! 55分 【ポケカBOX買取強化】 ただいまより、 ニンジャスピナー→11,500円 ニンジャスピナー→11,500円 ニンジャスピナー→11,500円 買取価格を上記に変更いたします！ 数量限定買取価格！！ たくさんのお持ち込みお待ちしております #ポケモンカード #ポケモン #BOX #買取 #難波 509", "type_label": "BOX"}, "gotcha-box_2060608992997704020_1": {"image_url": "https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&name=large", "tweet_url": "https://x.com/cardshop_gotcha/status/2060608992997704020", "summary": "カードショップ GOTCHA! 55分 【ポケカBOX買取強化】 ただいまより、 ニンジャスピナー→11,500円 ニンジャスピナー→11,500円 ニンジャスピナー→11,500円 買取価格を上記に変更いたします！ 数量限定買取価格！！ たくさんのお持ち込みお待ちしております #ポケモンカード #ポケモン #BOX #買取 #難波 510", "type_label": "BOX"}, "gotcha-single_2060572324274045303_2": {"image_url": "https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&name=360x360", "tweet_url": "https://x.com/cardshop_gotcha/status/2060572324274045303", "summary": "カードショップ GOTCHA! 3時間 【カードショップGOTCHA!買取価格情報】 ポケモンカードBOX 強化買取 5/29　更新 アビスアイ ▷▷13,600円 ニンジャスピナー ▷▷10,600円 MEGAドリームex ▷▷16,100円 メガシンフォニア ▷▷9,700円 ロケット団の栄光 ▷▷22,000円 1 1 1,363", "type_label": "BOX"}, "gotcha-single_2060572324274045303_3": {"image_url": "https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&name=360x360", "tweet_url": "https://x.com/cardshop_gotcha/status/2060572324274045303", "summary": "カードショップ GOTCHA! 3時間 【カードショップGOTCHA!買取価格情報】 ポケモンカードBOX 強化買取 5/29　更新 アビスアイ ▷▷13,600円 ニンジャスピナー ▷▷10,600円 MEGAドリームex ▷▷16,100円 メガシンフォニア ▷▷9,700円 ロケット団の栄光 ▷▷22,000円 1 1 1,363", "type_label": "BOX"}, "gotcha-box_2060572324274045303_4": {"image_url": "https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&name=360x360", "tweet_url": "https://x.com/cardshop_gotcha/status/2060572324274045303", "summary": "カードショップ GOTCHA! 3時間 【カードショップGOTCHA!買取価格情報】 ポケモンカードBOX 強化買取 5/29　更新 アビスアイ ▷▷13,600円 ニンジャスピナー ▷▷10,600円 MEGAドリームex ▷▷16,100円 メガシンフォニア ▷▷9,700円 ロケット団の栄光 ▷▷22,000円 1 1 1,363", "type_label": "BOX"}, "gotcha-box_2060572324274045303_5": {"image_url": "https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&name=360x360", "tweet_url": "https://x.com/cardshop_gotcha/status/2060572324274045303", "summary": "カードショップ GOTCHA! 3時間 【カードショップGOTCHA!買取価格情報】 ポケモンカードBOX 強化買取 5/29　更新 アビスアイ ▷▷13,600円 ニンジャスピナー ▷▷10,600円 MEGAドリームex ▷▷16,100円 メガシンフォニア ▷▷9,700円 ロケット団の栄光 ▷▷22,000円 1 1 1,363", "type_label": "BOX"}, "gotcha-single_2060570546635682142_6": {"image_url": "https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&name=large", "tweet_url": "https://x.com/cardshop_gotcha/status/2060570546635682142", "summary": "カードショップ GOTCHA! 3時間 【ポケカBOX買取強化】 スタートデッキ100→3,000円 スタートデッキ100 →3,000円 スタートデッキ100→3,000円 数量限定買取価格です！！ ※シュリンク付きのみ ※上記は満額買取時の買取金額です。 たくさんのお持ち込みお待ちしております 1 675", "type_label": "BOX"}, "gotcha-box_2060570546635682142_7": {"image_url": "https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&name=large", "tweet_url": "https://x.com/cardshop_gotcha/status/2060570546635682142", "summary": "カードショップ GOTCHA! 3時間 【ポケカBOX買取強化】 スタートデッキ100→3,000円 スタートデッキ100 →3,000円 スタートデッキ100→3,000円 数量限定買取価格です！！ ※シュリンク付きのみ ※上記は満額買取時の買取金額です。 たくさんのお持ち込みお待ちしております 1 675", "type_label": "BOX"}, "gotcha-box_2060568057123086839_8": {"image_url": "https://pbs.twimg.com/media/HJibfdJagAAMtcx?format=png&name=large", "tweet_url": "https://x.com/cardshop_gotcha/status/2060568057123086839", "summary": "カードショップ GOTCHA! 3時間 【ポケカBOX買取強化】 MEGAドリーム →16,100円 MEGAドリーム →16,100円 MEGAドリーム→16,100円 数量限定買取価格です！！ ※シュリンク付きのみ ※上記は満額買取時の買取金額です  たくさんのお持ち込みお待ちしております 681", "type_label": "BOX"}};
 let currentTweetUrl = "";
 
+function markLandscapeImage(img) {
+  if (!img || !img.naturalWidth || !img.naturalHeight) return;
+  const ratio = img.naturalWidth / img.naturalHeight;
+  const target = img.closest(".timeline-image, .image-card, .modal-image-wrap");
+  if (!target) return;
+  target.classList.toggle("is-landscape", ratio >= 1.35);
+}
+
+function bindLandscapeImages(root = document) {
+  root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {
+    img.addEventListener("load", () => markLandscapeImage(img));
+    if (img.complete) markLandscapeImage(img);
+  });
+}
+
 function openMedia(id) {
   const item = MEDIA_ITEMS[id];
 
@@ -1383,8 +1457,14 @@ function openMedia(id) {
 
   currentTweetUrl = item.tweet_url;
 
-  document.getElementById("modalImage").src = item.image_url;
+  const modalImage = document.getElementById("modalImage");
+  const modalWrap = document.getElementById("modalImageWrap");
+  if (modalWrap) modalWrap.classList.remove("is-landscape");
+  modalImage.src = item.image_url;
+  modalImage.onload = () => markLandscapeImage(modalImage);
+  if (modalImage.complete) markLandscapeImage(modalImage);
   document.getElementById("modalSummary").textContent = item.summary;
+  document.getElementById("modalImageLink").href = item.image_url;
   document.getElementById("modalTweetLink").href = item.tweet_url;
   document.getElementById("tweetEmbed").innerHTML = "";
 
@@ -1411,6 +1491,10 @@ function loadTweetEmbed() {
     window.twttr.widgets.load(embed);
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  bindLandscapeImages();
+});
 </script>
 
 </body>

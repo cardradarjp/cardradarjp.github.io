@@ -507,6 +507,35 @@ a {
   display: block;
 }
 
+.timeline-image.is-landscape,
+.image-card.is-landscape {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline-image.is-landscape img,
+.image-card.is-landscape img {
+  width: 150%;
+  max-width: none;
+}
+
+.landscape-hint {
+  display: none;
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(255,255,255,.24);
+  color: rgba(255,255,255,.9);
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+.is-landscape .landscape-hint {
+  display: inline-block;
+}
+
 .zoom-badge {
   position: absolute;
   top: 8px;
@@ -1024,6 +1053,10 @@ main {
   display: block;
 }
 
+.image-card {
+  position: relative;
+}
+
 .image-info {
   padding: 14px;
 }
@@ -1087,10 +1120,21 @@ main {
   cursor: pointer;
 }
 
+.modal-image-wrap {
+  position: relative;
+  margin-top: 14px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .modal-image {
   width: 100%;
   display: block;
-  margin-top: 14px;
+}
+
+.modal-image-wrap.is-landscape .modal-image {
+  width: 170vw;
+  max-width: none;
 }
 
 .modal-summary {
@@ -1468,6 +1512,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1499,6 +1544,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJimiFCbEAAoAo2?format=jpg&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1530,6 +1576,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJifdk0bcAApD4v?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1561,12 +1608,14 @@ main {
       <img src="https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060572324274045303', 1)">
       <img src="https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1598,6 +1647,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&amp;name=large" alt="KUROの買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1629,18 +1679,21 @@ main {
       <img src="https://pbs.twimg.com/media/HJifS7kWUAIhz9l?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060571993464832378', 1)">
       <img src="https://pbs.twimg.com/media/HJifTQRWkAU1DRs?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060571993464832378', 2)">
       <img src="https://pbs.twimg.com/media/HJifTk3XkAIzUjx?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 3" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 3 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1672,12 +1725,14 @@ main {
       <img src="https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2060571930927788088', 1)">
       <img src="https://pbs.twimg.com/media/HJifP21boAALxJi?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1709,6 +1764,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1740,6 +1796,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJibfdJagAAMtcx?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1771,6 +1828,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJiSrAdWEAIuY-G?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1802,6 +1860,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJiSck4XoAoplyd?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1833,6 +1892,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJiSODDW0AQ2PpH?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1864,6 +1924,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJiR_mvWUAgUkHY?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1895,6 +1956,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJiRw8bWAAAKfHQ?format=jpg&amp;name=large" alt="ドラスタ 日本橋本店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1926,18 +1988,21 @@ main {
       <img src="https://pbs.twimg.com/media/HJiRlRIWQAIUpI0?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060556915193553368', 1)">
       <img src="https://pbs.twimg.com/media/HJiRlk7WEAQ-lOf?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060556915193553368', 2)">
       <img src="https://pbs.twimg.com/media/HJiRl5_X0AYLduq?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 3" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 3 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -1969,18 +2034,21 @@ main {
       <img src="https://pbs.twimg.com/media/HJiMp0AXIAEapdc?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060551488787616221', 1)">
       <img src="https://pbs.twimg.com/media/HJiMqAnWgAExnxB?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060551488787616221', 2)">
       <img src="https://pbs.twimg.com/media/HJiMqLwWQAEM8zh?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 3" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 3 / 3</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2012,6 +2080,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJhpNQ6WQAE_mae?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2043,6 +2112,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJdoTc5bcAABPnC?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2074,6 +2144,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJdeWMJbUAAZtAw?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2105,6 +2176,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJdVO_EaYAA3tWn?format=jpg&amp;name=large" alt="KUROの買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2136,12 +2208,14 @@ main {
       <img src="https://pbs.twimg.com/media/HJdG9DFboAAhS2w?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2060193377271079399', 1)">
       <img src="https://pbs.twimg.com/media/HJdG9DGbEAAJIHr?format=jpg&amp;name=large" alt="アムタフの買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2173,12 +2247,14 @@ main {
       <img src="https://pbs.twimg.com/media/HJYCSmTaQAAQawk?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819', 1)">
       <img src="https://pbs.twimg.com/media/HJYCUX_bMAE3foG?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2210,6 +2286,7 @@ main {
       <img src="https://pbs.twimg.com/media/HJU6NV6b0AAheEr?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2241,12 +2318,14 @@ main {
       <img src="https://pbs.twimg.com/media/HJSoW9tbsAEN8Rt?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2059456047866339412', 1)">
       <img src="https://pbs.twimg.com/media/HJSoW9rawAAyBn1?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2278,24 +2357,28 @@ main {
       <img src="https://pbs.twimg.com/media/HJOTMnsbUAAfa3A?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 4</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 1)">
       <img src="https://pbs.twimg.com/media/HJOTMnsacAAWfpn?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 4</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 2)">
       <img src="https://pbs.twimg.com/media/HJOTMnwaUAIoQ7F?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 3" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 3 / 4</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 3)">
       <img src="https://pbs.twimg.com/media/HJOTMnsb0AAOutY?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 4" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 4 / 4</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2327,24 +2410,28 @@ main {
       <img src="https://pbs.twimg.com/media/HJFRCvmbkAAjieR?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 4</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 1)">
       <img src="https://pbs.twimg.com/media/HJFRDiBbEAAvxqH?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 2" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 2 / 4</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 2)">
       <img src="https://pbs.twimg.com/media/HJFRET6aEAAULJY?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 3" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 3 / 4</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
     <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 3)">
       <img src="https://pbs.twimg.com/media/HJFRFOMa0AEPAsi?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 4" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 4 / 4</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2376,6 +2463,7 @@ main {
       <img src="https://pbs.twimg.com/media/HG4SsYuagAAEuT4?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
     </button>
 
   </div>
@@ -2427,18 +2515,21 @@ main {
           <img src="https://pbs.twimg.com/media/HJifS7kWUAIhz9l?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060571993464832378', 1)">
           <img src="https://pbs.twimg.com/media/HJifTQRWkAU1DRs?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060571993464832378', 2)">
           <img src="https://pbs.twimg.com/media/HJifTk3XkAIzUjx?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2462,6 +2553,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJiSck4XoAoplyd?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2485,18 +2577,21 @@ main {
           <img src="https://pbs.twimg.com/media/HJiRlRIWQAIUpI0?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060556915193553368', 1)">
           <img src="https://pbs.twimg.com/media/HJiRlk7WEAQ-lOf?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060556915193553368', 2)">
           <img src="https://pbs.twimg.com/media/HJiRl5_X0AYLduq?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2537,6 +2632,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJiRw8bWAAAKfHQ?format=jpg&amp;name=large" alt="ドラスタ 日本橋本店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2577,6 +2673,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJiR_mvWUAgUkHY?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2600,18 +2697,21 @@ main {
           <img src="https://pbs.twimg.com/media/HJiMp0AXIAEapdc?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060551488787616221', 1)">
           <img src="https://pbs.twimg.com/media/HJiMqAnWgAExnxB?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060551488787616221', 2)">
           <img src="https://pbs.twimg.com/media/HJiMqLwWQAEM8zh?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 3</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2652,6 +2752,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJiSODDW0AQ2PpH?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2675,6 +2776,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJhpNQ6WQAE_mae?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2715,6 +2817,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJiSrAdWEAIuY-G?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2755,6 +2858,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJdeWMJbUAAZtAw?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2795,6 +2899,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJU6NV6b0AAheEr?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2835,24 +2940,28 @@ main {
           <img src="https://pbs.twimg.com/media/HJFRCvmbkAAjieR?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 1)">
           <img src="https://pbs.twimg.com/media/HJFRDiBbEAAvxqH?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 2)">
           <img src="https://pbs.twimg.com/media/HJFRET6aEAAULJY?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 3)">
           <img src="https://pbs.twimg.com/media/HJFRFOMa0AEPAsi?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2893,12 +3002,14 @@ main {
           <img src="https://pbs.twimg.com/media/HJSoW9tbsAEN8Rt?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2059456047866339412', 1)">
           <img src="https://pbs.twimg.com/media/HJSoW9rawAAyBn1?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2939,12 +3050,14 @@ main {
           <img src="https://pbs.twimg.com/media/HJYCSmTaQAAQawk?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819', 1)">
           <img src="https://pbs.twimg.com/media/HJYCUX_bMAE3foG?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -2985,6 +3098,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJdoTc5bcAABPnC?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3008,12 +3122,14 @@ main {
           <img src="https://pbs.twimg.com/media/HJdG9DFboAAhS2w?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2060193377271079399', 1)">
           <img src="https://pbs.twimg.com/media/HJdG9DGbEAAJIHr?format=jpg&amp;name=large" alt="アムタフの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3054,6 +3170,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3077,6 +3194,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJimiFCbEAAoAo2?format=jpg&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3100,6 +3218,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJifdk0bcAApD4v?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3123,12 +3242,14 @@ main {
           <img src="https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060572324274045303', 1)">
           <img src="https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3152,6 +3273,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3175,6 +3297,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJibfdJagAAMtcx?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3215,6 +3338,7 @@ main {
           <img src="https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&amp;name=large" alt="KUROの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3238,12 +3362,14 @@ main {
           <img src="https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2060571930927788088', 1)">
           <img src="https://pbs.twimg.com/media/HJifP21boAALxJi?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3284,24 +3410,28 @@ main {
           <img src="https://pbs.twimg.com/media/HJOTMnsbUAAfa3A?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 1)">
           <img src="https://pbs.twimg.com/media/HJOTMnsacAAWfpn?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 2)">
           <img src="https://pbs.twimg.com/media/HJOTMnwaUAIoQ7F?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 3)">
           <img src="https://pbs.twimg.com/media/HJOTMnsb0AAOutY?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
+          <span class="landscape-hint">横スクロールで確認</span>
         </button>
 
         </div>
@@ -3564,7 +3694,10 @@ main {
 <div class="modal" id="timelineMediaModal">
   <div class="modal-inner">
     <button class="modal-close" onclick="closeTimelineMedia()">閉じる</button>
-    <img class="modal-image" id="timelineModalImage" src="" alt="買取表画像">
+    <div class="modal-image-wrap" id="timelineModalImageWrap">
+      <img class="modal-image" id="timelineModalImage" src="" alt="買取表画像">
+      <span class="landscape-hint">横スクロールで確認</span>
+    </div>
     <div class="modal-nav">
       <button type="button" onclick="showTimelineImage(-1)">前へ</button>
       <span class="modal-counter" id="timelineModalCounter">画像 1 / 1</span>
@@ -3572,6 +3705,7 @@ main {
     </div>
     <div class="modal-summary" id="timelineModalSummary"></div>
     <div class="modal-actions">
+      <a id="timelineModalImageLink" href="#" target="_blank" rel="noopener noreferrer">画像だけ開く</a>
       <a id="timelineModalTweetLink" href="#" target="_blank" rel="noopener noreferrer">Xで開く</a>
     </div>
   </div>
@@ -3613,11 +3747,17 @@ function renderTimelineMedia() {
   if (!currentMediaItem) return;
   const images = currentMediaItem.image_urls || [];
   const image = images[currentMediaIndex];
+  const modalImage = document.getElementById("timelineModalImage");
+  const modalWrap = document.getElementById("timelineModalImageWrap");
 
-  document.getElementById("timelineModalImage").src = image || "";
+  if (modalWrap) modalWrap.classList.remove("is-landscape");
+  modalImage.src = image || "";
+  modalImage.onload = () => markLandscapeImage(modalImage);
   document.getElementById("timelineModalCounter").textContent = `画像 ${currentMediaIndex + 1} / ${Math.max(images.length, 1)}`;
   document.getElementById("timelineModalSummary").textContent = `${currentMediaItem.shop_name} / ${currentMediaItem.type_label} / 確認：${currentMediaItem.checked_at}${currentMediaItem.summary ? " / " + currentMediaItem.summary : ""}`;
+  document.getElementById("timelineModalImageLink").href = image || "#";
   document.getElementById("timelineModalTweetLink").href = currentMediaItem.tweet_url;
+  if (modalImage.complete) markLandscapeImage(modalImage);
 }
 
 function openTimelineMedia(id, startIndex = 0) {
@@ -3639,6 +3779,21 @@ function showTimelineImage(step) {
 
 function closeTimelineMedia() {
   document.getElementById("timelineMediaModal").classList.remove("open");
+}
+
+function markLandscapeImage(img) {
+  if (!img || !img.naturalWidth || !img.naturalHeight) return;
+  const ratio = img.naturalWidth / img.naturalHeight;
+  const target = img.closest(".timeline-image, .image-card, .modal-image-wrap");
+  if (!target) return;
+  target.classList.toggle("is-landscape", ratio >= 1.35);
+}
+
+function bindLandscapeImages(root = document) {
+  root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {
+    img.addEventListener("load", () => markLandscapeImage(img));
+    if (img.complete) markLandscapeImage(img);
+  });
 }
 
 function syncTypeButtons() {
@@ -3840,6 +3995,7 @@ document.addEventListener("DOMContentLoaded", () => {
   compactSearchBar.addEventListener("focusin", updateCompactSearchBar);
   compactSearchBar.addEventListener("focusout", () => setTimeout(updateCompactSearchBar, 0));
   updateCompactSearchBar();
+  bindLandscapeImages();
   syncTypeButtons();
   sortTimeline();
   applyFilters();
