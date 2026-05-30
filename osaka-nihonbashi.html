@@ -557,6 +557,10 @@ a {
   padding-top: 8px;
 }
 
+.search-area:not(.stores-open) .store-panel {
+  display: none !important;
+}
+
 .search-area.stores-open .store-panel {
   display: grid;
   gap: 8px;
@@ -1093,7 +1097,7 @@ main {
   <div class="search-area" id="searchArea">
     <div class="search-line">
       <input id="searchInput" class="search-input" type="search" placeholder="店舗・カード名で検索">
-      <div class="result-line">表示中：<span class="result-count">0</span>件</div>
+      <div class="result-line">表示中：<span class="result-count">27</span>件</div>
     </div>
 
     <div class="type-row">
@@ -1165,7 +1169,7 @@ main {
       <button class="reset-button" onclick="resetFilters()">リセット</button>
     </div>
 
-    <div class="store-panel" id="storePanel">
+    <div class="store-panel" id="storePanel" aria-hidden="true">
       
 <a class="store-panel-card" href="stores/dragonstar-otaroad-chuo.html">
   <div class="store-panel-name">ドラスタ オタロード中央</div>
@@ -1264,7 +1268,7 @@ main {
     <div class="compact-line">
       <button class="tool-button menu-button" type="button" aria-label="メニュー" onclick="openMenu()">☰</button>
       <input id="compactSearchInput" class="search-input" type="search" placeholder="検索">
-      <div class="result-line"><span class="result-count">0</span>件</div>
+      <div class="result-line"><span class="result-count">27</span>件</div>
     </div>
     <div class="type-row compact-type-row">
       
@@ -2305,7 +2309,10 @@ function toggleFilters() {
 }
 
 function toggleStorePanel() {
-  document.getElementById("searchArea").classList.toggle("stores-open");
+  const searchArea = document.getElementById("searchArea");
+  const storePanel = document.getElementById("storePanel");
+  const isOpen = searchArea.classList.toggle("stores-open");
+  if (storePanel) storePanel.setAttribute("aria-hidden", isOpen ? "false" : "true");
 }
 
 function renderTimelineMedia() {
@@ -2441,7 +2448,10 @@ function syncSearchInputs(source) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("searchArea")?.classList.remove("stores-open");
+  const searchArea = document.getElementById("searchArea");
+  const storePanel = document.getElementById("storePanel");
+  if (searchArea) searchArea.classList.remove("stores-open");
+  if (storePanel) storePanel.setAttribute("aria-hidden", "true");
   document.querySelectorAll(".search-input").forEach(input => {
     input.addEventListener("input", () => {
       syncSearchInputs(input);
