@@ -4,7 +4,7 @@ import re
 import json
 import sys
 import html as html_lib
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from urllib.parse import quote
 
@@ -19,7 +19,7 @@ Path(USER_DATA_DIR).mkdir(exist_ok=True)
 STORES_DIR = Path("stores")
 STORES_DIR.mkdir(exist_ok=True)
 
-MAX_POSTS_PER_SOURCE = 3
+SAFETY_POSTS_PER_SOURCE = 20
 CHECK_POSTS_PER_SOURCE = 60
 
 
@@ -562,6 +562,16 @@ def clean_tweet_text(text):
     return summary
 
 
+def contains_any(text, words):
+    lower_text = text.lower()
+    return any(word.lower() in lower_text for word in words)
+
+
+def matching_words(text, words):
+    lower_text = text.lower()
+    return [word for word in words if word.lower() in lower_text]
+
+
 def is_target_post(text, source_type):
     pokemon_words = [
         "ポケカ",
@@ -598,99 +608,123 @@ def is_target_post(text, source_type):
         "ガンダム",
     ]
 
-    if any(word in text for word in ng_words):
+    if contains_any(text, ng_words):
         return False
 
-    if not any(word in text for word in pokemon_words):
+    if not contains_any(text, pokemon_words):
         return False
 
-    if not any(word in text for word in buy_words):
-        return False
+    return contains_any(text, buy_words)
 
-    if source_type == "x_post_box":
-        box_words = [
-            "BOX",
-            "box",
-            "未開封",
-            "シュリンク",
-            "パック",
-            "カートン",
-            "ボックス",
-            "1BOX",
-        ]
 
-        box_ng_words = [
-            "BOX買取以外",
-            "BOX以外",
-            "ボックス以外",
-            "未開封BOX以外",
-            "BOX対象外",
-            "BOXは対象外",
-        ]
+def classify_display_type(text, source_type):
+    psa_words = ["PSA", "PSA10", "PSA9", "PSA 10", "PSA 9", "鑑定品", "鑑定", "ARS", "BGS", "ケース付き", "グレーディング"]
+    psa_ng_words = ["PSA買取不可", "PSA対象外", "PSAは対象外", "PSA買取なし"]
+    fixed_words = ["定額", "一律", "最低保証", "保証買取", "まとめ買取", "RR定額", "AR定額", "SR定額", "UR定額", "ノーマル買取", "ノーマル", "ストレージ", "汎用", "大量買取"]
+    box_words = ["BOX", "box", "未開封", "シュリンク", "カートン", "1BOX", "ボックス", "パック", "パック買取", "未開封BOX", "未開封買取"]
+    box_ng_words = ["BOX以外", "BOX買取以外", "ボックス以外", "未開封BOX以外", "BOX対象外", "BOXは対象外", "BOX買取なし"]
 
-        single_words = [
-            "SAR",
-            "SR",
-            "UR",
-            "HR",
-            "CSR",
-            "CHR",
-            "AR",
-            "SA",
-            "ex",
-            "EX",
-        ]
+    if not contains_any(text, psa_ng_words):
+        matches = matching_words(text, psa_words)
+        if matches:
+            return "x_post_psa", ",".join(matches)
 
-        if not any(word in text for word in box_words):
-            return False
+    matches = matching_words(text, fixed_words)
+    if matches:
+        return "x_post_fixed", ",".join(matches)
 
-        if any(word in text for word in box_ng_words):
-            return False
+    if not contains_any(text, box_ng_words):
+        matches = matching_words(text, box_words)
+        if matches:
+            return "x_post_box", ",".join(matches)
 
-        if sum(1 for word in single_words if word in text) >= 4:
-            return False
+    if source_type in TYPE_META and source_type.startswith("x_post_"):
+        return source_type, "source_type fallback"
 
-        return True
+    return "x_post_single", "default single"
 
-    if source_type == "x_post_fixed":
-        fixed_words = [
-            "定額",
-            "一律",
-            "まとめ買取",
-            "最低保証",
-            "保証買取",
-            "ノーマル",
-            "RR",
-            "AR",
-            "ストレージ",
-            "大量",
-        ]
 
-        return any(word in text for word in fixed_words)
+def display_type_label(display_type):
+    return short_type_label(TYPE_META.get(display_type, TYPE_META["x_post_single"])["label"])
 
-    if source_type == "x_post_psa":
-        psa_words = [
-            "PSA",
-            "PSA10",
-            "PSA9",
-            "鑑定品",
-            "鑑定",
-            "ARS",
-            "BGS",
-        ]
 
-        return any(word in text for word in psa_words)
+def parse_posted_at(value):
+    if not value:
+        return None
+    try:
+        normalized = value.replace("Z", "+00:00")
+        parsed = datetime.fromisoformat(normalized)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone(timedelta(hours=9)))
+    except ValueError:
+        return None
 
-    return True
+
+def posted_date_from_values(posted_at, collected_at):
+    parsed = parse_posted_at(posted_at)
+    if parsed:
+        return parsed.strftime("%Y-%m-%d")
+    if collected_at:
+        try:
+            return datetime.strptime(collected_at, "%Y/%m/%d %H:%M").strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    return ""
+
+
+def get_posted_at(tweet):
+    times = tweet.locator("time")
+    if times.count() == 0:
+        return ""
+    return times.nth(0).get_attribute("datetime") or ""
+
+
+def normalize_post(item, source=None):
+    post = dict(item)
+    if source:
+        for key in ["source_id", "source_type", "shop_name", "shop_slug", "brand", "brand_id", "area", "area_id"]:
+            if not post.get(key):
+                source_key = "id" if key == "source_id" else key
+                post[key] = source.get(source_key, post.get(key, ""))
+
+    source_type = post.get("source_type") or (source or {}).get("source_type", "x_post_single")
+    post["source_type"] = source_type
+    text_for_class = post.get("full_text") or post.get("summary") or ""
+    display_type, reason = classify_display_type(text_for_class, source_type)
+    post["display_type"] = post.get("display_type") or display_type
+    post["display_type_label"] = post.get("display_type_label") or display_type_label(post["display_type"])
+    post["buy_type_label"] = post.get("buy_type_label") or TYPE_META.get(source_type, TYPE_META["x_post_single"])["label"]
+    post["posted_at"] = post.get("posted_at") or ""
+    post["posted_date_jst"] = post.get("posted_date_jst") or posted_date_from_values(post.get("posted_at"), post.get("collected_at"))
+    post["classify_reason"] = post.get("classify_reason") or reason
+    post["image_urls"] = post.get("image_urls") or []
+    post["image_count"] = len(post["image_urls"])
+    post["status_id"] = post.get("status_id") or get_status_id(post.get("tweet_url", ""))
+    return post
+
+
+def select_latest_posts(candidates):
+    candidates = [normalize_post(post) for post in candidates]
+    candidates.sort(key=lambda post: (post.get("posted_at") or "", post.get("status_id", 0)), reverse=True)
+    dated = [post for post in candidates if post.get("posted_date_jst")]
+    if dated:
+        latest_date = max(post["posted_date_jst"] for post in dated)
+        return [post for post in candidates if post.get("posted_date_jst") == latest_date][:SAFETY_POSTS_PER_SOURCE]
+    return candidates[:SAFETY_POSTS_PER_SOURCE]
+
+
+def sort_post_key(post):
+    return (post.get("posted_at") or "", post.get("status_id", 0))
 
 
 def get_posts_for_shop(posts_by_source, shop_slug):
     posts = []
 
     for source in get_sources_by_shop(shop_slug):
-        posts.extend(posts_by_source.get(source["id"], []))
+        posts.extend(normalize_post(post, source) for post in posts_by_source.get(source["id"], []))
 
-    posts.sort(key=lambda p: p.get("status_id", 0), reverse=True)
+    posts.sort(key=sort_post_key, reverse=True)
     return posts
 
 
@@ -698,7 +732,7 @@ def get_latest_post(posts):
     if not posts:
         return None
 
-    return sorted(posts, key=lambda p: p.get("status_id", 0), reverse=True)[0]
+    return sorted(posts, key=sort_post_key, reverse=True)[0]
 
 
 def first_image(posts):
@@ -711,10 +745,13 @@ def get_timeline_posts(posts_by_source, area_id):
     posts_by_key = {}
 
     for source_posts in posts_by_source.values():
-        for post in source_posts:
+        for raw_post in source_posts:
+            post = normalize_post(raw_post)
             if post.get("area_id") != area_id:
                 continue
             if not post.get("tweet_url"):
+                continue
+            if not post.get("image_urls"):
                 continue
 
             key = post.get("tweet_url") or post.get("status_id")
@@ -728,13 +765,13 @@ def get_timeline_posts(posts_by_source, area_id):
                 if image_url not in merged["image_urls"]:
                     merged["image_urls"].append(image_url)
 
-            if infer_type_priority(infer_display_type(post)) < infer_type_priority(infer_display_type(merged)):
-                for field in ["source_type", "buy_type_label", "source_id"]:
+            if infer_type_priority(post.get("display_type")) < infer_type_priority(merged.get("display_type")):
+                for field in ["display_type", "display_type_label", "source_id", "classify_reason"]:
                     if field in post:
                         merged[field] = post[field]
 
     posts = list(posts_by_key.values())
-    posts.sort(key=lambda post: post.get("status_id", 0), reverse=True)
+    posts.sort(key=sort_post_key, reverse=True)
     return posts
 
 
@@ -759,29 +796,26 @@ def infer_type_priority(source_type):
 
 
 def infer_display_type(post):
-    text = (post.get("summary") or "").upper()
-    source_type = post.get("source_type", "")
-
-    psa_words = ["PSA", "PSA10", "PSA9", "鑑定品", "鑑定", "ARS", "BGS"]
-    fixed_words = ["定額", "一律", "最低保証", "保証買取", "まとめ買取", "RR定額", "AR定額", "SR定額"]
-    box_words = ["BOX", "未開封", "シュリンク", "カートン", "パック", "1BOX"]
-
-    if any(word.upper() in text for word in psa_words):
-        return "x_post_psa"
-    if any(word.upper() in text for word in fixed_words):
-        return "x_post_fixed"
-    if any(word.upper() in text for word in box_words):
-        return "x_post_box"
-    if source_type.startswith("x_post_"):
-        return "x_post_single"
-    return source_type
+    return normalize_post(post).get("display_type", post.get("source_type", "x_post_single"))
 
 
 def format_update_label(value):
     if not value:
         return "未取得"
+    parsed = parse_posted_at(value)
+    if parsed:
+        return parsed.strftime("%m/%d %H:%M")
     try:
         return datetime.strptime(value, "%Y/%m/%d %H:%M").strftime("%m/%d %H:%M")
+    except ValueError:
+        return value
+
+
+def format_date_label(value):
+    if not value:
+        return "未取得"
+    try:
+        return datetime.strptime(value, "%Y-%m-%d").strftime("%m/%d")
     except ValueError:
         return value
 
@@ -1757,6 +1791,17 @@ main {
   display: none !important;
 }
 
+.no-result {
+  max-width: 760px;
+  margin: 14px auto 0;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,.13);
+  background: rgba(255,255,255,.045);
+  color: rgba(255,255,255,.72);
+  text-align: center;
+  line-height: 1.7;
+}
+
 @media (max-width: 1100px) {
   .shop-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1979,10 +2024,14 @@ def build_area_page(posts_by_source, updated_at):
 
     media_items = {}
     timeline_html = ""
+    latest_timeline_date = timeline_posts[0].get("posted_date_jst", "") if timeline_posts else ""
+    same_day_count = sum(1 for post in timeline_posts if post.get("posted_date_jst") == latest_timeline_date) if latest_timeline_date else len(timeline_posts)
+    timeline_notice = f"最新投稿日：{format_date_label(latest_timeline_date)} / 同日投稿：{same_day_count}件" if timeline_posts else "最新投稿日：未取得 / 同日投稿：0件"
 
     for post in timeline_posts:
+        post = normalize_post(post)
         image_urls = post.get("image_urls", [])
-        display_type = infer_display_type(post)
+        display_type = post.get("display_type", infer_display_type(post))
         image_count = len(image_urls)
         image_html = """
   <div class="timeline-image no-thumb"><span class="zoom-badge">画像なし</span></div>
@@ -1996,17 +2045,17 @@ def build_area_page(posts_by_source, updated_at):
                 "summary": short_summary(post.get("summary", "")),
                 "shop_name": post["shop_name"],
                 "type_label": short_type_label(display_type),
-                "checked_at": format_update_label(post.get("collected_at", updated_at)),
+                "checked_at": format_update_label(post.get("posted_at") or post.get("collected_at", updated_at)),
             }
             image_html = f"""
   <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}')">
-    <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取表画像">
+    <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取表画像" loading="lazy">
     <span class="zoom-badge">拡大</span>
     <span class="image-count">画像 1 / {image_count}</span>
   </button>
 """
 
-        checked_label = format_update_label(post.get("collected_at", updated_at))
+        checked_label = format_update_label(post.get("posted_at") or post.get("collected_at", updated_at))
         type_label = short_type_label(display_type)
 
         timeline_html += f"""
@@ -2040,7 +2089,7 @@ def build_area_page(posts_by_source, updated_at):
         latest = get_latest_post(posts)
         types = get_shop_types(shop["sources"])
         type_labels = [short_type_label(t) for t in types]
-        latest_date = format_update_label(latest.get("collected_at", updated_at)) if latest else "未取得"
+        latest_date = format_date_label(latest.get("posted_date_jst")) if latest else "未取得"
         latest_count = len(posts)
         type_text = " / ".join(type_labels)
 
@@ -2190,12 +2239,13 @@ def build_area_page(posts_by_source, updated_at):
   <main>
     <div class="section-head">
       <h2>TIMELINE</h2>
-      <p>1ツイート1カードで表示</p>
+      <p>1ツイート1カードで表示 / {h(timeline_notice)}</p>
     </div>
 
     <div class="timeline-list" id="timelineList">
       {timeline_html}
     </div>
+    <div class="no-result hidden" id="noResult">該当する買取投稿はありません。<br>条件を変更してください。</div>
 
     <div class="section-head" id="store-list">
       <h2>STORE LIST</h2>
@@ -2376,6 +2426,8 @@ function matchesItem(item, search) {{
 function updateResultCount() {{
   const count = Array.from(document.querySelectorAll(".timeline-post")).filter(post => !post.classList.contains("hidden")).length;
   document.querySelectorAll(".result-count").forEach(el => el.textContent = count);
+  const noResult = document.getElementById("noResult");
+  if (noResult) noResult.classList.toggle("hidden", count !== 0);
 }}
 
 function applyFilters() {{
@@ -2439,12 +2491,12 @@ def build_store_page(shop, posts_by_source, updated_at):
     media_items = {}
     sections_html = ""
 
-    for source in sources:
-        if not is_x_source(source):
+    for display_type in ["x_post_psa", "x_post_fixed", "x_post_box", "x_post_single"]:
+        source_posts = [post for post in posts if post.get("display_type") == display_type]
+        if not source_posts:
             continue
 
-        source_posts = posts_by_source.get(source["id"], [])
-        meta = TYPE_META[source["source_type"]]
+        meta = TYPE_META[display_type]
 
         images_html = ""
 
@@ -2454,29 +2506,22 @@ def build_store_page(shop, posts_by_source, updated_at):
             image_urls = post.get("image_urls", [])
 
             for image_url in image_urls:
-                media_id = f'{source["id"]}_{post["status_id"]}_{media_index}'
+                media_id = f'{post.get("source_id", "post")}_{post.get("status_id", 0)}_{media_index}'
                 media_index += 1
 
                 media_items[media_id] = {
                     "image_url": image_url,
                     "tweet_url": post["tweet_url"],
-                    "summary": post["summary"],
-                    "type_label": meta["label"],
+                    "summary": post.get("summary", ""),
+                    "type_label": post.get("display_type_label") or short_type_label(meta["label"]),
                 }
 
                 images_html += f"""
 <div class="image-card" onclick="openMedia('{h(media_id)}')">
-  <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像">
+  <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像" loading="lazy">
   <div class="image-info">
-    <small>{h(short_type_label(meta["label"]))} / 更新 {h(format_update_label(post.get("collected_at", updated_at)))} / 画像{len(image_urls)}枚</small>
+    <small>{h(post.get("display_type_label") or short_type_label(meta["label"]))} / 確認 {h(format_update_label(post.get("posted_at") or post.get("collected_at", updated_at)))} / 画像{len(image_urls)}枚</small>
   </div>
-</div>
-"""
-
-        if not images_html:
-            images_html = """
-<div class="link-card">
-  <p class="summary">該当する画像付き投稿が見つかりませんでした。</p>
 </div>
 """
 
@@ -2633,11 +2678,14 @@ def collect_posts():
             print("==============================")
 
             if not is_x_source(source):
-                data_item = {
+                data_item = normalize_post({
                     **source,
+                    "source_id": source["id"],
+                    "display_type": source["source_type"],
+                    "display_type_label": short_type_label(TYPE_META[source["source_type"]]["label"]),
                     "buy_type_label": TYPE_META[source["source_type"]]["label"],
                     "collected_at": updated_at,
-                }
+                }, source)
                 all_data.append(data_item)
                 print("リンク情報として保存")
                 continue
@@ -2673,18 +2721,25 @@ def collect_posts():
                         continue
 
                     if not is_target_post(text, source["source_type"]):
+                        print(f"[除外] {source['shop_name']} source={source['source_type']} display=- date=- reason=not target")
                         continue
 
                     image_urls = get_image_urls(tweet)
 
-                    if not image_urls and "買取" not in text:
+                    if not image_urls:
+                        print(f"[除外] {source['shop_name']} source={source['source_type']} display=- date=- reason=no image")
                         continue
 
                     seen_urls.add(url)
+                    posted_at = get_posted_at(tweet)
+                    posted_date_jst = posted_date_from_values(posted_at, updated_at)
+                    display_type, reason = classify_display_type(text, source["source_type"])
 
-                    post = {
+                    post = normalize_post({
                         "source_id": source["id"],
                         "source_type": source["source_type"],
+                        "display_type": display_type,
+                        "display_type_label": display_type_label(display_type),
                         "buy_type_label": TYPE_META[source["source_type"]]["label"],
                         "shop_name": source["shop_name"],
                         "shop_slug": source["shop_slug"],
@@ -2694,21 +2749,27 @@ def collect_posts():
                         "area_id": source["area_id"],
                         "tweet_url": url,
                         "status_id": get_status_id(url),
+                        "full_text": text,
                         "summary": clean_tweet_text(text),
                         "image_urls": image_urls,
                         "image_count": len(image_urls),
+                        "posted_at": posted_at,
+                        "posted_date_jst": posted_date_jst,
                         "collected_at": updated_at,
-                    }
+                        "classify_reason": reason,
+                    }, source)
 
                     candidates.append(post)
 
-                candidates.sort(key=lambda x: x["status_id"], reverse=True)
-                posts = candidates[:MAX_POSTS_PER_SOURCE]
+                posts = select_latest_posts(candidates)
 
                 posts_by_source[source["id"]] = posts
                 all_data.extend(posts)
 
-                print("採用:", len(posts))
+                latest_date = posts[0].get("posted_date_jst", "-") if posts else "-"
+                print(f"採用: {len(posts)} / 最新投稿日: {latest_date}")
+                for post in posts:
+                    print(f"[採用] {post['shop_name']} source={post['source_type']} display={post['display_type']} date={post.get('posted_date_jst') or '-'} reason={post.get('classify_reason') or '-'}")
 
             except Exception as e:
                 print("取得エラー:", e)
@@ -2760,12 +2821,14 @@ def rebuild_html_from_data():
 
     for item in all_data:
         source_id = item.get("source_id") or item.get("id")
-        if not item.get("tweet_url") or not source_id:
+        source = get_source(source_id) if source_id else None
+        normalized = normalize_post(item, source)
+        if not normalized.get("tweet_url") or not source_id:
             continue
-        posts_by_source.setdefault(source_id, []).append(item)
+        posts_by_source.setdefault(source_id, []).append(normalized)
 
     for posts in posts_by_source.values():
-        posts.sort(key=lambda post: post.get("status_id", 0), reverse=True)
+        posts.sort(key=sort_post_key, reverse=True)
 
     build_all_pages(posts_by_source, updated_at)
 

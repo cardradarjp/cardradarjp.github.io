@@ -969,6 +969,17 @@ main {
   display: none !important;
 }
 
+.no-result {
+  max-width: 760px;
+  margin: 14px auto 0;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,.13);
+  background: rgba(255,255,255,.045);
+  color: rgba(255,255,255,.72);
+  text-align: center;
+  line-height: 1.7;
+}
+
 @media (max-width: 1100px) {
   .shop-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1090,16 +1101,16 @@ main {
   <div class="image-grid">
     
 <div class="image-card" onclick="openMedia('ds-dora3-single_2058798410954670509_0')">
-  <img src="https://pbs.twimg.com/media/HJJSPo9W4AAUUs5?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像">
+  <img src="https://pbs.twimg.com/media/HJJSPo9W4AAUUs5?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像" loading="lazy">
   <div class="image-info">
-    <small>シングル / 更新 05/30 12:42 / 画像1枚</small>
+    <small>シングル / 確認 05/30 12:42 / 画像1枚</small>
   </div>
 </div>
 
 <div class="image-card" onclick="openMedia('ds-dora3-single_2058758155077558488_1')">
-  <img src="https://pbs.twimg.com/media/HJItodNXEAA6Vtg?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像">
+  <img src="https://pbs.twimg.com/media/HJItodNXEAA6Vtg?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像" loading="lazy">
   <div class="image-info">
-    <small>シングル / 更新 05/30 12:42 / 画像1枚</small>
+    <small>シングル / 確認 05/30 12:42 / 画像1枚</small>
   </div>
 </div>
 
@@ -1130,7 +1141,7 @@ main {
 <script async src="https://platform.twitter.com/widgets.js"></script>
 
 <script>
-const MEDIA_ITEMS = {"ds-dora3-single_2058798410954670509_0": {"image_url": "https://pbs.twimg.com/media/HJJSPo9W4AAUUs5?format=jpg&name=large", "tweet_url": "https://x.com/ds_nipponbashi3/status/2058798410954670509", "summary": "ドラゴンスター日本橋3号店 5月25日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/25　更新Ver. ヤドラン(AR)(087/081) ￥1,800 ヤドラン(AR)(087/081) ￥1,800 ヤドラン(AR)(087/081) ￥1,800 イラストとてもかわいいですね お持ち込みお待ちしております 2,225", "type_label": "シングル買取"}, "ds-dora3-single_2058758155077558488_1": {"image_url": "https://pbs.twimg.com/media/HJItodNXEAA6Vtg?format=jpg&name=large", "tweet_url": "https://x.com/ds_nipponbashi3/status/2058758155077558488", "summary": "ドラゴンスター日本橋3号店 5月25日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/25　更新Ver. 一定枚数下記金額で買取致します テレパス超エネルギー(R)(079/080) ￥300 規定枚数到達次第終了致します お持ち込みお待ちしております 4 4,645", "type_label": "シングル買取"}};
+const MEDIA_ITEMS = {"ds-dora3-single_2058798410954670509_0": {"image_url": "https://pbs.twimg.com/media/HJJSPo9W4AAUUs5?format=jpg&name=large", "tweet_url": "https://x.com/ds_nipponbashi3/status/2058798410954670509", "summary": "ドラゴンスター日本橋3号店 5月25日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/25　更新Ver. ヤドラン(AR)(087/081) ￥1,800 ヤドラン(AR)(087/081) ￥1,800 ヤドラン(AR)(087/081) ￥1,800 イラストとてもかわいいですね お持ち込みお待ちしております 2,225", "type_label": "シングル"}, "ds-dora3-single_2058758155077558488_1": {"image_url": "https://pbs.twimg.com/media/HJItodNXEAA6Vtg?format=jpg&name=large", "tweet_url": "https://x.com/ds_nipponbashi3/status/2058758155077558488", "summary": "ドラゴンスター日本橋3号店 5月25日 ドラ スタ ３号 ORASTA #ポケカ　高価買取 5/25　更新Ver. 一定枚数下記金額で買取致します テレパス超エネルギー(R)(079/080) ￥300 規定枚数到達次第終了致します お持ち込みお待ちしております 4 4,645", "type_label": "シングル"}};
 let currentTweetUrl = "";
 
 function openMedia(id) {
