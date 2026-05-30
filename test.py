@@ -20,6 +20,7 @@ STORES_DIR = Path("stores")
 STORES_DIR.mkdir(exist_ok=True)
 
 SAFETY_POSTS_PER_SOURCE = 20
+FALLBACK_POSTS_PER_SOURCE = 5
 CHECK_POSTS_PER_SOURCE = 60
 
 
@@ -706,12 +707,28 @@ def normalize_post(item, source=None):
 
 def select_latest_posts(candidates):
     candidates = [normalize_post(post) for post in candidates]
-    candidates.sort(key=lambda post: (post.get("posted_at") or "", post.get("status_id", 0)), reverse=True)
-    dated = [post for post in candidates if post.get("posted_date_jst")]
-    if dated:
-        latest_date = max(post["posted_date_jst"] for post in dated)
-        return [post for post in candidates if post.get("posted_date_jst") == latest_date][:SAFETY_POSTS_PER_SOURCE]
-    return candidates[:SAFETY_POSTS_PER_SOURCE]
+    candidates.sort(key=sort_post_key, reverse=True)
+    posted_candidates = [post for post in candidates if parse_posted_at(post.get("posted_at")) and post.get("posted_date_jst")]
+    if posted_candidates:
+        latest_date = max(post["posted_date_jst"] for post in posted_candidates)
+        latest_day_posts = [post for post in candidates if post.get("posted_date_jst") == latest_date]
+        return latest_day_posts[:SAFETY_POSTS_PER_SOURCE]
+    return candidates[:FALLBACK_POSTS_PER_SOURCE]
+
+
+def dedupe_data_items(items):
+    deduped = []
+    seen_posts = set()
+    for item in items:
+        source_id = item.get("source_id") or item.get("id") or ""
+        tweet_url = item.get("tweet_url") or ""
+        if source_id and tweet_url:
+            key = (source_id, tweet_url)
+            if key in seen_posts:
+                continue
+            seen_posts.add(key)
+        deduped.append(item)
+    return deduped
 
 
 def sort_post_key(post):
@@ -2761,15 +2778,17 @@ def collect_posts():
 
                     candidates.append(post)
 
+                print(f"[候補] {source['shop_name']} {source['source_type']} candidates={len(candidates)}")
                 posts = select_latest_posts(candidates)
 
                 posts_by_source[source["id"]] = posts
                 all_data.extend(posts)
 
                 latest_date = posts[0].get("posted_date_jst", "-") if posts else "-"
-                print(f"採用: {len(posts)} / 最新投稿日: {latest_date}")
+                print(f"[最新日] {latest_date}")
+                print(f"[採用] {len(posts)}件")
                 for post in posts:
-                    print(f"[採用] {post['shop_name']} source={post['source_type']} display={post['display_type']} date={post.get('posted_date_jst') or '-'} reason={post.get('classify_reason') or '-'}")
+                    print(f"[分類] {post['shop_name']} source={post['source_type']} display={post['display_type']} date={post.get('posted_date_jst') or '-'} reason={post.get('classify_reason') or '-'}")
 
             except Exception as e:
                 print("取得エラー:", e)
@@ -2845,6 +2864,7 @@ def main():
         return rebuild_html_from_data()
 
     posts_by_source, all_data, updated_at = collect_posts()
+    all_data = dedupe_data_items(all_data)
 
     build_all_pages(posts_by_source, updated_at)
 
