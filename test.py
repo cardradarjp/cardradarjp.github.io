@@ -1324,10 +1324,18 @@ a {
 }
 
 .store-post-image-list {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
   gap: 10px;
   margin-top: 10px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+}
+
+.store-post-image-list .store-post-image {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
 }
 
 .timeline-image {
@@ -1445,7 +1453,7 @@ a {
 
 .store-post-actions {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 7px;
   margin-top: 8px;
 }
@@ -1463,10 +1471,6 @@ a {
 }
 
 @media (min-width: 820px) {
-  .store-post-image-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .store-post-card {
     flex-basis: min(48%, 520px);
   }
@@ -2326,7 +2330,6 @@ def build_area_page(posts_by_source, updated_at):
         </div>
         <div class="store-post-actions">
           <button type="button" onclick="openTimelineMedia('{h(media_id)}', 0)">拡大</button>
-          <a href="stores/{h(post["shop_slug"])}.html">この店舗を見る</a>
           <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
         </div>
       </article>
