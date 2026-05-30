@@ -708,7 +708,7 @@ def first_image(posts):
     return None
 
 def get_timeline_posts(posts_by_source, area_id):
-    posts = []
+    posts_by_key = {}
 
     for source_posts in posts_by_source.values():
         for post in source_posts:
@@ -716,11 +716,26 @@ def get_timeline_posts(posts_by_source, area_id):
                 continue
             if not post.get("tweet_url"):
                 continue
-            posts.append(post)
 
+            key = post.get("tweet_url") or post.get("status_id")
+            if key not in posts_by_key:
+                merged = dict(post)
+                merged["image_urls"] = []
+                posts_by_key[key] = merged
+
+            merged = posts_by_key[key]
+            for image_url in post.get("image_urls", []):
+                if image_url not in merged["image_urls"]:
+                    merged["image_urls"].append(image_url)
+
+            if infer_type_priority(infer_display_type(post)) < infer_type_priority(infer_display_type(merged)):
+                for field in ["source_type", "buy_type_label", "source_id"]:
+                    if field in post:
+                        merged[field] = post[field]
+
+    posts = list(posts_by_key.values())
     posts.sort(key=lambda post: post.get("status_id", 0), reverse=True)
     return posts
-
 
 
 def short_type_label(label_or_type):
@@ -731,6 +746,16 @@ def short_type_label(label_or_type):
         "公式Web買取表": "公式Web", "相場確認": "相場",
     }
     return mapping.get(label_or_type, label_or_type or "買取")
+
+
+def infer_type_priority(source_type):
+    order = {
+        "x_post_psa": 0,
+        "x_post_fixed": 1,
+        "x_post_box": 2,
+        "x_post_single": 3,
+    }
+    return order.get(source_type, 9)
 
 
 def infer_display_type(post):
@@ -1270,6 +1295,106 @@ a {
 .simple-store-meta { margin-top: 5px; color: rgba(255,255,255,.50); font-size: 12px; }
 .simple-store-date { color: rgba(255,255,255,.58); font-size: 12px; white-space: nowrap; }
 
+.image-count {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(0,0,0,.72);
+  border: 1px solid rgba(255,255,255,.22);
+  color: white;
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+.modal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.modal-nav button {
+  min-height: 38px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.045);
+  color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.modal-counter {
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+}
+
+.store-toggle {
+  width: 100%;
+  margin-top: 8px;
+  min-height: 36px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.045);
+  color: rgba(255,255,255,.88);
+  cursor: pointer;
+}
+
+.store-panel {
+  display: none;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255,255,255,.09);
+  padding-top: 8px;
+}
+
+.search-area.stores-open .store-panel {
+  display: grid;
+  gap: 8px;
+}
+
+.store-panel-card {
+  display: grid;
+  gap: 5px;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.11);
+  background: rgba(255,255,255,.035);
+  padding: 11px 12px;
+}
+
+.store-panel-name {
+  font-weight: 650;
+}
+
+.store-panel-meta,
+.store-panel-link {
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+}
+
+.support-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.support-group {
+  background: rgba(8,8,8,.82);
+  border: 1px solid rgba(255,255,255,.11);
+  padding: 16px;
+}
+
+.support-group h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+
+.support-group a {
+  display: block;
+  color: rgba(255,255,255,.78);
+  text-decoration: none;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
 .nav-overlay {
   position: fixed;
   inset: 0;
@@ -1695,6 +1820,10 @@ main {
   .simple-store-date {
     white-space: normal;
   }
+  .support-groups {
+    grid-template-columns: 1fr;
+  }
+
   .shop-card {
     min-height: auto;
   }
@@ -1854,6 +1983,7 @@ def build_area_page(posts_by_source, updated_at):
     for post in timeline_posts:
         image_urls = post.get("image_urls", [])
         display_type = infer_display_type(post)
+        image_count = len(image_urls)
         image_html = """
   <div class="timeline-image no-thumb"><span class="zoom-badge">画像なし</span></div>
 """
@@ -1861,21 +1991,22 @@ def build_area_page(posts_by_source, updated_at):
 
         if image_urls:
             media_items[media_id] = {
-                "image_url": image_urls[0],
+                "image_urls": image_urls,
                 "tweet_url": post["tweet_url"],
                 "summary": short_summary(post.get("summary", "")),
                 "shop_name": post["shop_name"],
                 "type_label": short_type_label(display_type),
-                "updated_at": format_update_label(post.get("collected_at", updated_at)),
+                "checked_at": format_update_label(post.get("collected_at", updated_at)),
             }
             image_html = f"""
   <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}')">
     <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取表画像">
     <span class="zoom-badge">拡大</span>
+    <span class="image-count">画像 1 / {image_count}</span>
   </button>
 """
 
-        update_label = format_update_label(post.get("collected_at", updated_at))
+        checked_label = format_update_label(post.get("collected_at", updated_at))
         type_label = short_type_label(display_type)
 
         timeline_html += f"""
@@ -1888,20 +2019,21 @@ def build_area_page(posts_by_source, updated_at):
 >
   <div class="timeline-head">
     <div class="timeline-store">{h(post["shop_name"])}</div>
-    <div class="timeline-meta">更新：{h(update_label)}<span class="timeline-type">{h(type_label)}</span></div>
+    <div class="timeline-meta">確認：{h(checked_label)}<span class="timeline-type">　{h(type_label)}</span></div>
   </div>
 
 {image_html}
 
   <div class="timeline-actions">
     <button type="button" onclick="openTimelineMedia('{h(media_id)}')">拡大</button>
-    <a href="stores/{h(post["shop_slug"])}.html">店舗</a>
+    <a href="stores/{h(post["shop_slug"])}.html">この店舗を見る</a>
     <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
   </div>
 </article>
 """
 
     stores_html = ""
+    store_panel_html = ""
 
     for shop in shops:
         posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
@@ -1910,6 +2042,7 @@ def build_area_page(posts_by_source, updated_at):
         type_labels = [short_type_label(t) for t in types]
         latest_date = format_update_label(latest.get("collected_at", updated_at)) if latest else "未取得"
         latest_count = len(posts)
+        type_text = " / ".join(type_labels)
 
         stores_html += f"""
 <a class="simple-store-card"
@@ -1920,30 +2053,47 @@ def build_area_page(posts_by_source, updated_at):
 >
   <div>
     <div class="simple-store-name">{h(shop["shop_name"])}</div>
-    <div class="simple-store-meta">{h('・'.join(type_labels))} / 最新投稿{latest_count}件</div>
+    <div class="simple-store-meta">{h(type_text)} / 最新{latest_count}件 / 確認 {h(latest_date)}</div>
+    <div class="store-panel-link">この店舗を見る →</div>
   </div>
-  <div class="simple-store-date">店舗ページ →<br>更新 {h(latest_date)}</div>
 </a>
 """
 
-    support_html = ""
+        store_panel_html += f"""
+<a class="store-panel-card" href="stores/{h(shop["shop_slug"])}.html">
+  <div class="store-panel-name">{h(shop["shop_name"])}</div>
+  <div class="store-panel-meta">{h(shop["brand"])} / {h(type_text)} / 最新{latest_count}件</div>
+  <div class="store-panel-link">この店舗を見る →</div>
+</a>
+"""
+
+    support_groups = {
+        "official_price_list": {"title": "公式Web買取表", "items": []},
+        "market_price_link": {"title": "相場確認", "items": []},
+    }
     support_quick_links = ""
 
     for source in support_sources:
-        short_label = short_type_label(source["source_type"])
+        group = support_groups.get(source["source_type"])
+        if not group:
+            continue
+        group["items"].append(source)
         support_quick_links += f"""
-<a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">{h(short_label)}：{h(source["shop_name"])}</a>
+<a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">{h(group["title"])}：{h(source["shop_name"])}</a>
 """
+
+    support_html = ""
+    for key in ["official_price_list", "market_price_link"]:
+        group = support_groups[key]
+        links = "".join([
+            f'<a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">{h(source["shop_name"])}</a>'
+            for source in group["items"]
+        ])
         support_html += f"""
-<div class="link-card">
-  <div class="card-meta">
-    <span>{h(source["area"])}</span>
-    <span>{h(short_label)}</span>
-  </div>
-  <h3>{h(source["shop_name"])}</h3>
-  <p class="summary">{h(source["description"])}</p>
-  <a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">ページを開く →</a>
-</div>
+<section class="support-group">
+  <h3>{h(group["title"])}</h3>
+  {links}
+</section>
 """
 
     type_buttons = """
@@ -1981,7 +2131,7 @@ def build_area_page(posts_by_source, updated_at):
       店舗別の詳細は各投稿または店舗一覧から確認できます。
     </p>
 
-    <div class="updated">LAST UPDATE : {h(updated_at)}</div>
+    <div class="updated">LAST CHECK : {h(updated_at)}</div>
   </section>
 
   <div class="search-area" id="searchArea">
@@ -2008,14 +2158,21 @@ def build_area_page(posts_by_source, updated_at):
       <button class="filter-toggle" type="button" onclick="toggleFilters()">絞り込み</button>
     </div>
 
+    <div class="support-quick-links">
+      {support_quick_links}
+    </div>
+
+    <button class="store-toggle" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
+
     <div class="brand-panel" id="brandPanel">
       <div class="brand-row">
         {brand_buttons}
       </div>
       <button class="reset-button" onclick="resetFilters()">リセット</button>
-      <div class="support-quick-links">
-        {support_quick_links}
-      </div>
+    </div>
+
+    <div class="store-panel" id="storePanel">
+      {store_panel_html}
     </div>
   </div>
 
@@ -2033,7 +2190,7 @@ def build_area_page(posts_by_source, updated_at):
   <main>
     <div class="section-head">
       <h2>TIMELINE</h2>
-      <p>買取表画像を新着順に表示</p>
+      <p>1ツイート1カードで表示</p>
     </div>
 
     <div class="timeline-list" id="timelineList">
@@ -2042,7 +2199,7 @@ def build_area_page(posts_by_source, updated_at):
 
     <div class="section-head" id="store-list">
       <h2>STORE LIST</h2>
-      <p>店舗名と更新日の簡易一覧</p>
+      <p>店舗別の簡易一覧</p>
     </div>
 
     <div class="simple-store-list" id="storeList">
@@ -2054,7 +2211,7 @@ def build_area_page(posts_by_source, updated_at):
       <p>公式Web買取表・相場確認</p>
     </div>
 
-    <div class="shop-grid">
+    <div class="support-groups">
       {support_html}
     </div>
   </main>
@@ -2069,9 +2226,9 @@ def build_area_page(posts_by_source, updated_at):
     <div class="nav-links">
       <a href="index.html">トップ</a>
       <a href="osaka-nihonbashi.html">大阪・日本橋</a>
-      <a href="osaka-nihonbashi.html#store-list">店舗一覧</a>
-      <a href="osaka-nihonbashi.html#support-links">公式Web買取表</a>
-      <a href="osaka-nihonbashi.html#support-links">相場確認</a>
+      <a href="osaka-nihonbashi.html#store-list" onclick="closeMenu()">店舗一覧</a>
+      <a href="osaka-nihonbashi.html#support-links" onclick="closeMenu()">公式Web買取表</a>
+      <a href="osaka-nihonbashi.html#support-links" onclick="closeMenu()">相場確認</a>
       <a href="#">掲載について</a>
     </div>
   </nav>
@@ -2081,6 +2238,11 @@ def build_area_page(posts_by_source, updated_at):
   <div class="modal-inner">
     <button class="modal-close" onclick="closeTimelineMedia()">閉じる</button>
     <img class="modal-image" id="timelineModalImage" src="" alt="買取表画像">
+    <div class="modal-nav">
+      <button type="button" onclick="showTimelineImage(-1)">前へ</button>
+      <span class="modal-counter" id="timelineModalCounter">画像 1 / 1</span>
+      <button type="button" onclick="showTimelineImage(1)">次へ</button>
+    </div>
     <div class="modal-summary" id="timelineModalSummary"></div>
     <div class="modal-actions">
       <a id="timelineModalTweetLink" href="#" target="_blank" rel="noopener noreferrer">Xで開く</a>
@@ -2093,6 +2255,8 @@ const selectedTypes = new Set();
 const selectedBrands = new Set();
 const TIMELINE_MEDIA = {media_json};
 let currentSort = "new";
+let currentMediaItem = null;
+let currentMediaIndex = 0;
 
 function openMenu() {{
   document.getElementById("navOverlay").classList.add("open");
@@ -2107,13 +2271,35 @@ function toggleFilters() {{
   document.getElementById("searchArea").classList.toggle("filters-open");
 }}
 
+function toggleStorePanel() {{
+  document.getElementById("searchArea").classList.toggle("stores-open");
+}}
+
+function renderTimelineMedia() {{
+  if (!currentMediaItem) return;
+  const images = currentMediaItem.image_urls || [];
+  const image = images[currentMediaIndex];
+
+  document.getElementById("timelineModalImage").src = image || "";
+  document.getElementById("timelineModalCounter").textContent = `画像 ${{currentMediaIndex + 1}} / ${{Math.max(images.length, 1)}}`;
+  document.getElementById("timelineModalSummary").textContent = `${{currentMediaItem.shop_name}} / ${{currentMediaItem.type_label}} / 確認：${{currentMediaItem.checked_at}}${{currentMediaItem.summary ? " / " + currentMediaItem.summary : ""}}`;
+  document.getElementById("timelineModalTweetLink").href = currentMediaItem.tweet_url;
+}}
+
 function openTimelineMedia(id) {{
-  const item = TIMELINE_MEDIA[id];
-  if (!item) return;
-  document.getElementById("timelineModalImage").src = item.image_url;
-  document.getElementById("timelineModalSummary").textContent = `${{item.shop_name}} / ${{item.type_label}} / 更新：${{item.updated_at}}${{item.summary ? " / " + item.summary : ""}}`;
-  document.getElementById("timelineModalTweetLink").href = item.tweet_url;
+  currentMediaItem = TIMELINE_MEDIA[id];
+  currentMediaIndex = 0;
+  if (!currentMediaItem) return;
+  renderTimelineMedia();
   document.getElementById("timelineMediaModal").classList.add("open");
+}}
+
+function showTimelineImage(step) {{
+  if (!currentMediaItem) return;
+  const count = (currentMediaItem.image_urls || []).length;
+  if (!count) return;
+  currentMediaIndex = (currentMediaIndex + step + count) % count;
+  renderTimelineMedia();
 }}
 
 function closeTimelineMedia() {{
