@@ -1313,8 +1313,11 @@ a {
   margin-top: 10px;
 }
 
-.store-post-images {
+.store-post-image-list {
+  display: grid;
   grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .timeline-image {
@@ -1450,7 +1453,7 @@ a {
 }
 
 @media (min-width: 820px) {
-  .store-post-images {
+  .store-post-image-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2278,7 +2281,7 @@ def build_area_page(posts_by_source, updated_at):
             store_image_buttons = []
             for image_index, image_url in enumerate(image_urls):
                 store_image_buttons.append(f"""
-        <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}', {image_index})">
+        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('{h(media_id)}', {image_index})">
           <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 {image_index + 1} / {image_count}</span>
@@ -2294,7 +2297,7 @@ def build_area_page(posts_by_source, updated_at):
         data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + type_label + ' ' + post.get("summary", ""))}"
       >
         <div class="store-post-meta">{h(type_label)} / 画像 {image_count}枚</div>
-        <div class="timeline-images store-post-images">
+        <div class="store-post-image-list">
 {''.join(store_image_buttons)}
         </div>
         <div class="store-post-actions">
