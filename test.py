@@ -2,6 +2,7 @@
 import time
 import re
 import json
+import sys
 import html as html_lib
 from datetime import datetime
 from pathlib import Path
@@ -732,6 +733,25 @@ def short_type_label(label_or_type):
     return mapping.get(label_or_type, label_or_type or "買取")
 
 
+def infer_display_type(post):
+    text = (post.get("summary") or "").upper()
+    source_type = post.get("source_type", "")
+
+    psa_words = ["PSA", "PSA10", "PSA9", "鑑定品", "鑑定", "ARS", "BGS"]
+    fixed_words = ["定額", "一律", "最低保証", "保証買取", "まとめ買取", "RR定額", "AR定額", "SR定額"]
+    box_words = ["BOX", "未開封", "シュリンク", "カートン", "パック", "1BOX"]
+
+    if any(word.upper() in text for word in psa_words):
+        return "x_post_psa"
+    if any(word.upper() in text for word in fixed_words):
+        return "x_post_fixed"
+    if any(word.upper() in text for word in box_words):
+        return "x_post_box"
+    if source_type.startswith("x_post_"):
+        return "x_post_single"
+    return source_type
+
+
 def format_update_label(value):
     if not value:
         return "未取得"
@@ -1218,6 +1238,65 @@ a {
 .simple-store-name { font-weight: 650; }
 .simple-store-meta { margin-top: 5px; color: rgba(255,255,255,.50); font-size: 12px; }
 .simple-store-date { color: rgba(255,255,255,.58); font-size: 12px; white-space: nowrap; }
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 320;
+  display: none;
+  background: rgba(0,0,0,.68);
+  backdrop-filter: blur(8px);
+}
+
+.nav-overlay.open { display: block; }
+
+.nav-panel {
+  width: min(86vw, 340px);
+  min-height: 100%;
+  background: rgba(7,7,7,.98);
+  border-right: 1px solid rgba(255,255,255,.16);
+  box-shadow: 22px 0 48px rgba(0,0,0,.44);
+  padding: 18px;
+}
+
+.nav-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.nav-title {
+  letter-spacing: .18em;
+  font-size: 13px;
+  color: rgba(255,255,255,.72);
+}
+
+.nav-close {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.05);
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.nav-links {
+  display: grid;
+  gap: 8px;
+}
+
+.nav-links a {
+  display: block;
+  text-decoration: none;
+  color: rgba(255,255,255,.88);
+  border: 1px solid rgba(255,255,255,.11);
+  background: rgba(255,255,255,.035);
+  padding: 14px 13px;
+  font-size: 15px;
+}
 
 main {
   padding: 28px 7vw calc(104px + env(safe-area-inset-bottom));
@@ -1742,6 +1821,7 @@ def build_area_page(posts_by_source, updated_at):
 
     for post in timeline_posts:
         image_urls = post.get("image_urls", [])
+        display_type = infer_display_type(post)
         image_html = """
   <div class="timeline-image no-thumb"><span class="zoom-badge">画像なし</span></div>
 """
@@ -1753,7 +1833,7 @@ def build_area_page(posts_by_source, updated_at):
                 "tweet_url": post["tweet_url"],
                 "summary": short_summary(post.get("summary", "")),
                 "shop_name": post["shop_name"],
-                "type_label": short_type_label(post.get("source_type")),
+                "type_label": short_type_label(display_type),
                 "updated_at": format_update_label(post.get("collected_at", updated_at)),
             }
             image_html = f"""
@@ -1764,15 +1844,15 @@ def build_area_page(posts_by_source, updated_at):
 """
 
         update_label = format_update_label(post.get("collected_at", updated_at))
-        type_label = short_type_label(post.get("source_type"))
+        type_label = short_type_label(display_type)
 
         timeline_html += f"""
 <article class="timeline-post"
   data-status="{h(post.get("status_id", 0))}"
   data-store="{h(post.get("shop_name", ""))}"
-  data-types="{h(post.get("source_type", ""))}"
+  data-types="{h(display_type)}"
   data-brand="{h(post.get("brand_id", ""))}"
-  data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + post.get("summary", ""))}"
+  data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + type_label + ' ' + post.get("summary", ""))}"
 >
   <div class="timeline-head">
     <div>
@@ -1811,9 +1891,9 @@ def build_area_page(posts_by_source, updated_at):
 >
   <div>
     <div class="simple-store-name">{h(shop["shop_name"])}</div>
-    <div class="simple-store-meta">{h(shop["brand"])} / {h('・'.join(type_labels))} / 投稿{latest_count}件</div>
+    <div class="simple-store-meta">{h('・'.join(type_labels))} / 最新投稿{latest_count}件</div>
   </div>
-  <div class="simple-store-date">更新 {h(latest_date)}</div>
+  <div class="simple-store-date">店舗ページ →<br>更新 {h(latest_date)}</div>
 </a>
 """
 
@@ -1877,7 +1957,7 @@ def build_area_page(posts_by_source, updated_at):
 
   <div class="sticky-search" id="stickySearch">
     <div class="tool-row">
-      <button class="tool-button menu-button" type="button" aria-label="メニュー">☰</button>
+      <button class="tool-button menu-button" type="button" aria-label="メニュー" onclick="openMenu()">☰</button>
       <input id="searchInput" class="compact-search" type="search" placeholder="店舗・カード名で検索">
       <div class="result-line">表示中：<span id="resultCount">0</span>件</div>
     </div>
@@ -1921,7 +2001,7 @@ def build_area_page(posts_by_source, updated_at):
       {timeline_html}
     </div>
 
-    <div class="section-head">
+    <div class="section-head" id="store-list">
       <h2>STORE LIST</h2>
       <p>店舗名と更新日の簡易一覧</p>
     </div>
@@ -1930,7 +2010,7 @@ def build_area_page(posts_by_source, updated_at):
       {stores_html}
     </div>
 
-    <div class="section-head">
+    <div class="section-head" id="support-links">
       <h2>SUPPORT LINKS</h2>
       <p>公式Web買取表・相場確認</p>
     </div>
@@ -1939,6 +2019,23 @@ def build_area_page(posts_by_source, updated_at):
       {support_html}
     </div>
   </main>
+</div>
+
+<div class="nav-overlay" id="navOverlay" onclick="closeMenu(event)">
+  <nav class="nav-panel" aria-label="メニュー" onclick="event.stopPropagation()">
+    <div class="nav-head">
+      <div class="nav-title">CARDRADAR MENU</div>
+      <button class="nav-close" type="button" onclick="closeMenu()" aria-label="閉じる">×</button>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">トップ</a>
+      <a href="osaka-nihonbashi.html">大阪・日本橋</a>
+      <a href="osaka-nihonbashi.html#store-list">店舗一覧</a>
+      <a href="osaka-nihonbashi.html#support-links">公式Web買取表</a>
+      <a href="osaka-nihonbashi.html#support-links">相場確認</a>
+      <a href="#">掲載について</a>
+    </div>
+  </nav>
 </div>
 
 <div class="modal" id="timelineMediaModal">
@@ -1957,6 +2054,15 @@ const selectedTypes = new Set();
 const selectedBrands = new Set();
 const TIMELINE_MEDIA = {media_json};
 let currentSort = "new";
+
+function openMenu() {{
+  document.getElementById("navOverlay").classList.add("open");
+}}
+
+function closeMenu(event) {{
+  if (event && event.target !== document.getElementById("navOverlay")) return;
+  document.getElementById("navOverlay").classList.remove("open");
+}}
 
 function toggleFilters() {{
   document.getElementById("stickySearch").classList.toggle("filters-open");
@@ -2049,6 +2155,10 @@ function applyFilters() {{
   sortTimeline();
   updateResultCount();
 }}
+
+document.addEventListener("keydown", event => {{
+  if (event.key === "Escape") closeMenu();
+}});
 
 document.addEventListener("DOMContentLoaded", () => {{
   document.getElementById("searchInput").addEventListener("input", applyFilters);
@@ -2375,7 +2485,48 @@ def build_all_pages(posts_by_source, updated_at):
         write_file(STORES_DIR / f"{shop['shop_slug']}.html", store_html)
 
 
+def rebuild_html_from_data():
+    data_path = Path("data.json")
+
+    if not data_path.exists():
+        print("data.json がありません。先に python test.py で取得してください。")
+        return 1
+
+    with open(data_path, "r", encoding="utf-8") as f:
+        all_data = json.load(f)
+
+    posts_by_source = {}
+    updated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
+
+    if all_data:
+        updated_at = all_data[0].get("collected_at", updated_at)
+
+    for source in SOURCES:
+        posts_by_source[source["id"]] = []
+
+    for item in all_data:
+        source_id = item.get("source_id") or item.get("id")
+        if not item.get("tweet_url") or not source_id:
+            continue
+        posts_by_source.setdefault(source_id, []).append(item)
+
+    for posts in posts_by_source.values():
+        posts.sort(key=lambda post: post.get("status_id", 0), reverse=True)
+
+    build_all_pages(posts_by_source, updated_at)
+
+    print("HTML再生成完了")
+    print("index.html")
+    print("osaka.html")
+    print("osaka-nihonbashi.html")
+    print("stores/*.html")
+    return 0
+
+
 def main():
+    if "--rebuild-html" in sys.argv:
+        return rebuild_html_from_data()
+
     posts_by_source, all_data, updated_at = collect_posts()
 
     build_all_pages(posts_by_source, updated_at)
@@ -2394,10 +2545,11 @@ def main():
     print("================================")
 
     input("Enterで終了")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
 
 
 
