@@ -3,6 +3,7 @@ import time
 import re
 import json
 import sys
+import argparse
 import html as html_lib
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -2668,10 +2669,64 @@ function loadTweetEmbed() {{
 # X取得
 # =========================
 
-def collect_posts():
-    posts_by_source = {}
-    all_data = []
+def load_data_items():
+    data_path = Path("data.json")
+    if not data_path.exists():
+        return []
+    with open(data_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_data_items(items):
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(dedupe_data_items(items), f, ensure_ascii=False, indent=2)
+
+
+def posts_by_source_from_data(all_data):
+    posts_by_source = {source["id"]: [] for source in SOURCES}
+    for item in all_data:
+        source_id = item.get("source_id") or item.get("id")
+        source = get_source(source_id) if source_id else None
+        normalized = normalize_post(item, source)
+        if not normalized.get("tweet_url") or not source_id:
+            continue
+        posts_by_source.setdefault(source_id, []).append(normalized)
+    for posts in posts_by_source.values():
+        posts.sort(key=sort_post_key, reverse=True)
+    return posts_by_source
+
+
+def replace_source_items(all_data, source_id, new_items):
+    kept = [item for item in all_data if (item.get("source_id") or item.get("id")) != source_id]
+    return dedupe_data_items(kept + new_items)
+
+
+def select_sources(area_id=None, source_id=None, max_sources=None):
+    selected = SOURCES
+    if area_id:
+        selected = [source for source in selected if source.get("area_id") == area_id]
+    if source_id:
+        selected = [source for source in selected if source.get("id") == source_id]
+    if max_sources is not None:
+        selected = selected[:max_sources]
+    return selected
+
+
+def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
+    previous_data = previous_data if previous_data is not None else load_data_items()
+    posts_by_source = posts_by_source_from_data(previous_data)
+    all_data = list(previous_data)
     updated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
+    target_sources = sources_to_fetch or SOURCES
+
+    initial_wait = 4 if quick else 10
+    scroll_count = 2 if quick else 6
+    scroll_wait = 1 if quick else 3
+    check_limit = 25 if quick else CHECK_POSTS_PER_SOURCE
+
+    print(f"取得対象source数: {len(target_sources)}")
+    if quick:
+        print("quickモード: wait短縮 / scroll短縮 / article確認数削減")
 
     with sync_playwright() as p:
         browser = p.chromium.launch_persistent_context(
@@ -2686,12 +2741,10 @@ def collect_posts():
 
         page = browser.new_page()
 
-        for source in SOURCES:
-            posts_by_source[source["id"]] = []
-
+        for source in target_sources:
             print("")
             print("==============================")
-            print(source["shop_name"], "/", TYPE_META[source["source_type"]]["label"])
+            print(f"{source['id']} / {source['shop_name']} / {TYPE_META[source['source_type']]['label']}")
             print("==============================")
 
             if not is_x_source(source):
@@ -2703,7 +2756,8 @@ def collect_posts():
                     "buy_type_label": TYPE_META[source["source_type"]]["label"],
                     "collected_at": updated_at,
                 }, source)
-                all_data.append(data_item)
+                all_data = replace_source_items(all_data, source["id"], [data_item])
+                save_data_items(all_data)
                 print("リンク情報として保存")
                 continue
 
@@ -2712,20 +2766,20 @@ def collect_posts():
 
             try:
                 page.goto(source["url"], wait_until="domcontentloaded", timeout=60000)
-                time.sleep(10)
+                time.sleep(initial_wait)
 
                 page.wait_for_selector("article", timeout=30000)
 
-                for _ in range(6):
+                for _ in range(scroll_count):
                     page.mouse.wheel(0, 1400)
-                    time.sleep(3)
+                    time.sleep(scroll_wait)
 
                 tweets = page.locator("article")
                 count = tweets.count()
 
                 print("検出article数:", count)
 
-                for i in range(min(count, CHECK_POSTS_PER_SOURCE)):
+                for i in range(min(count, check_limit)):
                     tweet = tweets.nth(i)
 
                     text = tweet.inner_text()
@@ -2782,7 +2836,8 @@ def collect_posts():
                 posts = select_latest_posts(candidates)
 
                 posts_by_source[source["id"]] = posts
-                all_data.extend(posts)
+                all_data = replace_source_items(all_data, source["id"], posts)
+                save_data_items(all_data)
 
                 latest_date = posts[0].get("posted_date_jst", "-") if posts else "-"
                 print(f"[最新日] {latest_date}")
@@ -2791,11 +2846,12 @@ def collect_posts():
                     print(f"[分類] {post['shop_name']} source={post['source_type']} display={post['display_type']} date={post.get('posted_date_jst') or '-'} reason={post.get('classify_reason') or '-'}")
 
             except Exception as e:
-                print("取得エラー:", e)
+                print(f"[失敗] {source['id']} reason={e}")
+                print("前回data.jsonのデータを残します")
 
         browser.close()
 
-    return posts_by_source, all_data, updated_at
+    return posts_by_source_from_data(all_data), dedupe_data_items(all_data), updated_at
 
 
 # =========================
@@ -2859,17 +2915,35 @@ def rebuild_html_from_data():
     return 0
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="CardRadar data collector")
+    parser.add_argument("--rebuild-html", action="store_true", help="既存data.jsonからHTMLだけ再生成する")
+    parser.add_argument("--area", help="指定area_idのsourceだけ取得する")
+    parser.add_argument("--source", help="指定source_idだけ取得する")
+    parser.add_argument("--max-sources", type=int, help="先頭から指定数のsourceだけ取得する")
+    parser.add_argument("--quick", action="store_true", help="待機とスクロールを短縮して軽量取得する")
+    return parser.parse_args()
+
+
 def main():
-    if "--rebuild-html" in sys.argv:
+    args = parse_args()
+
+    if args.rebuild_html:
         return rebuild_html_from_data()
 
-    posts_by_source, all_data, updated_at = collect_posts()
+    selected_sources = select_sources(args.area, args.source, args.max_sources)
+    if args.source and not selected_sources:
+        print(f"source_id が見つかりません: {args.source}")
+        return 1
+    if args.area and not selected_sources:
+        print(f"area_id のsourceが見つかりません: {args.area}")
+        return 1
+
+    posts_by_source, all_data, updated_at = collect_posts(selected_sources, quick=args.quick)
     all_data = dedupe_data_items(all_data)
+    save_data_items(all_data)
 
     build_all_pages(posts_by_source, updated_at)
-
-    with open("data.json", "w", encoding="utf-8") as f:
-        json.dump(all_data, f, ensure_ascii=False, indent=2)
 
     print("")
     print("================================")
@@ -2881,7 +2955,8 @@ def main():
     print("data.json")
     print("================================")
 
-    input("Enterで終了")
+    if len(sys.argv) == 1:
+        input("Enterで終了")
     return 0
 
 
