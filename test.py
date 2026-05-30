@@ -720,6 +720,32 @@ def get_timeline_posts(posts_by_source, area_id):
     posts.sort(key=lambda post: post.get("status_id", 0), reverse=True)
     return posts
 
+
+
+def short_type_label(label_or_type):
+    mapping = {
+        "x_post_single": "シングル", "x_post_box": "BOX", "x_post_fixed": "定額", "x_post_psa": "PSA",
+        "official_price_list": "公式Web", "market_price_link": "相場",
+        "シングル買取": "シングル", "BOX買取": "BOX", "定額買取": "定額", "PSA買取": "PSA",
+        "公式Web買取表": "公式Web", "相場確認": "相場",
+    }
+    return mapping.get(label_or_type, label_or_type or "買取")
+
+
+def format_update_label(value):
+    if not value:
+        return "未取得"
+    try:
+        return datetime.strptime(value, "%Y/%m/%d %H:%M").strftime("%m/%d %H:%M")
+    except ValueError:
+        return value
+
+
+def short_summary(value, limit=90):
+    text = " ".join(str(value or "").split())
+    return text if len(text) <= limit else text[:limit] + "..."
+
+
 def json_for_script(data):
     return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
 
@@ -977,22 +1003,25 @@ a {
 }
 
 .tool-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 8px;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
 }
 
 .tool-button,
-.sort-button {
-  height: 40px;
+.filter-toggle,
+.sort-select {
+  height: 38px;
   border: 1px solid rgba(255,255,255,.16);
-  background: rgba(255,255,255,.045);
+  background: rgba(255,255,255,.055);
   color: white;
-  padding: 0 13px;
-  cursor: pointer;
+  padding: 0 12px;
   font-size: 13px;
 }
+
+.tool-button,
+.filter-toggle { cursor: pointer; }
 
 .tool-button.menu-button {
   width: 42px;
@@ -1001,30 +1030,106 @@ a {
   line-height: 1;
 }
 
-.sort-button.active {
-  background: rgba(255,255,255,.18);
-  border-color: rgba(255,255,255,.34);
+.compact-search {
+  width: 100%;
+  height: 38px;
+  min-width: 0;
+  background: rgba(255,255,255,.075);
+  border: 1px solid rgba(255,255,255,.16);
+  color: white;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
 }
 
-.search-panel {
+.sticky-search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-105%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+.sticky-search.search-visible,
+.sticky-search:focus-within {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.type-row,
+.control-row,
+.brand-panel,
+.support-quick-links { margin-top: 8px; }
+
+.type-row,
+.brand-row,
+.support-quick-links {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding-bottom: 3px;
+}
+
+.control-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.sort-wrap {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  color: rgba(255,255,255,.62);
+  font-size: 12px;
+}
+
+.sort-select { width: 100%; appearance: auto; }
+
+.brand-panel {
   display: none;
-  margin-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.09);
+  padding-top: 8px;
 }
 
-.sticky-search.search-open .search-panel {
-  display: block;
+.sticky-search.filters-open .brand-panel { display: block; }
+
+.support-quick-links { flex-wrap: wrap; }
+
+.support-quick-links a {
+  color: rgba(255,255,255,.72);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.13);
+  padding: 7px 9px;
+  font-size: 12px;
+}
+
+.reset-button { height: 36px; margin-top: 8px; }
+
+.result-line {
+  margin-top: 0;
+  white-space: nowrap;
+  font-size: 12px;
+  letter-spacing: .08em;
 }
 
 .timeline-list {
   max-width: 760px;
   display: grid;
-  gap: 18px;
+  gap: 24px;
 }
 
 .timeline-post {
-  background: rgba(8,8,8,.82);
-  border: 1px solid rgba(255,255,255,.11);
-  padding: 16px;
+  background: rgba(13,13,13,.94);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 18px 42px rgba(0,0,0,.28);
+  padding: 14px;
 }
 
 .timeline-head {
@@ -1034,66 +1139,70 @@ a {
   align-items: flex-start;
 }
 
-.timeline-store {
-  font-size: 16px;
-  font-weight: 650;
-  letter-spacing: .04em;
-}
+.timeline-store { font-size: 16px; font-weight: 650; letter-spacing: .04em; }
 
 .timeline-meta {
   margin-top: 6px;
-  color: rgba(255,255,255,.52);
+  color: rgba(255,255,255,.56);
   font-size: 12px;
   line-height: 1.7;
 }
 
 .timeline-type {
   flex: 0 0 auto;
-  border: 1px solid rgba(255,255,255,.14);
-  color: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,255,255,.18);
+  color: rgba(255,255,255,.82);
+  background: rgba(255,255,255,.06);
   padding: 5px 8px;
   font-size: 11px;
 }
 
 .timeline-image {
+  position: relative;
   display: block;
-  margin-top: 14px;
-  background: rgba(255,255,255,.045);
-  overflow: hidden;
-}
-
-.timeline-image img {
   width: 100%;
-  display: block;
+  margin-top: 12px;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.10);
+  overflow: hidden;
+  cursor: zoom-in;
+  padding: 0;
 }
 
-.timeline-summary {
-  margin: 14px 0 0;
-  color: rgba(255,255,255,.74);
-  line-height: 1.75;
-  font-size: 13px;
+.timeline-image img { width: 100%; display: block; }
+
+.zoom-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,.72);
+  border: 1px solid rgba(255,255,255,.22);
+  color: white;
+  padding: 5px 8px;
+  font-size: 12px;
 }
 
 .timeline-actions {
-  margin-top: 14px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.timeline-actions a {
-  text-decoration: none;
-  border: 1px solid rgba(255,255,255,.16);
-  padding: 10px 12px;
-  font-size: 13px;
-  color: rgba(255,255,255,.86);
-}
-
-.simple-store-list {
-  max-width: 760px;
+  margin-top: 12px;
   display: grid;
-  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
 }
+
+.timeline-actions a,
+.timeline-actions button {
+  min-height: 38px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.045);
+  padding: 9px 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,.88);
+  text-align: center;
+  cursor: pointer;
+}
+
+.simple-store-list { max-width: 760px; display: grid; gap: 10px; }
 
 .simple-store-card {
   display: grid;
@@ -1106,23 +1215,12 @@ a {
   padding: 14px 16px;
 }
 
-.simple-store-name {
-  font-weight: 650;
-}
+.simple-store-name { font-weight: 650; }
+.simple-store-meta { margin-top: 5px; color: rgba(255,255,255,.50); font-size: 12px; }
+.simple-store-date { color: rgba(255,255,255,.58); font-size: 12px; white-space: nowrap; }
 
-.simple-store-meta {
-  margin-top: 5px;
-  color: rgba(255,255,255,.50);
-  font-size: 12px;
-}
-
-.simple-store-date {
-  color: rgba(255,255,255,.58);
-  font-size: 12px;
-  white-space: nowrap;
-}
 main {
-  padding: 28px 7vw 80px;
+  padding: 28px 7vw calc(104px + env(safe-area-inset-bottom));
 }
 
 .section-head {
@@ -1454,7 +1552,7 @@ main {
   }
 
   main {
-    padding: 24px 18px 72px;
+    padding: 24px 18px calc(112px + env(safe-area-inset-bottom));
   }
 
   .section-head {
@@ -1466,11 +1564,12 @@ main {
   }
 
   .tool-row {
-    gap: 8px;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 7px;
   }
 
   .timeline-post {
-    padding: 13px;
+    padding: 12px;
   }
 
   .timeline-head,
@@ -1638,18 +1737,34 @@ def build_area_page(posts_by_source, updated_at):
     brands = get_unique_brands("osaka-nihonbashi")
     timeline_posts = get_timeline_posts(posts_by_source, "osaka-nihonbashi")
 
+    media_items = {}
     timeline_html = ""
 
     for post in timeline_posts:
         image_urls = post.get("image_urls", [])
-        image_html = ""
+        image_html = """
+  <div class="timeline-image no-thumb"><span class="zoom-badge">画像なし</span></div>
+"""
+        media_id = f'timeline_{post.get("source_id", "post")}_{post.get("status_id", 0)}'
 
         if image_urls:
+            media_items[media_id] = {
+                "image_url": image_urls[0],
+                "tweet_url": post["tweet_url"],
+                "summary": short_summary(post.get("summary", "")),
+                "shop_name": post["shop_name"],
+                "type_label": short_type_label(post.get("source_type")),
+                "updated_at": format_update_label(post.get("collected_at", updated_at)),
+            }
             image_html = f"""
-  <a class="timeline-image" href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">
-    <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取投稿画像">
-  </a>
+  <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}')">
+    <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取表画像">
+    <span class="zoom-badge">拡大</span>
+  </button>
 """
+
+        update_label = format_update_label(post.get("collected_at", updated_at))
+        type_label = short_type_label(post.get("source_type"))
 
         timeline_html += f"""
 <article class="timeline-post"
@@ -1662,18 +1777,17 @@ def build_area_page(posts_by_source, updated_at):
   <div class="timeline-head">
     <div>
       <div class="timeline-store">{h(post["shop_name"])}</div>
-      <div class="timeline-meta">{h(post["area"])} / 取得 {h(post.get("collected_at", updated_at))}</div>
+      <div class="timeline-meta">更新：{h(update_label)}</div>
     </div>
-    <div class="timeline-type">{h(post.get("buy_type_label", "買取投稿"))}</div>
+    <div class="timeline-type">{h(type_label)}</div>
   </div>
 
 {image_html}
 
-  <p class="timeline-summary">{h(post.get("summary", ""))}</p>
-
   <div class="timeline-actions">
-    <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
+    <button type="button" onclick="openTimelineMedia('{h(media_id)}')">拡大</button>
     <a href="stores/{h(post["shop_slug"])}.html">店舗ページ</a>
+    <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
   </div>
 </article>
 """
@@ -1684,8 +1798,8 @@ def build_area_page(posts_by_source, updated_at):
         posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
         latest = get_latest_post(posts)
         types = get_shop_types(shop["sources"])
-        type_labels = get_type_labels(types)
-        latest_date = latest.get("collected_at", updated_at) if latest else "未取得"
+        type_labels = [short_type_label(t) for t in types]
+        latest_date = format_update_label(latest.get("collected_at", updated_at)) if latest else "未取得"
         latest_count = len(posts)
 
         stores_html += f"""
@@ -1704,14 +1818,18 @@ def build_area_page(posts_by_source, updated_at):
 """
 
     support_html = ""
+    support_quick_links = ""
 
     for source in support_sources:
-        meta = TYPE_META[source["source_type"]]
+        short_label = short_type_label(source["source_type"])
+        support_quick_links += f"""
+<a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">{h(short_label)}：{h(source["shop_name"])}</a>
+"""
         support_html += f"""
 <div class="link-card">
   <div class="card-meta">
     <span>{h(source["area"])}</span>
-    <span>{h(meta["label"])}</span>
+    <span>{h(short_label)}</span>
   </div>
   <h3>{h(source["shop_name"])}</h3>
   <p class="summary">{h(source["description"])}</p>
@@ -1726,7 +1844,7 @@ def build_area_page(posts_by_source, updated_at):
     for type_key in TYPE_ORDER:
         meta = TYPE_META[type_key]
         type_buttons += f"""
-<button class="filter-chip" onclick="toggleType('{h(type_key)}', this)">{h(meta["label"])}</button>
+<button class="filter-chip" onclick="toggleType('{h(type_key)}', this)">{h(short_type_label(meta["label"]))}</button>
 """
 
     brand_buttons = ""
@@ -1735,6 +1853,8 @@ def build_area_page(posts_by_source, updated_at):
         brand_buttons += f"""
 <button class="filter-chip" onclick="toggleBrand('{h(brand["id"])}', this)">{h(brand["label"])}</button>
 """
+
+    media_json = json_for_script(media_items)
 
     content = f"""
 <div class="page-shell">
@@ -1748,7 +1868,7 @@ def build_area_page(posts_by_source, updated_at):
     <h1 class="area-title">NIHONBASHI</h1>
 
     <p class="area-description">
-      大阪・日本橋周辺のポケカ買取投稿を、新しい順に眺められるタイムラインです。
+      大阪・日本橋周辺のポケカ買取表画像を、新しい順に眺められるタイムラインです。
       店舗別の詳細は各投稿または店舗一覧から確認できます。
     </p>
 
@@ -1758,24 +1878,35 @@ def build_area_page(posts_by_source, updated_at):
   <div class="sticky-search" id="stickySearch">
     <div class="tool-row">
       <button class="tool-button menu-button" type="button" aria-label="メニュー">☰</button>
-      <button class="tool-button" type="button" onclick="toggleSearch()">検索</button>
-      <button class="sort-button active" type="button" onclick="setSort('new', this)">新着順</button>
-      <button class="sort-button" type="button" onclick="setSort('store', this)">店舗順</button>
+      <input id="searchInput" class="compact-search" type="search" placeholder="店舗・カード名で検索">
       <div class="result-line">表示中：<span id="resultCount">0</span>件</div>
     </div>
 
-    <div class="search-panel" id="searchPanel">
-      <div class="search-main">
-        <input id="searchInput" type="text" placeholder="店舗名・ブランド名・買取タイプで検索">
-        <button class="reset-button" onclick="resetFilters()">リセット</button>
-      </div>
+    <div class="type-row">
+      {type_buttons}
+    </div>
 
-      <div class="chip-row">
-        {type_buttons}
-      </div>
+    <div class="control-row">
+      <label class="sort-wrap">並び替え
+        <select id="sortSelect" class="sort-select" onchange="setSort(this.value)">
+          <option value="new">新着順</option>
+          <option value="box">BOX優先</option>
+          <option value="fixed">定額優先</option>
+          <option value="psa">PSA優先</option>
+          <option value="single">シングル優先</option>
+          <option value="store">店舗名順</option>
+        </select>
+      </label>
+      <button class="filter-toggle" type="button" onclick="toggleFilters()">絞り込み</button>
+    </div>
 
-      <div class="chip-row">
+    <div class="brand-panel" id="brandPanel">
+      <div class="brand-row">
         {brand_buttons}
+      </div>
+      <button class="reset-button" onclick="resetFilters()">リセット</button>
+      <div class="support-quick-links">
+        {support_quick_links}
       </div>
     </div>
   </div>
@@ -1783,7 +1914,7 @@ def build_area_page(posts_by_source, updated_at):
   <main>
     <div class="section-head">
       <h2>TIMELINE</h2>
-      <p>買取投稿を新着順に表示</p>
+      <p>買取表画像を新着順に表示</p>
     </div>
 
     <div class="timeline-list" id="timelineList">
@@ -1810,56 +1941,58 @@ def build_area_page(posts_by_source, updated_at):
   </main>
 </div>
 
+<div class="modal" id="timelineMediaModal">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeTimelineMedia()">閉じる</button>
+    <img class="modal-image" id="timelineModalImage" src="" alt="買取表画像">
+    <div class="modal-summary" id="timelineModalSummary"></div>
+    <div class="modal-actions">
+      <a id="timelineModalTweetLink" href="#" target="_blank" rel="noopener noreferrer">Xで開く</a>
+    </div>
+  </div>
+</div>
+
 <script>
 const selectedTypes = new Set();
 const selectedBrands = new Set();
+const TIMELINE_MEDIA = {media_json};
 let currentSort = "new";
 
-function toggleSearch(forceOpen) {{
-  const bar = document.getElementById("stickySearch");
-  const shouldOpen = forceOpen === true || !bar.classList.contains("search-open");
-  bar.classList.toggle("search-open", shouldOpen);
+function toggleFilters() {{
+  document.getElementById("stickySearch").classList.toggle("filters-open");
+}}
 
-  if (shouldOpen) {{
-    document.getElementById("searchInput").focus();
-  }}
+function openTimelineMedia(id) {{
+  const item = TIMELINE_MEDIA[id];
+  if (!item) return;
+  document.getElementById("timelineModalImage").src = item.image_url;
+  document.getElementById("timelineModalSummary").textContent = `${{item.shop_name}} / ${{item.type_label}} / 更新：${{item.updated_at}}${{item.summary ? " / " + item.summary : ""}}`;
+  document.getElementById("timelineModalTweetLink").href = item.tweet_url;
+  document.getElementById("timelineMediaModal").classList.add("open");
+}}
+
+function closeTimelineMedia() {{
+  document.getElementById("timelineMediaModal").classList.remove("open");
 }}
 
 function toggleType(type, button) {{
   if (type === "all") {{
     selectedTypes.clear();
-    document.querySelectorAll(".chip-row:first-of-type .filter-chip").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".type-row .filter-chip").forEach(btn => btn.classList.remove("active"));
     button.classList.add("active");
     applyFilters();
     return;
   }}
-
-  document.querySelector(".chip-row:first-of-type .filter-chip").classList.remove("active");
-
-  if (selectedTypes.has(type)) {{
-    selectedTypes.delete(type);
-    button.classList.remove("active");
-  }} else {{
-    selectedTypes.add(type);
-    button.classList.add("active");
-  }}
-
-  if (selectedTypes.size === 0) {{
-    document.querySelector(".chip-row:first-of-type .filter-chip").classList.add("active");
-  }}
-
+  document.querySelector(".type-row .filter-chip").classList.remove("active");
+  if (selectedTypes.has(type)) {{ selectedTypes.delete(type); button.classList.remove("active"); }}
+  else {{ selectedTypes.add(type); button.classList.add("active"); }}
+  if (selectedTypes.size === 0) document.querySelector(".type-row .filter-chip").classList.add("active");
   applyFilters();
 }}
 
 function toggleBrand(brand, button) {{
-  if (selectedBrands.has(brand)) {{
-    selectedBrands.delete(brand);
-    button.classList.remove("active");
-  }} else {{
-    selectedBrands.add(brand);
-    button.classList.add("active");
-  }}
-
+  if (selectedBrands.has(brand)) {{ selectedBrands.delete(brand); button.classList.remove("active"); }}
+  else {{ selectedBrands.add(brand); button.classList.add("active"); }}
   applyFilters();
 }}
 
@@ -1867,75 +2000,61 @@ function resetFilters() {{
   selectedTypes.clear();
   selectedBrands.clear();
   document.getElementById("searchInput").value = "";
-
   document.querySelectorAll(".filter-chip").forEach(btn => btn.classList.remove("active"));
-  document.querySelector(".chip-row:first-of-type .filter-chip").classList.add("active");
-
+  document.querySelector(".type-row .filter-chip").classList.add("active");
   applyFilters();
 }}
 
-function setSort(sort, button) {{
+function setSort(sort) {{
   currentSort = sort;
-  document.querySelectorAll(".sort-button").forEach(btn => btn.classList.remove("active"));
-  button.classList.add("active");
   sortTimeline();
+  updateResultCount();
 }}
 
 function sortTimeline() {{
   const list = document.getElementById("timelineList");
   const posts = Array.from(list.querySelectorAll(".timeline-post"));
-
+  const priority = {{ box: "x_post_box", fixed: "x_post_fixed", psa: "x_post_psa", single: "x_post_single" }};
   posts.sort((a, b) => {{
-    if (currentSort === "store") {{
-      return a.dataset.store.localeCompare(b.dataset.store, "ja") || Number(b.dataset.status) - Number(a.dataset.status);
+    if (currentSort === "store") return a.dataset.store.localeCompare(b.dataset.store, "ja") || Number(b.dataset.status) - Number(a.dataset.status);
+    if (priority[currentSort]) {{
+      const aHit = a.dataset.types === priority[currentSort] ? 0 : 1;
+      const bHit = b.dataset.types === priority[currentSort] ? 0 : 1;
+      return aHit - bHit || Number(b.dataset.status) - Number(a.dataset.status);
     }}
-
     return Number(b.dataset.status) - Number(a.dataset.status);
   }});
-
   posts.forEach(post => list.appendChild(post));
+}}
+
+function matchesItem(item, search) {{
+  const typeList = item.dataset.types.split(" ");
+  const brand = item.dataset.brand;
+  const searchText = item.dataset.search.toLowerCase();
+  const typeOk = selectedTypes.size === 0 || typeList.some(t => selectedTypes.has(t));
+  const brandOk = selectedBrands.size === 0 || selectedBrands.has(brand);
+  const searchOk = !search || searchText.includes(search);
+  return typeOk && brandOk && searchOk;
+}}
+
+function updateResultCount() {{
+  const count = Array.from(document.querySelectorAll(".timeline-post")).filter(post => !post.classList.contains("hidden")).length;
+  document.getElementById("resultCount").textContent = count;
 }}
 
 function applyFilters() {{
   const search = document.getElementById("searchInput").value.trim().toLowerCase();
-  const posts = document.querySelectorAll(".timeline-post");
-  const stores = document.querySelectorAll(".simple-store-card");
-  let count = 0;
-
-  function matches(item) {{
-    const typeList = item.dataset.types.split(" ");
-    const brand = item.dataset.brand;
-    const searchText = item.dataset.search.toLowerCase();
-
-    const typeOk = selectedTypes.size === 0 || typeList.some(t => selectedTypes.has(t));
-    const brandOk = selectedBrands.size === 0 || selectedBrands.has(brand);
-    const searchOk = !search || searchText.includes(search);
-
-    return typeOk && brandOk && searchOk;
-  }}
-
-  posts.forEach(post => {{
-    if (matches(post)) {{
-      post.classList.remove("hidden");
-      count++;
-    }} else {{
-      post.classList.add("hidden");
-    }}
-  }});
-
-  stores.forEach(store => {{
-    store.classList.toggle("hidden", !matches(store));
-  }});
-
-  document.getElementById("resultCount").textContent = count;
+  document.querySelectorAll(".timeline-post").forEach(post => post.classList.toggle("hidden", !matchesItem(post, search)));
+  document.querySelectorAll(".simple-store-card").forEach(store => store.classList.toggle("hidden", !matchesItem(store, search)));
+  sortTimeline();
+  updateResultCount();
 }}
 
 document.addEventListener("DOMContentLoaded", () => {{
   document.getElementById("searchInput").addEventListener("input", applyFilters);
+  document.getElementById("sortSelect").addEventListener("change", event => setSort(event.target.value));
   window.addEventListener("scroll", () => {{
-    if (window.scrollY > 180) {{
-      document.getElementById("stickySearch").classList.add("search-open");
-    }}
+    document.getElementById("stickySearch").classList.toggle("search-visible", window.scrollY > 180);
   }}, {{ passive: true }});
   sortTimeline();
   applyFilters();
@@ -1943,6 +2062,7 @@ document.addEventListener("DOMContentLoaded", () => {{
 </script>
 """
     return html_shell("CardRadar｜大阪日本橋のポケカ買取タイムライン", content)
+
 
 # =========================
 # ページ生成：店舗ページ
@@ -1984,8 +2104,7 @@ def build_store_page(shop, posts_by_source, updated_at):
 <div class="image-card" onclick="openMedia('{h(media_id)}')">
   <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像">
   <div class="image-info">
-    <p>{h(post["summary"])}</p>
-    <small>{h(meta["label"])} / 画像{len(image_urls)}枚</small>
+    <small>{h(short_type_label(meta["label"]))} / 更新 {h(format_update_label(post.get("collected_at", updated_at)))} / 画像{len(image_urls)}枚</small>
   </div>
 </div>
 """
