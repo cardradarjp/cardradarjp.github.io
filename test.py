@@ -2058,9 +2058,10 @@ def build_area_page(posts_by_source, updated_at):
     timeline_html = ""
     timeline_initial_count = len(timeline_posts)
     no_result_class = "no-result hidden" if timeline_initial_count else "no-result"
+    no_result_attrs = ' hidden aria-hidden="true" style="display:none"' if timeline_initial_count else ' aria-hidden="false"'
     latest_timeline_date = timeline_posts[0].get("posted_date_jst", "") if timeline_posts else ""
     same_day_count = sum(1 for post in timeline_posts if post.get("posted_date_jst") == latest_timeline_date) if latest_timeline_date else len(timeline_posts)
-    timeline_notice = f"最新投稿日：{format_date_label(latest_timeline_date)} / 同日投稿：{same_day_count}件" if timeline_posts else "最新投稿日：未取得 / 同日投稿：0件"
+    timeline_notice = f"最新日：{format_date_label(latest_timeline_date)} の投稿 {same_day_count}件" if timeline_posts else "最新日：未取得 の投稿 0件"
 
     for post in timeline_posts:
         post = normalize_post(post)
@@ -2287,7 +2288,7 @@ def build_area_page(posts_by_source, updated_at):
     <div class="timeline-list" id="timelineList">
       {timeline_html}
     </div>
-    <div class="{no_result_class}" id="noResult">該当する買取投稿はありません。<br>条件を変更してください。</div>
+    <div class="{no_result_class}" id="noResult"{no_result_attrs}>該当する買取投稿はありません。<br>条件を変更してください。</div>
 
     <div class="section-head" id="store-list">
       <h2>STORE LIST</h2>
@@ -2484,6 +2485,8 @@ function updateNoResult(count) {{
   const visibleCount = typeof count === "number" ? count : getVisibleTimelineCards().length;
   const shouldShow = visibleCount === 0;
   noResult.classList.toggle("hidden", !shouldShow);
+  noResult.hidden = !shouldShow;
+  noResult.style.display = shouldShow ? "" : "none";
   noResult.setAttribute("aria-hidden", shouldShow ? "false" : "true");
 }}
 

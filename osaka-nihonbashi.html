@@ -1302,7 +1302,7 @@ main {
   <main>
     <div class="section-head">
       <h2>TIMELINE</h2>
-      <p>1ツイート1カードで表示 / 最新投稿日：05/30 / 同日投稿：17件</p>
+      <p>1ツイート1カードで表示 / 最新日：05/30 の投稿 17件</p>
     </div>
 
     <div class="timeline-list" id="timelineList">
@@ -2247,7 +2247,7 @@ main {
 </article>
 
     </div>
-    <div class="no-result hidden" id="noResult">該当する買取投稿はありません。<br>条件を変更してください。</div>
+    <div class="no-result hidden" id="noResult" hidden aria-hidden="true" style="display:none">該当する買取投稿はありません。<br>条件を変更してください。</div>
 
     <div class="section-head" id="store-list">
       <h2>STORE LIST</h2>
@@ -2649,6 +2649,8 @@ function updateNoResult(count) {
   const visibleCount = typeof count === "number" ? count : getVisibleTimelineCards().length;
   const shouldShow = visibleCount === 0;
   noResult.classList.toggle("hidden", !shouldShow);
+  noResult.hidden = !shouldShow;
+  noResult.style.display = shouldShow ? "" : "none";
   noResult.setAttribute("aria-hidden", shouldShow ? "false" : "true");
 }
 
