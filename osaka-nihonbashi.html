@@ -384,6 +384,9 @@ a {
 
 .support-quick-links {
   flex-wrap: wrap;
+  align-items: center;
+  color: rgba(255,255,255,.50);
+  font-size: 12px;
 }
 
 .support-quick-links a {
@@ -633,6 +636,11 @@ a {
   padding: 14px 16px;
 }
 
+.simple-store-card.is-waiting {
+  opacity: .62;
+  border-style: dashed;
+}
+
 .simple-store-name { font-weight: 650; }
 .simple-store-meta { margin-top: 5px; color: rgba(255,255,255,.50); font-size: 12px; }
 .simple-store-date { color: rgba(255,255,255,.58); font-size: 12px; white-space: nowrap; }
@@ -704,6 +712,11 @@ a {
   border: 1px solid rgba(255,255,255,.11);
   background: rgba(255,255,255,.035);
   padding: 11px 12px;
+}
+
+.store-panel-card.is-waiting {
+  opacity: .62;
+  border-style: dashed;
 }
 
 .store-panel-name {
@@ -1276,19 +1289,15 @@ main {
 
     <div class="support-quick-links">
       
-<a href="https://base.clove.jp/prices/pokemon" target="_blank" rel="noopener noreferrer">公式Web買取表：Clove Base</a>
-
-<a href="https://fullahead-buy.com/" target="_blank" rel="noopener noreferrer">公式Web買取表：フルアヘッド</a>
-
-<a href="https://jp.mercari.com/search?keyword=%E3%83%9D%E3%82%B1%E3%82%AB" target="_blank" rel="noopener noreferrer">相場確認：メルカリ ポケカ相場</a>
-
-<a href="https://jp.mercari.com/search?keyword=%E3%83%9D%E3%82%B1%E3%82%AB%20BOX%20%E6%9C%AA%E9%96%8B%E5%B0%81" target="_blank" rel="noopener noreferrer">相場確認：メルカリ BOX相場</a>
+<span>補助リンク：</span>
+<a href="#support-links">公式Web買取表</a>
+<a href="#support-links">相場確認</a>
 
     </div>
 
     <button class="store-toggle" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
 
-    <div class="brand-panel" id="brandPanel">
+    <div class="brand-panel" id="brandPanel" aria-hidden="true">
       <div class="brand-row">
         
 <button class="filter-chip" onclick="toggleBrand('dragonstar', this)">ドラゴンスター</button>
@@ -1361,12 +1370,6 @@ main {
   <div class="store-panel-link">この店舗を見る →</div>
 </a>
 
-<a class="store-panel-card" href="stores/girafull-namba.html">
-  <div class="store-panel-name">GIRAFULLなんば店</div>
-  <div class="store-panel-meta">GIRAFULL / シングル / 投稿：0件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
 <a class="store-panel-card" href="stores/girafull-osaka-nihonbashi.html">
   <div class="store-panel-name">GIRAFULL大阪日本橋店</div>
   <div class="store-panel-meta">GIRAFULL / シングル / 05/27投稿：1件</div>
@@ -1403,6 +1406,12 @@ main {
   <div class="store-panel-link">この店舗を見る →</div>
 </a>
 
+<a class="store-panel-card is-waiting" href="stores/girafull-namba.html">
+  <div class="store-panel-name">GIRAFULLなんば店</div>
+  <div class="store-panel-meta">GIRAFULL / シングル / 取得待ち</div>
+  <div class="store-panel-link">この店舗を見る →</div>
+</a>
+
     </div>
   </div>
 
@@ -1435,7 +1444,7 @@ main {
     <div id="timelineView" class="view-panel">
       <div class="section-head">
         <h2>TIMELINE</h2>
-        <p>1ツイート1カードで表示 / 最新日：05/30 の投稿 17件</p>
+        <p>1ツイート1カードで表示 / 最新日：05/30 / 最新日の投稿：17件</p>
       </div>
 
       <div class="timeline-list" id="timelineList">
@@ -3447,19 +3456,6 @@ main {
 </a>
 
 <a class="simple-store-card"
-   href="stores/girafull-namba.html"
-   data-types="x_post_single"
-   data-brand="girafull"
-   data-search="GIRAFULLなんば店 GIRAFULL シングル"
->
-  <div>
-    <div class="simple-store-name">GIRAFULLなんば店</div>
-    <div class="simple-store-meta">シングル / 投稿：0件</div>
-    <div class="store-panel-link">この店舗を見る →</div>
-  </div>
-</a>
-
-<a class="simple-store-card"
    href="stores/girafull-osaka-nihonbashi.html"
    data-types="x_post_single"
    data-brand="girafull"
@@ -3533,6 +3529,19 @@ main {
   <div>
     <div class="simple-store-name">買取ミミ</div>
     <div class="simple-store-meta">シングル / 定額 / 05/26投稿：1件</div>
+    <div class="store-panel-link">この店舗を見る →</div>
+  </div>
+</a>
+
+<a class="simple-store-card is-waiting"
+   href="stores/girafull-namba.html"
+   data-types="x_post_single"
+   data-brand="girafull"
+   data-search="GIRAFULLなんば店 GIRAFULL シングル"
+>
+  <div>
+    <div class="simple-store-name">GIRAFULLなんば店</div>
+    <div class="simple-store-meta">シングル / 取得待ち</div>
     <div class="store-panel-link">この店舗を見る →</div>
   </div>
 </a>
@@ -3612,7 +3621,10 @@ function closeMenu(event) {
 }
 
 function toggleFilters() {
-  document.getElementById("searchArea").classList.toggle("filters-open");
+  const searchArea = document.getElementById("searchArea");
+  const brandPanel = document.getElementById("brandPanel");
+  const isOpen = searchArea.classList.toggle("filters-open");
+  if (brandPanel) brandPanel.setAttribute("aria-hidden", isOpen ? "false" : "true");
 }
 
 function toggleStorePanel() {
@@ -3810,8 +3822,11 @@ function syncSearchInputs(source) {
 document.addEventListener("DOMContentLoaded", () => {
   const searchArea = document.getElementById("searchArea");
   const storePanel = document.getElementById("storePanel");
+  const brandPanel = document.getElementById("brandPanel");
   if (searchArea) searchArea.classList.remove("stores-open");
+  if (searchArea) searchArea.classList.remove("filters-open");
   if (storePanel) storePanel.setAttribute("aria-hidden", "true");
+  if (brandPanel) brandPanel.setAttribute("aria-hidden", "true");
   document.getElementById("timelineViewButton").addEventListener("click", () => setViewMode("timeline"));
   document.getElementById("storeViewButton").addEventListener("click", () => setViewMode("store"));
   document.querySelectorAll(".search-input").forEach(input => {

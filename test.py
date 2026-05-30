@@ -1224,6 +1224,9 @@ a {
 
 .support-quick-links {
   flex-wrap: wrap;
+  align-items: center;
+  color: rgba(255,255,255,.50);
+  font-size: 12px;
 }
 
 .support-quick-links a {
@@ -1473,6 +1476,11 @@ a {
   padding: 14px 16px;
 }
 
+.simple-store-card.is-waiting {
+  opacity: .62;
+  border-style: dashed;
+}
+
 .simple-store-name { font-weight: 650; }
 .simple-store-meta { margin-top: 5px; color: rgba(255,255,255,.50); font-size: 12px; }
 .simple-store-date { color: rgba(255,255,255,.58); font-size: 12px; white-space: nowrap; }
@@ -1544,6 +1552,11 @@ a {
   border: 1px solid rgba(255,255,255,.11);
   background: rgba(255,255,255,.035);
   padding: 11px 12px;
+}
+
+.store-panel-card.is-waiting {
+  opacity: .62;
+  border-style: dashed;
 }
 
 .store-panel-name {
@@ -2188,7 +2201,7 @@ def build_area_page(posts_by_source, updated_at):
     no_result_attrs = ' hidden aria-hidden="true" style="display:none"' if timeline_initial_count else ' aria-hidden="false"'
     latest_timeline_date = timeline_posts[0].get("posted_date_jst", "") if timeline_posts else ""
     same_day_count = sum(1 for post in timeline_posts if post.get("posted_date_jst") == latest_timeline_date) if latest_timeline_date else len(timeline_posts)
-    timeline_notice = f"最新日：{format_date_label(latest_timeline_date)} の投稿 {same_day_count}件" if timeline_posts else "最新日：未取得 の投稿 0件"
+    timeline_notice = f"最新日：{format_date_label(latest_timeline_date)} / 最新日の投稿：{same_day_count}件" if timeline_posts else "最新日：未取得 / 最新日の投稿：0件"
 
     for post in timeline_posts:
         post = normalize_post(post)
@@ -2330,8 +2343,10 @@ def build_area_page(posts_by_source, updated_at):
 </section>
 """
 
-    stores_html = ""
-    store_panel_html = ""
+    stores_active_html = ""
+    stores_waiting_html = ""
+    store_panel_active_html = ""
+    store_panel_waiting_html = ""
 
     for shop in shops:
         posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
@@ -2341,10 +2356,12 @@ def build_area_page(posts_by_source, updated_at):
         latest_date = format_date_label(latest.get("posted_date_jst")) if latest else "未取得"
         latest_count = len(posts)
         type_text = " / ".join(type_labels)
-        post_count_label = f"{latest_date}投稿：{latest_count}件" if latest else "投稿：0件"
+        has_posts = latest_count > 0
+        waiting_class = "" if has_posts else " is-waiting"
+        post_count_label = f"{latest_date}投稿：{latest_count}件" if has_posts else "取得待ち"
 
-        stores_html += f"""
-<a class="simple-store-card"
+        store_card_html = f"""
+<a class="simple-store-card{waiting_class}"
    href="stores/{h(shop["shop_slug"])}.html"
    data-types="{' '.join(types)}"
    data-brand="{h(shop["brand_id"])}"
@@ -2358,28 +2375,39 @@ def build_area_page(posts_by_source, updated_at):
 </a>
 """
 
-        store_panel_html += f"""
-<a class="store-panel-card" href="stores/{h(shop["shop_slug"])}.html">
+        store_panel_card_html = f"""
+<a class="store-panel-card{waiting_class}" href="stores/{h(shop["shop_slug"])}.html">
   <div class="store-panel-name">{h(shop["shop_name"])}</div>
   <div class="store-panel-meta">{h(shop["brand"])} / {h(type_text)} / {h(post_count_label)}</div>
   <div class="store-panel-link">この店舗を見る →</div>
 </a>
 """
 
+        if has_posts:
+            stores_active_html += store_card_html
+            store_panel_active_html += store_panel_card_html
+        else:
+            stores_waiting_html += store_card_html
+            store_panel_waiting_html += store_panel_card_html
+
+    stores_html = stores_active_html + stores_waiting_html
+    store_panel_html = store_panel_active_html + store_panel_waiting_html
+
     support_groups = {
         "official_price_list": {"title": "公式Web買取表", "items": []},
         "market_price_link": {"title": "相場確認", "items": []},
     }
-    support_quick_links = ""
+    support_quick_links = """
+<span>補助リンク：</span>
+<a href="#support-links">公式Web買取表</a>
+<a href="#support-links">相場確認</a>
+"""
 
     for source in support_sources:
         group = support_groups.get(source["source_type"])
         if not group:
             continue
         group["items"].append(source)
-        support_quick_links += f"""
-<a href="{h(source["official_url"])}" target="_blank" rel="noopener noreferrer">{h(group["title"])}：{h(source["shop_name"])}</a>
-"""
 
     support_html = ""
     for key in ["official_price_list", "market_price_link"]:
@@ -2468,7 +2496,7 @@ def build_area_page(posts_by_source, updated_at):
 
     <button class="store-toggle" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
 
-    <div class="brand-panel" id="brandPanel">
+    <div class="brand-panel" id="brandPanel" aria-hidden="true">
       <div class="brand-row">
         {brand_buttons}
       </div>
@@ -2588,7 +2616,10 @@ function closeMenu(event) {{
 }}
 
 function toggleFilters() {{
-  document.getElementById("searchArea").classList.toggle("filters-open");
+  const searchArea = document.getElementById("searchArea");
+  const brandPanel = document.getElementById("brandPanel");
+  const isOpen = searchArea.classList.toggle("filters-open");
+  if (brandPanel) brandPanel.setAttribute("aria-hidden", isOpen ? "false" : "true");
 }}
 
 function toggleStorePanel() {{
@@ -2786,8 +2817,11 @@ function syncSearchInputs(source) {{
 document.addEventListener("DOMContentLoaded", () => {{
   const searchArea = document.getElementById("searchArea");
   const storePanel = document.getElementById("storePanel");
+  const brandPanel = document.getElementById("brandPanel");
   if (searchArea) searchArea.classList.remove("stores-open");
+  if (searchArea) searchArea.classList.remove("filters-open");
   if (storePanel) storePanel.setAttribute("aria-hidden", "true");
+  if (brandPanel) brandPanel.setAttribute("aria-hidden", "true");
   document.getElementById("timelineViewButton").addEventListener("click", () => setViewMode("timeline"));
   document.getElementById("storeViewButton").addEventListener("click", () => setViewMode("store"));
   document.querySelectorAll(".search-input").forEach(input => {{
