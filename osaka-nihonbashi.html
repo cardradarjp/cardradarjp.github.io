@@ -2413,20 +2413,24 @@ function matchesItem(item, search) {
   return typeOk && brandOk && searchOk;
 }
 
-function getVisibleTimelinePosts() {
+function getVisibleTimelineCards() {
   const list = document.getElementById("timelineList");
   if (!list) return [];
-  return Array.from(list.querySelectorAll(".timeline-post")).filter(post => {
-    if (post.classList.contains("hidden")) return false;
-    return window.getComputedStyle(post).display !== "none";
+  return Array.from(list.querySelectorAll(":scope > .timeline-post")).filter(card => {
+    if (card.classList.contains("hidden")) return false;
+    return window.getComputedStyle(card).display !== "none";
   });
 }
 
-function updateResultCount() {
-  const count = getVisibleTimelinePosts().length;
-  document.querySelectorAll(".result-count").forEach(el => el.textContent = count);
+function updateNoResult(count) {
   const noResult = document.getElementById("noResult");
   if (noResult) noResult.classList.toggle("hidden", count !== 0);
+}
+
+function updateResultCount() {
+  const count = getVisibleTimelineCards().length;
+  document.querySelectorAll(".result-count").forEach(el => el.textContent = count);
+  updateNoResult(count);
 }
 
 function applyFilters() {
@@ -2453,10 +2457,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (searchArea) searchArea.classList.remove("stores-open");
   if (storePanel) storePanel.setAttribute("aria-hidden", "true");
   document.querySelectorAll(".search-input").forEach(input => {
-    input.addEventListener("input", () => {
+    const handleSearchInput = () => {
       syncSearchInputs(input);
       applyFilters();
-    });
+    };
+    input.addEventListener("input", handleSearchInput);
+    input.addEventListener("search", handleSearchInput);
+    input.addEventListener("change", handleSearchInput);
+    input.addEventListener("keyup", handleSearchInput);
   });
   document.getElementById("sortSelect").addEventListener("change", event => setSort(event.target.value));
   const compactSearchBar = document.getElementById("compactSearchBar");
