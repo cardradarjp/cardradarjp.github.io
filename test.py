@@ -2110,6 +2110,7 @@ def build_area_page(posts_by_source, updated_at):
         latest_date = format_date_label(latest.get("posted_date_jst")) if latest else "未取得"
         latest_count = len(posts)
         type_text = " / ".join(type_labels)
+        post_count_label = f"{latest_date}投稿：{latest_count}件" if latest else "投稿：0件"
 
         stores_html += f"""
 <a class="simple-store-card"
@@ -2120,7 +2121,7 @@ def build_area_page(posts_by_source, updated_at):
 >
   <div>
     <div class="simple-store-name">{h(shop["shop_name"])}</div>
-    <div class="simple-store-meta">{h(type_text)} / 最新{latest_count}件 / 確認 {h(latest_date)}</div>
+    <div class="simple-store-meta">{h(type_text)} / {h(post_count_label)}</div>
     <div class="store-panel-link">この店舗を見る →</div>
   </div>
 </a>
@@ -2129,7 +2130,7 @@ def build_area_page(posts_by_source, updated_at):
         store_panel_html += f"""
 <a class="store-panel-card" href="stores/{h(shop["shop_slug"])}.html">
   <div class="store-panel-name">{h(shop["shop_name"])}</div>
-  <div class="store-panel-meta">{h(shop["brand"])} / {h(type_text)} / 最新{latest_count}件</div>
+  <div class="store-panel-meta">{h(shop["brand"])} / {h(type_text)} / {h(post_count_label)}</div>
   <div class="store-panel-link">この店舗を見る →</div>
 </a>
 """
@@ -2441,8 +2442,17 @@ function matchesItem(item, search) {{
   return typeOk && brandOk && searchOk;
 }}
 
+function getVisibleTimelinePosts() {{
+  const list = document.getElementById("timelineList");
+  if (!list) return [];
+  return Array.from(list.querySelectorAll(".timeline-post")).filter(post => {{
+    if (post.classList.contains("hidden")) return false;
+    return window.getComputedStyle(post).display !== "none";
+  }});
+}}
+
 function updateResultCount() {{
-  const count = Array.from(document.querySelectorAll(".timeline-post")).filter(post => !post.classList.contains("hidden")).length;
+  const count = getVisibleTimelinePosts().length;
   document.querySelectorAll(".result-count").forEach(el => el.textContent = count);
   const noResult = document.getElementById("noResult");
   if (noResult) noResult.classList.toggle("hidden", count !== 0);
@@ -2467,6 +2477,7 @@ function syncSearchInputs(source) {{
 }}
 
 document.addEventListener("DOMContentLoaded", () => {{
+  document.getElementById("searchArea")?.classList.remove("stores-open");
   document.querySelectorAll(".search-input").forEach(input => {{
     input.addEventListener("input", () => {{
       syncSearchInputs(input);
@@ -2492,6 +2503,7 @@ document.addEventListener("DOMContentLoaded", () => {{
   syncTypeButtons();
   sortTimeline();
   applyFilters();
+  requestAnimationFrame(updateResultCount);
 }});
 </script>
 """
