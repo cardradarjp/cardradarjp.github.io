@@ -1282,11 +1282,17 @@ a {
   margin-left: 8px;
 }
 
+.timeline-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
 .timeline-image {
   position: relative;
   display: block;
   width: 100%;
-  margin-top: 10px;
   background: rgba(255,255,255,.045);
   border: 1px solid rgba(255,255,255,.12);
   overflow: hidden;
@@ -1875,6 +1881,10 @@ main {
     padding: 12px;
   }
 
+  .timeline-images {
+    grid-template-columns: 1fr;
+  }
+
   .timeline-head,
   .simple-store-card {
     grid-template-columns: 1fr;
@@ -2071,12 +2081,19 @@ def build_area_page(posts_by_source, updated_at):
                 "type_label": short_type_label(display_type),
                 "checked_at": format_update_label(post.get("posted_at") or post.get("collected_at", updated_at)),
             }
+            image_buttons = []
+            for image_index, image_url in enumerate(image_urls):
+                image_buttons.append(f"""
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}', {image_index})">
+      <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 {image_index + 1} / {image_count}</span>
+    </button>
+""")
             image_html = f"""
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}')">
-    <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / {image_count}</span>
-  </button>
+  <div class="timeline-images">
+{''.join(image_buttons)}
+  </div>
 """
 
         checked_label = format_update_label(post.get("posted_at") or post.get("collected_at", updated_at))
@@ -2364,10 +2381,11 @@ function renderTimelineMedia() {{
   document.getElementById("timelineModalTweetLink").href = currentMediaItem.tweet_url;
 }}
 
-function openTimelineMedia(id) {{
+function openTimelineMedia(id, startIndex = 0) {{
   currentMediaItem = TIMELINE_MEDIA[id];
-  currentMediaIndex = 0;
   if (!currentMediaItem) return;
+  const count = (currentMediaItem.image_urls || []).length;
+  currentMediaIndex = count ? Math.min(Math.max(Number(startIndex) || 0, 0), count - 1) : 0;
   renderTimelineMedia();
   document.getElementById("timelineMediaModal").classList.add("open");
 }}
@@ -2462,7 +2480,11 @@ function getVisibleTimelineCards() {{
 
 function updateNoResult(count) {{
   const noResult = document.getElementById("noResult");
-  if (noResult) noResult.classList.toggle("hidden", count !== 0);
+  if (!noResult) return;
+  const visibleCount = typeof count === "number" ? count : getVisibleTimelineCards().length;
+  const shouldShow = visibleCount === 0;
+  noResult.classList.toggle("hidden", !shouldShow);
+  noResult.setAttribute("aria-hidden", shouldShow ? "false" : "true");
 }}
 
 function updateResultCount() {{

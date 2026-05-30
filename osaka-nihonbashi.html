@@ -442,11 +442,17 @@ a {
   margin-left: 8px;
 }
 
+.timeline-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
 .timeline-image {
   position: relative;
   display: block;
   width: 100%;
-  margin-top: 10px;
   background: rgba(255,255,255,.045);
   border: 1px solid rgba(255,255,255,.12);
   overflow: hidden;
@@ -1035,6 +1041,10 @@ main {
     padding: 12px;
   }
 
+  .timeline-images {
+    grid-template-columns: 1fr;
+  }
+
   .timeline-head,
   .simple-store-card {
     grid-template-columns: 1fr;
@@ -1310,11 +1320,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060608992997704020')">
-    <img src="https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060608992997704020', 0)">
+      <img src="https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1337,11 +1351,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060580083413487665')">
-    <img src="https://pbs.twimg.com/media/HJimiFCbEAAoAo2?format=jpg&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060580083413487665', 0)">
+      <img src="https://pbs.twimg.com/media/HJimiFCbEAAoAo2?format=jpg&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1364,11 +1382,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060572506436882602')">
-    <img src="https://pbs.twimg.com/media/HJifdk0bcAApD4v?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060572506436882602', 0)">
+      <img src="https://pbs.twimg.com/media/HJifdk0bcAApD4v?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1391,11 +1413,21 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060572324274045303')">
-    <img src="https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 2</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060572324274045303', 0)">
+      <img src="https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 2</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060572324274045303', 1)">
+      <img src="https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 2</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1418,11 +1450,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2060572284905984352')">
-    <img src="https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&amp;name=large" alt="KUROの買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2060572284905984352', 0)">
+      <img src="https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&amp;name=large" alt="KUROの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1445,11 +1481,27 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060571993464832378')">
-    <img src="https://pbs.twimg.com/media/HJifS7kWUAIhz9l?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 3</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060571993464832378', 0)">
+      <img src="https://pbs.twimg.com/media/HJifS7kWUAIhz9l?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 3</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060571993464832378', 1)">
+      <img src="https://pbs.twimg.com/media/HJifTQRWkAU1DRs?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 3</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060571993464832378', 2)">
+      <img src="https://pbs.twimg.com/media/HJifTk3XkAIzUjx?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 3" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 3 / 3</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1472,11 +1524,21 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2060571930927788088')">
-    <img src="https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&amp;name=360x360" alt="KUROの買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 2</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2060571930927788088', 0)">
+      <img src="https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 2</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2060571930927788088', 1)">
+      <img src="https://pbs.twimg.com/media/HJifP21boAALxJi?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 2</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1499,11 +1561,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060570546635682142')">
-    <img src="https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2060570546635682142', 0)">
+      <img src="https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1526,11 +1592,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-box_2060568057123086839')">
-    <img src="https://pbs.twimg.com/media/HJibfdJagAAMtcx?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_gotcha-box_2060568057123086839', 0)">
+      <img src="https://pbs.twimg.com/media/HJibfdJagAAMtcx?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1553,11 +1623,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2060558102953423030')">
-    <img src="https://pbs.twimg.com/media/HJiSrAdWEAIuY-G?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2060558102953423030', 0)">
+      <img src="https://pbs.twimg.com/media/HJiSrAdWEAIuY-G?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1580,11 +1654,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060557854629667113')">
-    <img src="https://pbs.twimg.com/media/HJiSck4XoAoplyd?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060557854629667113', 0)">
+      <img src="https://pbs.twimg.com/media/HJiSck4XoAoplyd?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1607,11 +1685,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060557608973369751')">
-    <img src="https://pbs.twimg.com/media/HJiSODDW0AQ2PpH?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060557608973369751', 0)">
+      <img src="https://pbs.twimg.com/media/HJiSODDW0AQ2PpH?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1634,11 +1716,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060557357357154600')">
-    <img src="https://pbs.twimg.com/media/HJiR_mvWUAgUkHY?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060557357357154600', 0)">
+      <img src="https://pbs.twimg.com/media/HJiR_mvWUAgUkHY?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1661,11 +1747,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-honten-single_2060557105317228819')">
-    <img src="https://pbs.twimg.com/media/HJiRw8bWAAAKfHQ?format=jpg&amp;name=large" alt="ドラスタ 日本橋本店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-honten-single_2060557105317228819', 0)">
+      <img src="https://pbs.twimg.com/media/HJiRw8bWAAAKfHQ?format=jpg&amp;name=large" alt="ドラスタ 日本橋本店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1688,11 +1778,27 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060556915193553368')">
-    <img src="https://pbs.twimg.com/media/HJiRlRIWQAIUpI0?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 3</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060556915193553368', 0)">
+      <img src="https://pbs.twimg.com/media/HJiRlRIWQAIUpI0?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 3</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060556915193553368', 1)">
+      <img src="https://pbs.twimg.com/media/HJiRlk7WEAQ-lOf?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 3</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060556915193553368', 2)">
+      <img src="https://pbs.twimg.com/media/HJiRl5_X0AYLduq?format=jpg&amp;name=360x360" alt="ドラスタ オタロード中央の買取表画像 3" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 3 / 3</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1715,11 +1821,27 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060551488787616221')">
-    <img src="https://pbs.twimg.com/media/HJiMp0AXIAEapdc?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 3</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060551488787616221', 0)">
+      <img src="https://pbs.twimg.com/media/HJiMp0AXIAEapdc?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 3</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060551488787616221', 1)">
+      <img src="https://pbs.twimg.com/media/HJiMqAnWgAExnxB?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 3</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2060551488787616221', 2)">
+      <img src="https://pbs.twimg.com/media/HJiMqLwWQAEM8zh?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 3" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 3 / 3</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1742,11 +1864,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060512508050346376')">
-    <img src="https://pbs.twimg.com/media/HJhpNQ6WQAE_mae?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060512508050346376', 0)">
+      <img src="https://pbs.twimg.com/media/HJhpNQ6WQAE_mae?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1769,11 +1895,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2060230046208688344')">
-    <img src="https://pbs.twimg.com/media/HJdoTc5bcAABPnC?format=jpg&amp;name=large" alt="アムタフの買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2060230046208688344', 0)">
+      <img src="https://pbs.twimg.com/media/HJdoTc5bcAABPnC?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1796,11 +1926,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2060219738110959742')">
-    <img src="https://pbs.twimg.com/media/HJdeWMJbUAAZtAw?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2060219738110959742', 0)">
+      <img src="https://pbs.twimg.com/media/HJdeWMJbUAAZtAw?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1823,11 +1957,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_kuro-box_2060209075909267756')">
-    <img src="https://pbs.twimg.com/media/HJdVO_EaYAA3tWn?format=jpg&amp;name=large" alt="KUROの買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_kuro-box_2060209075909267756', 0)">
+      <img src="https://pbs.twimg.com/media/HJdVO_EaYAA3tWn?format=jpg&amp;name=large" alt="KUROの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1850,11 +1988,21 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2060193377271079399')">
-    <img src="https://pbs.twimg.com/media/HJdG9DFboAAhS2w?format=jpg&amp;name=large" alt="アムタフの買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 2</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2060193377271079399', 0)">
+      <img src="https://pbs.twimg.com/media/HJdG9DFboAAhS2w?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 2</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2060193377271079399', 1)">
+      <img src="https://pbs.twimg.com/media/HJdG9DGbEAAJIHr?format=jpg&amp;name=large" alt="アムタフの買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 2</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1877,11 +2025,21 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819')">
-    <img src="https://pbs.twimg.com/media/HJYCSmTaQAAQawk?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 2</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819', 0)">
+      <img src="https://pbs.twimg.com/media/HJYCSmTaQAAQawk?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 2</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819', 1)">
+      <img src="https://pbs.twimg.com/media/HJYCUX_bMAE3foG?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 2</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1904,11 +2062,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2059616451032670647')">
-    <img src="https://pbs.twimg.com/media/HJU6NV6b0AAheEr?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2059616451032670647', 0)">
+      <img src="https://pbs.twimg.com/media/HJU6NV6b0AAheEr?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1931,11 +2093,21 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2059456047866339412')">
-    <img src="https://pbs.twimg.com/media/HJSoW9tbsAEN8Rt?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 2</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2059456047866339412', 0)">
+      <img src="https://pbs.twimg.com/media/HJSoW9tbsAEN8Rt?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 2</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2059456047866339412', 1)">
+      <img src="https://pbs.twimg.com/media/HJSoW9rawAAyBn1?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 2</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1958,11 +2130,33 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967')">
-    <img src="https://pbs.twimg.com/media/HJOTMnsbUAAfa3A?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 4</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 0)">
+      <img src="https://pbs.twimg.com/media/HJOTMnsbUAAfa3A?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 4</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 1)">
+      <img src="https://pbs.twimg.com/media/HJOTMnsacAAWfpn?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 4</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 2)">
+      <img src="https://pbs.twimg.com/media/HJOTMnwaUAIoQ7F?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 3" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 3 / 4</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2059151305910988967', 3)">
+      <img src="https://pbs.twimg.com/media/HJOTMnsb0AAOutY?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 4" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 4 / 4</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -1985,11 +2179,33 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433')">
-    <img src="https://pbs.twimg.com/media/HJFRCvmbkAAjieR?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 4</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 0)">
+      <img src="https://pbs.twimg.com/media/HJFRCvmbkAAjieR?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 4</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 1)">
+      <img src="https://pbs.twimg.com/media/HJFRDiBbEAAvxqH?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 4</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 2)">
+      <img src="https://pbs.twimg.com/media/HJFRET6aEAAULJY?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 3" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 3 / 4</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 3)">
+      <img src="https://pbs.twimg.com/media/HJFRFOMa0AEPAsi?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 4" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 4 / 4</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -2012,11 +2228,15 @@ main {
   </div>
 
 
-  <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_amtaf-fixed_2048595440975909034')">
-    <img src="https://pbs.twimg.com/media/HG4SsYuagAAEuT4?format=jpg&amp;name=large" alt="アムタフの買取表画像" loading="lazy">
-    <span class="zoom-badge">拡大</span>
-    <span class="image-count">画像 1 / 1</span>
-  </button>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openTimelineMedia('timeline_amtaf-fixed_2048595440975909034', 0)">
+      <img src="https://pbs.twimg.com/media/HG4SsYuagAAEuT4?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+    </button>
+
+  </div>
 
 
   <div class="timeline-actions">
@@ -2326,10 +2546,11 @@ function renderTimelineMedia() {
   document.getElementById("timelineModalTweetLink").href = currentMediaItem.tweet_url;
 }
 
-function openTimelineMedia(id) {
+function openTimelineMedia(id, startIndex = 0) {
   currentMediaItem = TIMELINE_MEDIA[id];
-  currentMediaIndex = 0;
   if (!currentMediaItem) return;
+  const count = (currentMediaItem.image_urls || []).length;
+  currentMediaIndex = count ? Math.min(Math.max(Number(startIndex) || 0, 0), count - 1) : 0;
   renderTimelineMedia();
   document.getElementById("timelineMediaModal").classList.add("open");
 }
@@ -2424,7 +2645,11 @@ function getVisibleTimelineCards() {
 
 function updateNoResult(count) {
   const noResult = document.getElementById("noResult");
-  if (noResult) noResult.classList.toggle("hidden", count !== 0);
+  if (!noResult) return;
+  const visibleCount = typeof count === "number" ? count : getVisibleTimelineCards().length;
+  const shouldShow = visibleCount === 0;
+  noResult.classList.toggle("hidden", !shouldShow);
+  noResult.setAttribute("aria-hidden", shouldShow ? "false" : "true");
 }
 
 function updateResultCount() {
