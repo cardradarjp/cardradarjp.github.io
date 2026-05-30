@@ -1397,6 +1397,10 @@ a {
   padding-top: 8px;
 }
 
+.search-area:not(.stores-open) .store-panel {
+  display: none !important;
+}
+
 .search-area.stores-open .store-panel {
   display: grid;
   gap: 8px;
@@ -2042,6 +2046,8 @@ def build_area_page(posts_by_source, updated_at):
 
     media_items = {}
     timeline_html = ""
+    timeline_initial_count = len(timeline_posts)
+    no_result_class = "no-result hidden" if timeline_initial_count else "no-result"
     latest_timeline_date = timeline_posts[0].get("posted_date_jst", "") if timeline_posts else ""
     same_day_count = sum(1 for post in timeline_posts if post.get("posted_date_jst") == latest_timeline_date) if latest_timeline_date else len(timeline_posts)
     timeline_notice = f"最新投稿日：{format_date_label(latest_timeline_date)} / 同日投稿：{same_day_count}件" if timeline_posts else "最新投稿日：未取得 / 同日投稿：0件"
@@ -2205,7 +2211,7 @@ def build_area_page(posts_by_source, updated_at):
   <div class="search-area" id="searchArea">
     <div class="search-line">
       <input id="searchInput" class="search-input" type="search" placeholder="店舗・カード名で検索">
-      <div class="result-line">表示中：<span class="result-count">0</span>件</div>
+      <div class="result-line">表示中：<span class="result-count">{timeline_initial_count}</span>件</div>
     </div>
 
     <div class="type-row">
@@ -2239,7 +2245,7 @@ def build_area_page(posts_by_source, updated_at):
       <button class="reset-button" onclick="resetFilters()">リセット</button>
     </div>
 
-    <div class="store-panel" id="storePanel">
+    <div class="store-panel" id="storePanel" aria-hidden="true">
       {store_panel_html}
     </div>
   </div>
@@ -2248,7 +2254,7 @@ def build_area_page(posts_by_source, updated_at):
     <div class="compact-line">
       <button class="tool-button menu-button" type="button" aria-label="メニュー" onclick="openMenu()">☰</button>
       <input id="compactSearchInput" class="search-input" type="search" placeholder="検索">
-      <div class="result-line"><span class="result-count">0</span>件</div>
+      <div class="result-line"><span class="result-count">{timeline_initial_count}</span>件</div>
     </div>
     <div class="type-row compact-type-row">
       {type_buttons}
@@ -2264,7 +2270,7 @@ def build_area_page(posts_by_source, updated_at):
     <div class="timeline-list" id="timelineList">
       {timeline_html}
     </div>
-    <div class="no-result hidden" id="noResult">該当する買取投稿はありません。<br>条件を変更してください。</div>
+    <div class="{no_result_class}" id="noResult">該当する買取投稿はありません。<br>条件を変更してください。</div>
 
     <div class="section-head" id="store-list">
       <h2>STORE LIST</h2>
@@ -2341,7 +2347,10 @@ function toggleFilters() {{
 }}
 
 function toggleStorePanel() {{
-  document.getElementById("searchArea").classList.toggle("stores-open");
+  const searchArea = document.getElementById("searchArea");
+  const storePanel = document.getElementById("storePanel");
+  const isOpen = searchArea.classList.toggle("stores-open");
+  if (storePanel) storePanel.setAttribute("aria-hidden", isOpen ? "false" : "true");
 }}
 
 function renderTimelineMedia() {{
@@ -2477,7 +2486,10 @@ function syncSearchInputs(source) {{
 }}
 
 document.addEventListener("DOMContentLoaded", () => {{
-  document.getElementById("searchArea")?.classList.remove("stores-open");
+  const searchArea = document.getElementById("searchArea");
+  const storePanel = document.getElementById("storePanel");
+  if (searchArea) searchArea.classList.remove("stores-open");
+  if (storePanel) storePanel.setAttribute("aria-hidden", "true");
   document.querySelectorAll(".search-input").forEach(input => {{
     input.addEventListener("input", () => {{
       syncSearchInputs(input);
