@@ -38,6 +38,13 @@ TYPE_ORDER = [
     "market_price_link",
 ]
 
+MAIN_FILTER_TYPES = [
+    "x_post_single",
+    "x_post_box",
+    "x_post_fixed",
+    "x_post_psa",
+]
+
 TYPE_META = {
     "x_post_single": {
         "label": "シングル買取",
@@ -2431,7 +2438,7 @@ def build_area_page(posts_by_source, updated_at):
 <button class="filter-chip active" data-type="all" onclick="toggleType('all', this)">すべて</button>
 """
 
-    for type_key in TYPE_ORDER:
+    for type_key in MAIN_FILTER_TYPES:
         meta = TYPE_META[type_key]
         type_buttons += f"""
 <button class="filter-chip" data-type="{h(type_key)}" onclick="toggleType('{h(type_key)}', this)">{h(short_type_label(meta["label"]))}</button>
