@@ -407,6 +407,30 @@ a {
   letter-spacing: .06em;
 }
 
+.view-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.view-toggle {
+  min-height: 34px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.045);
+  color: rgba(255,255,255,.76);
+  cursor: pointer;
+}
+
+.view-toggle.active {
+  border-color: rgba(255,255,255,.34);
+  background: rgba(255,255,255,.13);
+  color: white;
+}
+
+.view-panel.hidden {
+  display: none !important;
+}
+
 .timeline-list {
   max-width: 760px;
   display: grid;
@@ -497,6 +521,95 @@ a {
 }
 
 .simple-store-list { max-width: 760px; display: grid; gap: 10px; }
+
+.store-group-list {
+  max-width: 100%;
+  display: grid;
+  gap: 28px;
+}
+
+.store-group {
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(10,10,10,.90);
+  padding: 14px;
+}
+
+.store-group-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.store-group-name {
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.store-group-meta {
+  margin-top: 5px;
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.store-group-link {
+  color: rgba(255,255,255,.82);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.16);
+  padding: 8px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.store-post-strip {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+}
+
+.store-post-card {
+  flex: 0 0 min(88vw, 520px);
+  scroll-snap-align: start;
+  border: 1px solid rgba(255,255,255,.13);
+  background: rgba(255,255,255,.035);
+  padding: 10px;
+}
+
+.store-post-meta {
+  color: rgba(255,255,255,.70);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.store-post-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.store-post-actions a,
+.store-post-actions button {
+  min-height: 34px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.045);
+  color: rgba(255,255,255,.88);
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+@media (min-width: 820px) {
+  .store-post-card {
+    flex-basis: min(48%, 520px);
+  }
+}
 
 .simple-store-card {
   display: grid;
@@ -1046,9 +1159,12 @@ main {
   }
 
   .timeline-head,
+  .store-group-head,
   .simple-store-card {
     grid-template-columns: 1fr;
   }
+
+  .store-post-card { flex-basis: 88vw; }
 
   .timeline-head {
     display: grid;

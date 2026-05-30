@@ -1247,6 +1247,30 @@ a {
   letter-spacing: .06em;
 }
 
+.view-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.view-toggle {
+  min-height: 34px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.045);
+  color: rgba(255,255,255,.76);
+  cursor: pointer;
+}
+
+.view-toggle.active {
+  border-color: rgba(255,255,255,.34);
+  background: rgba(255,255,255,.13);
+  color: white;
+}
+
+.view-panel.hidden {
+  display: none !important;
+}
+
 .timeline-list {
   max-width: 760px;
   display: grid;
@@ -1337,6 +1361,95 @@ a {
 }
 
 .simple-store-list { max-width: 760px; display: grid; gap: 10px; }
+
+.store-group-list {
+  max-width: 100%;
+  display: grid;
+  gap: 28px;
+}
+
+.store-group {
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(10,10,10,.90);
+  padding: 14px;
+}
+
+.store-group-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.store-group-name {
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.store-group-meta {
+  margin-top: 5px;
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.store-group-link {
+  color: rgba(255,255,255,.82);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.16);
+  padding: 8px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.store-post-strip {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+}
+
+.store-post-card {
+  flex: 0 0 min(88vw, 520px);
+  scroll-snap-align: start;
+  border: 1px solid rgba(255,255,255,.13);
+  background: rgba(255,255,255,.035);
+  padding: 10px;
+}
+
+.store-post-meta {
+  color: rgba(255,255,255,.70);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.store-post-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.store-post-actions a,
+.store-post-actions button {
+  min-height: 34px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.045);
+  color: rgba(255,255,255,.88);
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+@media (min-width: 820px) {
+  .store-post-card {
+    flex-basis: min(48%, 520px);
+  }
+}
 
 .simple-store-card {
   display: grid;
@@ -1886,9 +1999,12 @@ main {
   }
 
   .timeline-head,
+  .store-group-head,
   .simple-store-card {
     grid-template-columns: 1fr;
   }
+
+  .store-post-card { flex-basis: 88vw; }
 
   .timeline-head {
     display: grid;
@@ -2123,6 +2239,78 @@ def build_area_page(posts_by_source, updated_at):
 </article>
 """
 
+    store_groups_html = ""
+
+    for shop in shops:
+        shop_posts = [normalize_post(post) for post in timeline_posts if post.get("shop_slug") == shop["shop_slug"]]
+        if not shop_posts:
+            continue
+
+        latest_shop_date = max((post.get("posted_date_jst", "") for post in shop_posts), default="")
+        latest_shop_posts = [post for post in shop_posts if not latest_shop_date or post.get("posted_date_jst", "") == latest_shop_date]
+        latest_shop_posts.sort(key=lambda post: int(post.get("status_id", 0)), reverse=True)
+
+        display_types = []
+        for post in latest_shop_posts:
+            display_type = post.get("display_type", infer_display_type(post))
+            if display_type not in display_types:
+                display_types.append(display_type)
+        type_text = " / ".join(short_type_label(t) for t in display_types) if display_types else "未分類"
+        latest_label = format_date_label(latest_shop_date) if latest_shop_date else "未取得"
+
+        store_post_cards = ""
+        for post in latest_shop_posts:
+            image_urls = post.get("image_urls", [])
+            if not image_urls:
+                continue
+            display_type = post.get("display_type", infer_display_type(post))
+            type_label = short_type_label(display_type)
+            media_id = f'timeline_{post.get("source_id", "post")}_{post.get("status_id", 0)}'
+            image_count = len(image_urls)
+
+            store_post_cards += f"""
+      <article class="store-post-card"
+        data-status="{h(post.get("status_id", 0))}"
+        data-store="{h(post.get("shop_name", ""))}"
+        data-types="{h(display_type)}"
+        data-brand="{h(post.get("brand_id", ""))}"
+        data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + type_label + ' ' + post.get("summary", ""))}"
+      >
+        <div class="store-post-meta">{h(type_label)} / 画像 {image_count}枚</div>
+        <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}', 0)">
+          <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取表画像" loading="lazy">
+          <span class="zoom-badge">拡大</span>
+          <span class="image-count">画像 1 / {image_count}</span>
+        </button>
+        <div class="store-post-actions">
+          <button type="button" onclick="openTimelineMedia('{h(media_id)}', 0)">拡大</button>
+          <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
+        </div>
+      </article>
+"""
+
+        if not store_post_cards:
+            continue
+
+        store_groups_html += f"""
+<section class="store-group"
+  data-types="{h(' '.join(display_types))}"
+  data-brand="{h(shop["brand_id"])}"
+  data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + type_text)}"
+>
+  <div class="store-group-head">
+    <div>
+      <div class="store-group-name">{h(shop["shop_name"])}</div>
+      <div class="store-group-meta">確認日：{h(latest_label)} / 投稿 {len(latest_shop_posts)}件 / {h(type_text)}</div>
+    </div>
+    <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
+  </div>
+  <div class="store-post-strip">
+{store_post_cards}
+  </div>
+</section>
+"""
+
     stores_html = ""
     store_panel_html = ""
 
@@ -2232,6 +2420,11 @@ def build_area_page(posts_by_source, updated_at):
       <div class="result-line">表示中：<span class="result-count">{timeline_initial_count}</span>件</div>
     </div>
 
+    <div class="view-switch" role="group" aria-label="表示切替">
+      <button id="timelineViewButton" class="view-toggle active" type="button" onclick="setViewMode('timeline')">新着TL</button>
+      <button id="storeViewButton" class="view-toggle" type="button" onclick="setViewMode('store')">店舗ごと</button>
+    </div>
+
     <div class="type-row">
       {type_buttons}
     </div>
@@ -2280,14 +2473,28 @@ def build_area_page(posts_by_source, updated_at):
   </div>
 
   <main>
-    <div class="section-head">
-      <h2>TIMELINE</h2>
-      <p>1ツイート1カードで表示 / {h(timeline_notice)}</p>
+    <div id="timelineView" class="view-panel">
+      <div class="section-head">
+        <h2>TIMELINE</h2>
+        <p>1ツイート1カードで表示 / {h(timeline_notice)}</p>
+      </div>
+
+      <div class="timeline-list" id="timelineList">
+        {timeline_html}
+      </div>
     </div>
 
-    <div class="timeline-list" id="timelineList">
-      {timeline_html}
+    <div id="storeView" class="view-panel hidden">
+      <div class="section-head">
+        <h2>STORE VIEW</h2>
+        <p>店舗ごとに最新日の投稿を横スライドで表示</p>
+      </div>
+
+      <div class="store-group-list" id="storeGroupList">
+        {store_groups_html}
+      </div>
     </div>
+
     <div class="{no_result_class}" id="noResult"{no_result_attrs}>該当する買取投稿はありません。<br>条件を変更してください。</div>
 
     <div class="section-head" id="store-list">
@@ -2348,6 +2555,7 @@ const selectedTypes = new Set();
 const selectedBrands = new Set();
 const TIMELINE_MEDIA = {media_json};
 let currentSort = "new";
+let currentView = "timeline";
 let currentMediaItem = null;
 let currentMediaIndex = 0;
 
@@ -2446,6 +2654,7 @@ function setSort(sort) {{
 
 function sortTimeline() {{
   const list = document.getElementById("timelineList");
+  if (!list) return;
   const posts = Array.from(list.querySelectorAll(".timeline-post"));
   const priority = {{ box: "x_post_box", fixed: "x_post_fixed", psa: "x_post_psa", single: "x_post_single" }};
   posts.sort((a, b) => {{
@@ -2479,10 +2688,25 @@ function getVisibleTimelineCards() {{
   }});
 }}
 
+function getVisibleStorePostCards() {{
+  const list = document.getElementById("storeGroupList");
+  if (!list) return [];
+  return Array.from(list.querySelectorAll(".store-post-card")).filter(card => {{
+    if (card.classList.contains("hidden")) return false;
+    const group = card.closest(".store-group");
+    if (group && group.classList.contains("hidden")) return false;
+    return window.getComputedStyle(card).display !== "none";
+  }});
+}}
+
+function getVisibleActiveCards() {{
+  return currentView === "store" ? getVisibleStorePostCards() : getVisibleTimelineCards();
+}}
+
 function updateNoResult(count) {{
   const noResult = document.getElementById("noResult");
   if (!noResult) return;
-  const visibleCount = typeof count === "number" ? count : getVisibleTimelineCards().length;
+  const visibleCount = typeof count === "number" ? count : getVisibleActiveCards().length;
   const shouldShow = visibleCount === 0;
   noResult.classList.toggle("hidden", !shouldShow);
   noResult.hidden = !shouldShow;
@@ -2491,7 +2715,7 @@ function updateNoResult(count) {{
 }}
 
 function updateResultCount() {{
-  const count = getVisibleTimelineCards().length;
+  const count = getVisibleActiveCards().length;
   document.querySelectorAll(".result-count").forEach(el => el.textContent = count);
   updateNoResult(count);
 }}
@@ -2500,7 +2724,25 @@ function applyFilters() {{
   const search = document.getElementById("searchInput").value.trim().toLowerCase();
   document.querySelectorAll(".timeline-post").forEach(post => post.classList.toggle("hidden", !matchesItem(post, search)));
   document.querySelectorAll(".simple-store-card").forEach(store => store.classList.toggle("hidden", !matchesItem(store, search)));
+  document.querySelectorAll(".store-group").forEach(group => {{
+    let visibleChildren = 0;
+    group.querySelectorAll(".store-post-card").forEach(card => {{
+      const cardMatches = matchesItem(card, search);
+      card.classList.toggle("hidden", !cardMatches);
+      if (cardMatches) visibleChildren += 1;
+    }});
+    group.classList.toggle("hidden", visibleChildren === 0);
+  }});
   sortTimeline();
+  updateResultCount();
+}}
+
+function setViewMode(mode) {{
+  currentView = mode === "store" ? "store" : "timeline";
+  document.getElementById("timelineView").classList.toggle("hidden", currentView !== "timeline");
+  document.getElementById("storeView").classList.toggle("hidden", currentView !== "store");
+  document.getElementById("timelineViewButton").classList.toggle("active", currentView === "timeline");
+  document.getElementById("storeViewButton").classList.toggle("active", currentView === "store");
   updateResultCount();
 }}
 
@@ -2519,6 +2761,8 @@ document.addEventListener("DOMContentLoaded", () => {{
   const storePanel = document.getElementById("storePanel");
   if (searchArea) searchArea.classList.remove("stores-open");
   if (storePanel) storePanel.setAttribute("aria-hidden", "true");
+  document.getElementById("timelineViewButton").addEventListener("click", () => setViewMode("timeline"));
+  document.getElementById("storeViewButton").addEventListener("click", () => setViewMode("store"));
   document.querySelectorAll(".search-input").forEach(input => {{
     const handleSearchInput = () => {{
       syncSearchInputs(input);
@@ -2548,6 +2792,7 @@ document.addEventListener("DOMContentLoaded", () => {{
   syncTypeButtons();
   sortTimeline();
   applyFilters();
+  setViewMode("timeline");
   requestAnimationFrame(updateResultCount);
 }});
 </script>
