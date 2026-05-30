@@ -513,10 +513,42 @@ a {
   -webkit-overflow-scrolling: touch;
 }
 
-.timeline-image.is-landscape img,
-.image-card.is-landscape img {
-  width: 150%;
+.timeline-image.is-landscape > img,
+.image-card.is-landscape > img {
+  width: 100%;
   max-width: none;
+}
+
+.landscape-split {
+  display: none;
+}
+
+.landscape-slice {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,.035);
+}
+
+.landscape-slice img {
+  width: 200%;
+  max-width: none;
+  display: block;
+}
+
+.landscape-slice.is-right img {
+  transform: translateX(-50%);
+}
+
+.landscape-slice-label {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 2;
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(255,255,255,.22);
+  color: rgba(255,255,255,.88);
+  padding: 5px 8px;
+  font-size: 12px;
 }
 
 .landscape-hint {
@@ -1133,7 +1165,7 @@ main {
 }
 
 .modal-image-wrap.is-landscape .modal-image {
-  width: 170vw;
+  width: 100%;
   max-width: none;
 }
 
@@ -1232,6 +1264,23 @@ main {
 
   .timeline-images {
     grid-template-columns: 1fr;
+  }
+
+  .timeline-image.is-landscape,
+  .image-card.is-landscape,
+  .modal-image-wrap.is-landscape {
+    overflow-x: visible;
+  }
+
+  .timeline-image.is-landscape > img,
+  .image-card.is-landscape > img,
+  .modal-image-wrap.is-landscape > .modal-image {
+    display: none;
+  }
+
+  .is-landscape .landscape-split {
+    display: grid;
+    gap: 8px;
   }
 
   .timeline-head,
@@ -1377,7 +1426,29 @@ function markLandscapeImage(img) {
   const ratio = img.naturalWidth / img.naturalHeight;
   const target = img.closest(".timeline-image, .image-card, .modal-image-wrap");
   if (!target) return;
-  target.classList.toggle("is-landscape", ratio >= 1.35);
+  const isLandscape = ratio >= 1.35;
+  target.classList.toggle("is-landscape", isLandscape);
+  if (isLandscape) renderLandscapeSplit(target, img);
+  else target.querySelector(".landscape-split")?.remove();
+}
+
+function renderLandscapeSplit(target, img) {
+  let split = target.querySelector(".landscape-split");
+  if (!split) {
+    split = document.createElement("div");
+    split.className = "landscape-split";
+    img.insertAdjacentElement("afterend", split);
+  }
+  split.innerHTML = `
+    <div class="landscape-slice is-left">
+      <span class="landscape-slice-label">左半分</span>
+      <img src="${img.currentSrc || img.src}" alt="">
+    </div>
+    <div class="landscape-slice is-right">
+      <span class="landscape-slice-label">右半分</span>
+      <img src="${img.currentSrc || img.src}" alt="">
+    </div>
+  `;
 }
 
 function bindLandscapeImages(root = document) {
