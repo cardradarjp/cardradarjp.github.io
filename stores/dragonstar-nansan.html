@@ -259,17 +259,58 @@ a {
   letter-spacing: .12em;
 }
 
-.tool-row {
+.search-area,
+.compact-search-bar {
+  background: rgba(5,5,5,.92);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  padding: 10px 7vw;
+}
+
+.search-area {
+  position: relative;
+  z-index: 10;
+}
+
+.compact-search-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  transform: translateY(-105%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+.compact-search-bar.search-visible,
+.compact-search-bar:focus-within {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-line,
+.compact-line {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) auto;
   gap: 8px;
   align-items: center;
+}
+
+.search-line {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.compact-line {
+  grid-template-columns: 42px minmax(0, 1fr) auto;
 }
 
 .tool-button,
 .filter-toggle,
 .sort-select {
-  height: 38px;
+  height: 36px;
   border: 1px solid rgba(255,255,255,.16);
   background: rgba(255,255,255,.055);
   color: white;
@@ -287,9 +328,9 @@ a {
   line-height: 1;
 }
 
-.compact-search {
+.search-input {
   width: 100%;
-  height: 38px;
+  height: 36px;
   min-width: 0;
   background: rgba(255,255,255,.075);
   border: 1px solid rgba(255,255,255,.16);
@@ -299,28 +340,12 @@ a {
   outline: none;
 }
 
-.sticky-search {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  transform: translateY(-105%);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform .18s ease, opacity .18s ease;
-}
-
-.sticky-search.search-visible,
-.sticky-search:focus-within {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
 .type-row,
 .control-row,
 .brand-panel,
-.support-quick-links { margin-top: 8px; }
+.support-quick-links {
+  margin-top: 7px;
+}
 
 .type-row,
 .brand-row,
@@ -355,9 +380,11 @@ a {
   padding-top: 8px;
 }
 
-.sticky-search.filters-open .brand-panel { display: block; }
+.search-area.filters-open .brand-panel { display: block; }
 
-.support-quick-links { flex-wrap: wrap; }
+.support-quick-links {
+  flex-wrap: wrap;
+}
 
 .support-quick-links a {
   color: rgba(255,255,255,.72);
@@ -367,93 +394,97 @@ a {
   font-size: 12px;
 }
 
-.reset-button { height: 36px; margin-top: 8px; }
+.reset-button {
+  height: 34px;
+  margin-top: 8px;
+}
 
 .result-line {
   margin-top: 0;
   white-space: nowrap;
+  color: rgba(255,255,255,.58);
   font-size: 12px;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
 }
 
 .timeline-list {
   max-width: 760px;
   display: grid;
-  gap: 24px;
+  gap: 26px;
 }
 
 .timeline-post {
-  background: rgba(13,13,13,.94);
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 18px 42px rgba(0,0,0,.28);
-  padding: 14px;
+  background: rgba(14,14,14,.96);
+  border: 1px solid rgba(255,255,255,.20);
+  box-shadow: 0 20px 48px rgba(0,0,0,.34);
+  padding: 13px;
 }
 
 .timeline-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: flex-start;
+  display: block;
 }
 
-.timeline-store { font-size: 16px; font-weight: 650; letter-spacing: .04em; }
+.timeline-store {
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: .04em;
+}
 
 .timeline-meta {
-  margin-top: 6px;
-  color: rgba(255,255,255,.56);
+  margin-top: 5px;
+  color: rgba(255,255,255,.58);
   font-size: 12px;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .timeline-type {
-  flex: 0 0 auto;
-  border: 1px solid rgba(255,255,255,.18);
-  color: rgba(255,255,255,.82);
-  background: rgba(255,255,255,.06);
-  padding: 5px 8px;
-  font-size: 11px;
+  color: rgba(255,255,255,.86);
+  margin-left: 8px;
 }
 
 .timeline-image {
   position: relative;
   display: block;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 10px;
   background: rgba(255,255,255,.045);
-  border: 1px solid rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.12);
   overflow: hidden;
   cursor: zoom-in;
   padding: 0;
 }
 
-.timeline-image img { width: 100%; display: block; }
+.timeline-image img {
+  width: 100%;
+  display: block;
+}
 
 .zoom-badge {
   position: absolute;
   top: 8px;
   right: 8px;
-  background: rgba(0,0,0,.72);
-  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(255,255,255,.24);
   color: white;
   padding: 5px 8px;
   font-size: 12px;
 }
 
 .timeline-actions {
-  margin-top: 12px;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  gap: 7px;
 }
 
 .timeline-actions a,
 .timeline-actions button {
-  min-height: 38px;
+  min-height: 34px;
   text-decoration: none;
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(255,255,255,.045);
-  padding: 9px 8px;
-  font-size: 13px;
+  padding: 8px 6px;
+  font-size: 12px;
   color: rgba(255,255,255,.88);
   text-align: center;
   cursor: pointer;
@@ -875,11 +906,12 @@ main {
     display: block;
   }
 
-  .sticky-search {
-    padding: 10px 18px;
+  .search-area,
+  .compact-search-bar {
+    padding: 9px 14px;
   }
 
-  .tool-row {
+  .compact-line {
     grid-template-columns: 40px minmax(0, 1fr) auto;
     gap: 7px;
   }

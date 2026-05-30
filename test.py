@@ -1022,17 +1022,58 @@ a {
   letter-spacing: .12em;
 }
 
-.tool-row {
+.search-area,
+.compact-search-bar {
+  background: rgba(5,5,5,.92);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  padding: 10px 7vw;
+}
+
+.search-area {
+  position: relative;
+  z-index: 10;
+}
+
+.compact-search-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  transform: translateY(-105%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+.compact-search-bar.search-visible,
+.compact-search-bar:focus-within {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-line,
+.compact-line {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) auto;
   gap: 8px;
   align-items: center;
+}
+
+.search-line {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.compact-line {
+  grid-template-columns: 42px minmax(0, 1fr) auto;
 }
 
 .tool-button,
 .filter-toggle,
 .sort-select {
-  height: 38px;
+  height: 36px;
   border: 1px solid rgba(255,255,255,.16);
   background: rgba(255,255,255,.055);
   color: white;
@@ -1050,9 +1091,9 @@ a {
   line-height: 1;
 }
 
-.compact-search {
+.search-input {
   width: 100%;
-  height: 38px;
+  height: 36px;
   min-width: 0;
   background: rgba(255,255,255,.075);
   border: 1px solid rgba(255,255,255,.16);
@@ -1062,28 +1103,12 @@ a {
   outline: none;
 }
 
-.sticky-search {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  transform: translateY(-105%);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform .18s ease, opacity .18s ease;
-}
-
-.sticky-search.search-visible,
-.sticky-search:focus-within {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
 .type-row,
 .control-row,
 .brand-panel,
-.support-quick-links { margin-top: 8px; }
+.support-quick-links {
+  margin-top: 7px;
+}
 
 .type-row,
 .brand-row,
@@ -1118,9 +1143,11 @@ a {
   padding-top: 8px;
 }
 
-.sticky-search.filters-open .brand-panel { display: block; }
+.search-area.filters-open .brand-panel { display: block; }
 
-.support-quick-links { flex-wrap: wrap; }
+.support-quick-links {
+  flex-wrap: wrap;
+}
 
 .support-quick-links a {
   color: rgba(255,255,255,.72);
@@ -1130,93 +1157,97 @@ a {
   font-size: 12px;
 }
 
-.reset-button { height: 36px; margin-top: 8px; }
+.reset-button {
+  height: 34px;
+  margin-top: 8px;
+}
 
 .result-line {
   margin-top: 0;
   white-space: nowrap;
+  color: rgba(255,255,255,.58);
   font-size: 12px;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
 }
 
 .timeline-list {
   max-width: 760px;
   display: grid;
-  gap: 24px;
+  gap: 26px;
 }
 
 .timeline-post {
-  background: rgba(13,13,13,.94);
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 18px 42px rgba(0,0,0,.28);
-  padding: 14px;
+  background: rgba(14,14,14,.96);
+  border: 1px solid rgba(255,255,255,.20);
+  box-shadow: 0 20px 48px rgba(0,0,0,.34);
+  padding: 13px;
 }
 
 .timeline-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: flex-start;
+  display: block;
 }
 
-.timeline-store { font-size: 16px; font-weight: 650; letter-spacing: .04em; }
+.timeline-store {
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: .04em;
+}
 
 .timeline-meta {
-  margin-top: 6px;
-  color: rgba(255,255,255,.56);
+  margin-top: 5px;
+  color: rgba(255,255,255,.58);
   font-size: 12px;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .timeline-type {
-  flex: 0 0 auto;
-  border: 1px solid rgba(255,255,255,.18);
-  color: rgba(255,255,255,.82);
-  background: rgba(255,255,255,.06);
-  padding: 5px 8px;
-  font-size: 11px;
+  color: rgba(255,255,255,.86);
+  margin-left: 8px;
 }
 
 .timeline-image {
   position: relative;
   display: block;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 10px;
   background: rgba(255,255,255,.045);
-  border: 1px solid rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.12);
   overflow: hidden;
   cursor: zoom-in;
   padding: 0;
 }
 
-.timeline-image img { width: 100%; display: block; }
+.timeline-image img {
+  width: 100%;
+  display: block;
+}
 
 .zoom-badge {
   position: absolute;
   top: 8px;
   right: 8px;
-  background: rgba(0,0,0,.72);
-  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(255,255,255,.24);
   color: white;
   padding: 5px 8px;
   font-size: 12px;
 }
 
 .timeline-actions {
-  margin-top: 12px;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  gap: 7px;
 }
 
 .timeline-actions a,
 .timeline-actions button {
-  min-height: 38px;
+  min-height: 34px;
   text-decoration: none;
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(255,255,255,.045);
-  padding: 9px 8px;
-  font-size: 13px;
+  padding: 8px 6px;
+  font-size: 12px;
   color: rgba(255,255,255,.88);
   text-align: center;
   cursor: pointer;
@@ -1638,11 +1669,12 @@ main {
     display: block;
   }
 
-  .sticky-search {
-    padding: 10px 18px;
+  .search-area,
+  .compact-search-bar {
+    padding: 9px 14px;
   }
 
-  .tool-row {
+  .compact-line {
     grid-template-columns: 40px minmax(0, 1fr) auto;
     gap: 7px;
   }
@@ -1855,18 +1887,15 @@ def build_area_page(posts_by_source, updated_at):
   data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + type_label + ' ' + post.get("summary", ""))}"
 >
   <div class="timeline-head">
-    <div>
-      <div class="timeline-store">{h(post["shop_name"])}</div>
-      <div class="timeline-meta">更新：{h(update_label)}</div>
-    </div>
-    <div class="timeline-type">{h(type_label)}</div>
+    <div class="timeline-store">{h(post["shop_name"])}</div>
+    <div class="timeline-meta">更新：{h(update_label)}<span class="timeline-type">{h(type_label)}</span></div>
   </div>
 
 {image_html}
 
   <div class="timeline-actions">
     <button type="button" onclick="openTimelineMedia('{h(media_id)}')">拡大</button>
-    <a href="stores/{h(post["shop_slug"])}.html">店舗ページ</a>
+    <a href="stores/{h(post["shop_slug"])}.html">店舗</a>
     <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
   </div>
 </article>
@@ -1918,13 +1947,13 @@ def build_area_page(posts_by_source, updated_at):
 """
 
     type_buttons = """
-<button class="filter-chip active" onclick="toggleType('all', this)">すべて</button>
+<button class="filter-chip active" data-type="all" onclick="toggleType('all', this)">すべて</button>
 """
 
     for type_key in TYPE_ORDER:
         meta = TYPE_META[type_key]
         type_buttons += f"""
-<button class="filter-chip" onclick="toggleType('{h(type_key)}', this)">{h(short_type_label(meta["label"]))}</button>
+<button class="filter-chip" data-type="{h(type_key)}" onclick="toggleType('{h(type_key)}', this)">{h(short_type_label(meta["label"]))}</button>
 """
 
     brand_buttons = ""
@@ -1955,11 +1984,10 @@ def build_area_page(posts_by_source, updated_at):
     <div class="updated">LAST UPDATE : {h(updated_at)}</div>
   </section>
 
-  <div class="sticky-search" id="stickySearch">
-    <div class="tool-row">
-      <button class="tool-button menu-button" type="button" aria-label="メニュー" onclick="openMenu()">☰</button>
-      <input id="searchInput" class="compact-search" type="search" placeholder="店舗・カード名で検索">
-      <div class="result-line">表示中：<span id="resultCount">0</span>件</div>
+  <div class="search-area" id="searchArea">
+    <div class="search-line">
+      <input id="searchInput" class="search-input" type="search" placeholder="店舗・カード名で検索">
+      <div class="result-line">表示中：<span class="result-count">0</span>件</div>
     </div>
 
     <div class="type-row">
@@ -1988,6 +2016,17 @@ def build_area_page(posts_by_source, updated_at):
       <div class="support-quick-links">
         {support_quick_links}
       </div>
+    </div>
+  </div>
+
+  <div class="compact-search-bar" id="compactSearchBar">
+    <div class="compact-line">
+      <button class="tool-button menu-button" type="button" aria-label="メニュー" onclick="openMenu()">☰</button>
+      <input id="compactSearchInput" class="search-input" type="search" placeholder="検索">
+      <div class="result-line"><span class="result-count">0</span>件</div>
+    </div>
+    <div class="type-row compact-type-row">
+      {type_buttons}
     </div>
   </div>
 
@@ -2065,7 +2104,7 @@ function closeMenu(event) {{
 }}
 
 function toggleFilters() {{
-  document.getElementById("stickySearch").classList.toggle("filters-open");
+  document.getElementById("searchArea").classList.toggle("filters-open");
 }}
 
 function openTimelineMedia(id) {{
@@ -2081,18 +2120,23 @@ function closeTimelineMedia() {{
   document.getElementById("timelineMediaModal").classList.remove("open");
 }}
 
+function syncTypeButtons() {{
+  document.querySelectorAll(".type-row .filter-chip").forEach(btn => {{
+    const type = btn.dataset.type;
+    btn.classList.toggle("active", selectedTypes.size === 0 ? type === "all" : selectedTypes.has(type));
+  }});
+}}
+
 function toggleType(type, button) {{
   if (type === "all") {{
     selectedTypes.clear();
-    document.querySelectorAll(".type-row .filter-chip").forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
-    applyFilters();
-    return;
+  }} else if (selectedTypes.has(type)) {{
+    selectedTypes.delete(type);
+  }} else {{
+    selectedTypes.add(type);
   }}
-  document.querySelector(".type-row .filter-chip").classList.remove("active");
-  if (selectedTypes.has(type)) {{ selectedTypes.delete(type); button.classList.remove("active"); }}
-  else {{ selectedTypes.add(type); button.classList.add("active"); }}
-  if (selectedTypes.size === 0) document.querySelector(".type-row .filter-chip").classList.add("active");
+
+  syncTypeButtons();
   applyFilters();
 }}
 
@@ -2105,9 +2149,9 @@ function toggleBrand(brand, button) {{
 function resetFilters() {{
   selectedTypes.clear();
   selectedBrands.clear();
-  document.getElementById("searchInput").value = "";
+  document.querySelectorAll(".search-input").forEach(input => input.value = "");
   document.querySelectorAll(".filter-chip").forEach(btn => btn.classList.remove("active"));
-  document.querySelector(".type-row .filter-chip").classList.add("active");
+  syncTypeButtons();
   applyFilters();
 }}
 
@@ -2145,7 +2189,7 @@ function matchesItem(item, search) {{
 
 function updateResultCount() {{
   const count = Array.from(document.querySelectorAll(".timeline-post")).filter(post => !post.classList.contains("hidden")).length;
-  document.getElementById("resultCount").textContent = count;
+  document.querySelectorAll(".result-count").forEach(el => el.textContent = count);
 }}
 
 function applyFilters() {{
@@ -2160,12 +2204,24 @@ document.addEventListener("keydown", event => {{
   if (event.key === "Escape") closeMenu();
 }});
 
+function syncSearchInputs(source) {{
+  document.querySelectorAll(".search-input").forEach(input => {{
+    if (input !== source) input.value = source.value;
+  }});
+}}
+
 document.addEventListener("DOMContentLoaded", () => {{
-  document.getElementById("searchInput").addEventListener("input", applyFilters);
+  document.querySelectorAll(".search-input").forEach(input => {{
+    input.addEventListener("input", () => {{
+      syncSearchInputs(input);
+      applyFilters();
+    }});
+  }});
   document.getElementById("sortSelect").addEventListener("change", event => setSort(event.target.value));
   window.addEventListener("scroll", () => {{
-    document.getElementById("stickySearch").classList.toggle("search-visible", window.scrollY > 180);
+    document.getElementById("compactSearchBar").classList.toggle("search-visible", window.scrollY >= 160);
   }}, {{ passive: true }});
+  syncTypeButtons();
   sortTimeline();
   applyFilters();
 }});
