@@ -978,9 +978,9 @@ a {
 }
 
 .sticky-search {
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  position: static;
+  top: auto;
+  z-index: auto;
   background: rgba(5,5,5,.92);
   backdrop-filter: blur(18px);
   border-top: 1px solid rgba(255,255,255,.08);
@@ -1057,8 +1057,9 @@ a {
 }
 
 .search-area {
-  position: relative;
-  z-index: 10;
+  position: static;
+  top: auto;
+  z-index: auto;
 }
 
 .compact-search-bar {
@@ -1073,8 +1074,7 @@ a {
   transition: transform .18s ease, opacity .18s ease;
 }
 
-.compact-search-bar.search-visible,
-.compact-search-bar:focus-within {
+.compact-search-bar.search-visible {
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
@@ -2404,9 +2404,11 @@ document.addEventListener("DOMContentLoaded", () => {{
     }});
   }});
   document.getElementById("sortSelect").addEventListener("change", event => setSort(event.target.value));
-  window.addEventListener("scroll", () => {{
-    document.getElementById("compactSearchBar").classList.toggle("search-visible", window.scrollY >= 160);
-  }}, {{ passive: true }});
+  const updateCompactSearchBar = () => {{
+    document.getElementById("compactSearchBar").classList.toggle("search-visible", window.scrollY > 160);
+  }};
+  window.addEventListener("scroll", updateCompactSearchBar, {{ passive: true }});
+  updateCompactSearchBar();
   syncTypeButtons();
   sortTimeline();
   applyFilters();
