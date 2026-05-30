@@ -2911,10 +2911,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   document.getElementById("sortSelect").addEventListener("change", event => setSort(event.target.value));
+  const compactSearchBar = document.getElementById("compactSearchBar");
+  let lastScrollY = window.scrollY;
   const updateCompactSearchBar = () => {
-    document.getElementById("compactSearchBar").classList.toggle("search-visible", window.scrollY > 160);
+    const currentY = window.scrollY;
+    const isNearTop = currentY < 160;
+    const isScrollingUp = currentY < lastScrollY;
+    const isFocused = compactSearchBar.contains(document.activeElement);
+    const shouldShow = !isNearTop && (isScrollingUp || isFocused);
+    compactSearchBar.classList.toggle("search-visible", shouldShow);
+    lastScrollY = currentY;
   };
   window.addEventListener("scroll", updateCompactSearchBar, { passive: true });
+  compactSearchBar.addEventListener("focusin", updateCompactSearchBar);
+  compactSearchBar.addEventListener("focusout", () => setTimeout(updateCompactSearchBar, 0));
   updateCompactSearchBar();
   syncTypeButtons();
   sortTimeline();
