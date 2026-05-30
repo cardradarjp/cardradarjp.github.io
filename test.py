@@ -2267,6 +2267,15 @@ def build_area_page(posts_by_source, updated_at):
             type_label = short_type_label(display_type)
             media_id = f'timeline_{post.get("source_id", "post")}_{post.get("status_id", 0)}'
             image_count = len(image_urls)
+            store_image_buttons = []
+            for image_index, image_url in enumerate(image_urls):
+                store_image_buttons.append(f"""
+        <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}', {image_index})">
+          <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
+          <span class="zoom-badge">拡大</span>
+          <span class="image-count">画像 {image_index + 1} / {image_count}</span>
+        </button>
+""")
 
             store_post_cards += f"""
       <article class="store-post-card"
@@ -2277,11 +2286,9 @@ def build_area_page(posts_by_source, updated_at):
         data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + type_label + ' ' + post.get("summary", ""))}"
       >
         <div class="store-post-meta">{h(type_label)} / 画像 {image_count}枚</div>
-        <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}', 0)">
-          <img src="{h(image_urls[0])}" alt="{h(post["shop_name"])}の買取表画像" loading="lazy">
-          <span class="zoom-badge">拡大</span>
-          <span class="image-count">画像 1 / {image_count}</span>
-        </button>
+        <div class="timeline-images">
+{''.join(store_image_buttons)}
+        </div>
         <div class="store-post-actions">
           <button type="button" onclick="openTimelineMedia('{h(media_id)}', 0)">拡大</button>
           <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
@@ -2679,12 +2686,20 @@ function matchesItem(item, search) {{
   return typeOk && brandOk && searchOk;
 }}
 
+function isVisibleResultCard(card) {{
+  if (!card) return false;
+  if (card.classList.contains("hidden")) return false;
+  if (card.closest(".view-panel.hidden")) return false;
+  if (card.closest(".store-group.hidden")) return false;
+  return !!(card.offsetWidth || card.offsetHeight || card.getClientRects().length);
+}}
+
 function getVisibleTimelineCards() {{
   const list = document.getElementById("timelineList");
   if (!list) return [];
   return Array.from(list.querySelectorAll(":scope > .timeline-post")).filter(card => {{
     if (card.classList.contains("hidden")) return false;
-    return window.getComputedStyle(card).display !== "none";
+    return isVisibleResultCard(card);
   }});
 }}
 
@@ -2695,7 +2710,7 @@ function getVisibleStorePostCards() {{
     if (card.classList.contains("hidden")) return false;
     const group = card.closest(".store-group");
     if (group && group.classList.contains("hidden")) return false;
-    return window.getComputedStyle(card).display !== "none";
+    return isVisibleResultCard(card);
   }});
 }}
 
