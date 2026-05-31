@@ -1340,7 +1340,9 @@ a {
 
 .timeline-image {
   position: relative;
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   width: 100%;
   background: rgba(255,255,255,.045);
   border: 1px solid rgba(255,255,255,.12);
@@ -1351,6 +1353,7 @@ a {
 
 .timeline-image img {
   width: 100%;
+  flex: 0 0 100%;
   display: block;
 }
 
@@ -1368,6 +1371,7 @@ a {
 
 .landscape-split {
   display: none;
+  flex: 0 0 100%;
 }
 
 .landscape-slice {
@@ -1387,26 +1391,21 @@ a {
 }
 
 .landscape-slice-label {
-  position: absolute;
-  left: 8px;
-  top: 8px;
-  z-index: 2;
+  display: inline-block;
   background: rgba(0,0,0,.74);
   border: 1px solid rgba(255,255,255,.22);
   color: rgba(255,255,255,.88);
+  margin: 0 0 6px;
   padding: 5px 8px;
   font-size: 12px;
 }
 
 .landscape-hint {
   display: none;
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  z-index: 2;
   background: rgba(0,0,0,.74);
   border: 1px solid rgba(255,255,255,.24);
   color: rgba(255,255,255,.9);
+  margin: 6px 0 0 6px;
   padding: 5px 8px;
   font-size: 12px;
 }
@@ -1416,12 +1415,12 @@ a {
 }
 
 .zoom-badge {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+  position: static;
+  display: inline-block;
   background: rgba(0,0,0,.74);
   border: 1px solid rgba(255,255,255,.24);
   color: white;
+  margin: 6px 0 0 6px;
   padding: 5px 8px;
   font-size: 12px;
 }
@@ -1558,12 +1557,12 @@ a {
 .simple-store-date { color: rgba(255,255,255,.58); font-size: 12px; white-space: nowrap; }
 
 .image-count {
-  position: absolute;
-  left: 8px;
-  bottom: 8px;
+  position: static;
+  display: inline-block;
   background: rgba(0,0,0,.72);
   border: 1px solid rgba(255,255,255,.22);
   color: white;
+  margin: 6px 0 0 6px;
   padding: 5px 8px;
   font-size: 12px;
 }
