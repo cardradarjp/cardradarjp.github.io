@@ -491,6 +491,47 @@ a {
   scroll-snap-align: start;
 }
 
+.scroll-aware {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.22) rgba(255,255,255,.06);
+}
+
+.scroll-aware.can-scroll-left {
+  box-shadow: inset 18px 0 18px -18px rgba(255,255,255,.32);
+}
+
+.scroll-aware.can-scroll-right {
+  box-shadow: inset -18px 0 18px -18px rgba(255,255,255,.32);
+}
+
+.scroll-aware.can-scroll-left.can-scroll-right {
+  box-shadow:
+    inset 18px 0 18px -18px rgba(255,255,255,.32),
+    inset -18px 0 18px -18px rgba(255,255,255,.32);
+}
+
+.scroll-progress {
+  display: none;
+  width: max-content;
+  margin: 6px 0 0 6px;
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.055);
+  color: rgba(255,255,255,.72);
+  font-size: 11px;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.scroll-progress.is-visible {
+  display: inline-block;
+}
+
+.store-post-strip + .scroll-progress,
+.store-post-image-list + .scroll-progress {
+  margin: 6px 0 0;
+}
+
 .timeline-image {
   position: relative;
   display: flex;
@@ -1405,6 +1446,7 @@ function markLandscapeImage(img) {
   target.classList.toggle("is-landscape", isLandscape);
   if (isLandscape) renderLandscapeSplit(target, img);
   else target.querySelector(".landscape-split")?.remove();
+  setupScrollIndicators(target);
 }
 
 function renderLandscapeSplit(target, img) {
@@ -1430,6 +1472,67 @@ function bindLandscapeImages(root = document) {
   root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {
     img.addEventListener("load", () => markLandscapeImage(img));
     if (img.complete) markLandscapeImage(img);
+  });
+}
+
+function getScrollIndicatorHost(el) {
+  if (el.matches(".store-post-strip, .store-post-image-list")) return el.parentElement || el;
+  return el;
+}
+
+function ensureScrollIndicator(el) {
+  const host = getScrollIndicatorHost(el);
+  let indicator = el.dataset.scrollIndicatorId
+    ? document.getElementById(el.dataset.scrollIndicatorId)
+    : null;
+  if (!indicator) {
+    indicator = document.createElement("span");
+    indicator.className = "scroll-progress";
+    indicator.id = `scrollIndicator_${Math.random().toString(36).slice(2)}`;
+    el.dataset.scrollIndicatorId = indicator.id;
+    if (el.matches(".store-post-strip, .store-post-image-list")) {
+      el.insertAdjacentElement("afterend", indicator);
+    } else {
+      host.appendChild(indicator);
+    }
+  }
+  return indicator;
+}
+
+function updateScrollIndicator(el) {
+  if (!el || !el.isConnected) return;
+  const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+  const canScroll = maxScroll > 4;
+  el.classList.toggle("scroll-aware", canScroll);
+  el.classList.toggle("can-scroll-left", canScroll && el.scrollLeft > 4);
+  el.classList.toggle("can-scroll-right", canScroll && el.scrollLeft < maxScroll - 4);
+  const indicator = ensureScrollIndicator(el);
+  indicator.classList.toggle("is-visible", canScroll);
+  if (!canScroll) return;
+  const total = Math.max(2, Math.ceil(el.scrollWidth / Math.max(el.clientWidth, 1)));
+  const current = Math.min(total, Math.max(1, Math.round((el.scrollLeft / Math.max(maxScroll, 1)) * (total - 1)) + 1));
+  indicator.textContent = `${current} / ${total}`;
+}
+
+function setupScrollIndicators(root = document) {
+  const scope = root instanceof Element ? root : document;
+  const targets = new Set();
+  if (scope.matches?.(".store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split")) targets.add(scope);
+  scope.querySelectorAll?.(".store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split").forEach(el => targets.add(el));
+  targets.forEach(el => {
+    if (!el.dataset.scrollAwareBound) {
+      el.dataset.scrollAwareBound = "1";
+      let ticking = false;
+      el.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          updateScrollIndicator(el);
+        });
+      }, { passive: true });
+    }
+    requestAnimationFrame(() => updateScrollIndicator(el));
   });
 }
 
@@ -1477,6 +1580,7 @@ function loadTweetEmbed() {
 
 document.addEventListener("DOMContentLoaded", () => {
   bindLandscapeImages();
+  setupScrollIndicators();
 });
 </script>
 

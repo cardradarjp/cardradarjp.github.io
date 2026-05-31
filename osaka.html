@@ -491,6 +491,47 @@ a {
   scroll-snap-align: start;
 }
 
+.scroll-aware {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.22) rgba(255,255,255,.06);
+}
+
+.scroll-aware.can-scroll-left {
+  box-shadow: inset 18px 0 18px -18px rgba(255,255,255,.32);
+}
+
+.scroll-aware.can-scroll-right {
+  box-shadow: inset -18px 0 18px -18px rgba(255,255,255,.32);
+}
+
+.scroll-aware.can-scroll-left.can-scroll-right {
+  box-shadow:
+    inset 18px 0 18px -18px rgba(255,255,255,.32),
+    inset -18px 0 18px -18px rgba(255,255,255,.32);
+}
+
+.scroll-progress {
+  display: none;
+  width: max-content;
+  margin: 6px 0 0 6px;
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.055);
+  color: rgba(255,255,255,.72);
+  font-size: 11px;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.scroll-progress.is-visible {
+  display: inline-block;
+}
+
+.store-post-strip + .scroll-progress,
+.store-post-image-list + .scroll-progress {
+  margin: 6px 0 0;
+}
+
 .timeline-image {
   position: relative;
   display: flex;
