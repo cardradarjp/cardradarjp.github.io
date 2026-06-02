@@ -657,8 +657,8 @@ def display_type_label(display_type):
     return short_type_label(TYPE_META.get(display_type, TYPE_META["x_post_single"])["label"])
 
 
-def is_non_pokemon_post(post):
-    text = " ".join([
+def display_filter_text(post):
+    return " ".join([
         str(post.get("full_text", "")),
         str(post.get("text", "")),
         str(post.get("summary", "")),
@@ -668,6 +668,10 @@ def is_non_pokemon_post(post):
         str(post.get("shop_name", "")),
         str(post.get("brand", "")),
     ])
+
+
+def is_non_pokemon_post(post):
+    text = display_filter_text(post)
 
     pokemon_words = ["ポケカ", "ポケモンカード", "ポケモン", "Pokemon", "Pokémon", "ポケットモンスター"]
     non_pokemon_words = [
@@ -691,8 +695,32 @@ def is_non_pokemon_post(post):
     return contains_any(text, non_pokemon_words)
 
 
+def is_non_buy_notice_post(post):
+    text = display_filter_text(post)
+    buy_check_text = " ".join([
+        str(post.get("full_text", "")),
+        str(post.get("text", "")),
+        str(post.get("summary", "")),
+        str(post.get("shop_name", "")),
+        str(post.get("brand", "")),
+    ]).replace("買取受付時間", "").replace("買取受付", "")
+    notice_words = [
+        "営業時間", "営業案内", "営業日", "休業", "臨時休業", "定休日",
+        "開店", "閉店", "本日の営業時間", "年末年始", "棚卸",
+        "大会", "イベント", "入荷", "販売", "抽選", "予約", "受付中",
+    ]
+    buy_words = [
+        "買取", "高価買取", "買取表", "WANTED", "募集", "最低保証",
+        "定額", "一律", "まとめ買取", "PSA買取", "BOX買取",
+    ]
+    return contains_any(text, notice_words) and not contains_any(buy_check_text, buy_words)
+
+
 def filter_display_posts(posts):
-    return [post for post in posts if not is_non_pokemon_post(post)]
+    return [
+        post for post in posts
+        if not is_non_pokemon_post(post) and not is_non_buy_notice_post(post)
+    ]
 
 
 def count_non_pokemon_exclusions(posts_by_source):
@@ -701,6 +729,18 @@ def count_non_pokemon_exclusions(posts_by_source):
         for raw_post in source_posts:
             post = normalize_post(raw_post)
             if not is_non_pokemon_post(post):
+                continue
+            key = post.get("tweet_url") or post.get("status_id") or id(raw_post)
+            excluded_keys.add(key)
+    return len(excluded_keys)
+
+
+def count_notice_exclusions(posts_by_source):
+    excluded_keys = set()
+    for source_posts in posts_by_source.values():
+        for raw_post in source_posts:
+            post = normalize_post(raw_post)
+            if is_non_pokemon_post(post) or not is_non_buy_notice_post(post):
                 continue
             key = post.get("tweet_url") or post.get("status_id") or id(raw_post)
             excluded_keys.add(key)
@@ -825,7 +865,7 @@ def get_timeline_posts(posts_by_source, area_id):
             post = normalize_post(raw_post)
             if post.get("area_id") != area_id:
                 continue
-            if is_non_pokemon_post(post):
+            if is_non_pokemon_post(post) or is_non_buy_notice_post(post):
                 continue
             if not post.get("tweet_url"):
                 continue
@@ -3961,7 +4001,9 @@ def write_file(path, content):
 
 def build_all_pages(posts_by_source, updated_at):
     excluded_count = count_non_pokemon_exclusions(posts_by_source)
+    notice_excluded_count = count_notice_exclusions(posts_by_source)
     print(f"ポケカ外として除外：{excluded_count}件")
+    print(f"お知らせ系として除外：{notice_excluded_count}件")
 
     write_file("index.html", build_index_page(updated_at))
     write_file("osaka.html", build_osaka_page(updated_at))
