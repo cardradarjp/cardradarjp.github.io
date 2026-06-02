@@ -665,10 +665,11 @@ def is_non_pokemon_post(post):
         str(post.get("buy_type_label", "")),
         str(post.get("type_label", "")),
         str(post.get("display_type_label", "")),
+        str(post.get("shop_name", "")),
+        str(post.get("brand", "")),
     ])
 
-    pokemon_words = ["ポケカ", "ポケモンカード", "ポケモン", "Pokémon", "Pokemon", "シングル", "買取表"]
-    pokemon_short_words = ["SV", "SAR", "SR", "AR", "RR", "RRR", "PSA", "BOX"]
+    pokemon_words = ["ポケカ", "ポケモンカード", "ポケモン", "Pokemon", "Pokémon", "ポケットモンスター"]
     non_pokemon_words = [
         "遊戯王", "遊戯王OCG", "YU-GI-OH", "ユギオウ",
         "ワンピースカード", "ONE PIECE CARD",
@@ -678,15 +679,14 @@ def is_non_pokemon_post(post):
         "ユニオンアリーナ", "UNION ARENA",
         "ドラゴンボールカード", "DBFW",
     ]
+    hard_non_pokemon_words = [
+        # X本文に #ポケカ が混ざっていても、カード名から別TCGと分かるものだけを落とす。
+        "雙王の械", "闇の眼を持つ幻想師", "トゥーンのもくじ",
+    ]
 
-    has_pokemon_word = contains_any(text, pokemon_words)
-    upper_text = text.upper()
-    has_pokemon_short_word = any(
-        re.search(rf"(?<![A-Z0-9]){re.escape(word)}(?![A-Z0-9])", upper_text)
-        for word in pokemon_short_words
-    )
-
-    if has_pokemon_word or has_pokemon_short_word:
+    if contains_any(text, hard_non_pokemon_words):
+        return True
+    if contains_any(text, pokemon_words):
         return False
     return contains_any(text, non_pokemon_words)
 
