@@ -1544,6 +1544,27 @@ main {
 const MEDIA_ITEMS = {"kuro-single_2060572284905984352_0": {"image_url": "https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&name=large", "tweet_url": "https://x.com/kuro_tcg/status/2060572284905984352", "summary": "トレカショップKURO大阪日本橋店 3時間 本日5月30日（土）の買取価格はこちら 新弾ポケカ アビスアイ BOXシュリンクあり 14,600円 BOXシュリンクなし 12,600円 カートン【未開封】179,000円 パック 140円 新弾BOXは大きな凹み、シュリンク破れ以外の減額なし みなさまのご来店お待ちしております 5 3,775", "type_label": "BOX"}, "kuro-box_2060209075909267756_1": {"image_url": "https://pbs.twimg.com/media/HJdVO_EaYAA3tWn?format=jpg&name=large", "tweet_url": "https://x.com/kuro_tcg/status/2060209075909267756", "summary": "トレカショップKURO大阪日本橋店 5月29日 本日5月29日（水）の買取価格はこちら 新弾ポケカ アビスアイ BOXシュリンクあり 15,600円 BOXシュリンクなし 13,000円 カートン【未開封】189,000円 パック 140円 新弾BOXは大きな凹み、シュリンク破れ以外の減額なし みなさまのご来店お待ちしております 6 4,330", "type_label": "BOX"}, "kuro-single_2060571930927788088_0": {"image_url": "https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&name=360x360", "tweet_url": "https://x.com/kuro_tcg/status/2060571930927788088", "summary": "トレカショップKURO大阪日本橋店 3時間 【5/30ポケカ買取価格】 本日銀行振込のみ アビスアイ：14600 ニンジャスピナー：11000 ムニキスゼロ：8000 メガドリームex：15800 インフェルノX：24000 メガブレイブ：11600 メガシンフォニア：10000 ブラックボルト：19000 ホワイトフレア：18500 ブラックボルト 4 4,378", "type_label": "シングル"}, "kuro-single_2060571930927788088_1": {"image_url": "https://pbs.twimg.com/media/HJifP21boAALxJi?format=jpg&name=360x360", "tweet_url": "https://x.com/kuro_tcg/status/2060571930927788088", "summary": "トレカショップKURO大阪日本橋店 3時間 【5/30ポケカ買取価格】 本日銀行振込のみ アビスアイ：14600 ニンジャスピナー：11000 ムニキスゼロ：8000 メガドリームex：15800 インフェルノX：24000 メガブレイブ：11600 メガシンフォニア：10000 ブラックボルト：19000 ホワイトフレア：18500 ブラックボルト 4 4,378", "type_label": "シングル"}};
 let currentTweetUrl = "";
 
+function getHighResImageUrl(url) {
+  if (!url || !url.includes("pbs.twimg.com/media/")) return url;
+  try {
+    const parsed = new URL(url, window.location.href);
+    parsed.searchParams.set("name", "orig");
+    return parsed.toString();
+  } catch (e) {
+    return url
+      .replace("name=small", "name=orig")
+      .replace("name=medium", "name=orig")
+      .replace("name=large", "name=orig");
+  }
+}
+
+function upgradeImageElement(img) {
+  if (!img) return "";
+  const highResUrl = getHighResImageUrl(img.getAttribute("src") || img.src);
+  if (highResUrl && highResUrl !== img.src) img.src = highResUrl;
+  return highResUrl;
+}
+
 function markLandscapeImage(img) {
   if (!img || !img.naturalWidth || !img.naturalHeight) return;
   const ratio = img.naturalWidth / img.naturalHeight;
@@ -1602,6 +1623,7 @@ function renderLandscapeModeSwitch(target, mode) {
 function renderLandscapeView(target, img) {
   const mode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
+  const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
@@ -1621,19 +1643,19 @@ function renderLandscapeView(target, img) {
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
       <span class="landscape-slice-label">左上</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-top-right">
       <span class="landscape-slice-label">右上</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-left">
       <span class="landscape-slice-label">左下</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-right">
       <span class="landscape-slice-label">右下</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
   `;
     return;
@@ -1642,17 +1664,18 @@ function renderLandscapeView(target, img) {
   split.innerHTML = `
     <div class="landscape-slice is-left">
       <span class="landscape-slice-label">左半分</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-right">
       <span class="landscape-slice-label">右半分</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
   `;
 }
 
 function bindLandscapeImages(root = document) {
   root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {
+    upgradeImageElement(img);
     img.addEventListener("load", () => markLandscapeImage(img));
     if (img.complete) markLandscapeImage(img);
   });
@@ -1728,12 +1751,13 @@ function openMedia(id) {
 
   const modalImage = document.getElementById("modalImage");
   const modalWrap = document.getElementById("modalImageWrap");
+  const imageUrl = getHighResImageUrl(item.image_url);
   if (modalWrap) modalWrap.classList.remove("is-landscape");
-  modalImage.src = item.image_url;
+  modalImage.src = imageUrl;
   modalImage.onload = () => markLandscapeImage(modalImage);
   if (modalImage.complete) markLandscapeImage(modalImage);
   document.getElementById("modalSummary").textContent = item.summary;
-  document.getElementById("modalImageLink").href = item.image_url;
+  document.getElementById("modalImageLink").href = imageUrl;
   document.getElementById("modalTweetLink").href = item.tweet_url;
   document.getElementById("tweetEmbed").innerHTML = "";
 

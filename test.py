@@ -2861,7 +2861,7 @@ function toggleStorePanel() {{
 function renderTimelineMedia() {{
   if (!currentMediaItem) return;
   const images = currentMediaItem.image_urls || [];
-  const image = images[currentMediaIndex];
+  const image = getHighResImageUrl(images[currentMediaIndex]);
   const modalImage = document.getElementById("timelineModalImage");
   const modalWrap = document.getElementById("timelineModalImageWrap");
 
@@ -2894,6 +2894,27 @@ function showTimelineImage(step) {{
 
 function closeTimelineMedia() {{
   document.getElementById("timelineMediaModal").classList.remove("open");
+}}
+
+function getHighResImageUrl(url) {{
+  if (!url || !url.includes("pbs.twimg.com/media/")) return url;
+  try {{
+    const parsed = new URL(url, window.location.href);
+    parsed.searchParams.set("name", "orig");
+    return parsed.toString();
+  }} catch (e) {{
+    return url
+      .replace("name=small", "name=orig")
+      .replace("name=medium", "name=orig")
+      .replace("name=large", "name=orig");
+  }}
+}}
+
+function upgradeImageElement(img) {{
+  if (!img) return "";
+  const highResUrl = getHighResImageUrl(img.getAttribute("src") || img.src);
+  if (highResUrl && highResUrl !== img.src) img.src = highResUrl;
+  return highResUrl;
 }}
 
 function markLandscapeImage(img) {{
@@ -2954,6 +2975,7 @@ function renderLandscapeModeSwitch(target, mode) {{
 function renderLandscapeView(target, img) {{
   const mode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
+  const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
@@ -2973,19 +2995,19 @@ function renderLandscapeView(target, img) {{
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
       <span class="landscape-slice-label">左上</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-top-right">
       <span class="landscape-slice-label">右上</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-left">
       <span class="landscape-slice-label">左下</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-right">
       <span class="landscape-slice-label">右下</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
   `;
     return;
@@ -2994,17 +3016,18 @@ function renderLandscapeView(target, img) {{
   split.innerHTML = `
     <div class="landscape-slice is-left">
       <span class="landscape-slice-label">左半分</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-right">
       <span class="landscape-slice-label">右半分</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
   `;
 }}
 
 function bindLandscapeImages(root = document) {{
   root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {{
+    upgradeImageElement(img);
     img.addEventListener("load", () => markLandscapeImage(img));
     if (img.complete) markLandscapeImage(img);
   }});
@@ -3417,6 +3440,27 @@ def build_store_page(shop, posts_by_source, updated_at):
 const MEDIA_ITEMS = {media_json};
 let currentTweetUrl = "";
 
+function getHighResImageUrl(url) {{
+  if (!url || !url.includes("pbs.twimg.com/media/")) return url;
+  try {{
+    const parsed = new URL(url, window.location.href);
+    parsed.searchParams.set("name", "orig");
+    return parsed.toString();
+  }} catch (e) {{
+    return url
+      .replace("name=small", "name=orig")
+      .replace("name=medium", "name=orig")
+      .replace("name=large", "name=orig");
+  }}
+}}
+
+function upgradeImageElement(img) {{
+  if (!img) return "";
+  const highResUrl = getHighResImageUrl(img.getAttribute("src") || img.src);
+  if (highResUrl && highResUrl !== img.src) img.src = highResUrl;
+  return highResUrl;
+}}
+
 function markLandscapeImage(img) {{
   if (!img || !img.naturalWidth || !img.naturalHeight) return;
   const ratio = img.naturalWidth / img.naturalHeight;
@@ -3475,6 +3519,7 @@ function renderLandscapeModeSwitch(target, mode) {{
 function renderLandscapeView(target, img) {{
   const mode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
+  const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
@@ -3494,19 +3539,19 @@ function renderLandscapeView(target, img) {{
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
       <span class="landscape-slice-label">左上</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-top-right">
       <span class="landscape-slice-label">右上</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-left">
       <span class="landscape-slice-label">左下</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-right">
       <span class="landscape-slice-label">右下</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
   `;
     return;
@@ -3515,17 +3560,18 @@ function renderLandscapeView(target, img) {{
   split.innerHTML = `
     <div class="landscape-slice is-left">
       <span class="landscape-slice-label">左半分</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-right">
       <span class="landscape-slice-label">右半分</span>
-      <span class="landscape-slice-frame"><img src="${{img.currentSrc || img.src}}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
   `;
 }}
 
 function bindLandscapeImages(root = document) {{
   root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {{
+    upgradeImageElement(img);
     img.addEventListener("load", () => markLandscapeImage(img));
     if (img.complete) markLandscapeImage(img);
   }});
@@ -3601,12 +3647,13 @@ function openMedia(id) {{
 
   const modalImage = document.getElementById("modalImage");
   const modalWrap = document.getElementById("modalImageWrap");
+  const imageUrl = getHighResImageUrl(item.image_url);
   if (modalWrap) modalWrap.classList.remove("is-landscape");
-  modalImage.src = item.image_url;
+  modalImage.src = imageUrl;
   modalImage.onload = () => markLandscapeImage(modalImage);
   if (modalImage.complete) markLandscapeImage(modalImage);
   document.getElementById("modalSummary").textContent = item.summary;
-  document.getElementById("modalImageLink").href = item.image_url;
+  document.getElementById("modalImageLink").href = imageUrl;
   document.getElementById("modalTweetLink").href = item.tweet_url;
   document.getElementById("tweetEmbed").innerHTML = "";
 

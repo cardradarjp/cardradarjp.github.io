@@ -1544,6 +1544,27 @@ main {
 const MEDIA_ITEMS = {"ds-dora2-single_2060557357357154600_0": {"image_url": "https://pbs.twimg.com/media/HJiR_mvWUAgUkHY?format=jpg&name=large", "tweet_url": "https://x.com/ds_nipponbashi2/status/2060557357357154600", "summary": "ドラゴンスター日本橋2号店 4時間 #ポケモンカード SR買取最低保証パワーアップ 5/30(土)〜5/31(日)の2日間限定！！ 買取最低保証 SR → 円 今週末はドラゴンスターがアツい 眠っているSRカード、まとめてお持ち込み大歓迎です 「これも対象かな？」というカードもぜひお持ちください 1,560", "type_label": "定額"}, "ds-dora2-single_2060551488787616221_0": {"image_url": "https://pbs.twimg.com/media/HJiMp0AXIAEapdc?format=jpg&name=large", "tweet_url": "https://x.com/ds_nipponbashi2/status/2060551488787616221", "summary": "ドラゴンスター日本橋2号店 4時間 ドラ スタ #ポケカ 2号店 ORA2! WANTED 数量限定 買取表更新ダ 雙王の械(ｼｰｸﾚｯﾄ) ￥800買取 闇の眼を持つ幻想師･ﾉｰ･ﾌｪｲｽ(ｼｰｸﾚｯﾄ) ￥1,000買取 ﾄｩｰﾝのもくじ(ｼｰｸﾚｯﾄ) ￥1,400買取 3 3,539", "type_label": "シングル"}, "ds-dora2-single_2060551488787616221_1": {"image_url": "https://pbs.twimg.com/media/HJiMqAnWgAExnxB?format=jpg&name=large", "tweet_url": "https://x.com/ds_nipponbashi2/status/2060551488787616221", "summary": "ドラゴンスター日本橋2号店 4時間 ドラ スタ #ポケカ 2号店 ORA2! WANTED 数量限定 買取表更新ダ 雙王の械(ｼｰｸﾚｯﾄ) ￥800買取 闇の眼を持つ幻想師･ﾉｰ･ﾌｪｲｽ(ｼｰｸﾚｯﾄ) ￥1,000買取 ﾄｩｰﾝのもくじ(ｼｰｸﾚｯﾄ) ￥1,400買取 3 3,539", "type_label": "シングル"}, "ds-dora2-single_2060551488787616221_2": {"image_url": "https://pbs.twimg.com/media/HJiMqLwWQAEM8zh?format=jpg&name=large", "tweet_url": "https://x.com/ds_nipponbashi2/status/2060551488787616221", "summary": "ドラゴンスター日本橋2号店 4時間 ドラ スタ #ポケカ 2号店 ORA2! WANTED 数量限定 買取表更新ダ 雙王の械(ｼｰｸﾚｯﾄ) ￥800買取 闇の眼を持つ幻想師･ﾉｰ･ﾌｪｲｽ(ｼｰｸﾚｯﾄ) ￥1,000買取 ﾄｩｰﾝのもくじ(ｼｰｸﾚｯﾄ) ￥1,400買取 3 3,539", "type_label": "シングル"}};
 let currentTweetUrl = "";
 
+function getHighResImageUrl(url) {
+  if (!url || !url.includes("pbs.twimg.com/media/")) return url;
+  try {
+    const parsed = new URL(url, window.location.href);
+    parsed.searchParams.set("name", "orig");
+    return parsed.toString();
+  } catch (e) {
+    return url
+      .replace("name=small", "name=orig")
+      .replace("name=medium", "name=orig")
+      .replace("name=large", "name=orig");
+  }
+}
+
+function upgradeImageElement(img) {
+  if (!img) return "";
+  const highResUrl = getHighResImageUrl(img.getAttribute("src") || img.src);
+  if (highResUrl && highResUrl !== img.src) img.src = highResUrl;
+  return highResUrl;
+}
+
 function markLandscapeImage(img) {
   if (!img || !img.naturalWidth || !img.naturalHeight) return;
   const ratio = img.naturalWidth / img.naturalHeight;
@@ -1602,6 +1623,7 @@ function renderLandscapeModeSwitch(target, mode) {
 function renderLandscapeView(target, img) {
   const mode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
+  const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
@@ -1621,19 +1643,19 @@ function renderLandscapeView(target, img) {
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
       <span class="landscape-slice-label">左上</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-top-right">
       <span class="landscape-slice-label">右上</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-left">
       <span class="landscape-slice-label">左下</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-right">
       <span class="landscape-slice-label">右下</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
   `;
     return;
@@ -1642,17 +1664,18 @@ function renderLandscapeView(target, img) {
   split.innerHTML = `
     <div class="landscape-slice is-left">
       <span class="landscape-slice-label">左半分</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-right">
       <span class="landscape-slice-label">右半分</span>
-      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
   `;
 }
 
 function bindLandscapeImages(root = document) {
   root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {
+    upgradeImageElement(img);
     img.addEventListener("load", () => markLandscapeImage(img));
     if (img.complete) markLandscapeImage(img);
   });
@@ -1728,12 +1751,13 @@ function openMedia(id) {
 
   const modalImage = document.getElementById("modalImage");
   const modalWrap = document.getElementById("modalImageWrap");
+  const imageUrl = getHighResImageUrl(item.image_url);
   if (modalWrap) modalWrap.classList.remove("is-landscape");
-  modalImage.src = item.image_url;
+  modalImage.src = imageUrl;
   modalImage.onload = () => markLandscapeImage(modalImage);
   if (modalImage.complete) markLandscapeImage(modalImage);
   document.getElementById("modalSummary").textContent = item.summary;
-  document.getElementById("modalImageLink").href = item.image_url;
+  document.getElementById("modalImageLink").href = imageUrl;
   document.getElementById("modalTweetLink").href = item.tweet_url;
   document.getElementById("tweetEmbed").innerHTML = "";
 
