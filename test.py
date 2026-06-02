@@ -657,6 +657,56 @@ def display_type_label(display_type):
     return short_type_label(TYPE_META.get(display_type, TYPE_META["x_post_single"])["label"])
 
 
+def is_non_pokemon_post(post):
+    text = " ".join([
+        str(post.get("full_text", "")),
+        str(post.get("text", "")),
+        str(post.get("summary", "")),
+        str(post.get("buy_type_label", "")),
+        str(post.get("type_label", "")),
+        str(post.get("display_type_label", "")),
+    ])
+
+    pokemon_words = ["ポケカ", "ポケモンカード", "ポケモン", "Pokémon", "Pokemon", "シングル", "買取表"]
+    pokemon_short_words = ["SV", "SAR", "SR", "AR", "RR", "RRR", "PSA", "BOX"]
+    non_pokemon_words = [
+        "遊戯王", "遊戯王OCG", "YU-GI-OH", "ユギオウ",
+        "ワンピースカード", "ONE PIECE CARD",
+        "デュエマ", "デュエルマスターズ",
+        "ヴァイス", "Weiss",
+        "バトスピ", "バトルスピリッツ",
+        "ユニオンアリーナ", "UNION ARENA",
+        "ドラゴンボールカード", "DBFW",
+    ]
+
+    has_pokemon_word = contains_any(text, pokemon_words)
+    upper_text = text.upper()
+    has_pokemon_short_word = any(
+        re.search(rf"(?<![A-Z0-9]){re.escape(word)}(?![A-Z0-9])", upper_text)
+        for word in pokemon_short_words
+    )
+
+    if has_pokemon_word or has_pokemon_short_word:
+        return False
+    return contains_any(text, non_pokemon_words)
+
+
+def filter_display_posts(posts):
+    return [post for post in posts if not is_non_pokemon_post(post)]
+
+
+def count_non_pokemon_exclusions(posts_by_source):
+    excluded_keys = set()
+    for source_posts in posts_by_source.values():
+        for raw_post in source_posts:
+            post = normalize_post(raw_post)
+            if not is_non_pokemon_post(post):
+                continue
+            key = post.get("tweet_url") or post.get("status_id") or id(raw_post)
+            excluded_keys.add(key)
+    return len(excluded_keys)
+
+
 def parse_posted_at(value):
     if not value:
         return None
@@ -749,6 +799,7 @@ def get_posts_for_shop(posts_by_source, shop_slug):
     for source in get_sources_by_shop(shop_slug):
         posts.extend(normalize_post(post, source) for post in posts_by_source.get(source["id"], []))
 
+    posts = filter_display_posts(posts)
     posts.sort(key=sort_post_key, reverse=True)
     return posts
 
@@ -773,6 +824,8 @@ def get_timeline_posts(posts_by_source, area_id):
         for raw_post in source_posts:
             post = normalize_post(raw_post)
             if post.get("area_id") != area_id:
+                continue
+            if is_non_pokemon_post(post):
                 continue
             if not post.get("tweet_url"):
                 continue
@@ -3907,6 +3960,9 @@ def write_file(path, content):
 
 
 def build_all_pages(posts_by_source, updated_at):
+    excluded_count = count_non_pokemon_exclusions(posts_by_source)
+    print(f"ポケカ外として除外：{excluded_count}件")
+
     write_file("index.html", build_index_page(updated_at))
     write_file("osaka.html", build_osaka_page(updated_at))
     write_file("osaka-nihonbashi.html", build_area_page(posts_by_source, updated_at))
