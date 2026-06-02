@@ -923,10 +923,13 @@ a {
 .nav-panel {
   width: min(86vw, 340px);
   min-height: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: rgba(7,7,7,.98);
   border-right: 1px solid rgba(255,255,255,.16);
   box-shadow: 22px 0 48px rgba(0,0,0,.44);
-  padding: 18px;
+  padding: 18px 18px calc(24px + env(safe-area-inset-bottom));
 }
 
 .nav-head {
@@ -974,16 +977,35 @@ a {
   border-top: 1px solid rgba(255,255,255,.12);
 }
 
-.nav-store-title {
+.nav-store-toggle {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.11);
+  background: rgba(255,255,255,.035);
+  color: rgba(255,255,255,.88);
+  padding: 13px;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-store-toggle::after {
+  content: "▾";
+  float: right;
   color: rgba(255,255,255,.58);
-  font-size: 12px;
-  letter-spacing: .08em;
-  margin-bottom: 8px;
+}
+
+.nav-store-toggle[aria-expanded="true"]::after {
+  content: "▴";
 }
 
 .nav-store-links {
   display: grid;
   gap: 6px;
+  margin-top: 8px;
+}
+
+.nav-store-links[hidden] {
+  display: none;
 }
 
 .nav-store-links a {
