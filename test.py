@@ -2719,7 +2719,7 @@ def build_area_page(posts_by_source, updated_at):
       {support_quick_links}
     </div>
 
-    <button class="store-toggle" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
+    <button class="store-toggle" id="store-list" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
 
     <div class="brand-panel" id="brandPanel" aria-hidden="true">
       <div class="brand-row">
@@ -2768,15 +2768,6 @@ def build_area_page(posts_by_source, updated_at):
     </div>
 
     <div class="{no_result_class}" id="noResult"{no_result_attrs}>該当する買取投稿はありません。<br>条件を変更してください。</div>
-
-    <div class="section-head" id="store-list">
-      <h2>STORE LIST</h2>
-      <p>店舗別の簡易一覧</p>
-    </div>
-
-    <div class="simple-store-list" id="storeList">
-      {stores_html}
-    </div>
 
     <div class="section-head" id="support-links">
       <h2>SUPPORT LINKS</h2>
