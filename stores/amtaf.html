@@ -599,33 +599,42 @@ a {
 
 .landscape-slice {
   position: relative;
-  overflow: hidden;
   background: rgba(255,255,255,.035);
 }
 
-.landscape-slice img {
+.landscape-slice-frame {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+.landscape-slice-frame img {
   width: 200%;
   max-width: none;
   display: block;
 }
 
-.landscape-slice.is-right img {
+.landscape-slice.is-right .landscape-slice-frame img {
   transform: translateX(-50%);
 }
 
-.landscape-mode-quarter .landscape-slice img {
+.landscape-mode-quarter .landscape-slice-frame {
+  aspect-ratio: var(--landscape-panel-ratio, 1.6);
+}
+
+.landscape-mode-quarter .landscape-slice-frame img {
   width: 200%;
 }
 
-.landscape-mode-quarter .landscape-slice.is-top-right img {
+.landscape-mode-quarter .landscape-slice.is-top-right .landscape-slice-frame img {
   transform: translateX(-50%);
 }
 
-.landscape-mode-quarter .landscape-slice.is-bottom-left img {
+.landscape-mode-quarter .landscape-slice.is-bottom-left .landscape-slice-frame img {
   transform: translateY(-50%);
 }
 
-.landscape-mode-quarter .landscape-slice.is-bottom-right img {
+.landscape-mode-quarter .landscape-slice.is-bottom-right .landscape-slice-frame img {
   transform: translate(-50%, -50%);
 }
 
@@ -772,6 +781,20 @@ a {
 @media (min-width: 820px) {
   .store-post-card {
     flex-basis: min(48%, 520px);
+  }
+}
+
+@media (min-width: 761px) {
+  .timeline-image.is-landscape.landscape-mode-quarter > img,
+  .image-card.is-landscape.landscape-mode-quarter > img,
+  .modal-image-wrap.is-landscape.landscape-mode-quarter > .modal-image {
+    display: none;
+  }
+
+  .is-landscape.landscape-mode-quarter .landscape-split {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 }
 
@@ -1368,6 +1391,10 @@ main {
     gap: 8px;
   }
 
+  .is-landscape.landscape-mode-quarter .landscape-split {
+    grid-template-columns: 1fr;
+  }
+
   .is-landscape.landscape-mode-original .landscape-split {
     display: none;
   }
@@ -1598,6 +1625,7 @@ function renderLandscapeModeSwitch(target, mode) {
 
 function renderLandscapeView(target, img) {
   const mode = getLandscapeMode();
+  const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
@@ -1613,34 +1641,36 @@ function renderLandscapeView(target, img) {
     return;
   }
   if (mode === "quarter") {
+    split.style.setProperty("--landscape-panel-ratio", ratio.toFixed(4));
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
       <span class="landscape-slice-label">左上</span>
-      <img src="${img.currentSrc || img.src}" alt="">
+      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
     </div>
     <div class="landscape-slice is-top-right">
       <span class="landscape-slice-label">右上</span>
-      <img src="${img.currentSrc || img.src}" alt="">
+      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-left">
       <span class="landscape-slice-label">左下</span>
-      <img src="${img.currentSrc || img.src}" alt="">
+      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-right">
       <span class="landscape-slice-label">右下</span>
-      <img src="${img.currentSrc || img.src}" alt="">
+      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
     </div>
   `;
     return;
   }
+  split.style.removeProperty("--landscape-panel-ratio");
   split.innerHTML = `
     <div class="landscape-slice is-left">
       <span class="landscape-slice-label">左半分</span>
-      <img src="${img.currentSrc || img.src}" alt="">
+      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
     </div>
     <div class="landscape-slice is-right">
       <span class="landscape-slice-label">右半分</span>
-      <img src="${img.currentSrc || img.src}" alt="">
+      <span class="landscape-slice-frame"><img src="${img.currentSrc || img.src}" alt=""></span>
     </div>
   `;
 }
