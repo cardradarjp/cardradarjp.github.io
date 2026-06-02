@@ -2876,17 +2876,90 @@ function markLandscapeImage(img) {{
   if (!target) return;
   const isLandscape = ratio >= 1.35;
   target.classList.toggle("is-landscape", isLandscape);
-  if (isLandscape) renderLandscapeSplit(target, img);
-  else target.querySelector(".landscape-split")?.remove();
+  if (isLandscape) renderLandscapeView(target, img);
+  else {{
+    target.querySelector(".landscape-split")?.remove();
+    target.querySelector(".landscape-mode-switch")?.remove();
+    target.classList.remove("landscape-mode-original", "landscape-mode-half", "landscape-mode-quarter");
+  }}
   setupScrollIndicators(target);
 }}
 
-function renderLandscapeSplit(target, img) {{
+function getLandscapeMode() {{
+  const saved = localStorage.getItem("cardradarLandscapeMode");
+  return ["original", "half", "quarter"].includes(saved) ? saved : "half";
+}}
+
+function setLandscapeMode(mode) {{
+  const nextMode = ["original", "half", "quarter"].includes(mode) ? mode : "half";
+  localStorage.setItem("cardradarLandscapeMode", nextMode);
+  document.querySelectorAll(".is-landscape").forEach(target => {{
+    const img = target.querySelector(":scope > img, :scope > .modal-image");
+    if (img) renderLandscapeView(target, img);
+  }});
+  setupScrollIndicators();
+}}
+
+function renderLandscapeModeSwitch(target, mode) {{
+  let controls = target.querySelector(".landscape-mode-switch");
+  if (!controls) {{
+    controls = document.createElement("span");
+    controls.className = "landscape-mode-switch";
+    target.appendChild(controls);
+  }}
+  controls.innerHTML = ["original", "half", "quarter"].map(item => {{
+    const labels = {{ original: "元画像", half: "縦1/2", quarter: "縦横1/4" }};
+    return `<span class="landscape-mode-button ${{item === mode ? "is-active" : ""}}" role="button" tabindex="0" data-landscape-mode="${{item}}">${{labels[item]}}</span>`;
+  }}).join("");
+  controls.querySelectorAll(".landscape-mode-button").forEach(button => {{
+    const activate = event => {{
+      event.preventDefault();
+      event.stopPropagation();
+      setLandscapeMode(button.dataset.landscapeMode);
+    }};
+    button.addEventListener("click", activate);
+    button.addEventListener("keydown", event => {{
+      if (event.key === "Enter" || event.key === " ") activate(event);
+    }});
+  }});
+}}
+
+function renderLandscapeView(target, img) {{
+  const mode = getLandscapeMode();
+  target.classList.toggle("landscape-mode-original", mode === "original");
+  target.classList.toggle("landscape-mode-half", mode === "half");
+  target.classList.toggle("landscape-mode-quarter", mode === "quarter");
+  renderLandscapeModeSwitch(target, mode);
   let split = target.querySelector(".landscape-split");
   if (!split) {{
     split = document.createElement("div");
     split.className = "landscape-split";
     img.insertAdjacentElement("afterend", split);
+  }}
+  if (mode === "original") {{
+    split.innerHTML = "";
+    return;
+  }}
+  if (mode === "quarter") {{
+    split.innerHTML = `
+    <div class="landscape-slice is-top-left">
+      <span class="landscape-slice-label">左上</span>
+      <img src="${{img.currentSrc || img.src}}" alt="">
+    </div>
+    <div class="landscape-slice is-top-right">
+      <span class="landscape-slice-label">右上</span>
+      <img src="${{img.currentSrc || img.src}}" alt="">
+    </div>
+    <div class="landscape-slice is-bottom-left">
+      <span class="landscape-slice-label">左下</span>
+      <img src="${{img.currentSrc || img.src}}" alt="">
+    </div>
+    <div class="landscape-slice is-bottom-right">
+      <span class="landscape-slice-label">右下</span>
+      <img src="${{img.currentSrc || img.src}}" alt="">
+    </div>
+  `;
+    return;
   }}
   split.innerHTML = `
     <div class="landscape-slice is-left">
@@ -3321,17 +3394,90 @@ function markLandscapeImage(img) {{
   if (!target) return;
   const isLandscape = ratio >= 1.35;
   target.classList.toggle("is-landscape", isLandscape);
-  if (isLandscape) renderLandscapeSplit(target, img);
-  else target.querySelector(".landscape-split")?.remove();
+  if (isLandscape) renderLandscapeView(target, img);
+  else {{
+    target.querySelector(".landscape-split")?.remove();
+    target.querySelector(".landscape-mode-switch")?.remove();
+    target.classList.remove("landscape-mode-original", "landscape-mode-half", "landscape-mode-quarter");
+  }}
   setupScrollIndicators(target);
 }}
 
-function renderLandscapeSplit(target, img) {{
+function getLandscapeMode() {{
+  const saved = localStorage.getItem("cardradarLandscapeMode");
+  return ["original", "half", "quarter"].includes(saved) ? saved : "half";
+}}
+
+function setLandscapeMode(mode) {{
+  const nextMode = ["original", "half", "quarter"].includes(mode) ? mode : "half";
+  localStorage.setItem("cardradarLandscapeMode", nextMode);
+  document.querySelectorAll(".is-landscape").forEach(target => {{
+    const img = target.querySelector(":scope > img, :scope > .modal-image");
+    if (img) renderLandscapeView(target, img);
+  }});
+  setupScrollIndicators();
+}}
+
+function renderLandscapeModeSwitch(target, mode) {{
+  let controls = target.querySelector(".landscape-mode-switch");
+  if (!controls) {{
+    controls = document.createElement("span");
+    controls.className = "landscape-mode-switch";
+    target.appendChild(controls);
+  }}
+  controls.innerHTML = ["original", "half", "quarter"].map(item => {{
+    const labels = {{ original: "元画像", half: "縦1/2", quarter: "縦横1/4" }};
+    return `<span class="landscape-mode-button ${{item === mode ? "is-active" : ""}}" role="button" tabindex="0" data-landscape-mode="${{item}}">${{labels[item]}}</span>`;
+  }}).join("");
+  controls.querySelectorAll(".landscape-mode-button").forEach(button => {{
+    const activate = event => {{
+      event.preventDefault();
+      event.stopPropagation();
+      setLandscapeMode(button.dataset.landscapeMode);
+    }};
+    button.addEventListener("click", activate);
+    button.addEventListener("keydown", event => {{
+      if (event.key === "Enter" || event.key === " ") activate(event);
+    }});
+  }});
+}}
+
+function renderLandscapeView(target, img) {{
+  const mode = getLandscapeMode();
+  target.classList.toggle("landscape-mode-original", mode === "original");
+  target.classList.toggle("landscape-mode-half", mode === "half");
+  target.classList.toggle("landscape-mode-quarter", mode === "quarter");
+  renderLandscapeModeSwitch(target, mode);
   let split = target.querySelector(".landscape-split");
   if (!split) {{
     split = document.createElement("div");
     split.className = "landscape-split";
     img.insertAdjacentElement("afterend", split);
+  }}
+  if (mode === "original") {{
+    split.innerHTML = "";
+    return;
+  }}
+  if (mode === "quarter") {{
+    split.innerHTML = `
+    <div class="landscape-slice is-top-left">
+      <span class="landscape-slice-label">左上</span>
+      <img src="${{img.currentSrc || img.src}}" alt="">
+    </div>
+    <div class="landscape-slice is-top-right">
+      <span class="landscape-slice-label">右上</span>
+      <img src="${{img.currentSrc || img.src}}" alt="">
+    </div>
+    <div class="landscape-slice is-bottom-left">
+      <span class="landscape-slice-label">左下</span>
+      <img src="${{img.currentSrc || img.src}}" alt="">
+    </div>
+    <div class="landscape-slice is-bottom-right">
+      <span class="landscape-slice-label">右下</span>
+      <img src="${{img.currentSrc || img.src}}" alt="">
+    </div>
+  `;
+    return;
   }}
   split.innerHTML = `
     <div class="landscape-slice is-left">
