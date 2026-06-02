@@ -23,6 +23,9 @@ STORES_DIR.mkdir(exist_ok=True)
 SAFETY_POSTS_PER_SOURCE = 20
 FALLBACK_POSTS_PER_SOURCE = 5
 CHECK_POSTS_PER_SOURCE = 60
+MIN_LATEST_DAY_POSTS = 8
+MAX_TIMELINE_POSTS = 30
+TIMELINE_FALLBACK_DAYS = 7
 
 
 # =========================
@@ -891,6 +894,69 @@ def get_timeline_posts(posts_by_source, area_id):
     posts = list(posts_by_key.values())
     posts.sort(key=sort_post_key, reverse=True)
     return posts
+
+
+def parse_jst_date(value):
+    if not value:
+        return None
+    try:
+        return datetime.strptime(value, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def select_timeline_posts_with_fallback(posts):
+    posts = [normalize_post(post) for post in posts]
+    posts.sort(key=sort_post_key, reverse=True)
+
+    meta = {
+        "latest_date": "",
+        "latest_count": 0,
+        "fallback_used": False,
+        "selected_count": 0,
+    }
+    if not posts:
+        return [], meta
+
+    dated_posts = [post for post in posts if post.get("posted_date_jst")]
+    if not dated_posts:
+        selected = posts[:MAX_TIMELINE_POSTS]
+        meta["selected_count"] = len(selected)
+        return selected, meta
+
+    latest_date = max(post["posted_date_jst"] for post in dated_posts)
+    latest_day_posts = [post for post in posts if post.get("posted_date_jst") == latest_date]
+    meta["latest_date"] = latest_date
+    meta["latest_count"] = len(latest_day_posts)
+
+    if len(latest_day_posts) >= MIN_LATEST_DAY_POSTS:
+        selected = latest_day_posts[:MAX_TIMELINE_POSTS]
+        meta["selected_count"] = len(selected)
+        return selected, meta
+
+    latest_date_obj = parse_jst_date(latest_date)
+    selected = list(latest_day_posts)
+    seen_keys = {post.get("tweet_url") or post.get("status_id") for post in selected}
+
+    fallback_posts = []
+    for post in posts:
+        key = post.get("tweet_url") or post.get("status_id")
+        if key in seen_keys:
+            continue
+        post_date = parse_jst_date(post.get("posted_date_jst"))
+        if latest_date_obj:
+            if not post_date:
+                continue
+            days_old = (latest_date_obj - post_date).days
+            if days_old <= 0 or days_old > TIMELINE_FALLBACK_DAYS:
+                continue
+        fallback_posts.append(post)
+
+    selected.extend(fallback_posts[: max(0, MAX_TIMELINE_POSTS - len(selected))])
+    selected.sort(key=sort_post_key, reverse=True)
+    meta["fallback_used"] = len(selected) > len(latest_day_posts)
+    meta["selected_count"] = len(selected)
+    return selected, meta
 
 
 def short_type_label(label_or_type):
@@ -2533,16 +2599,22 @@ def build_area_page(posts_by_source, updated_at):
     shops = get_physical_shops("osaka-nihonbashi")
     support_sources = get_support_sources()
     brands = get_unique_brands("osaka-nihonbashi")
-    timeline_posts = get_timeline_posts(posts_by_source, "osaka-nihonbashi")
+    all_timeline_posts = get_timeline_posts(posts_by_source, "osaka-nihonbashi")
+    timeline_posts, timeline_meta = select_timeline_posts_with_fallback(all_timeline_posts)
 
     media_items = {}
     timeline_html = ""
     timeline_initial_count = len(timeline_posts)
     no_result_class = "no-result hidden" if timeline_initial_count else "no-result"
     no_result_attrs = ' hidden aria-hidden="true" style="display:none"' if timeline_initial_count else ' aria-hidden="false"'
-    latest_timeline_date = timeline_posts[0].get("posted_date_jst", "") if timeline_posts else ""
-    same_day_count = sum(1 for post in timeline_posts if post.get("posted_date_jst") == latest_timeline_date) if latest_timeline_date else len(timeline_posts)
-    timeline_notice = f"最新日：{format_date_label(latest_timeline_date)} / 最新日の投稿：{same_day_count}件" if timeline_posts else "最新日：未取得 / 最新日の投稿：0件"
+    latest_timeline_date = timeline_meta.get("latest_date", "")
+    same_day_count = timeline_meta.get("latest_count", 0)
+    if timeline_posts:
+        timeline_notice = f"最新日：{format_date_label(latest_timeline_date)} / 最新日の投稿：{same_day_count}件"
+        if timeline_meta.get("fallback_used"):
+            timeline_notice += " / 前日以前も表示"
+    else:
+        timeline_notice = "最新日：未取得 / 最新日の投稿：0件"
 
     for post in timeline_posts:
         post = normalize_post(post)
@@ -4002,8 +4074,13 @@ def write_file(path, content):
 def build_all_pages(posts_by_source, updated_at):
     excluded_count = count_non_pokemon_exclusions(posts_by_source)
     notice_excluded_count = count_notice_exclusions(posts_by_source)
+    area_timeline_posts = get_timeline_posts(posts_by_source, "osaka-nihonbashi")
+    _, timeline_meta = select_timeline_posts_with_fallback(area_timeline_posts)
     print(f"ポケカ外として除外：{excluded_count}件")
     print(f"お知らせ系として除外：{notice_excluded_count}件")
+    print(f"最新日投稿数：{timeline_meta.get('latest_count', 0)}件")
+    print(f"補完表示：{'あり' if timeline_meta.get('fallback_used') else 'なし'}")
+    print(f"補完後の表示投稿数：{timeline_meta.get('selected_count', 0)}件")
 
     write_file("index.html", build_index_page(updated_at))
     write_file("osaka.html", build_osaka_page(updated_at))
