@@ -1540,8 +1540,6 @@ a {
   cursor: pointer;
 }
 
-.simple-store-list { max-width: 760px; display: grid; gap: 10px; }
-
 .store-group-list {
   max-width: 100%;
   display: grid;
@@ -1644,26 +1642,6 @@ a {
     gap: 8px;
   }
 }
-
-.simple-store-card {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-  align-items: center;
-  text-decoration: none;
-  background: rgba(10,10,10,.82);
-  border: 1px solid rgba(255,255,255,.13);
-  padding: 15px 16px;
-}
-
-.simple-store-card.is-waiting {
-  opacity: .62;
-  border-style: dashed;
-}
-
-.simple-store-name { font-weight: 650; font-size: 15px; }
-.simple-store-meta { margin-top: 6px; color: rgba(255,255,255,.56); font-size: 12px; line-height: 1.6; }
-.simple-store-date { color: rgba(255,255,255,.58); font-size: 12px; white-space: nowrap; }
 
 .image-count {
   position: static;
@@ -2247,8 +2225,7 @@ main {
   }
 
   .timeline-head,
-  .store-group-head,
-  .simple-store-card {
+  .store-group-head {
     grid-template-columns: 1fr;
   }
 
@@ -2258,9 +2235,6 @@ main {
     display: grid;
   }
 
-  .simple-store-date {
-    white-space: normal;
-  }
   .support-groups {
     grid-template-columns: 1fr;
   }
@@ -2568,8 +2542,6 @@ def build_area_page(posts_by_source, updated_at):
 </section>
 """
 
-    stores_active_html = ""
-    stores_waiting_html = ""
     store_panel_active_html = ""
     store_panel_waiting_html = ""
 
@@ -2585,21 +2557,6 @@ def build_area_page(posts_by_source, updated_at):
         waiting_class = "" if has_posts else " is-waiting"
         post_count_label = f"{latest_date}投稿：{latest_count}件" if has_posts else "取得待ち"
 
-        store_card_html = f"""
-<a class="simple-store-card{waiting_class}"
-   href="stores/{h(shop["shop_slug"])}.html"
-   data-types="{' '.join(types)}"
-   data-brand="{h(shop["brand_id"])}"
-   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + ' '.join(type_labels))}"
->
-  <div>
-    <div class="simple-store-name">{h(shop["shop_name"])}</div>
-    <div class="simple-store-meta">{h(type_text)} / {h(post_count_label)}</div>
-    <div class="store-panel-link">この店舗を見る →</div>
-  </div>
-</a>
-"""
-
         store_panel_card_html = f"""
 <a class="store-panel-card{waiting_class}" href="stores/{h(shop["shop_slug"])}.html">
   <div class="store-panel-name">{h(shop["shop_name"])}</div>
@@ -2609,13 +2566,10 @@ def build_area_page(posts_by_source, updated_at):
 """
 
         if has_posts:
-            stores_active_html += store_card_html
             store_panel_active_html += store_panel_card_html
         else:
-            stores_waiting_html += store_card_html
             store_panel_waiting_html += store_panel_card_html
 
-    stores_html = stores_active_html + stores_waiting_html
     store_panel_html = store_panel_active_html + store_panel_waiting_html
 
     support_groups = {
@@ -3215,7 +3169,6 @@ function updateResultCount() {{
 function applyFilters() {{
   const search = document.getElementById("searchInput").value.trim().toLowerCase();
   document.querySelectorAll(".timeline-post").forEach(post => post.classList.toggle("hidden", !matchesItem(post, search)));
-  document.querySelectorAll(".simple-store-card").forEach(store => store.classList.toggle("hidden", !matchesItem(store, search)));
   document.querySelectorAll(".store-group").forEach(group => {{
     let visibleChildren = 0;
     group.querySelectorAll(".store-post-card").forEach(card => {{
