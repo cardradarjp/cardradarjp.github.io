@@ -968,6 +968,34 @@ a {
   font-size: 15px;
 }
 
+.nav-store-list {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+
+.nav-store-title {
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+  letter-spacing: .08em;
+  margin-bottom: 8px;
+}
+
+.nav-store-links {
+  display: grid;
+  gap: 6px;
+}
+
+.nav-store-links a {
+  display: block;
+  text-decoration: none;
+  color: rgba(255,255,255,.84);
+  border: 1px solid rgba(255,255,255,.09);
+  background: rgba(255,255,255,.026);
+  padding: 10px 11px;
+  font-size: 13px;
+}
+
 main {
   padding: 28px 7vw calc(104px + env(safe-area-inset-bottom));
 }
@@ -1482,7 +1510,7 @@ main {
 
     </div>
 
-    <button class="store-toggle" id="store-list" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
+    <button class="store-toggle" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
 
     <div class="brand-panel" id="brandPanel" aria-hidden="true">
       <div class="brand-row">
@@ -3618,10 +3646,29 @@ main {
     <div class="nav-links">
       <a href="index.html">トップ</a>
       <a href="osaka-nihonbashi.html">大阪・日本橋</a>
-      <a href="osaka-nihonbashi.html#store-list" onclick="closeMenu()">店舗一覧</a>
       <a href="osaka-nihonbashi.html#support-links" onclick="closeMenu()">公式Web買取表</a>
       <a href="osaka-nihonbashi.html#support-links" onclick="closeMenu()">相場確認</a>
       <a href="#">掲載について</a>
+    </div>
+    <div class="nav-store-list">
+      <div class="nav-store-title">店舗一覧</div>
+      <div class="nav-store-links">
+        <a href="stores/dragonstar-otaroad-chuo.html" onclick="closeMenu()">ドラスタ オタロード中央</a>
+<a href="stores/dragonstar-nihonbashi-honten.html" onclick="closeMenu()">ドラスタ 日本橋本店</a>
+<a href="stores/dragonstar-nihonbashi-2.html" onclick="closeMenu()">ドラスタ 日本橋2号店</a>
+<a href="stores/dragonstar-nihonbashi-3.html" onclick="closeMenu()">ドラスタ 日本橋3号店</a>
+<a href="stores/dragonstar-nansan.html" onclick="closeMenu()">ドラスタ なんさん通り店</a>
+<a href="stores/hareruya2-namba.html" onclick="closeMenu()">晴れる屋2なんば</a>
+<a href="stores/cardlabo-namba.html" onclick="closeMenu()">カードラボなんば店</a>
+<a href="stores/cardlabo-osaka-nihonbashi.html" onclick="closeMenu()">カードラボ大阪日本橋店</a>
+<a href="stores/girafull-namba.html" onclick="closeMenu()">GIRAFULLなんば店</a>
+<a href="stores/girafull-osaka-nihonbashi.html" onclick="closeMenu()">GIRAFULL大阪日本橋店</a>
+<a href="stores/girafull-otaroad.html" onclick="closeMenu()">GIRAFULLオタロード店</a>
+<a href="stores/amtaf.html" onclick="closeMenu()">アムタフ</a>
+<a href="stores/gotcha.html" onclick="closeMenu()">GOTCHA!</a>
+<a href="stores/kuro.html" onclick="closeMenu()">KURO</a>
+<a href="stores/kaitori-mimi.html" onclick="closeMenu()">買取ミミ</a>
+      </div>
     </div>
   </nav>
 </div>

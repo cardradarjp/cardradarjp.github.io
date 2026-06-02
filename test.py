@@ -1815,6 +1815,34 @@ a {
   font-size: 15px;
 }
 
+.nav-store-list {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+
+.nav-store-title {
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+  letter-spacing: .08em;
+  margin-bottom: 8px;
+}
+
+.nav-store-links {
+  display: grid;
+  gap: 6px;
+}
+
+.nav-store-links a {
+  display: block;
+  text-decoration: none;
+  color: rgba(255,255,255,.84);
+  border: 1px solid rgba(255,255,255,.09);
+  background: rgba(255,255,255,.026);
+  padding: 10px 11px;
+  font-size: 13px;
+}
+
 main {
   padding: 28px 7vw calc(104px + env(safe-area-inset-bottom));
 }
@@ -2571,6 +2599,10 @@ def build_area_page(posts_by_source, updated_at):
             store_panel_waiting_html += store_panel_card_html
 
     store_panel_html = store_panel_active_html + store_panel_waiting_html
+    nav_store_links = "\n".join(
+        f'<a href="stores/{h(shop["shop_slug"])}.html" onclick="closeMenu()">{h(shop["shop_name"])}</a>'
+        for shop in shops
+    )
 
     support_groups = {
         "official_price_list": {"title": "公式Web買取表", "items": []},
@@ -2673,7 +2705,7 @@ def build_area_page(posts_by_source, updated_at):
       {support_quick_links}
     </div>
 
-    <button class="store-toggle" id="store-list" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
+    <button class="store-toggle" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
 
     <div class="brand-panel" id="brandPanel" aria-hidden="true">
       <div class="brand-row">
@@ -2743,10 +2775,15 @@ def build_area_page(posts_by_source, updated_at):
     <div class="nav-links">
       <a href="index.html">トップ</a>
       <a href="osaka-nihonbashi.html">大阪・日本橋</a>
-      <a href="osaka-nihonbashi.html#store-list" onclick="closeMenu()">店舗一覧</a>
       <a href="osaka-nihonbashi.html#support-links" onclick="closeMenu()">公式Web買取表</a>
       <a href="osaka-nihonbashi.html#support-links" onclick="closeMenu()">相場確認</a>
       <a href="#">掲載について</a>
+    </div>
+    <div class="nav-store-list">
+      <div class="nav-store-title">店舗一覧</div>
+      <div class="nav-store-links">
+        {nav_store_links}
+      </div>
     </div>
   </nav>
 </div>
