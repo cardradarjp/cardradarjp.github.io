@@ -26,6 +26,8 @@ CHECK_POSTS_PER_SOURCE = 60
 MIN_LATEST_DAY_POSTS = 8
 MAX_TIMELINE_POSTS = 30
 TIMELINE_FALLBACK_DAYS = 7
+STORE_VIEW_RANGE_DAYS = 7
+MAX_STORE_VIEW_POSTS_PER_SHOP = 10
 
 
 # =========================
@@ -959,6 +961,75 @@ def select_timeline_posts_with_fallback(posts):
     return selected, meta
 
 
+def post_identity(post):
+    return post.get("tweet_url") or post.get("status_id") or f'{post.get("source_id", "")}:{post.get("image_url", "")}'
+
+
+def build_store_view_meta(mode_label, start_date, end_date, posts):
+    display_types = []
+    for post in posts:
+        display_type = post.get("display_type", infer_display_type(post))
+        if display_type not in display_types:
+            display_types.append(display_type)
+    type_text = " / ".join(short_type_label(t) for t in display_types) if display_types else "未分類"
+    if mode_label == "最新のみ":
+        date_text = format_date_label(end_date) if end_date else "未取得"
+    else:
+        start_text = format_date_label(start_date) if start_date else "未取得"
+        end_text = format_date_label(end_date) if end_date else "未取得"
+        date_text = f"{start_text}〜{end_text}" if start_text != end_text else end_text
+    return f"{mode_label}：{date_text} / 投稿{len(posts)}件 / {type_text}"
+
+
+def select_store_view_posts(shop_posts):
+    posts = [normalize_post(post) for post in shop_posts]
+    posts.sort(key=sort_post_key, reverse=True)
+    meta = {
+        "latest_meta": "最新のみ：未取得 / 投稿0件 / 未分類",
+        "week_meta": "過去7日：未取得 / 投稿0件 / 未分類",
+        "latest_keys": set(),
+    }
+    if not posts:
+        return [], [], meta
+
+    dated_posts = [post for post in posts if post.get("posted_date_jst")]
+    if not dated_posts:
+        fallback_posts = posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
+        latest_keys = {post_identity(post) for post in fallback_posts}
+        meta["latest_meta"] = build_store_view_meta("最新のみ", "", "", fallback_posts)
+        meta["week_meta"] = build_store_view_meta("過去7日", "", "", fallback_posts)
+        meta["latest_keys"] = latest_keys
+        return fallback_posts, fallback_posts, meta
+
+    latest_date = max(post["posted_date_jst"] for post in dated_posts)
+    latest_date_obj = parse_jst_date(latest_date)
+    latest_posts = [post for post in posts if post.get("posted_date_jst") == latest_date]
+    latest_posts.sort(key=sort_post_key, reverse=True)
+
+    week_posts = []
+    if latest_date_obj:
+        for post in posts:
+            post_date = parse_jst_date(post.get("posted_date_jst"))
+            if not post_date:
+                continue
+            days_old = (latest_date_obj - post_date).days
+            if 0 <= days_old < STORE_VIEW_RANGE_DAYS:
+                week_posts.append(post)
+    else:
+        week_posts = list(latest_posts)
+
+    week_posts.sort(key=sort_post_key, reverse=True)
+    week_posts = week_posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
+    range_start_obj = latest_date_obj - timedelta(days=STORE_VIEW_RANGE_DAYS - 1) if latest_date_obj else None
+    range_start = range_start_obj.strftime("%Y-%m-%d") if range_start_obj else latest_date
+    latest_keys = {post_identity(post) for post in latest_posts}
+
+    meta["latest_meta"] = build_store_view_meta("最新のみ", latest_date, latest_date, latest_posts)
+    meta["week_meta"] = build_store_view_meta("過去7日", range_start, latest_date, week_posts)
+    meta["latest_keys"] = latest_keys
+    return latest_posts, week_posts, meta
+
+
 def short_type_label(label_or_type):
     mapping = {
         "x_post_single": "シングル", "x_post_box": "BOX", "x_post_fixed": "定額", "x_post_psa": "PSA",
@@ -1436,6 +1507,36 @@ a {
   color: white;
 }
 
+.store-view-tools {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.store-range-toggle {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.035);
+}
+
+.store-range-button {
+  min-height: 30px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(255,255,255,.68);
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.store-range-button.active {
+  border-color: rgba(255,255,255,.28);
+  background: rgba(255,255,255,.13);
+  color: #fff;
+}
+
 .view-panel.hidden {
   display: none !important;
 }
@@ -1755,6 +1856,10 @@ a {
   border: 1px solid rgba(255,255,255,.13);
   background: rgba(255,255,255,.035);
   padding: 10px;
+}
+
+.store-post-card.range-hidden {
+  display: none;
 }
 
 .store-post-meta {
@@ -2680,24 +2785,24 @@ def build_area_page(posts_by_source, updated_at):
     store_groups_html = ""
 
     for shop in shops:
-        shop_posts = [normalize_post(post) for post in timeline_posts if post.get("shop_slug") == shop["shop_slug"]]
+        shop_posts = [normalize_post(post) for post in all_timeline_posts if post.get("shop_slug") == shop["shop_slug"]]
         if not shop_posts:
             continue
 
-        latest_shop_date = max((post.get("posted_date_jst", "") for post in shop_posts), default="")
-        latest_shop_posts = [post for post in shop_posts if not latest_shop_date or post.get("posted_date_jst", "") == latest_shop_date]
-        latest_shop_posts.sort(key=lambda post: int(post.get("status_id", 0)), reverse=True)
+        latest_shop_posts, week_shop_posts, store_view_meta = select_store_view_posts(shop_posts)
+        if not week_shop_posts:
+            continue
 
         display_types = []
-        for post in latest_shop_posts:
+        for post in week_shop_posts:
             display_type = post.get("display_type", infer_display_type(post))
             if display_type not in display_types:
                 display_types.append(display_type)
         type_text = " / ".join(short_type_label(t) for t in display_types) if display_types else "未分類"
-        latest_label = format_date_label(latest_shop_date) if latest_shop_date else "未取得"
+        latest_keys = store_view_meta["latest_keys"]
 
         store_post_cards = ""
-        for post in latest_shop_posts:
+        for post in week_shop_posts:
             image_urls = post.get("image_urls", [])
             if not image_urls:
                 continue
@@ -2705,6 +2810,8 @@ def build_area_page(posts_by_source, updated_at):
             type_label = short_type_label(display_type)
             media_id = f'timeline_{post.get("source_id", "post")}_{post.get("status_id", 0)}'
             image_count = len(image_urls)
+            checked_label = format_update_label(post.get("posted_at") or post.get("collected_at", updated_at))
+            in_latest_range = "1" if post_identity(post) in latest_keys else "0"
             store_image_buttons = []
             for image_index, image_url in enumerate(image_urls):
                 store_image_buttons.append(f"""
@@ -2723,8 +2830,10 @@ def build_area_page(posts_by_source, updated_at):
         data-types="{h(display_type)}"
         data-brand="{h(post.get("brand_id", ""))}"
         data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + type_label + ' ' + post.get("summary", ""))}"
+        data-range-latest="{in_latest_range}"
+        data-range-week="1"
       >
-        <div class="store-post-meta">{h(type_label)} / 画像 {image_count}枚</div>
+        <div class="store-post-meta">確認：{h(checked_label)} / {h(type_label)} / 画像 {image_count}枚</div>
         <div class="store-post-image-list">
 {''.join(store_image_buttons)}
         </div>
@@ -2743,11 +2852,13 @@ def build_area_page(posts_by_source, updated_at):
   data-types="{h(' '.join(display_types))}"
   data-brand="{h(shop["brand_id"])}"
   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + type_text)}"
+  data-latest-meta="{h(store_view_meta["latest_meta"])}"
+  data-week-meta="{h(store_view_meta["week_meta"])}"
 >
   <div class="store-group-head">
     <div>
       <div class="store-group-name">{h(shop["shop_name"])}</div>
-      <div class="store-group-meta">確認日：{h(latest_label)} / 投稿 {len(latest_shop_posts)}件 / {h(type_text)}</div>
+      <div class="store-group-meta">{h(store_view_meta["latest_meta"])}</div>
     </div>
     <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
   </div>
@@ -2932,7 +3043,13 @@ def build_area_page(posts_by_source, updated_at):
     <div id="storeView" class="view-panel hidden">
       <div class="section-head">
         <h2>STORE VIEW</h2>
-        <p>店舗ごとに最新日の投稿を横スライドで表示</p>
+        <p>店舗ごとに投稿を横スライドで表示</p>
+        <div class="store-view-tools" aria-label="STORE VIEW表示範囲">
+          <div class="store-range-toggle">
+            <button id="storeRangeLatestButton" class="store-range-button active" type="button" onclick="setStoreRangeMode('latest')">最新のみ</button>
+            <button id="storeRangeWeekButton" class="store-range-button" type="button" onclick="setStoreRangeMode('week')">過去7日</button>
+          </div>
+        </div>
       </div>
 
       <div class="store-group-list" id="storeGroupList">
@@ -3001,6 +3118,7 @@ const selectedBrands = new Set();
 const TIMELINE_MEDIA = {media_json};
 let currentSort = "new";
 let currentView = "timeline";
+let currentStoreRange = "latest";
 let currentMediaItem = null;
 let currentMediaIndex = 0;
 
@@ -3405,13 +3523,48 @@ function updateResultCount() {{
   updateNoResult(count);
 }}
 
+function updateStoreRangeButtons() {{
+  const latestButton = document.getElementById("storeRangeLatestButton");
+  const weekButton = document.getElementById("storeRangeWeekButton");
+  if (latestButton) {{
+    latestButton.classList.toggle("active", currentStoreRange === "latest");
+    latestButton.setAttribute("aria-pressed", currentStoreRange === "latest" ? "true" : "false");
+  }}
+  if (weekButton) {{
+    weekButton.classList.toggle("active", currentStoreRange === "week");
+    weekButton.setAttribute("aria-pressed", currentStoreRange === "week" ? "true" : "false");
+  }}
+}}
+
+function updateStoreRangeVisibility() {{
+  document.querySelectorAll(".store-post-card").forEach(card => {{
+    const shouldShow = currentStoreRange === "week" || card.dataset.rangeLatest === "1";
+    card.classList.toggle("range-hidden", !shouldShow);
+    card.dataset.rangeVisible = shouldShow ? "1" : "0";
+  }});
+  document.querySelectorAll(".store-group").forEach(group => {{
+    const meta = currentStoreRange === "week" ? group.dataset.weekMeta : group.dataset.latestMeta;
+    const metaEl = group.querySelector(".store-group-meta");
+    if (metaEl && meta) metaEl.textContent = meta;
+  }});
+}}
+
+function setStoreRangeMode(mode) {{
+  currentStoreRange = mode === "week" ? "week" : "latest";
+  updateStoreRangeButtons();
+  updateStoreRangeVisibility();
+  applyFilters();
+  requestAnimationFrame(() => setupScrollIndicators());
+}}
+
 function applyFilters() {{
   const search = document.getElementById("searchInput").value.trim().toLowerCase();
   document.querySelectorAll(".timeline-post").forEach(post => post.classList.toggle("hidden", !matchesItem(post, search)));
   document.querySelectorAll(".store-group").forEach(group => {{
     let visibleChildren = 0;
     group.querySelectorAll(".store-post-card").forEach(card => {{
-      const cardMatches = matchesItem(card, search);
+      const rangeOk = card.dataset.rangeVisible !== "0";
+      const cardMatches = rangeOk && matchesItem(card, search);
       card.classList.toggle("hidden", !cardMatches);
       if (cardMatches) visibleChildren += 1;
     }});
@@ -3481,6 +3634,8 @@ document.addEventListener("DOMContentLoaded", () => {{
   bindLandscapeImages();
   setupScrollIndicators();
   syncTypeButtons();
+  updateStoreRangeButtons();
+  updateStoreRangeVisibility();
   sortTimeline();
   applyFilters();
   setViewMode("timeline");

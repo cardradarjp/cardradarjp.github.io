@@ -430,6 +430,36 @@ a {
   color: white;
 }
 
+.store-view-tools {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.store-range-toggle {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.035);
+}
+
+.store-range-button {
+  min-height: 30px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(255,255,255,.68);
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.store-range-button.active {
+  border-color: rgba(255,255,255,.28);
+  background: rgba(255,255,255,.13);
+  color: #fff;
+}
+
 .view-panel.hidden {
   display: none !important;
 }
@@ -749,6 +779,10 @@ a {
   border: 1px solid rgba(255,255,255,.13);
   background: rgba(255,255,255,.035);
   padding: 10px;
+}
+
+.store-post-card.range-hidden {
+  display: none;
 }
 
 .store-post-meta {
