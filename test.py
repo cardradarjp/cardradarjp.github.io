@@ -2382,7 +2382,14 @@ main {
 }
 
 .image-card.is-landscape.landscape-mode-half .landscape-split {
-  grid-template-columns: repeat(2, minmax(min(78vw, 560px), 1fr));
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.image-card.is-landscape.landscape-mode-half .landscape-slice {
+  flex: 0 0 min(78vw, 560px);
 }
 
 .image-card.is-landscape.landscape-mode-quarter .landscape-split {
@@ -2610,7 +2617,14 @@ main {
   }
 
   .image-card.is-landscape.landscape-mode-half .landscape-split {
-    grid-template-columns: repeat(2, minmax(78vw, 1fr));
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .image-card.is-landscape.landscape-mode-half .landscape-slice {
+    flex: 0 0 78vw;
   }
 
   .image-card.is-landscape.landscape-mode-quarter .landscape-split {
