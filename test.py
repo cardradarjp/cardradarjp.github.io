@@ -1,4 +1,3 @@
-﻿from playwright.sync_api import sync_playwright
 import time
 import re
 import json
@@ -3058,6 +3057,7 @@ def build_area_page(posts_by_source, updated_at):
     </div>
 
     <div id="storeView" class="view-panel hidden">
+      <!-- STORE VIEW range controls are generated from test.py for the published Osaka/Nipponbashi HTML. -->
       <div class="section-head">
         <h2>STORE VIEW</h2>
         <p>店舗ごとに投稿を横スライドで表示</p>
@@ -4093,6 +4093,8 @@ def select_sources(area_id=None, source_id=None, max_sources=None):
 
 
 def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
+    from playwright.sync_api import sync_playwright
+
     previous_data = previous_data if previous_data is not None else load_data_items()
     posts_by_source = posts_by_source_from_data(previous_data)
     all_data = list(previous_data)
