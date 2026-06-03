@@ -3057,6 +3057,7 @@ def build_area_page(posts_by_source, updated_at):
     </div>
 
     <div id="storeView" class="view-panel hidden">
+      <!-- STORE VIEW range controls are generated from test.py for the published Osaka/Nipponbashi HTML. -->
       <div class="section-head">
         <h2>STORE VIEW</h2>
         <p>店舗ごとに投稿を横スライドで表示</p>
