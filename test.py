@@ -2382,14 +2382,27 @@ main {
 }
 
 .image-card.is-landscape.landscape-mode-half .landscape-split {
-  display: flex;
+  display: flex !important;
   flex-wrap: nowrap;
+  gap: 8px;
+  width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
 }
 
 .image-card.is-landscape.landscape-mode-half .landscape-slice {
-  flex: 0 0 min(78vw, 560px);
+  flex: 0 0 78vw;
+  min-width: 78vw;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 761px) {
+  .image-card.is-landscape.landscape-mode-half .landscape-slice {
+    flex-basis: min(48%, 560px);
+    min-width: min(48%, 560px);
+  }
 }
 
 .image-card.is-landscape.landscape-mode-quarter .landscape-split {
@@ -2617,14 +2630,20 @@ main {
   }
 
   .image-card.is-landscape.landscape-mode-half .landscape-split {
-    display: flex;
+    display: flex !important;
     flex-wrap: nowrap;
+    gap: 8px;
+    width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
   }
 
   .image-card.is-landscape.landscape-mode-half .landscape-slice {
     flex: 0 0 78vw;
+    min-width: 78vw;
+    scroll-snap-align: start;
   }
 
   .image-card.is-landscape.landscape-mode-quarter .landscape-split {
