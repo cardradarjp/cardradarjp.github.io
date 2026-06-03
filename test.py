@@ -1,4 +1,3 @@
-﻿from playwright.sync_api import sync_playwright
 import time
 import re
 import json
@@ -3553,9 +3552,15 @@ function updateStoreRangeButtons() {{
   }}
 }}
 
+function isStoreCardInCurrentRange(card) {{
+  if (!card) return false;
+  if (currentStoreRange === "week") return card.dataset.rangeWeek === "1";
+  return card.dataset.rangeLatest === "1";
+}}
+
 function updateStoreRangeVisibility() {{
   document.querySelectorAll(".store-post-card").forEach(card => {{
-    const shouldShow = currentStoreRange === "week" || card.dataset.rangeLatest === "1";
+    const shouldShow = isStoreCardInCurrentRange(card);
     card.classList.toggle("range-hidden", !shouldShow);
     card.dataset.rangeVisible = shouldShow ? "1" : "0";
   }});
@@ -3580,8 +3585,10 @@ function applyFilters() {{
   document.querySelectorAll(".store-group").forEach(group => {{
     let visibleChildren = 0;
     group.querySelectorAll(".store-post-card").forEach(card => {{
-      const rangeOk = card.dataset.rangeVisible !== "0";
+      const rangeOk = isStoreCardInCurrentRange(card);
       const cardMatches = rangeOk && matchesItem(card, search);
+      card.classList.toggle("range-hidden", !rangeOk);
+      card.dataset.rangeVisible = rangeOk ? "1" : "0";
       card.classList.toggle("hidden", !cardMatches);
       if (cardMatches) visibleChildren += 1;
     }});
@@ -3598,7 +3605,9 @@ function setViewMode(mode) {{
   document.getElementById("storeView").classList.toggle("hidden", currentView !== "store");
   document.getElementById("timelineViewButton").classList.toggle("active", currentView === "timeline");
   document.getElementById("storeViewButton").classList.toggle("active", currentView === "store");
-  updateResultCount();
+  updateStoreRangeButtons();
+  updateStoreRangeVisibility();
+  applyFilters();
   requestAnimationFrame(() => setupScrollIndicators());
 }}
 
@@ -3651,9 +3660,9 @@ document.addEventListener("DOMContentLoaded", () => {{
   bindLandscapeImages();
   setupScrollIndicators();
   syncTypeButtons();
+  currentStoreRange = "latest";
   updateStoreRangeButtons();
   updateStoreRangeVisibility();
-  sortTimeline();
   applyFilters();
   setViewMode("timeline");
   requestAnimationFrame(updateResultCount);
@@ -4093,6 +4102,8 @@ def select_sources(area_id=None, source_id=None, max_sources=None):
 
 
 def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
+    from playwright.sync_api import sync_playwright
+
     previous_data = previous_data if previous_data is not None else load_data_items()
     posts_by_source = posts_by_source_from_data(previous_data)
     all_data = list(previous_data)
