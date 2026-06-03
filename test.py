@@ -810,12 +810,35 @@ def normalize_post(item, source=None):
 def select_latest_posts(candidates):
     candidates = [normalize_post(post) for post in candidates]
     candidates.sort(key=sort_post_key, reverse=True)
-    posted_candidates = [post for post in candidates if parse_posted_at(post.get("posted_at")) and post.get("posted_date_jst")]
+    posted_candidates = [post for post in candidates if parse_jst_date(post.get("posted_date_jst"))]
     if posted_candidates:
-        latest_date = max(post["posted_date_jst"] for post in posted_candidates)
-        latest_day_posts = [post for post in candidates if post.get("posted_date_jst") == latest_date]
-        return latest_day_posts[:SAFETY_POSTS_PER_SOURCE]
+        latest_date_obj = max(parse_jst_date(post["posted_date_jst"]) for post in posted_candidates)
+        week_posts = []
+        for post in candidates:
+            post_date = parse_jst_date(post.get("posted_date_jst"))
+            if not post_date:
+                continue
+            days_old = (latest_date_obj - post_date).days
+            if 0 <= days_old < STORE_VIEW_RANGE_DAYS:
+                week_posts.append(post)
+        return week_posts[:SAFETY_POSTS_PER_SOURCE]
     return candidates[:FALLBACK_POSTS_PER_SOURCE]
+
+
+def build_source_selection_log(candidates, posts):
+    dated_candidates = [post for post in candidates if parse_jst_date(post.get("posted_date_jst"))]
+    latest_date = "-"
+    week_saved = "なし"
+    if dated_candidates:
+        latest_date_obj = max(parse_jst_date(post["posted_date_jst"]) for post in dated_candidates)
+        latest_date = latest_date_obj.strftime("%Y-%m-%d")
+        week_saved = "あり"
+    return (
+        f"取得候補：{len(candidates)}件 / "
+        f"保存対象：{len(posts)}件 / "
+        f"最新日：{latest_date} / "
+        f"過去7日保存：{week_saved}"
+    )
 
 
 def dedupe_data_items(items):
@@ -2348,6 +2371,51 @@ main {
   display: block;
 }
 
+.image-card.is-landscape:not(.landscape-mode-original) .landscape-split {
+  gap: 8px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+}
+
+.image-card.is-landscape.landscape-mode-half .landscape-split {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.image-card.is-landscape.landscape-mode-half .landscape-slice {
+  flex: 0 0 78vw;
+  min-width: 78vw;
+}
+
+.image-card.is-landscape.landscape-mode-quarter .landscape-split {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-card.is-landscape.landscape-mode-quarter .landscape-slice {
+  flex: 0 0 calc(50% - 4px);
+  min-width: min(72vw, 420px);
+}
+
+.image-card.is-landscape .landscape-slice {
+  scroll-snap-align: start;
+}
+
+.image-card.is-landscape.landscape-mode-original .landscape-split {
+  display: none;
+}
+
+@media (min-width: 761px) {
+  .image-card.is-landscape.landscape-mode-half .landscape-slice {
+    flex-basis: min(48%, 560px);
+    min-width: min(48%, 560px);
+  }
+}
+
 .image-card {
   position: relative;
 }
@@ -2552,6 +2620,35 @@ main {
 
   .is-landscape.landscape-mode-original .landscape-split {
     display: none;
+  }
+
+  .image-card.is-landscape:not(.landscape-mode-original) .landscape-split {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .image-card.is-landscape.landscape-mode-half .landscape-split {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+  }
+
+  .image-card.is-landscape.landscape-mode-half .landscape-slice {
+    flex: 0 0 78vw;
+    min-width: 78vw;
+  }
+
+  .image-card.is-landscape.landscape-mode-quarter .landscape-split {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+  }
+
+  .image-card.is-landscape.landscape-mode-quarter .landscape-slice {
+    flex: 0 0 74vw;
+    min-width: 74vw;
   }
 
   .timeline-head,
@@ -4226,6 +4323,7 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
 
                 print(f"[候補] {source['shop_name']} {source['source_type']} candidates={len(candidates)}")
                 posts = select_latest_posts(candidates)
+                print(f"[保存範囲] {source['shop_name']} {source['source_type']} {build_source_selection_log(candidates, posts)}")
 
                 posts_by_source[source["id"]] = posts
                 all_data = replace_source_items(all_data, source["id"], posts)
