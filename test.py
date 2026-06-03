@@ -2348,7 +2348,13 @@ main {
   display: block;
 }
 
-.image-card.is-landscape:not(.landscape-mode-original) .landscape-split {
+.image-card.is-landscape.landscape-mode-half > img {
+  display: none;
+}
+
+.image-card.is-landscape.landscape-mode-half .landscape-split {
+  display: flex;
+  flex-wrap: nowrap;
   gap: 8px;
   width: 100%;
   overflow-x: auto;
@@ -2358,32 +2364,10 @@ main {
   padding-bottom: 4px;
 }
 
-.image-card.is-landscape.landscape-mode-half .landscape-split {
-  display: flex;
-  flex-wrap: nowrap;
-}
-
 .image-card.is-landscape.landscape-mode-half .landscape-slice {
   flex: 0 0 78vw;
   min-width: 78vw;
-}
-
-.image-card.is-landscape.landscape-mode-quarter .landscape-split {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.image-card.is-landscape.landscape-mode-quarter .landscape-slice {
-  flex: 0 0 calc(50% - 4px);
-  min-width: min(72vw, 420px);
-}
-
-.image-card.is-landscape .landscape-slice {
   scroll-snap-align: start;
-}
-
-.image-card.is-landscape.landscape-mode-original .landscape-split {
-  display: none;
 }
 
 @media (min-width: 761px) {
@@ -2599,33 +2583,20 @@ main {
     display: none;
   }
 
-  .image-card.is-landscape:not(.landscape-mode-original) .landscape-split {
+  .image-card.is-landscape.landscape-mode-half .landscape-split {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
   }
 
-  .image-card.is-landscape.landscape-mode-half .landscape-split {
-    display: flex;
-    flex-wrap: nowrap;
-    grid-template-columns: none;
-  }
-
   .image-card.is-landscape.landscape-mode-half .landscape-slice {
     flex: 0 0 78vw;
     min-width: 78vw;
-  }
-
-  .image-card.is-landscape.landscape-mode-quarter .landscape-split {
-    display: flex;
-    flex-wrap: nowrap;
-    grid-template-columns: none;
-  }
-
-  .image-card.is-landscape.landscape-mode-quarter .landscape-slice {
-    flex: 0 0 74vw;
-    min-width: 74vw;
+    scroll-snap-align: start;
   }
 
   .timeline-head,
