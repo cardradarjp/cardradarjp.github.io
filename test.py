@@ -2371,6 +2371,32 @@ main {
   display: block;
 }
 
+.image-card.is-landscape:not(.landscape-mode-original) .landscape-split {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+}
+
+.image-card.is-landscape.landscape-mode-half .landscape-split {
+  grid-template-columns: repeat(2, minmax(min(78vw, 560px), 1fr));
+}
+
+.image-card.is-landscape.landscape-mode-quarter .landscape-split {
+  grid-template-columns: repeat(2, minmax(min(72vw, 420px), 1fr));
+}
+
+.image-card.is-landscape .landscape-slice {
+  scroll-snap-align: start;
+}
+
+.image-card.is-landscape.landscape-mode-original .landscape-split {
+  display: none;
+}
+
 .image-card {
   position: relative;
 }
@@ -2575,6 +2601,20 @@ main {
 
   .is-landscape.landscape-mode-original .landscape-split {
     display: none;
+  }
+
+  .image-card.is-landscape:not(.landscape-mode-original) .landscape-split {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .image-card.is-landscape.landscape-mode-half .landscape-split {
+    grid-template-columns: repeat(2, minmax(78vw, 1fr));
+  }
+
+  .image-card.is-landscape.landscape-mode-quarter .landscape-split {
+    grid-template-columns: repeat(2, minmax(74vw, 1fr));
   }
 
   .timeline-head,
