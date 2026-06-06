@@ -723,6 +723,10 @@ a {
   cursor: pointer;
 }
 
+.store-timeline-post .timeline-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .store-group-list {
   max-width: 100%;
   display: grid;
@@ -1633,55 +1637,92 @@ main {
       <h1 class="store-title">KURO</h1>
       <div class="store-sub">KURO / 大阪・日本橋</div>
       <p class="area-description">
-        この店舗の買取表画像を大きく表示しています。
+        この店舗の買取投稿を時系列で表示しています。
         画像をタップすると拡大表示し、必要な場合のみX埋め込みを読み込みます。
       </p>
       <div class="updated">LAST UPDATE : 2026/05/30 12:42</div>
     </div>
 
     
-<section class="image-section">
-  <h2>BOX買取</h2>
-  <div class="image-grid">
+<section class="image-section store-timeline-section">
+  <h2>TIMELINE</h2>
+  <div class="timeline-list store-timeline-list">
     
-<div class="image-card" onclick="openMedia('kuro-single_2060572284905984352_0')">
-  <img src="https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&amp;name=large" alt="KUROの買取表画像" loading="lazy">
-  <span class="landscape-hint">横スクロールで確認</span>
-  <div class="image-info">
-    <small>BOX / 確認 05/30 13:01 / 画像1枚</small>
+<article class="timeline-post store-timeline-post">
+  <div class="timeline-head">
+    <div class="timeline-store">KURO</div>
+    <div class="timeline-meta">確認：05/30 13:01<span class="timeline-type">　BOX</span></div>
   </div>
-</div>
 
-<div class="image-card" onclick="openMedia('kuro-box_2060209075909267756_1')">
-  <img src="https://pbs.twimg.com/media/HJdVO_EaYAA3tWn?format=jpg&amp;name=large" alt="KUROの買取表画像" loading="lazy">
-  <span class="landscape-hint">横スクロールで確認</span>
-  <div class="image-info">
-    <small>BOX / 確認 05/29 12:58 / 画像1枚</small>
-  </div>
-</div>
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openMedia('kuro-single_2060572284905984352_0')">
+      <img src="https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&amp;name=large" alt="KUROの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
+    </button>
 
   </div>
-</section>
 
-<section class="image-section">
-  <h2>シングル買取</h2>
-  <div class="image-grid">
-    
-<div class="image-card" onclick="openMedia('kuro-single_2060571930927788088_0')">
-  <img src="https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&amp;name=360x360" alt="KUROの買取表画像" loading="lazy">
-  <span class="landscape-hint">横スクロールで確認</span>
-  <div class="image-info">
-    <small>シングル / 確認 05/30 13:00 / 画像2枚</small>
+  <div class="timeline-actions">
+    <button type="button" onclick="openMedia('kuro-single_2060572284905984352_0')">拡大</button>
+    <a href="https://x.com/kuro_tcg/status/2060572284905984352" target="_blank" rel="noopener noreferrer">Xで開く</a>
   </div>
-</div>
+</article>
 
-<div class="image-card" onclick="openMedia('kuro-single_2060571930927788088_1')">
-  <img src="https://pbs.twimg.com/media/HJifP21boAALxJi?format=jpg&amp;name=360x360" alt="KUROの買取表画像" loading="lazy">
-  <span class="landscape-hint">横スクロールで確認</span>
-  <div class="image-info">
-    <small>シングル / 確認 05/30 13:00 / 画像2枚</small>
+<article class="timeline-post store-timeline-post">
+  <div class="timeline-head">
+    <div class="timeline-store">KURO</div>
+    <div class="timeline-meta">確認：05/30 13:00<span class="timeline-type">　シングル</span></div>
   </div>
-</div>
+
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openMedia('kuro-single_2060571930927788088_0')">
+      <img src="https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
+    </button>
+
+    <button class="timeline-image" type="button" onclick="openMedia('kuro-single_2060571930927788088_1')">
+      <img src="https://pbs.twimg.com/media/HJifP21boAALxJi?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 2 / 2</span>
+      <span class="landscape-hint">横スクロールで確認</span>
+    </button>
+
+  </div>
+
+  <div class="timeline-actions">
+    <button type="button" onclick="openMedia('kuro-single_2060571930927788088_0')">拡大</button>
+    <a href="https://x.com/kuro_tcg/status/2060571930927788088" target="_blank" rel="noopener noreferrer">Xで開く</a>
+  </div>
+</article>
+
+<article class="timeline-post store-timeline-post">
+  <div class="timeline-head">
+    <div class="timeline-store">KURO</div>
+    <div class="timeline-meta">確認：05/29 12:58<span class="timeline-type">　BOX</span></div>
+  </div>
+
+  <div class="timeline-images">
+
+    <button class="timeline-image" type="button" onclick="openMedia('kuro-box_2060209075909267756_0')">
+      <img src="https://pbs.twimg.com/media/HJdVO_EaYAA3tWn?format=jpg&amp;name=large" alt="KUROの買取表画像 1" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 1 / 1</span>
+      <span class="landscape-hint">横スクロールで確認</span>
+    </button>
+
+  </div>
+
+  <div class="timeline-actions">
+    <button type="button" onclick="openMedia('kuro-box_2060209075909267756_0')">拡大</button>
+    <a href="https://x.com/kuro_tcg/status/2060209075909267756" target="_blank" rel="noopener noreferrer">Xで開く</a>
+  </div>
+</article>
 
   </div>
 </section>
@@ -1714,7 +1755,7 @@ main {
 <script async src="https://platform.twitter.com/widgets.js"></script>
 
 <script>
-const MEDIA_ITEMS = {"kuro-single_2060572284905984352_0": {"image_url": "https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&name=large", "tweet_url": "https://x.com/kuro_tcg/status/2060572284905984352", "summary": "トレカショップKURO大阪日本橋店 3時間 本日5月30日（土）の買取価格はこちら 新弾ポケカ アビスアイ BOXシュリンクあり 14,600円 BOXシュリンクなし 12,600円 カートン【未開封】179,000円 パック 140円 新弾BOXは大きな凹み、シュリンク破れ以外の減額なし みなさまのご来店お待ちしております 5 3,775", "type_label": "BOX"}, "kuro-box_2060209075909267756_1": {"image_url": "https://pbs.twimg.com/media/HJdVO_EaYAA3tWn?format=jpg&name=large", "tweet_url": "https://x.com/kuro_tcg/status/2060209075909267756", "summary": "トレカショップKURO大阪日本橋店 5月29日 本日5月29日（水）の買取価格はこちら 新弾ポケカ アビスアイ BOXシュリンクあり 15,600円 BOXシュリンクなし 13,000円 カートン【未開封】189,000円 パック 140円 新弾BOXは大きな凹み、シュリンク破れ以外の減額なし みなさまのご来店お待ちしております 6 4,330", "type_label": "BOX"}, "kuro-single_2060571930927788088_0": {"image_url": "https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&name=360x360", "tweet_url": "https://x.com/kuro_tcg/status/2060571930927788088", "summary": "トレカショップKURO大阪日本橋店 3時間 【5/30ポケカ買取価格】 本日銀行振込のみ アビスアイ：14600 ニンジャスピナー：11000 ムニキスゼロ：8000 メガドリームex：15800 インフェルノX：24000 メガブレイブ：11600 メガシンフォニア：10000 ブラックボルト：19000 ホワイトフレア：18500 ブラックボルト 4 4,378", "type_label": "シングル"}, "kuro-single_2060571930927788088_1": {"image_url": "https://pbs.twimg.com/media/HJifP21boAALxJi?format=jpg&name=360x360", "tweet_url": "https://x.com/kuro_tcg/status/2060571930927788088", "summary": "トレカショップKURO大阪日本橋店 3時間 【5/30ポケカ買取価格】 本日銀行振込のみ アビスアイ：14600 ニンジャスピナー：11000 ムニキスゼロ：8000 メガドリームex：15800 インフェルノX：24000 メガブレイブ：11600 メガシンフォニア：10000 ブラックボルト：19000 ホワイトフレア：18500 ブラックボルト 4 4,378", "type_label": "シングル"}};
+const MEDIA_ITEMS = {"kuro-single_2060572284905984352_0": {"image_url": "https://pbs.twimg.com/media/HJifkb4aIAECb55?format=jpg&name=large", "tweet_url": "https://x.com/kuro_tcg/status/2060572284905984352", "summary": "トレカショップKURO大阪日本橋店 3時間 本日5月30日（土）の買取価格はこちら 新弾ポケカ アビスアイ BOXシュリンクあり 14,600円 BOXシュリンクなし 12,600...", "type_label": "BOX"}, "kuro-single_2060571930927788088_0": {"image_url": "https://pbs.twimg.com/media/HJifP2qbgAEi051?format=jpg&name=360x360", "tweet_url": "https://x.com/kuro_tcg/status/2060571930927788088", "summary": "トレカショップKURO大阪日本橋店 3時間 【5/30ポケカ買取価格】 本日銀行振込のみ アビスアイ：14600 ニンジャスピナー：11000 ムニキスゼロ：8000 メガドリーム...", "type_label": "シングル"}, "kuro-single_2060571930927788088_1": {"image_url": "https://pbs.twimg.com/media/HJifP21boAALxJi?format=jpg&name=360x360", "tweet_url": "https://x.com/kuro_tcg/status/2060571930927788088", "summary": "トレカショップKURO大阪日本橋店 3時間 【5/30ポケカ買取価格】 本日銀行振込のみ アビスアイ：14600 ニンジャスピナー：11000 ムニキスゼロ：8000 メガドリーム...", "type_label": "シングル"}, "kuro-box_2060209075909267756_0": {"image_url": "https://pbs.twimg.com/media/HJdVO_EaYAA3tWn?format=jpg&name=large", "tweet_url": "https://x.com/kuro_tcg/status/2060209075909267756", "summary": "トレカショップKURO大阪日本橋店 5月29日 本日5月29日（水）の買取価格はこちら 新弾ポケカ アビスアイ BOXシュリンクあり 15,600円 BOXシュリンクなし 13,0...", "type_label": "BOX"}};
 let currentTweetUrl = "";
 
 function getHighResImageUrl(url) {

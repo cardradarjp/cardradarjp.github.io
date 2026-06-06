@@ -884,6 +884,37 @@ def first_image(posts):
             return image_url
     return None
 
+
+def merge_posts_by_tweet(posts):
+    posts_by_key = {}
+
+    for raw_post in posts:
+        post = normalize_post(raw_post)
+        if not post.get("tweet_url"):
+            continue
+        if not post.get("image_urls"):
+            continue
+
+        key = post.get("tweet_url") or post.get("status_id")
+        if key not in posts_by_key:
+            merged = dict(post)
+            merged["image_urls"] = []
+            posts_by_key[key] = merged
+
+        merged = posts_by_key[key]
+        for image_url in post.get("image_urls", []):
+            if image_url not in merged["image_urls"]:
+                merged["image_urls"].append(image_url)
+
+        if infer_type_priority(post.get("display_type")) < infer_type_priority(merged.get("display_type")):
+            for field in ["display_type", "display_type_label", "source_id", "classify_reason"]:
+                if field in post:
+                    merged[field] = post[field]
+
+    merged_posts = list(posts_by_key.values())
+    merged_posts.sort(key=sort_post_key, reverse=True)
+    return merged_posts
+
 def get_timeline_posts(posts_by_source, area_id):
     posts_by_key = {}
 
@@ -1820,6 +1851,10 @@ a {
   color: rgba(255,255,255,.88);
   text-align: center;
   cursor: pointer;
+}
+
+.store-timeline-post .timeline-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .store-group-list {
@@ -3803,48 +3838,64 @@ def build_store_page(shop, posts_by_source, updated_at):
     posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
 
     media_items = {}
-    sections_html = ""
+    timeline_cards_html = ""
 
-    for display_type in ["x_post_psa", "x_post_fixed", "x_post_box", "x_post_single"]:
-        source_posts = [post for post in posts if post.get("display_type") == display_type]
-        if not source_posts:
+    for post in merge_posts_by_tweet(posts):
+        image_urls = post.get("image_urls", [])
+        if not image_urls:
             continue
 
-        meta = TYPE_META[display_type]
+        display_type = post.get("display_type", infer_display_type(post))
+        type_label = post.get("display_type_label") or short_type_label(display_type)
+        checked_label = format_update_label(post.get("posted_at") or post.get("collected_at", updated_at))
+        image_count = len(image_urls)
+        image_buttons = []
+        first_media_id = ""
 
-        images_html = ""
+        for image_index, image_url in enumerate(image_urls):
+            media_id = f'{post.get("source_id", "post")}_{post.get("status_id", 0)}_{image_index}'
+            if not first_media_id:
+                first_media_id = media_id
 
-        media_index = 0
+            media_items[media_id] = {
+                "image_url": image_url,
+                "tweet_url": post["tweet_url"],
+                "summary": short_summary(post.get("summary", "")),
+                "type_label": type_label,
+            }
 
-        for post in source_posts:
-            image_urls = post.get("image_urls", [])
+            image_buttons.append(f"""
+    <button class="timeline-image" type="button" onclick="openMedia('{h(media_id)}')">
+      <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
+      <span class="zoom-badge">拡大</span>
+      <span class="image-count">画像 {image_index + 1} / {image_count}</span>
+      <span class="landscape-hint">横スクロールで確認</span>
+    </button>
+""")
 
-            for image_url in image_urls:
-                media_id = f'{post.get("source_id", "post")}_{post.get("status_id", 0)}_{media_index}'
-                media_index += 1
-
-                media_items[media_id] = {
-                    "image_url": image_url,
-                    "tweet_url": post["tweet_url"],
-                    "summary": post.get("summary", ""),
-                    "type_label": post.get("display_type_label") or short_type_label(meta["label"]),
-                }
-
-                images_html += f"""
-<div class="image-card" onclick="openMedia('{h(media_id)}')">
-  <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像" loading="lazy">
-  <span class="landscape-hint">横スクロールで確認</span>
-  <div class="image-info">
-    <small>{h(post.get("display_type_label") or short_type_label(meta["label"]))} / 確認 {h(format_update_label(post.get("posted_at") or post.get("collected_at", updated_at)))} / 画像{len(image_urls)}枚</small>
+        timeline_cards_html += f"""
+<article class="timeline-post store-timeline-post">
+  <div class="timeline-head">
+    <div class="timeline-store">{h(shop["shop_name"])}</div>
+    <div class="timeline-meta">確認：{h(checked_label)}<span class="timeline-type">　{h(short_type_label(type_label))}</span></div>
   </div>
-</div>
+
+  <div class="timeline-images">
+{''.join(image_buttons)}
+  </div>
+
+  <div class="timeline-actions">
+    <button type="button" onclick="openMedia('{h(first_media_id)}')">拡大</button>
+    <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
+  </div>
+</article>
 """
 
-        sections_html += f"""
-<section class="image-section">
-  <h2>{h(meta["label"])}</h2>
-  <div class="image-grid">
-    {images_html}
+    sections_html = f"""
+<section class="image-section store-timeline-section">
+  <h2>TIMELINE</h2>
+  <div class="timeline-list store-timeline-list">
+    {timeline_cards_html if timeline_cards_html else '<div class="no-result">該当する買取投稿はありません。<br>条件を変更してください。</div>'}
   </div>
 </section>
 """
@@ -3888,7 +3939,7 @@ def build_store_page(shop, posts_by_source, updated_at):
       <h1 class="store-title">{h(shop["shop_name"])}</h1>
       <div class="store-sub">{h(shop["brand"])} / {h(shop["area"])}</div>
       <p class="area-description">
-        この店舗の買取表画像を大きく表示しています。
+        この店舗の買取投稿を時系列で表示しています。
         画像をタップすると拡大表示し、必要な場合のみX埋め込みを読み込みます。
       </p>
       <div class="updated">LAST UPDATE : {h(updated_at)}</div>
