@@ -3142,8 +3142,8 @@ def build_area_page(posts_by_source, updated_at):
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 12px;
-  padding: 2px 12px 12px;
+  gap: 16px;
+  padding: 4px 12px 14px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
@@ -3156,13 +3156,15 @@ def build_area_page(posts_by_source, updated_at):
   min-width: 74vw !important;
   max-width: 74vw !important;
   scroll-snap-align: start;
-  padding: 9px;
-  border-color: rgba(255,255,255,.13);
-  background: rgba(255,255,255,.032);
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 16px;
+  background: rgba(255,255,255,.045);
+  box-shadow: 0 10px 24px rgba(0,0,0,.24);
 }
 
 #storeView .store-post-shop {
-  margin: 0 1px 2px;
+  margin: 0 1px 4px;
   color: rgba(255,255,255,.90);
   font-size: 12px;
   font-weight: 650;
@@ -3170,7 +3172,9 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-meta {
-  margin: 0 1px 7px;
+  margin: 0 1px 9px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
   color: rgba(255,255,255,.66);
   font-size: 10.5px;
   line-height: 1.35;
@@ -3205,9 +3209,61 @@ def build_area_page(posts_by_source, updated_at):
   object-fit: contain;
 }
 
-#storeView .store-post-image .landscape-mode-switch,
-#storeView .store-post-image .landscape-split {
-  display: none !important;
+#storeView .store-post-image .landscape-mode-switch {
+  gap: 4px;
+  margin-top: 5px;
+}
+
+#storeView .store-post-image .landscape-mode-button {
+  padding: 4px 6px;
+  font-size: 10px;
+}
+
+#storeView .store-post-image .image-count,
+#storeView .store-post-image .zoom-badge,
+#storeView .store-post-image .landscape-hint,
+#storeView .store-post-image .scroll-progress {
+  margin-top: 4px;
+  padding: 3px 5px;
+  font-size: 10px;
+}
+
+#storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-split,
+#storeView .store-view-landscape-split {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 8px;
+  width: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-half .landscape-slice {
+  flex: 0 0 82% !important;
+  min-width: 82% !important;
+  max-width: 82% !important;
+  scroll-snap-align: start;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-split {
+  display: grid !important;
+  grid-auto-flow: column !important;
+  grid-auto-columns: 72% !important;
+  grid-template-columns: none !important;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice {
+  width: auto !important;
+  min-width: 0 !important;
+  scroll-snap-align: start;
+}
+
+#storeView .store-post-image.is-landscape .landscape-slice-frame img {
+  max-height: 42vh;
+  object-fit: contain;
 }
 
 #storeView .store-post-actions {
@@ -3568,7 +3624,7 @@ function renderLandscapeModeSwitch(target, mode) {{
 }}
 
 function renderLandscapeView(target, img) {{
-  const mode = target.classList.contains("store-post-image") ? "original" : getLandscapeMode();
+  const mode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
   const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   target.classList.toggle("landscape-mode-original", mode === "original");
