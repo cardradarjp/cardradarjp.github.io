@@ -3893,7 +3893,8 @@ def build_store_page(shop, posts_by_source, updated_at):
 
     sections_html = f"""
 <section class="image-section store-timeline-section">
-  <h2>TIMELINE</h2>
+  <h2>店舗タイムライン</h2>
+  <p class="section-note">この店舗の買取投稿を新しい順に表示しています。</p>
   <div class="timeline-list store-timeline-list">
     {timeline_cards_html if timeline_cards_html else '<div class="no-result">該当する買取投稿はありません。<br>条件を変更してください。</div>'}
   </div>
@@ -3920,6 +3921,49 @@ def build_store_page(shop, posts_by_source, updated_at):
 """
 
     media_json = json_for_script(media_items)
+    store_timeline_css = """
+<style>
+.store-timeline-section .section-note {
+  margin: -6px 0 14px;
+  color: rgba(255,255,255,.56);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.store-timeline-list {
+  max-width: 820px;
+  gap: 22px;
+}
+
+.store-timeline-post {
+  padding: 15px;
+}
+
+.store-timeline-post .timeline-head {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.store-timeline-post .timeline-images {
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.store-timeline-post .timeline-actions {
+  margin-top: 12px;
+}
+
+@media (max-width: 760px) {
+  .store-timeline-list {
+    gap: 20px;
+  }
+
+  .store-timeline-post {
+    padding: 13px;
+  }
+}
+</style>
+"""
 
     content = f"""
 <div class="page-shell">
@@ -3933,6 +3977,8 @@ def build_store_page(shop, posts_by_source, updated_at):
       STORE
     </div>
   </section>
+
+  {store_timeline_css}
 
   <main class="store-layout">
     <div class="store-header">
