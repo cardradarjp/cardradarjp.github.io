@@ -1580,8 +1580,9 @@ main {
 }
 
 /* 店舗ページ：横長画像の縦1/2分割を横並びに固定 */
-.image-card.is-landscape.landscape-mode-half .landscape-split {
+.store-image-card.is-landscape.landscape-mode-half .landscape-split {
   display: flex !important;
+  flex-direction: row !important;
   flex-wrap: nowrap !important;
   gap: 8px;
   width: 100%;
@@ -1591,16 +1592,20 @@ main {
   scroll-snap-type: x mandatory;
 }
 
-.image-card.is-landscape.landscape-mode-half .landscape-slice {
-  flex: 0 0 78vw;
-  min-width: 78vw;
+.store-image-card.is-landscape.landscape-mode-half .landscape-slice {
+  flex: 0 0 86vw !important;
+  width: 86vw !important;
+  min-width: 86vw !important;
+  max-width: 86vw !important;
   scroll-snap-align: start;
 }
 
 @media (min-width: 761px) {
-  .image-card.is-landscape.landscape-mode-half .landscape-slice {
-    flex-basis: min(48%, 560px);
-    min-width: min(48%, 560px);
+  .store-image-card.is-landscape.landscape-mode-half .landscape-slice {
+    flex-basis: min(48%, 560px) !important;
+    width: min(48%, 560px) !important;
+    min-width: min(48%, 560px) !important;
+    max-width: min(48%, 560px) !important;
   }
 }
 
@@ -1644,7 +1649,7 @@ main {
   <h2>PSA買取</h2>
   <div class="image-grid">
     
-<div class="image-card" onclick="openMedia('gotcha-single_2060580083413487665_0')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-single_2060580083413487665_0')">
   <img src="https://pbs.twimg.com/media/HJimiFCbEAAoAo2?format=jpg&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1652,7 +1657,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-single_2060572506436882602_1')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-single_2060572506436882602_1')">
   <img src="https://pbs.twimg.com/media/HJifdk0bcAApD4v?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1667,7 +1672,7 @@ main {
   <h2>BOX買取</h2>
   <div class="image-grid">
     
-<div class="image-card" onclick="openMedia('gotcha-single_2060608992997704020_0')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-single_2060608992997704020_0')">
   <img src="https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1675,7 +1680,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-box_2060608992997704020_1')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-box_2060608992997704020_1')">
   <img src="https://pbs.twimg.com/media/HJjA7PHaMAAt6Zi?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1683,7 +1688,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-single_2060572324274045303_2')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-single_2060572324274045303_2')">
   <img src="https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1691,7 +1696,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-single_2060572324274045303_3')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-single_2060572324274045303_3')">
   <img src="https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1699,7 +1704,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-box_2060572324274045303_4')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-box_2060572324274045303_4')">
   <img src="https://pbs.twimg.com/media/HJiflM0boAApNXL?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1707,7 +1712,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-box_2060572324274045303_5')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-box_2060572324274045303_5')">
   <img src="https://pbs.twimg.com/media/HJifm0RbcAAO-t9?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1715,7 +1720,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-single_2060570546635682142_6')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-single_2060570546635682142_6')">
   <img src="https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1723,7 +1728,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-box_2060570546635682142_7')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-box_2060570546635682142_7')">
   <img src="https://pbs.twimg.com/media/HJidk6Rb0AAwnwk?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1731,7 +1736,7 @@ main {
   </div>
 </div>
 
-<div class="image-card" onclick="openMedia('gotcha-box_2060568057123086839_8')">
+<div class="image-card store-image-card" onclick="openMedia('gotcha-box_2060568057123086839_8')">
   <img src="https://pbs.twimg.com/media/HJibfdJagAAMtcx?format=png&amp;name=large" alt="GOTCHA!の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -1868,7 +1873,6 @@ function renderLandscapeView(target, img) {
     return;
   }
   if (mode === "quarter") {
-    split.style.setProperty("--landscape-panel-ratio", ratio.toFixed(4));
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
       <span class="landscape-slice-label">左上</span>
@@ -1889,7 +1893,6 @@ function renderLandscapeView(target, img) {
   `;
     return;
   }
-  split.style.removeProperty("--landscape-panel-ratio");
   split.innerHTML = `
     <div class="landscape-slice is-left">
       <span class="landscape-slice-label">左半分</span>

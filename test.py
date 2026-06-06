@@ -2679,8 +2679,9 @@ main {
 }
 
 /* 店舗ページ：横長画像の縦1/2分割を横並びに固定 */
-.image-card.is-landscape.landscape-mode-half .landscape-split {
+.store-image-card.is-landscape.landscape-mode-half .landscape-split {
   display: flex !important;
+  flex-direction: row !important;
   flex-wrap: nowrap !important;
   gap: 8px;
   width: 100%;
@@ -2690,16 +2691,20 @@ main {
   scroll-snap-type: x mandatory;
 }
 
-.image-card.is-landscape.landscape-mode-half .landscape-slice {
-  flex: 0 0 78vw;
-  min-width: 78vw;
+.store-image-card.is-landscape.landscape-mode-half .landscape-slice {
+  flex: 0 0 86vw !important;
+  width: 86vw !important;
+  min-width: 86vw !important;
+  max-width: 86vw !important;
   scroll-snap-align: start;
 }
 
 @media (min-width: 761px) {
-  .image-card.is-landscape.landscape-mode-half .landscape-slice {
-    flex-basis: min(48%, 560px);
-    min-width: min(48%, 560px);
+  .store-image-card.is-landscape.landscape-mode-half .landscape-slice {
+    flex-basis: min(48%, 560px) !important;
+    width: min(48%, 560px) !important;
+    min-width: min(48%, 560px) !important;
+    max-width: min(48%, 560px) !important;
   }
 }
 """
@@ -3449,7 +3454,7 @@ function renderLandscapeView(target, img) {{
       <span class="landscape-slice-label">右下</span>
       <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
-  `;
+  `; 
     return;
   }}
   split.style.removeProperty("--landscape-panel-ratio");
@@ -3831,7 +3836,7 @@ def build_store_page(shop, posts_by_source, updated_at):
                 }
 
                 images_html += f"""
-<div class="image-card" onclick="openMedia('{h(media_id)}')">
+<div class="image-card store-image-card" onclick="openMedia('{h(media_id)}')">
   <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像" loading="lazy">
   <span class="landscape-hint">横スクロールで確認</span>
   <div class="image-info">
@@ -4021,7 +4026,6 @@ function renderLandscapeView(target, img) {{
     return;
   }}
   if (mode === "quarter") {{
-    split.style.setProperty("--landscape-panel-ratio", ratio.toFixed(4));
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
       <span class="landscape-slice-label">左上</span>
@@ -4042,7 +4046,6 @@ function renderLandscapeView(target, img) {{
   `;
     return;
   }}
-  split.style.removeProperty("--landscape-panel-ratio");
   split.innerHTML = `
     <div class="landscape-slice is-left">
       <span class="landscape-slice-label">左半分</span>
