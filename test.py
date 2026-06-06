@@ -3210,6 +3210,19 @@ def build_area_page(posts_by_source, updated_at):
   scroll-snap-type: x mandatory;
 }
 
+.store-view-section .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-split,
+.store-view-section .store-view-landscape-split {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 8px;
+  width: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
 .store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-half .landscape-split {
   display: flex !important;
   flex-direction: row !important;
@@ -3222,9 +3235,22 @@ def build_area_page(posts_by_source, updated_at):
   scroll-snap-type: x mandatory;
 }
 
+.store-view-section .store-post-image.is-landscape.landscape-mode-half .landscape-split {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+}
+
 .store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-half .landscape-slice {
   flex: 0 0 82%;
   min-width: 82%;
+  scroll-snap-align: start;
+}
+
+.store-view-section .store-post-image.is-landscape.landscape-mode-half .landscape-slice {
+  flex: 0 0 82% !important;
+  min-width: 82% !important;
+  max-width: 82% !important;
   scroll-snap-align: start;
 }
 
@@ -3241,7 +3267,26 @@ def build_area_page(posts_by_source, updated_at):
   scroll-snap-type: x mandatory;
 }
 
+.store-view-section .store-post-image.is-landscape.landscape-mode-quarter .landscape-split {
+  display: grid !important;
+  grid-auto-flow: column !important;
+  grid-auto-columns: 72% !important;
+  grid-template-columns: none !important;
+  gap: 8px;
+  width: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
 .store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-quarter .landscape-slice {
+  scroll-snap-align: start;
+}
+
+.store-view-section .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice {
+  width: auto !important;
+  min-width: 0 !important;
   scroll-snap-align: start;
 }
 
@@ -3630,6 +3675,7 @@ function renderLandscapeView(target, img) {{
     split.className = "landscape-split";
     img.insertAdjacentElement("afterend", split);
   }}
+  split.classList.toggle("store-view-landscape-split", target.classList.contains("store-post-image"));
   if (mode === "original") {{
     split.innerHTML = "";
     return;
