@@ -1916,6 +1916,27 @@ function renderLandscapeView(target, img) {
   `;
 }
 
+iif (target.matches(".image-card, .modal-image-wrap")) {
+  split.style.setProperty("display", "flex", "important");
+  split.style.setProperty("flex-direction", "row", "important");
+  split.style.setProperty("flex-wrap", "nowrap", "important");
+  split.style.setProperty("gap", "8px");
+  split.style.setProperty("width", "100%");
+  split.style.setProperty("overflow-x", "auto");
+  split.style.setProperty("overflow-y", "hidden");
+  split.style.setProperty("-webkit-overflow-scrolling", "touch");
+  split.style.setProperty("scroll-snap-type", "x mandatory");
+
+  split.querySelectorAll(".landscape-slice").forEach(slice => {
+    slice.style.setProperty("display", "block", "important");
+    slice.style.setProperty("flex", "0 0 78vw", "important");
+    slice.style.setProperty("width", "78vw", "important");
+    slice.style.setProperty("min-width", "78vw", "important");
+    slice.style.setProperty("max-width", "78vw", "important");
+    slice.style.setProperty("scroll-snap-align", "start");
+  });
+}
+
 function bindLandscapeImages(root = document) {
   root.querySelectorAll(".timeline-image img, .image-card img").forEach(img => {
     upgradeImageElement(img);
