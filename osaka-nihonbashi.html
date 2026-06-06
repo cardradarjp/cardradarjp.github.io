@@ -1714,8 +1714,21 @@ main {
 
 .store-view-section .store-post-card .timeline-image.is-landscape:not(.landscape-mode-original) .landscape-split {
   display: flex !important;
+  flex-direction: row !important;
   flex-wrap: nowrap !important;
   gap: 7px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-half .landscape-split {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 8px;
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -1729,9 +1742,20 @@ main {
   scroll-snap-align: start;
 }
 
+.store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-quarter .landscape-split {
+  display: grid !important;
+  grid-auto-flow: column;
+  grid-auto-columns: 72%;
+  grid-template-columns: none !important;
+  gap: 8px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
 .store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-quarter .landscape-slice {
-  flex: 0 0 72%;
-  min-width: 72%;
   scroll-snap-align: start;
 }
 
@@ -1768,6 +1792,13 @@ main {
 
   .store-view-section .store-post-card .timeline-image.is-landscape .landscape-slice-frame img {
     max-height: 380px;
+  }
+}
+
+@media (max-width: 760px) {
+  .store-view-section .store-post-card {
+    flex-basis: 68vw;
+    min-width: 68vw;
   }
 }
 </style>
