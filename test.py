@@ -3168,7 +3168,7 @@ def build_area_page(posts_by_source, updated_at):
   <main>
     <div id="timelineView" class="view-panel">
       <div class="section-head">
-        <h2>TIMELINE</h2>
+        <h2>新着TL</h2>
         <p>1ツイート1カードで表示 / {h(timeline_notice)}</p>
       </div>
 
