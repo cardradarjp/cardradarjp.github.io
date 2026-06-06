@@ -3005,6 +3005,7 @@ def build_area_page(posts_by_source, updated_at):
         data-range-latest="{in_latest_range}"
         data-range-week="1"
       >
+        <div class="store-post-shop">{h(post.get("shop_name", ""))}</div>
         <div class="store-post-meta">確認：{h(checked_label)} / {h(type_label)} / 画像 {image_count}枚</div>
         <div class="store-post-image-list">
 {''.join(store_image_buttons)}
@@ -3012,6 +3013,7 @@ def build_area_page(posts_by_source, updated_at):
         <div class="store-post-actions">
           <button type="button" onclick="openTimelineMedia('{h(media_id)}', 0)">拡大</button>
           <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
+          <a href="stores/{h(post["shop_slug"])}.html">この店舗を見る</a>
         </div>
       </article>
 """
@@ -3122,6 +3124,87 @@ def build_area_page(posts_by_source, updated_at):
 """
 
     media_json = json_for_script(media_items)
+    store_view_css = """
+<style>
+.store-view-section .store-group {
+  padding: 14px 12px 16px;
+}
+
+.store-view-section .store-post-strip {
+  gap: 12px;
+  padding: 3px 3px 12px;
+}
+
+.store-view-section .store-post-card {
+  flex: 0 0 min(88vw, 540px);
+  padding: 9px;
+  border-color: rgba(255,255,255,.13);
+  background: rgba(255,255,255,.028);
+}
+
+.store-view-section .store-post-shop {
+  margin: 0 2px 3px;
+  color: rgba(255,255,255,.90);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.store-view-section .store-post-meta {
+  margin-bottom: 8px;
+  color: rgba(255,255,255,.66);
+}
+
+.store-view-section .store-post-image-list {
+  gap: 9px;
+  padding-bottom: 9px;
+}
+
+.store-view-section .store-post-image-list .store-post-image {
+  flex: 0 0 100%;
+  min-width: 100%;
+}
+
+.store-view-section .store-post-card .timeline-image {
+  background: rgba(0,0,0,.82);
+  border-color: rgba(255,255,255,.13);
+}
+
+.store-view-section .store-post-card .timeline-image img {
+  width: 100%;
+  height: auto;
+  max-height: 72vh;
+  object-fit: contain;
+}
+
+.store-view-section .store-post-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 8px;
+  padding: 0;
+}
+
+.store-view-section .store-post-actions a,
+.store-view-section .store-post-actions button {
+  width: 100%;
+  min-height: 32px;
+  padding: 7px 6px;
+  font-size: 11px;
+  white-space: normal;
+}
+
+@media (min-width: 900px) {
+  .store-view-section .store-post-card {
+    flex-basis: min(46%, 560px);
+  }
+
+  .store-view-section .store-post-card .timeline-image img {
+    max-height: 560px;
+  }
+}
+</style>
+"""
 
     content = f"""
 <div class="page-shell">
@@ -3141,6 +3224,8 @@ def build_area_page(posts_by_source, updated_at):
 
     <div class="updated">LAST CHECK : {h(updated_at)}</div>
   </section>
+
+  {store_view_css}
 
   <div class="search-area" id="searchArea">
     <div class="search-line">
