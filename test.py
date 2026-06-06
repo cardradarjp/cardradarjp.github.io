@@ -3029,14 +3029,14 @@ def build_area_page(posts_by_source, updated_at):
   data-latest-meta="{h(store_view_meta["latest_meta"])}"
   data-week-meta="{h(store_view_meta["week_meta"])}"
 >
-  <div class="store-group-head">
+  <div class="store-group-header">
     <div>
       <div class="store-group-name">{h(shop["shop_name"])}</div>
       <div class="store-group-meta">{h(store_view_meta["latest_meta"])}</div>
     </div>
     <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
   </div>
-  <div class="store-post-strip">
+  <div class="store-post-carousel">
 {store_post_cards}
   </div>
 </section>
@@ -3126,33 +3126,42 @@ def build_area_page(posts_by_source, updated_at):
     media_json = json_for_script(media_items)
     store_view_css = """
 <style>
-.store-view-section .store-group {
-  padding: 14px 12px 16px;
+#storeView .store-group {
+  padding: 14px 0 16px;
 }
 
-.store-view-section .store-post-strip {
+#storeView .store-group-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 0 12px 8px;
+}
+
+#storeView .store-post-carousel {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 11px;
-  padding: 3px 10px 12px 3px;
+  gap: 12px;
+  padding: 2px 12px 12px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
 }
 
-.store-view-section .store-post-card {
-  flex: 0 0 68vw !important;
-  min-width: 68vw !important;
-  max-width: 68vw !important;
+#storeView .store-post-card {
+  flex: 0 0 74vw !important;
+  min-width: 74vw !important;
+  max-width: 74vw !important;
   scroll-snap-align: start;
-  padding: 8px;
+  padding: 9px;
   border-color: rgba(255,255,255,.13);
-  background: rgba(255,255,255,.028);
+  background: rgba(255,255,255,.032);
 }
 
-.store-view-section .store-post-shop {
+#storeView .store-post-shop {
   margin: 0 1px 2px;
   color: rgba(255,255,255,.90);
   font-size: 12px;
@@ -3160,161 +3169,48 @@ def build_area_page(posts_by_source, updated_at):
   line-height: 1.35;
 }
 
-.store-view-section .store-post-meta {
+#storeView .store-post-meta {
   margin: 0 1px 7px;
   color: rgba(255,255,255,.66);
   font-size: 10.5px;
   line-height: 1.35;
 }
 
-.store-view-section .store-post-image-list {
+#storeView .store-post-image-list {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 7px;
+  gap: 8px;
   padding-bottom: 8px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
 }
 
-.store-view-section .store-post-image-list .store-post-image {
-  flex: 0 0 82% !important;
-  min-width: 82% !important;
-  max-width: 82% !important;
+#storeView .store-post-image {
+  flex: 0 0 88% !important;
+  min-width: 88% !important;
+  max-width: 88% !important;
   scroll-snap-align: start;
-}
-
-.store-view-section .store-post-card .timeline-image {
   background: rgba(0,0,0,.82);
   border-color: rgba(255,255,255,.13);
 }
 
-.store-view-section .store-post-card .timeline-image img {
+#storeView .store-post-image img {
   width: 100%;
   height: auto;
   max-height: 48vh;
   object-fit: contain;
 }
 
-.store-view-section .store-post-card .landscape-mode-switch {
-  gap: 4px;
-  margin-top: 5px;
+#storeView .store-post-image .landscape-mode-switch,
+#storeView .store-post-image .landscape-split {
+  display: none !important;
 }
 
-.store-view-section .store-post-card .landscape-mode-button {
-  padding: 4px 6px;
-  font-size: 10px;
-}
-
-.store-view-section .store-post-card .image-count,
-.store-view-section .store-post-card .zoom-badge,
-.store-view-section .store-post-card .landscape-hint,
-.store-view-section .store-post-card .scroll-progress {
-  margin-top: 4px;
-  padding: 3px 5px;
-  font-size: 10px;
-}
-
-.store-view-section .store-post-card .timeline-image.is-landscape:not(.landscape-mode-original) .landscape-split {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  gap: 7px;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-}
-
-.store-view-section .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-split,
-.store-view-section .store-view-landscape-split {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  gap: 8px;
-  width: 100%;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-}
-
-.store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-half .landscape-split {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  gap: 8px;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-}
-
-.store-view-section .store-post-image.is-landscape.landscape-mode-half .landscape-split {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-}
-
-.store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-half .landscape-slice {
-  flex: 0 0 82%;
-  min-width: 82%;
-  scroll-snap-align: start;
-}
-
-.store-view-section .store-post-image.is-landscape.landscape-mode-half .landscape-slice {
-  flex: 0 0 82% !important;
-  min-width: 82% !important;
-  max-width: 82% !important;
-  scroll-snap-align: start;
-}
-
-.store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-quarter .landscape-split {
-  display: grid !important;
-  grid-auto-flow: column;
-  grid-auto-columns: 72%;
-  grid-template-columns: none !important;
-  gap: 8px;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-}
-
-.store-view-section .store-post-image.is-landscape.landscape-mode-quarter .landscape-split {
-  display: grid !important;
-  grid-auto-flow: column !important;
-  grid-auto-columns: 72% !important;
-  grid-template-columns: none !important;
-  gap: 8px;
-  width: 100%;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-}
-
-.store-view-section .store-post-card .timeline-image.is-landscape.landscape-mode-quarter .landscape-slice {
-  scroll-snap-align: start;
-}
-
-.store-view-section .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice {
-  width: auto !important;
-  min-width: 0 !important;
-  scroll-snap-align: start;
-}
-
-.store-view-section .store-post-card .timeline-image.is-landscape .landscape-slice-frame img {
-  max-height: 42vh;
-  object-fit: contain;
-}
-
-.store-view-section .store-post-actions {
+#storeView .store-post-actions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 5px;
@@ -3322,8 +3218,8 @@ def build_area_page(posts_by_source, updated_at):
   padding: 0;
 }
 
-.store-view-section .store-post-actions a,
-.store-view-section .store-post-actions button {
+#storeView .store-post-actions a,
+#storeView .store-post-actions button {
   width: 100%;
   min-height: 29px;
   padding: 6px 4px;
@@ -3332,25 +3228,14 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 @media (min-width: 900px) {
-  .store-view-section .store-post-card {
-    flex-basis: min(360px, 42vw) !important;
-    min-width: min(360px, 42vw) !important;
-    max-width: min(360px, 42vw) !important;
+  #storeView .store-post-card {
+    flex-basis: min(360px, 36vw) !important;
+    min-width: min(360px, 36vw) !important;
+    max-width: min(360px, 36vw) !important;
   }
 
-  .store-view-section .store-post-card .timeline-image img {
+  #storeView .store-post-image img {
     max-height: 430px;
-  }
-
-  .store-view-section .store-post-card .timeline-image.is-landscape .landscape-slice-frame img {
-    max-height: 380px;
-  }
-}
-
-@media (max-width: 760px) {
-  .store-view-section .store-post-card {
-    flex-basis: 68vw;
-    min-width: 68vw;
   }
 }
 </style>
@@ -3683,7 +3568,7 @@ function renderLandscapeModeSwitch(target, mode) {{
 }}
 
 function renderLandscapeView(target, img) {{
-  const mode = getLandscapeMode();
+  const mode = target.classList.contains("store-post-image") ? "original" : getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
   const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   target.classList.toggle("landscape-mode-original", mode === "original");
@@ -3745,7 +3630,7 @@ function bindLandscapeImages(root = document) {{
 }}
 
 function getScrollIndicatorHost(el) {{
-  if (el.matches(".store-post-strip, .store-post-image-list")) return el.parentElement || el;
+  if (el.matches(".store-post-carousel, .store-post-strip, .store-post-image-list")) return el.parentElement || el;
   return el;
 }}
 
@@ -3759,7 +3644,7 @@ function ensureScrollIndicator(el) {{
     indicator.className = "scroll-progress";
     indicator.id = `scrollIndicator_${{Math.random().toString(36).slice(2)}}`;
     el.dataset.scrollIndicatorId = indicator.id;
-    if (el.matches(".store-post-strip, .store-post-image-list")) {{
+    if (el.matches(".store-post-carousel, .store-post-strip, .store-post-image-list")) {{
       el.insertAdjacentElement("afterend", indicator);
     }} else {{
       host.appendChild(indicator);
@@ -3786,8 +3671,8 @@ function updateScrollIndicator(el) {{
 function setupScrollIndicators(root = document) {{
   const scope = root instanceof Element ? root : document;
   const targets = new Set();
-  if (scope.matches?.(".store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split")) targets.add(scope);
-  scope.querySelectorAll?.(".store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split").forEach(el => targets.add(el));
+  if (scope.matches?.(".store-post-carousel, .store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split")) targets.add(scope);
+  scope.querySelectorAll?.(".store-post-carousel, .store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split").forEach(el => targets.add(el));
   targets.forEach(el => {{
     if (!el.dataset.scrollAwareBound) {{
       el.dataset.scrollAwareBound = "1";
