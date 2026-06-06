@@ -1642,7 +1642,7 @@ main {
 
     <div class="view-switch" role="group" aria-label="表示切替">
       <button id="timelineViewButton" class="view-toggle active" type="button" onclick="setViewMode('timeline')">新着TL</button>
-      <button id="storeViewButton" class="view-toggle" type="button" onclick="setViewMode('store')">店舗ごと</button>
+      <button id="storeViewButton" class="view-toggle" type="button" onclick="setViewMode('store')">店舗別ビュー</button>
     </div>
 
     <div class="type-row">
@@ -2357,11 +2357,11 @@ main {
     </div>
 
     <div id="storeView" class="view-panel hidden">
-      <!-- STORE VIEW range controls are generated from test.py for the published Osaka/Nipponbashi HTML. -->
+      <!-- 店舗別ビューの表示範囲 controls are generated from test.py for the published Osaka/Nipponbashi HTML. -->
       <div class="section-head">
-        <h2>STORE VIEW</h2>
-        <p>店舗ごとに投稿を横スライドで表示</p>
-        <div class="store-view-tools" aria-label="STORE VIEW表示範囲">
+        <h2>店舗別ビュー</h2>
+        <p>店舗別ビューで投稿を横スライド表示</p>
+        <div class="store-view-tools" aria-label="店舗別ビュー表示範囲">
           <div class="store-range-toggle">
             <button id="storeRangeLatestButton" class="store-range-button active" type="button" onclick="setStoreRangeMode('latest')">最新のみ</button>
             <button id="storeRangeWeekButton" class="store-range-button" type="button" onclick="setStoreRangeMode('week')">過去7日</button>
