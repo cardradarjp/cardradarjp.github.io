@@ -1,4 +1,4 @@
-import time
+﻿import time
 import re
 import json
 import sys
@@ -2683,10 +2683,11 @@ main {
   }
 }
 
-/* 店舗ページ：横長画像の縦1/2分割を横並びに固定 */
+/* 店舗ページ/拡大モーダル：横長画像の縦1/2分割を横並びに固定 */
 .image-card.is-landscape.landscape-mode-half .landscape-split,
 .modal-image-wrap.is-landscape.landscape-mode-half .landscape-split {
   display: flex !important;
+  flex-direction: row !important;
   flex-wrap: nowrap !important;
   gap: 8px;
   width: 100%;
@@ -2698,16 +2699,21 @@ main {
 
 .image-card.is-landscape.landscape-mode-half .landscape-slice,
 .modal-image-wrap.is-landscape.landscape-mode-half .landscape-slice {
-  flex: 0 0 78vw;
-  min-width: 78vw;
+  display: block !important;
+  flex: 0 0 78vw !important;
+  width: 78vw !important;
+  min-width: 78vw !important;
+  max-width: 78vw !important;
   scroll-snap-align: start;
 }
 
 @media (min-width: 761px) {
   .image-card.is-landscape.landscape-mode-half .landscape-slice,
   .modal-image-wrap.is-landscape.landscape-mode-half .landscape-slice {
-    flex-basis: min(48%, 560px);
-    min-width: min(48%, 560px);
+    flex-basis: min(48%, 560px) !important;
+    width: min(48%, 560px) !important;
+    min-width: min(48%, 560px) !important;
+    max-width: min(48%, 560px) !important;
   }
 }
 """
