@@ -3447,7 +3447,7 @@ def build_area_page(posts_by_source, updated_at):
       </div>
     </div>
 
-    <div id="storeView" class="view-panel hidden">
+    <div id="storeView" class="view-panel hidden store-view-section">
       <!-- 店舗別ビューの表示範囲 controls are generated from test.py for the published Osaka/Nipponbashi HTML. -->
       <div class="section-head">
         <h2>店舗別ビュー</h2>
