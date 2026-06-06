@@ -3131,12 +3131,22 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 .store-view-section .store-post-strip {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   gap: 11px;
   padding: 3px 10px 12px 3px;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
 }
 
 .store-view-section .store-post-card {
-  flex: 0 0 min(68vw, 420px);
+  flex: 0 0 68vw !important;
+  min-width: 68vw !important;
+  max-width: 68vw !important;
+  scroll-snap-align: start;
   padding: 8px;
   border-color: rgba(255,255,255,.13);
   background: rgba(255,255,255,.028);
@@ -3158,13 +3168,22 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 .store-view-section .store-post-image-list {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   gap: 7px;
   padding-bottom: 8px;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
 }
 
 .store-view-section .store-post-image-list .store-post-image {
-  flex: 0 0 82%;
-  min-width: 82%;
+  flex: 0 0 82% !important;
+  min-width: 82% !important;
+  max-width: 82% !important;
+  scroll-snap-align: start;
 }
 
 .store-view-section .store-post-card .timeline-image {
@@ -3314,7 +3333,9 @@ def build_area_page(posts_by_source, updated_at):
 
 @media (min-width: 900px) {
   .store-view-section .store-post-card {
-    flex-basis: min(34%, 420px);
+    flex-basis: min(360px, 42vw) !important;
+    min-width: min(360px, 42vw) !important;
+    max-width: min(360px, 42vw) !important;
   }
 
   .store-view-section .store-post-card .timeline-image img {
