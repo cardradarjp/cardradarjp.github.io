@@ -1640,8 +1640,20 @@ main {
 
   
 <style>
+#storeView,
+#storeView .store-group-list {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
 #storeView .store-group {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 14px 0 16px;
+  overflow-x: hidden;
 }
 
 #storeView .store-group-header {
@@ -1653,32 +1665,35 @@ main {
 }
 
 #storeView .store-post-carousel {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  gap: 16px;
-  padding: 4px 12px 14px;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
+  display: block !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 4px 0 14px;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
 }
 
 #storeView .store-post-card {
-  flex: 0 0 74vw !important;
-  min-width: 74vw !important;
-  max-width: 74vw !important;
-  scroll-snap-align: start;
-  padding: 12px;
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 16px;
-  background: rgba(255,255,255,.045);
-  box-shadow: 0 10px 24px rgba(0,0,0,.24);
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  padding: 8px 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#storeView .store-post-card + .store-post-card {
+  margin-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  padding-top: 12px;
 }
 
 #storeView .store-post-shop {
-  margin: 0 1px 4px;
+  margin: 0 12px 4px;
   color: rgba(255,255,255,.90);
   font-size: 12px;
   font-weight: 650;
@@ -1686,7 +1701,7 @@ main {
 }
 
 #storeView .store-post-meta {
-  margin: 0 1px 9px;
+  margin: 0 12px 9px;
   padding-bottom: 7px;
   border-bottom: 1px solid rgba(255,255,255,.09);
   color: rgba(255,255,255,.66);
@@ -1698,28 +1713,33 @@ main {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 8px;
-  padding-bottom: 8px;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 9vw 9px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: 9vw;
 }
 
 #storeView .store-post-image {
-  flex: 0 0 88% !important;
-  min-width: 88% !important;
-  max-width: 88% !important;
-  scroll-snap-align: start;
+  flex: 0 0 82% !important;
+  min-width: 82% !important;
+  max-width: 82% !important;
+  height: min(54vh, 420px);
+  scroll-snap-align: center;
   background: rgba(0,0,0,.82);
   border-color: rgba(255,255,255,.13);
 }
 
 #storeView .store-post-image img {
   width: 100%;
-  height: auto;
-  max-height: 48vh;
+  height: 100%;
+  max-height: none;
   object-fit: contain;
 }
 
@@ -1784,7 +1804,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 5px;
-  margin-top: 6px;
+  margin: 6px 12px 0;
   padding: 0;
 }
 
@@ -1799,13 +1819,16 @@ main {
 
 @media (min-width: 900px) {
   #storeView .store-post-card {
-    flex-basis: min(360px, 36vw) !important;
-    min-width: min(360px, 36vw) !important;
-    max-width: min(360px, 36vw) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
   }
 
-  #storeView .store-post-image img {
-    max-height: 430px;
+  #storeView .store-post-image {
+    flex-basis: min(420px, 48%) !important;
+    min-width: min(420px, 48%) !important;
+    max-width: min(420px, 48%) !important;
+    height: 430px;
   }
 }
 </style>
