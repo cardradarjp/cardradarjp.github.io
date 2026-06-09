@@ -2987,12 +2987,12 @@ def build_area_page(posts_by_source, updated_at):
             store_image_buttons = []
             for image_index, image_url in enumerate(image_urls):
                 store_image_buttons.append(f"""
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('{h(media_id)}', {image_index})">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
           <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 {image_index + 1} / {image_count}</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 """)
 
             store_post_cards += f"""
@@ -3229,6 +3229,10 @@ def build_area_page(posts_by_source, updated_at):
   object-fit: contain;
 }
 
+#storeView .store-post-image.is-landscape:not(.landscape-mode-original) > img {
+  display: none;
+}
+
 #storeView .store-post-image .landscape-mode-switch {
   gap: 4px;
   margin-top: 5px;
@@ -3248,6 +3252,10 @@ def build_area_page(posts_by_source, updated_at):
   font-size: 10px;
 }
 
+#storeView .store-post-image .image-count {
+  display: none;
+}
+
 #storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-split,
 #storeView .store-view-landscape-split {
   display: flex !important;
@@ -3255,10 +3263,18 @@ def build_area_page(posts_by_source, updated_at):
   flex-wrap: nowrap !important;
   gap: 8px;
   width: 100%;
+  height: calc(100% - 34px);
+  min-height: 0;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
+}
+
+#storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-slice {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-half .landscape-slice {
@@ -3282,8 +3298,32 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-image.is-landscape .landscape-slice-frame img {
-  max-height: 42vh;
-  object-fit: contain;
+  display: block;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+}
+
+#storeView .store-post-image.is-landscape .landscape-slice-frame {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-half .landscape-slice-frame img {
+  width: 200%;
+  height: 100%;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice-frame img {
+  width: 200%;
+  height: 200%;
+}
+
+#storeView .store-post-image .landscape-slice-label {
+  margin: 0 0 4px;
+  padding: 3px 6px;
+  font-size: 10px;
 }
 
 #storeView .store-post-actions {
@@ -3558,6 +3598,12 @@ function openTimelineMedia(id, startIndex = 0) {{
   document.getElementById("timelineMediaModal").classList.add("open");
 }}
 
+function handleStoreImageKey(event, id, startIndex = 0) {{
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  openTimelineMedia(id, startIndex);
+}}
+
 function showTimelineImage(step) {{
   if (!currentMediaItem) return;
   const count = (currentMediaItem.image_urls || []).length;
@@ -3629,8 +3675,11 @@ function renderLandscapeModeSwitch(target, mode) {{
     controls.className = "landscape-mode-switch";
     target.appendChild(controls);
   }}
+  const isStoreViewImage = target.classList.contains("store-post-image");
   controls.innerHTML = ["original", "half", "quarter"].map(item => {{
-    const labels = {{ original: "元画像", half: "縦1/2", quarter: "縦横1/4" }};
+    const labels = isStoreViewImage
+      ? {{ original: "元画像", half: "2分割", quarter: "4分割" }}
+      : {{ original: "元画像", half: "縦1/2", quarter: "縦横1/4" }};
     return `<span class="landscape-mode-button ${{item === mode ? "is-active" : ""}}" role="button" tabindex="0" data-landscape-mode="${{item}}">${{labels[item]}}</span>`;
   }}).join("");
   controls.querySelectorAll(".landscape-mode-button").forEach(button => {{
@@ -3650,6 +3699,7 @@ function renderLandscapeView(target, img) {{
   const mode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
   const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
+  const isStoreViewImage = target.classList.contains("store-post-image");
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
@@ -3667,34 +3717,38 @@ function renderLandscapeView(target, img) {{
   }}
   if (mode === "quarter") {{
     split.style.setProperty("--landscape-panel-ratio", ratio.toFixed(4));
+    const labels = isStoreViewImage
+      ? ["4分割：左上", "4分割：右上", "4分割：左下", "4分割：右下"]
+      : ["左上", "右上", "左下", "右下"];
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
-      <span class="landscape-slice-label">左上</span>
+      <span class="landscape-slice-label">${{labels[0]}}</span>
       <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-top-right">
-      <span class="landscape-slice-label">右上</span>
+      <span class="landscape-slice-label">${{labels[1]}}</span>
       <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-left">
-      <span class="landscape-slice-label">左下</span>
+      <span class="landscape-slice-label">${{labels[2]}}</span>
       <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-right">
-      <span class="landscape-slice-label">右下</span>
+      <span class="landscape-slice-label">${{labels[3]}}</span>
       <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
   `;
     return;
   }}
   split.style.removeProperty("--landscape-panel-ratio");
+  const halfLabels = isStoreViewImage ? ["2分割：左", "2分割：右"] : ["左半分", "右半分"];
   split.innerHTML = `
     <div class="landscape-slice is-left">
-      <span class="landscape-slice-label">左半分</span>
+      <span class="landscape-slice-label">${{halfLabels[0]}}</span>
       <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
     <div class="landscape-slice is-right">
-      <span class="landscape-slice-label">右半分</span>
+      <span class="landscape-slice-label">${{halfLabels[1]}}</span>
       <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
     </div>
   `;

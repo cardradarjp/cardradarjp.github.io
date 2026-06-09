@@ -1743,6 +1743,10 @@ main {
   object-fit: contain;
 }
 
+#storeView .store-post-image.is-landscape:not(.landscape-mode-original) > img {
+  display: none;
+}
+
 #storeView .store-post-image .landscape-mode-switch {
   gap: 4px;
   margin-top: 5px;
@@ -1762,6 +1766,10 @@ main {
   font-size: 10px;
 }
 
+#storeView .store-post-image .image-count {
+  display: none;
+}
+
 #storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-split,
 #storeView .store-view-landscape-split {
   display: flex !important;
@@ -1769,10 +1777,18 @@ main {
   flex-wrap: nowrap !important;
   gap: 8px;
   width: 100%;
+  height: calc(100% - 34px);
+  min-height: 0;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
+}
+
+#storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-slice {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-half .landscape-slice {
@@ -1796,8 +1812,32 @@ main {
 }
 
 #storeView .store-post-image.is-landscape .landscape-slice-frame img {
-  max-height: 42vh;
-  object-fit: contain;
+  display: block;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+}
+
+#storeView .store-post-image.is-landscape .landscape-slice-frame {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-half .landscape-slice-frame img {
+  width: 200%;
+  height: 100%;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice-frame img {
+  width: 200%;
+  height: 200%;
+}
+
+#storeView .store-post-image .landscape-slice-label {
+  margin: 0 0 4px;
+  padding: 3px 6px;
+  font-size: 10px;
 }
 
 #storeView .store-post-actions {
@@ -3227,12 +3267,12 @@ main {
         <div class="store-post-meta">確認：06/05 22:35 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2062891075635687531', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-otachu-single_2062891075635687531', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-otachu-single_2062891075635687531', 0)">
           <img src="https://pbs.twimg.com/media/HKDcf-DWwAEemeK?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3255,19 +3295,19 @@ main {
         <div class="store-post-meta">確認：06/03 21:30 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2062149878608749053', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-otachu-single_2062149878608749053', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-otachu-single_2062149878608749053', 0)">
           <img src="https://pbs.twimg.com/media/HJ46YRcWcAAuhIS?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2062149878608749053', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-otachu-single_2062149878608749053', 1)" onkeydown="handleStoreImageKey(event, 'timeline_ds-otachu-single_2062149878608749053', 1)">
           <img src="https://pbs.twimg.com/media/HJ46YlJXEAAKs8F?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3290,12 +3330,12 @@ main {
         <div class="store-post-meta">確認：06/03 21:30 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2062149872644395011', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-otachu-single_2062149872644395011', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-otachu-single_2062149872644395011', 0)">
           <img src="https://pbs.twimg.com/media/HJ46YXoWEAAkkTE?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3318,12 +3358,12 @@ main {
         <div class="store-post-meta">確認：05/31 16:04 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060980663499493582', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-otachu-single_2060980663499493582', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-otachu-single_2060980663499493582', 0)">
           <img src="https://pbs.twimg.com/media/HJoS_RZXEAcM9yi?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3346,12 +3386,12 @@ main {
         <div class="store-post-meta">確認：05/31 12:04 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2060920265849122980', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-otachu-single_2060920265849122980', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-otachu-single_2060920265849122980', 0)">
           <img src="https://pbs.twimg.com/media/HJncDqAWwAAIab3?format=jpg&amp;name=large" alt="ドラスタ オタロード中央の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3393,12 +3433,12 @@ main {
         <div class="store-post-meta">確認：05/31 12:01 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-honten-single_2060919494881558728', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-honten-single_2060919494881558728', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-honten-single_2060919494881558728', 0)">
           <img src="https://pbs.twimg.com/media/HJnbW0UXoAMVzcp?format=jpg&amp;name=large" alt="ドラスタ 日本橋本店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3421,12 +3461,12 @@ main {
         <div class="store-post-meta">確認：05/29 20:01 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-honten-single_2060315560869548513', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-honten-single_2060315560869548513', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-honten-single_2060315560869548513', 0)">
           <img src="https://pbs.twimg.com/media/HJe2FLnXwAQ8kka?format=jpg&amp;name=large" alt="ドラスタ 日本橋本店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3468,19 +3508,19 @@ main {
         <div class="store-post-meta">確認：05/24 09:30 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058344852522213799', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058344852522213799', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058344852522213799', 0)">
           <img src="https://pbs.twimg.com/media/HJC1u2YWsAAoTXb?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058344852522213799', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058344852522213799', 1)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058344852522213799', 1)">
           <img src="https://pbs.twimg.com/media/HJC1vCfWYAAn1Oc?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3503,19 +3543,19 @@ main {
         <div class="store-post-meta">確認：05/24 09:21 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058342602072605173', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058342602072605173', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058342602072605173', 0)">
           <img src="https://pbs.twimg.com/media/HJCzr0bXYAAt-k2?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058342602072605173', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058342602072605173', 1)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058342602072605173', 1)">
           <img src="https://pbs.twimg.com/media/HJCzsDHWAAAvwMs?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3538,19 +3578,19 @@ main {
         <div class="store-post-meta">確認：05/23 18:15 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058114688903217320', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058114688903217320', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058114688903217320', 0)">
           <img src="https://pbs.twimg.com/media/HI_kZlLXoAA8mw2?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058114688903217320', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058114688903217320', 1)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058114688903217320', 1)">
           <img src="https://pbs.twimg.com/media/HI_kZxvXEAAXCNT?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3573,19 +3613,19 @@ main {
         <div class="store-post-meta">確認：05/23 17:35 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058104601140711768', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058104601140711768', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058104601140711768', 0)">
           <img src="https://pbs.twimg.com/media/HI_bOYBX0AAvSQx?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058104601140711768', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058104601140711768', 1)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058104601140711768', 1)">
           <img src="https://pbs.twimg.com/media/HI_bOjxWIAAzsC3?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3608,12 +3648,12 @@ main {
         <div class="store-post-meta">確認：05/23 15:29 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058072777534406702', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2058072777534406702', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2058072777534406702', 0)">
           <img src="https://pbs.twimg.com/media/HI--SCOWMAAJpWU?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3636,19 +3676,19 @@ main {
         <div class="store-post-meta">確認：05/23 09:43 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2057985652281536528', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2057985652281536528', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2057985652281536528', 0)">
           <img src="https://pbs.twimg.com/media/HI9vCqDXYAAVqZJ?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2057985652281536528', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora2-single_2057985652281536528', 1)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora2-single_2057985652281536528', 1)">
           <img src="https://pbs.twimg.com/media/HI9vC2LWwAAIL2g?format=jpg&amp;name=large" alt="ドラスタ 日本橋2号店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3690,12 +3730,12 @@ main {
         <div class="store-post-meta">確認：05/31 12:03 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060920004061565253', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora3-single_2060920004061565253', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora3-single_2060920004061565253', 0)">
           <img src="https://pbs.twimg.com/media/HJnb0clXAAMnRHn?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3718,12 +3758,12 @@ main {
         <div class="store-post-meta">確認：05/31 09:47 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060885784547225916', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora3-single_2060885784547225916', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora3-single_2060885784547225916', 0)">
           <img src="https://pbs.twimg.com/media/HJm8svyXcAA0R46?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3746,19 +3786,19 @@ main {
         <div class="store-post-meta">確認：05/28 23:11 / 定額 / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060001105136828509', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora3-single_2060001105136828509', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora3-single_2060001105136828509', 0)">
           <img src="https://pbs.twimg.com/media/HJaYFMrXMAc8tb1?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060001105136828509', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora3-single_2060001105136828509', 1)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora3-single_2060001105136828509', 1)">
           <img src="https://pbs.twimg.com/media/HJaYFhFXEAEJXBa?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3781,12 +3821,12 @@ main {
         <div class="store-post-meta">確認：05/28 12:50 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2059844632859550177', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-dora3-single_2059844632859550177', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-dora3-single_2059844632859550177', 0)">
           <img src="https://pbs.twimg.com/media/HJYJxhmW8AA5DoR?format=jpg&amp;name=large" alt="ドラスタ 日本橋3号店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3828,12 +3868,12 @@ main {
         <div class="store-post-meta">確認：05/28 20:33 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2059961196162269406', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-nansan-single_2059961196162269406', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-nansan-single_2059961196162269406', 0)">
           <img src="https://pbs.twimg.com/media/HJZzyngWkAIxMMv?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3856,12 +3896,12 @@ main {
         <div class="store-post-meta">確認：05/24 16:58 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058457648865968394', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-nansan-single_2058457648865968394', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-nansan-single_2058457648865968394', 0)">
           <img src="https://pbs.twimg.com/media/HJEcUp9WUAA_q_b?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3884,12 +3924,12 @@ main {
         <div class="store-post-meta">確認：05/24 11:48 / 定額 / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058379517635207621', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-nansan-single_2058379517635207621', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-nansan-single_2058379517635207621', 0)">
           <img src="https://pbs.twimg.com/media/HJDVQ05WYAAPdIg?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3912,12 +3952,12 @@ main {
         <div class="store-post-meta">確認：05/24 10:42 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058363098759573946', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-nansan-single_2058363098759573946', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-nansan-single_2058363098759573946', 0)">
           <img src="https://pbs.twimg.com/media/HJDGVIVW4AAQqmf?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3940,19 +3980,19 @@ main {
         <div class="store-post-meta">確認：05/23 14:13 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058053645611000198', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-nansan-single_2058053645611000198', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-nansan-single_2058053645611000198', 0)">
           <img src="https://pbs.twimg.com/media/HI-s4ngWgAAa1mG?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058053645611000198', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-nansan-single_2058053645611000198', 1)" onkeydown="handleStoreImageKey(event, 'timeline_ds-nansan-single_2058053645611000198', 1)">
           <img src="https://pbs.twimg.com/media/HI-q1JJW8AAn-bd?format=jpg&amp;name=240x240" alt="ドラスタ なんさん通り店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -3975,12 +4015,12 @@ main {
         <div class="store-post-meta">確認：05/23 09:40 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2057985103230280156', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_ds-nansan-single_2057985103230280156', 0)" onkeydown="handleStoreImageKey(event, 'timeline_ds-nansan-single_2057985103230280156', 0)">
           <img src="https://pbs.twimg.com/media/HI9ui4oXAAEWi4F?format=jpg&amp;name=large" alt="ドラスタ なんさん通り店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4022,12 +4062,12 @@ main {
         <div class="store-post-meta">確認：06/02 12:05 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2061645337790726398', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2061645337790726398', 0)" onkeydown="handleStoreImageKey(event, 'timeline_hareruya2-namba-single_2061645337790726398', 0)">
           <img src="https://pbs.twimg.com/media/HJxvcZmacAATFYz?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4050,12 +4090,12 @@ main {
         <div class="store-post-meta">確認：06/01 12:13 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2061285062663196862', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2061285062663196862', 0)" onkeydown="handleStoreImageKey(event, 'timeline_hareruya2-namba-single_2061285062663196862', 0)">
           <img src="https://pbs.twimg.com/media/HJsn1QgbMAA7T16?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4078,12 +4118,12 @@ main {
         <div class="store-post-meta">確認：05/31 10:16 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2060893051988660534', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2060893051988660534', 0)" onkeydown="handleStoreImageKey(event, 'timeline_hareruya2-namba-single_2060893051988660534', 0)">
           <img src="https://pbs.twimg.com/media/HJnDSrbasAAD5wJ?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4106,12 +4146,12 @@ main {
         <div class="store-post-meta">確認：05/28 12:11 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2059834897272119436', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2059834897272119436', 0)" onkeydown="handleStoreImageKey(event, 'timeline_hareruya2-namba-single_2059834897272119436', 0)">
           <img src="https://pbs.twimg.com/media/HJYATHZagAAWtzy?format=jpg&amp;name=large" alt="晴れる屋2なんばの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4153,12 +4193,12 @@ main {
         <div class="store-post-meta">確認：06/05 21:24 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062873246169792592', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062873246169792592', 0)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062873246169792592', 0)">
           <img src="https://pbs.twimg.com/media/HKDMQHYaIAAvubB?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4181,12 +4221,12 @@ main {
         <div class="store-post-meta">確認：06/05 21:24 / BOX / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062873140104188204', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062873140104188204', 0)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062873140104188204', 0)">
           <img src="https://pbs.twimg.com/media/HKDMDZzbYAA_61R?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4209,33 +4249,33 @@ main {
         <div class="store-post-meta">確認：06/05 21:23 / シングル / 画像 4枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872934033797263', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872934033797263', 0)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062872934033797263', 0)">
           <img src="https://pbs.twimg.com/media/HKDL7nzbUAANt09?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872934033797263', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872934033797263', 1)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062872934033797263', 1)">
           <img src="https://pbs.twimg.com/media/HKDL8LFbgAAjMjN?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872934033797263', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872934033797263', 2)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062872934033797263', 2)">
           <img src="https://pbs.twimg.com/media/HKDL8qmaAAAks03?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872934033797263', 3)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872934033797263', 3)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062872934033797263', 3)">
           <img src="https://pbs.twimg.com/media/HKDL9L6bEAAczq1?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4258,26 +4298,26 @@ main {
         <div class="store-post-meta">確認：06/05 21:22 / BOX / 画像 3枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872762180571218', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872762180571218', 0)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062872762180571218', 0)">
           <img src="https://pbs.twimg.com/media/HKDLzRJbMAE5D8C?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872762180571218', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872762180571218', 1)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062872762180571218', 1)">
           <img src="https://pbs.twimg.com/media/HKDLzrNaYAA9dlg?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872762180571218', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062872762180571218', 2)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062872762180571218', 2)">
           <img src="https://pbs.twimg.com/media/HKDL0GbbYAAU7lq?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4300,12 +4340,12 @@ main {
         <div class="store-post-meta">確認：06/05 13:37 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755696085758310', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755696085758310', 0)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062755696085758310', 0)">
           <img src="https://pbs.twimg.com/media/HKBhW1nbMAAh2ZI?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4328,33 +4368,33 @@ main {
         <div class="store-post-meta">確認：06/05 13:36 / シングル / 画像 4枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755491248587217', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755491248587217', 0)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062755491248587217', 0)">
           <img src="https://pbs.twimg.com/media/HKBhCoBb0AAuGmQ?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755491248587217', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755491248587217', 1)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062755491248587217', 1)">
           <img src="https://pbs.twimg.com/media/HKBhFl4aUAAg4aS?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755491248587217', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755491248587217', 2)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062755491248587217', 2)">
           <img src="https://pbs.twimg.com/media/HKBhIaTaEAAjyyW?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755491248587217', 3)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2062755491248587217', 3)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-namba-single_2062755491248587217', 3)">
           <img src="https://pbs.twimg.com/media/HKBhLTkaYAAFe4H?format=jpg&amp;name=large" alt="カードラボなんば店の買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4396,33 +4436,33 @@ main {
         <div class="store-post-meta">確認：05/24 20:49 / シングル / 画像 4枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 0)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-nihonbashi-single_2058515729029423433', 0)">
           <img src="https://pbs.twimg.com/media/HJFRCvmbkAAjieR?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 1)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-nihonbashi-single_2058515729029423433', 1)">
           <img src="https://pbs.twimg.com/media/HJFRDiBbEAAvxqH?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 2)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-nihonbashi-single_2058515729029423433', 2)">
           <img src="https://pbs.twimg.com/media/HJFRET6aEAAULJY?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 3)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2058515729029423433', 3)" onkeydown="handleStoreImageKey(event, 'timeline_cardlabo-nihonbashi-single_2058515729029423433', 3)">
           <img src="https://pbs.twimg.com/media/HJFRFOMa0AEPAsi?format=jpg&amp;name=large" alt="カードラボ大阪日本橋店の買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4464,19 +4504,19 @@ main {
         <div class="store-post-meta">確認：06/06 10:24 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069463315140925', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069463315140925', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063069463315140925', 0)">
           <img src="https://pbs.twimg.com/media/HKF-vbabEAATkeo?format=jpg&amp;name=large" alt="GIRAFULLなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069463315140925', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069463315140925', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063069463315140925', 1)">
           <img src="https://pbs.twimg.com/media/HKF-vbVaQAAU4Kx?format=jpg&amp;name=large" alt="GIRAFULLなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4499,26 +4539,26 @@ main {
         <div class="store-post-meta">確認：06/06 10:23 / シングル / 画像 3枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069340510175598', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069340510175598', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063069340510175598', 0)">
           <img src="https://pbs.twimg.com/media/HKF-oNbb0AA872j?format=jpg&amp;name=large" alt="GIRAFULLなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069340510175598', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069340510175598', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063069340510175598', 1)">
           <img src="https://pbs.twimg.com/media/HKF-oNbbIAAN9Qx?format=jpg&amp;name=360x360" alt="GIRAFULLなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069340510175598', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063069340510175598', 2)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063069340510175598', 2)">
           <img src="https://pbs.twimg.com/media/HKF-oNiakAAN_rN?format=jpg&amp;name=360x360" alt="GIRAFULLなんば店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4541,19 +4581,19 @@ main {
         <div class="store-post-meta">確認：06/06 10:20 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063068386888929627', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063068386888929627', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063068386888929627', 0)">
           <img src="https://pbs.twimg.com/media/HKF9w0waIAAaLDg?format=jpg&amp;name=large" alt="GIRAFULLなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063068386888929627', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063068386888929627', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063068386888929627', 1)">
           <img src="https://pbs.twimg.com/media/HKF9w0vaUAANq_A?format=jpg&amp;name=large" alt="GIRAFULLなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4576,19 +4616,19 @@ main {
         <div class="store-post-meta">確認：06/06 10:00 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063063326163452126', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063063326163452126', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063063326163452126', 0)">
           <img src="https://pbs.twimg.com/media/HKBgWRGbQAAnE1g?format=png&amp;name=large" alt="GIRAFULLなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2063063326163452126', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2063063326163452126', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2063063326163452126', 1)">
           <img src="https://pbs.twimg.com/media/HKBgXUNacAEH9yg?format=png&amp;name=large" alt="GIRAFULLなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4611,19 +4651,19 @@ main {
         <div class="store-post-meta">確認：06/05 17:00 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2062806639883768260', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2062806639883768260', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2062806639883768260', 0)">
           <img src="https://pbs.twimg.com/media/HKBgLTOaYAAA_lZ?format=png&amp;name=large" alt="GIRAFULLなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2062806639883768260', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2062806639883768260', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2062806639883768260', 1)">
           <img src="https://pbs.twimg.com/media/HKBgMmXbYAAyql5?format=png&amp;name=large" alt="GIRAFULLなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4646,19 +4686,19 @@ main {
         <div class="store-post-meta">確認：06/05 15:03 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2062777354725069293', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2062777354725069293', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2062777354725069293', 0)">
           <img src="https://pbs.twimg.com/media/HKB1Eh2awAA36Ct?format=jpg&amp;name=large" alt="GIRAFULLなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2062777354725069293', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2062777354725069293', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2062777354725069293', 1)">
           <img src="https://pbs.twimg.com/media/HKB1Eh4bUAERAGQ?format=jpg&amp;name=large" alt="GIRAFULLなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4681,19 +4721,19 @@ main {
         <div class="store-post-meta">確認：06/05 13:32 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2062754327471735211', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2062754327471735211', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2062754327471735211', 0)">
           <img src="https://pbs.twimg.com/media/HKBgF2wbIAAcuqz?format=png&amp;name=large" alt="GIRAFULLなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2062754327471735211', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2062754327471735211', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2062754327471735211', 1)">
           <img src="https://pbs.twimg.com/media/HKBgH0IaYAA2A7J?format=png&amp;name=large" alt="GIRAFULLなんば店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4716,12 +4756,12 @@ main {
         <div class="store-post-meta">確認：06/05 13:04 / シングル / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2062747303296049384', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-namba-single_2062747303296049384', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-namba-single_2062747303296049384', 0)">
           <img src="https://pbs.twimg.com/media/HKBZvVQbwAAXeaU?format=jpg&amp;name=large" alt="GIRAFULLなんば店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4763,19 +4803,19 @@ main {
         <div class="store-post-meta">確認：05/24 11:24 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2058373549845565715', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2058373549845565715', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-nihonbashi-single_2058373549845565715', 0)">
           <img src="https://pbs.twimg.com/media/HJDP1UsagAA4fOM?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2058373549845565715', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2058373549845565715', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-nihonbashi-single_2058373549845565715', 1)">
           <img src="https://pbs.twimg.com/media/HJDP1U0aMAAuQYL?format=jpg&amp;name=large" alt="GIRAFULL大阪日本橋店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4817,19 +4857,19 @@ main {
         <div class="store-post-meta">確認：05/28 12:20 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2059837250205286819', 0)">
           <img src="https://pbs.twimg.com/media/HJYCSmTaQAAQawk?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059837250205286819', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2059837250205286819', 1)">
           <img src="https://pbs.twimg.com/media/HJYCUX_bMAE3foG?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4852,33 +4892,33 @@ main {
         <div class="store-post-meta">確認：05/26 16:41 / 定額 / 画像 4枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059178196940271817', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059178196940271817', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2059178196940271817', 0)">
           <img src="https://pbs.twimg.com/media/HJOq8XsbkAAvqZo?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059178196940271817', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059178196940271817', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2059178196940271817', 1)">
           <img src="https://pbs.twimg.com/media/HJOq9TaasAAzFs3?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059178196940271817', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059178196940271817', 2)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2059178196940271817', 2)">
           <img src="https://pbs.twimg.com/media/HJOrAx4aQAAqLfY?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059178196940271817', 3)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059178196940271817', 3)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2059178196940271817', 3)">
           <img src="https://pbs.twimg.com/media/HJOrp3aaMAA32vE?format=jpg&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4901,19 +4941,19 @@ main {
         <div class="store-post-meta">確認：05/26 11:56 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059106338203148569', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059106338203148569', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2059106338203148569', 0)">
           <img src="https://pbs.twimg.com/media/HJNqDbcawAARQGg?format=jpg&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059106338203148569', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059106338203148569', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2059106338203148569', 1)">
           <img src="https://pbs.twimg.com/media/HJNqFAVbYAA3hBI?format=jpg&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4936,19 +4976,19 @@ main {
         <div class="store-post-meta">確認：05/24 11:34 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058376116919062851', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058376116919062851', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2058376116919062851', 0)">
           <img src="https://pbs.twimg.com/media/HJDRNY5aUAAhJrW?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058376116919062851', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058376116919062851', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2058376116919062851', 1)">
           <img src="https://pbs.twimg.com/media/HJDROy0a8AE03e6?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -4971,19 +5011,19 @@ main {
         <div class="store-post-meta">確認：05/23 17:09 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058097882348269748', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058097882348269748', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2058097882348269748', 0)">
           <img src="https://pbs.twimg.com/media/HI_UsdibwAAV_qH?format=jpg&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058097882348269748', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058097882348269748', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2058097882348269748', 1)">
           <img src="https://pbs.twimg.com/media/HI_UuCLacAAebux?format=jpg&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5006,19 +5046,19 @@ main {
         <div class="store-post-meta">確認：05/23 11:38 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058014730938364108', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058014730938364108', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2058014730938364108', 0)">
           <img src="https://pbs.twimg.com/media/HI-In02a8AATMkK?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058014730938364108', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058014730938364108', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2058014730938364108', 1)">
           <img src="https://pbs.twimg.com/media/HI-IqcAboAAP5uY?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5041,26 +5081,26 @@ main {
         <div class="store-post-meta">確認：05/22 12:00 / シングル / 画像 3枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2057657752105968038', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2057657752105968038', 0)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2057657752105968038', 0)">
           <img src="https://pbs.twimg.com/media/HI5EwLGaYAAaRXj?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2057657752105968038', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2057657752105968038', 1)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2057657752105968038', 1)">
           <img src="https://pbs.twimg.com/media/HI5EyH3bwAADjxh?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2057657752105968038', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2057657752105968038', 2)" onkeydown="handleStoreImageKey(event, 'timeline_girafull-otaroad-single_2057657752105968038', 2)">
           <img src="https://pbs.twimg.com/media/HI5EzuUb0AAhFsi?format=png&amp;name=large" alt="GIRAFULLオタロード店の買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 3</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5102,19 +5142,19 @@ main {
         <div class="store-post-meta">確認：05/27 11:55 / PSA / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2059468435764224334', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_amtaf-single_2059468435764224334', 0)" onkeydown="handleStoreImageKey(event, 'timeline_amtaf-single_2059468435764224334', 0)">
           <img src="https://pbs.twimg.com/media/HJSznbvaAAAegHE?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2059468435764224334', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_amtaf-single_2059468435764224334', 1)" onkeydown="handleStoreImageKey(event, 'timeline_amtaf-single_2059468435764224334', 1)">
           <img src="https://pbs.twimg.com/media/HJSznbwbgAA42o5?format=jpg&amp;name=large" alt="アムタフの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5137,12 +5177,12 @@ main {
         <div class="store-post-meta">確認：05/24 11:43 / PSA / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_amtaf-single_2058378276360650950', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_amtaf-single_2058378276360650950', 0)" onkeydown="handleStoreImageKey(event, 'timeline_amtaf-single_2058378276360650950', 0)">
           <img src="https://pbs.twimg.com/media/HJDUIHYbQAAfF0H?format=jpg&amp;name=large" alt="アムタフの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5184,12 +5224,12 @@ main {
         <div class="store-post-meta">確認：06/04 13:15 / BOX / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2062387636262850699', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-single_2062387636262850699', 0)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-single_2062387636262850699', 0)">
           <img src="https://pbs.twimg.com/media/HJ8SQOSaAAAXtDq?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5212,19 +5252,19 @@ main {
         <div class="store-post-meta">確認：06/04 12:30 / BOX / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2062376325281976606', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-single_2062376325281976606', 0)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-single_2062376325281976606', 0)">
           <img src="https://pbs.twimg.com/media/HJ8HyYaaIAAWBoS?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2062376325281976606', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-single_2062376325281976606', 1)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-single_2062376325281976606', 1)">
           <img src="https://pbs.twimg.com/media/HJ8IEX1bsAAbwKH?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5247,12 +5287,12 @@ main {
         <div class="store-post-meta">確認：06/04 11:29 / PSA / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2062360957809229925', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-single_2062360957809229925', 0)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-single_2062360957809229925', 0)">
           <img src="https://pbs.twimg.com/media/HJ76PCEbIAAVk9p?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5275,12 +5315,12 @@ main {
         <div class="store-post-meta">確認：06/04 11:26 / PSA / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2062360304034734346', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-single_2062360304034734346', 0)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-single_2062360304034734346', 0)">
           <img src="https://pbs.twimg.com/media/HJ75w_YacAAvFts?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5303,12 +5343,12 @@ main {
         <div class="store-post-meta">確認：06/04 11:26 / PSA / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-single_2062360204323524960', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-single_2062360204323524960', 0)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-single_2062360204323524960', 0)">
           <img src="https://pbs.twimg.com/media/HJ74tF5boAAYFoO?format=jpg&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5331,12 +5371,12 @@ main {
         <div class="store-post-meta">確認：06/01 16:29 / BOX / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-box_2061349317244604454', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-box_2061349317244604454', 0)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-box_2061349317244604454', 0)">
           <img src="https://pbs.twimg.com/media/HJtiRz5bkAAdkDn?format=png&amp;name=large" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5359,19 +5399,19 @@ main {
         <div class="store-post-meta">確認：06/01 13:08 / BOX / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-box_2061298866780336602', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-box_2061298866780336602', 0)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-box_2061298866780336602', 0)">
           <img src="https://pbs.twimg.com/media/HJs0XcLagAAX0-K?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_gotcha-box_2061298866780336602', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_gotcha-box_2061298866780336602', 1)" onkeydown="handleStoreImageKey(event, 'timeline_gotcha-box_2061298866780336602', 1)">
           <img src="https://pbs.twimg.com/media/HJs0ZMPbQAAFjR6?format=png&amp;name=360x360" alt="GOTCHA!の買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5413,19 +5453,19 @@ main {
         <div class="store-post-meta">確認：06/05 12:59 / PSA / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746216979693631', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746216979693631', 0)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746216979693631', 0)">
           <img src="https://pbs.twimg.com/media/HKBYv9LaEAAcQp5?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746216979693631', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746216979693631', 1)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746216979693631', 1)">
           <img src="https://pbs.twimg.com/media/HKBYv9OboAAt92P?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5448,33 +5488,33 @@ main {
         <div class="store-post-meta">確認：06/05 12:59 / シングル / 画像 4枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746100524884105', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746100524884105', 0)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746100524884105', 0)">
           <img src="https://pbs.twimg.com/media/HKBYoFSboAAZmIT?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746100524884105', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746100524884105', 1)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746100524884105', 1)">
           <img src="https://pbs.twimg.com/media/HKBYoFXacAAiWmQ?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746100524884105', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746100524884105', 2)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746100524884105', 2)">
           <img src="https://pbs.twimg.com/media/HKBYoFUa0AAQjwy?format=jpg&amp;name=360x360" alt="KUROの買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746100524884105', 3)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746100524884105', 3)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746100524884105', 3)">
           <img src="https://pbs.twimg.com/media/HKBYoFabUAAghDe?format=jpg&amp;name=360x360" alt="KUROの買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5497,33 +5537,33 @@ main {
         <div class="store-post-meta">確認：06/05 12:59 / BOX / 画像 4枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746046783164739', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746046783164739', 0)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746046783164739', 0)">
           <img src="https://pbs.twimg.com/media/HKBYl3faYAAlA91?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746046783164739', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746046783164739', 1)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746046783164739', 1)">
           <img src="https://pbs.twimg.com/media/HKBYl3cbkAAuCO1?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746046783164739', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746046783164739', 2)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746046783164739', 2)">
           <img src="https://pbs.twimg.com/media/HKBYl3dbMAAYLr8?format=jpg&amp;name=360x360" alt="KUROの買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062746046783164739', 3)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062746046783164739', 3)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062746046783164739', 3)">
           <img src="https://pbs.twimg.com/media/HKBYl3easAAeP92?format=jpg&amp;name=360x360" alt="KUROの買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5546,19 +5586,19 @@ main {
         <div class="store-post-meta">確認：06/05 12:58 / シングル / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062745829400797247', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062745829400797247', 0)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062745829400797247', 0)">
           <img src="https://pbs.twimg.com/media/HKBYZTGbEAA-Oyi?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-single_2062745829400797247', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-single_2062745829400797247', 1)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-single_2062745829400797247', 1)">
           <img src="https://pbs.twimg.com/media/HKBYZS7aYAANL8O?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5581,19 +5621,19 @@ main {
         <div class="store-post-meta">確認：06/05 12:57 / BOX / 画像 2枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-box_2062745636169252879', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-box_2062745636169252879', 0)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-box_2062745636169252879', 0)">
           <img src="https://pbs.twimg.com/media/HKBYNxLbkAA6A0E?format=jpg&amp;name=360x360" alt="KUROの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-box_2062745636169252879', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-box_2062745636169252879', 1)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-box_2062745636169252879', 1)">
           <img src="https://pbs.twimg.com/media/HKBYNxPbAAAs5IF?format=jpg&amp;name=360x360" alt="KUROの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 2</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5616,12 +5656,12 @@ main {
         <div class="store-post-meta">確認：06/05 12:55 / BOX / 画像 1枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_kuro-box_2062745222824776126', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_kuro-box_2062745222824776126', 0)" onkeydown="handleStoreImageKey(event, 'timeline_kuro-box_2062745222824776126', 0)">
           <img src="https://pbs.twimg.com/media/HKBX2HXbYAA7GuR?format=jpg&amp;name=large" alt="KUROの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 1</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5663,33 +5703,33 @@ main {
         <div class="store-post-meta">確認：05/16 11:42 / シングル / 画像 4枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 0)" onkeydown="handleStoreImageKey(event, 'timeline_mimi-single_2055478989150720148', 0)">
           <img src="https://pbs.twimg.com/media/HIaHPqVbwAAQhC4?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 1)" onkeydown="handleStoreImageKey(event, 'timeline_mimi-single_2055478989150720148', 1)">
           <img src="https://pbs.twimg.com/media/HIaHPqVaQAA-_g5?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 2)" onkeydown="handleStoreImageKey(event, 'timeline_mimi-single_2055478989150720148', 2)">
           <img src="https://pbs.twimg.com/media/HIaHPqWb0AA4p2s?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 3)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 3)" onkeydown="handleStoreImageKey(event, 'timeline_mimi-single_2055478989150720148', 3)">
           <img src="https://pbs.twimg.com/media/HIaHPqUbUAAId9s?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5712,33 +5752,33 @@ main {
         <div class="store-post-meta">確認：05/10 11:40 / シングル / 画像 4枚</div>
         <div class="store-post-image-list">
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2053304194736820524', 0)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_mimi-single_2053304194736820524', 0)" onkeydown="handleStoreImageKey(event, 'timeline_mimi-single_2053304194736820524', 0)">
           <img src="https://pbs.twimg.com/media/HH7NR2dawAA_8Pd?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 1" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 1 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2053304194736820524', 1)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_mimi-single_2053304194736820524', 1)" onkeydown="handleStoreImageKey(event, 'timeline_mimi-single_2053304194736820524', 1)">
           <img src="https://pbs.twimg.com/media/HH7NR2UbEAAmUvN?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 2" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 2 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2053304194736820524', 2)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_mimi-single_2053304194736820524', 2)" onkeydown="handleStoreImageKey(event, 'timeline_mimi-single_2053304194736820524', 2)">
           <img src="https://pbs.twimg.com/media/HH7NR2VaIAElbE0?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 3" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 3 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
-        <button class="timeline-image store-post-image" type="button" onclick="openTimelineMedia('timeline_mimi-single_2053304194736820524', 3)">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('timeline_mimi-single_2053304194736820524', 3)" onkeydown="handleStoreImageKey(event, 'timeline_mimi-single_2053304194736820524', 3)">
           <img src="https://pbs.twimg.com/media/HH7NR2UbIAA7EPp?format=jpg&amp;name=360x360" alt="買取ミミの買取表画像 4" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 4 / 4</span>
           <span class="landscape-hint">横スクロールで確認</span>
-        </button>
+        </div>
 
         </div>
         <div class="store-post-actions">
@@ -5907,6 +5947,12 @@ function openTimelineMedia(id, startIndex = 0) {
   document.getElementById("timelineMediaModal").classList.add("open");
 }
 
+function handleStoreImageKey(event, id, startIndex = 0) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  openTimelineMedia(id, startIndex);
+}
+
 function showTimelineImage(step) {
   if (!currentMediaItem) return;
   const count = (currentMediaItem.image_urls || []).length;
@@ -5978,8 +6024,11 @@ function renderLandscapeModeSwitch(target, mode) {
     controls.className = "landscape-mode-switch";
     target.appendChild(controls);
   }
+  const isStoreViewImage = target.classList.contains("store-post-image");
   controls.innerHTML = ["original", "half", "quarter"].map(item => {
-    const labels = { original: "元画像", half: "縦1/2", quarter: "縦横1/4" };
+    const labels = isStoreViewImage
+      ? { original: "元画像", half: "2分割", quarter: "4分割" }
+      : { original: "元画像", half: "縦1/2", quarter: "縦横1/4" };
     return `<span class="landscape-mode-button ${item === mode ? "is-active" : ""}" role="button" tabindex="0" data-landscape-mode="${item}">${labels[item]}</span>`;
   }).join("");
   controls.querySelectorAll(".landscape-mode-button").forEach(button => {
@@ -5999,6 +6048,7 @@ function renderLandscapeView(target, img) {
   const mode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
   const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
+  const isStoreViewImage = target.classList.contains("store-post-image");
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
@@ -6016,34 +6066,38 @@ function renderLandscapeView(target, img) {
   }
   if (mode === "quarter") {
     split.style.setProperty("--landscape-panel-ratio", ratio.toFixed(4));
+    const labels = isStoreViewImage
+      ? ["4分割：左上", "4分割：右上", "4分割：左下", "4分割：右下"]
+      : ["左上", "右上", "左下", "右下"];
     split.innerHTML = `
     <div class="landscape-slice is-top-left">
-      <span class="landscape-slice-label">左上</span>
+      <span class="landscape-slice-label">${labels[0]}</span>
       <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-top-right">
-      <span class="landscape-slice-label">右上</span>
+      <span class="landscape-slice-label">${labels[1]}</span>
       <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-left">
-      <span class="landscape-slice-label">左下</span>
+      <span class="landscape-slice-label">${labels[2]}</span>
       <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-bottom-right">
-      <span class="landscape-slice-label">右下</span>
+      <span class="landscape-slice-label">${labels[3]}</span>
       <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
   `;
     return;
   }
   split.style.removeProperty("--landscape-panel-ratio");
+  const halfLabels = isStoreViewImage ? ["2分割：左", "2分割：右"] : ["左半分", "右半分"];
   split.innerHTML = `
     <div class="landscape-slice is-left">
-      <span class="landscape-slice-label">左半分</span>
+      <span class="landscape-slice-label">${halfLabels[0]}</span>
       <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
     <div class="landscape-slice is-right">
-      <span class="landscape-slice-label">右半分</span>
+      <span class="landscape-slice-label">${halfLabels[1]}</span>
       <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
     </div>
   `;
