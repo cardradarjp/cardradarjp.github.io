@@ -1811,6 +1811,30 @@ main {
   scroll-snap-align: start;
 }
 
+#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 10px;
+  width: 100%;
+  height: calc(100% - 34px);
+  min-height: 0;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-slice {
+  flex: 0 0 82% !important;
+  min-width: 82% !important;
+  max-width: 82% !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  scroll-snap-align: center;
+}
+
 #storeView .store-post-image.is-landscape .landscape-slice-frame img {
   display: block;
   max-width: none;
@@ -1832,6 +1856,16 @@ main {
 #storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice-frame img {
   width: 200%;
   height: 200%;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-slice-frame img {
+  width: calc(var(--table-cols, 3) * 100%);
+  height: calc(var(--table-rows, 2) * 100%);
+  transform: translate(
+    calc(var(--table-col, 0) * -100% / var(--table-cols, 3)),
+    calc(var(--table-row, 0) * -100% / var(--table-rows, 2))
+  );
+  transform-origin: top left;
 }
 
 #storeView .store-post-image .landscape-slice-label {
@@ -5997,24 +6031,30 @@ function markLandscapeImage(img) {
   else {
     target.querySelector(".landscape-split")?.remove();
     target.querySelector(".landscape-mode-switch")?.remove();
-    target.classList.remove("landscape-mode-original", "landscape-mode-half", "landscape-mode-quarter");
+    target.classList.remove("landscape-mode-original", "landscape-mode-half", "landscape-mode-quarter", "landscape-mode-table");
   }
   setupScrollIndicators(target);
 }
 
 function getLandscapeMode() {
   const saved = localStorage.getItem("cardradarLandscapeMode");
-  return ["original", "half", "quarter"].includes(saved) ? saved : "half";
+  return ["original", "half", "quarter", "table"].includes(saved) ? saved : "half";
 }
 
 function setLandscapeMode(mode) {
-  const nextMode = ["original", "half", "quarter"].includes(mode) ? mode : "half";
+  const nextMode = ["original", "half", "quarter", "table"].includes(mode) ? mode : "half";
   localStorage.setItem("cardradarLandscapeMode", nextMode);
   document.querySelectorAll(".is-landscape").forEach(target => {
     const img = target.querySelector(":scope > img, :scope > .modal-image");
     if (img) renderLandscapeView(target, img);
   });
   setupScrollIndicators();
+}
+
+function isDragonstarStoreViewImage(target) {
+  if (!target?.classList?.contains("store-post-image")) return false;
+  const card = target.closest(".store-post-card");
+  return card?.dataset?.brand === "dragonstar";
 }
 
 function renderLandscapeModeSwitch(target, mode) {
@@ -6025,10 +6065,14 @@ function renderLandscapeModeSwitch(target, mode) {
     target.appendChild(controls);
   }
   const isStoreViewImage = target.classList.contains("store-post-image");
-  controls.innerHTML = ["original", "half", "quarter"].map(item => {
-    const labels = isStoreViewImage
-      ? { original: "元画像", half: "2分割", quarter: "4分割" }
-      : { original: "元画像", half: "縦1/2", quarter: "縦横1/4" };
+  const isDragonstarTableImage = isDragonstarStoreViewImage(target);
+  const modes = isDragonstarTableImage ? ["original", "table"] : ["original", "half", "quarter"];
+  controls.innerHTML = modes.map(item => {
+    const labels = isDragonstarTableImage
+      ? { original: "元画像", table: "表ごと" }
+      : isStoreViewImage
+        ? { original: "元画像", half: "2分割", quarter: "4分割" }
+        : { original: "元画像", half: "縦1/2", quarter: "縦横1/4" };
     return `<span class="landscape-mode-button ${item === mode ? "is-active" : ""}" role="button" tabindex="0" data-landscape-mode="${item}">${labels[item]}</span>`;
   }).join("");
   controls.querySelectorAll(".landscape-mode-button").forEach(button => {
@@ -6044,14 +6088,21 @@ function renderLandscapeModeSwitch(target, mode) {
   });
 }
 
+function getDragonstarTableGrid(ratio) {
+  return ratio >= 2.65 ? { cols: 3, rows: 2 } : { cols: 3, rows: 3 };
+}
+
 function renderLandscapeView(target, img) {
-  const mode = getLandscapeMode();
+  const savedMode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
   const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   const isStoreViewImage = target.classList.contains("store-post-image");
+  const isDragonstarTableImage = isDragonstarStoreViewImage(target);
+  const mode = savedMode === "table" && !isDragonstarTableImage ? "half" : savedMode;
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
+  target.classList.toggle("landscape-mode-table", mode === "table");
   renderLandscapeModeSwitch(target, mode);
   let split = target.querySelector(".landscape-split");
   if (!split) {
@@ -6062,6 +6113,25 @@ function renderLandscapeView(target, img) {
   split.classList.toggle("store-view-landscape-split", target.classList.contains("store-post-image"));
   if (mode === "original") {
     split.innerHTML = "";
+    return;
+  }
+  if (mode === "table") {
+    const grid = getDragonstarTableGrid(ratio);
+    split.style.setProperty("--table-cols", grid.cols);
+    split.style.setProperty("--table-rows", grid.rows);
+    split.style.removeProperty("--landscape-panel-ratio");
+    const slices = [];
+    for (let row = 0; row < grid.rows; row += 1) {
+      for (let col = 0; col < grid.cols; col += 1) {
+        const index = row * grid.cols + col + 1;
+        slices.push(`
+    <div class="landscape-slice store-table-slice" style="--table-col:${col}; --table-row:${row}; --table-cols:${grid.cols}; --table-rows:${grid.rows}">
+      <span class="landscape-slice-label">表 ${index} / ${grid.cols * grid.rows}</span>
+      <span class="landscape-slice-frame"><img src="${sourceUrl}" alt=""></span>
+    </div>`);
+      }
+    }
+    split.innerHTML = slices.join("");
     return;
   }
   if (mode === "quarter") {
