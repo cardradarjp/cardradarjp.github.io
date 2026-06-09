@@ -2984,10 +2984,11 @@ def build_area_page(posts_by_source, updated_at):
             image_count = len(image_urls)
             checked_label = format_update_label(post.get("posted_at") or post.get("collected_at", updated_at))
             in_latest_range = "1" if post_identity(post) in latest_keys else "0"
+            is_table_split_candidate = post.get("brand_id") == "dragonstar"
             store_image_buttons = []
             for image_index, image_url in enumerate(image_urls):
                 store_image_buttons.append(f"""
-        <div class="timeline-image store-post-image" role="button" tabindex="0" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
+        <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
           <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
           <span class="zoom-badge">拡大</span>
           <span class="image-count">画像 {image_index + 1} / {image_count}</span>
@@ -3676,7 +3677,7 @@ function markLandscapeImage(img) {{
   const ratio = img.naturalWidth / img.naturalHeight;
   const target = img.closest(".timeline-image, .image-card, .modal-image-wrap");
   if (!target) return;
-  const isLandscape = ratio >= 1.35;
+  const isLandscape = ratio >= 1.35 || isDragonstarStoreViewImage(target);
   target.classList.toggle("is-landscape", isLandscape);
   if (isLandscape) renderLandscapeView(target, img);
   else {{
@@ -3704,6 +3705,8 @@ function setLandscapeMode(mode) {{
 
 function isDragonstarStoreViewImage(target) {{
   if (!target?.classList?.contains("store-post-image")) return false;
+  if (target.dataset.tableSplitCandidate === "true") return true;
+  if (target.dataset.brandId === "dragonstar") return true;
   const card = target.closest(".store-post-card");
   return card?.dataset?.brand === "dragonstar";
 }}
@@ -3749,7 +3752,9 @@ function renderLandscapeView(target, img) {{
   const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   const isStoreViewImage = target.classList.contains("store-post-image");
   const isDragonstarTableImage = isDragonstarStoreViewImage(target);
-  const mode = savedMode === "table" && !isDragonstarTableImage ? "half" : savedMode;
+  const mode = isDragonstarTableImage
+    ? (savedMode === "table" ? "table" : "original")
+    : (savedMode === "table" ? "half" : savedMode);
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
