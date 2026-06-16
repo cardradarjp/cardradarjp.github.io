@@ -2987,12 +2987,21 @@ def build_area_page(posts_by_source, updated_at):
             is_table_split_candidate = post.get("brand_id") == "dragonstar"
             store_image_buttons = []
             for image_index, image_url in enumerate(image_urls):
+                table_controls = ""
+                if is_table_split_candidate:
+                    table_controls = """
+          <div class="store-image-controls" aria-label="表ごと表示切替">
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="table" onclick="setStoreTableMode(event, this, 'table')">表ごと</button>
+          </div>"""
                 store_image_buttons.append(f"""
-        <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
-          <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
-          <span class="zoom-badge">拡大</span>
-          <span class="image-count">画像 {image_index + 1} / {image_count}</span>
-          <span class="landscape-hint">横スクロールで確認</span>
+        <div class="store-image-item" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-enabled="{str(is_table_split_candidate).lower()}">
+          <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="original" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
+            <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
+            <span class="zoom-badge">拡大</span>
+            <span class="image-count">画像 {image_index + 1} / {image_count}</span>
+            <span class="landscape-hint">横スクロールで確認</span>
+          </div>{table_controls}
         </div>
 """)
 
@@ -3213,12 +3222,18 @@ def build_area_page(posts_by_source, updated_at):
   scroll-padding-inline: 9vw;
 }
 
-#storeView .store-post-image {
+#storeView .store-image-item {
   flex: 0 0 82% !important;
   min-width: 82% !important;
   max-width: 82% !important;
-  height: min(54vh, 420px);
   scroll-snap-align: center;
+}
+
+#storeView .store-post-image {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: min(54vh, 420px);
   background: rgba(0,0,0,.82);
   border-color: rgba(255,255,255,.13);
 }
@@ -3242,6 +3257,29 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-post-image .landscape-mode-button {
   padding: 4px 6px;
   font-size: 10px;
+}
+
+#storeView .store-image-controls {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+#storeView .store-table-mode-button {
+  flex: 1;
+  min-height: 30px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 8px;
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.78);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+#storeView .store-table-mode-button.is-active {
+  border-color: rgba(255,255,255,.38);
+  background: rgba(255,255,255,.16);
+  color: #fff;
 }
 
 #storeView .store-post-image .image-count,
@@ -3385,10 +3423,13 @@ def build_area_page(posts_by_source, updated_at):
     max-width: 100% !important;
   }
 
-  #storeView .store-post-image {
+  #storeView .store-image-item {
     flex-basis: min(420px, 48%) !important;
     min-width: min(420px, 48%) !important;
     max-width: min(420px, 48%) !important;
+  }
+
+  #storeView .store-post-image {
     height: 430px;
   }
 }
@@ -3707,12 +3748,41 @@ function isDragonstarStoreViewImage(target) {{
   if (!target?.classList?.contains("store-post-image")) return false;
   if (target.dataset.tableSplitCandidate === "true") return true;
   if (target.dataset.brandId === "dragonstar") return true;
+  const item = target.closest(".store-image-item");
+  if (item?.dataset?.tableSplitEnabled === "true") return true;
+  if (item?.dataset?.brandId === "dragonstar") return true;
   const card = target.closest(".store-post-card");
   return card?.dataset?.brand === "dragonstar";
 }}
 
+function syncStoreTableControls(target, mode) {{
+  const item = target?.closest(".store-image-item");
+  if (!item) return;
+  item.querySelectorAll(".store-table-mode-button").forEach(button => {{
+    button.classList.toggle("is-active", button.dataset.tableMode === mode);
+  }});
+}}
+
+function setStoreTableMode(event, button, mode) {{
+  event.preventDefault();
+  event.stopPropagation();
+  const item = button.closest(".store-image-item");
+  const target = item?.querySelector(".store-post-image");
+  const img = target?.querySelector(":scope > img");
+  if (!target || !img) return;
+  const nextMode = mode === "table" ? "table" : "original";
+  target.dataset.storeTableMode = nextMode;
+  target.classList.add("is-landscape");
+  renderLandscapeView(target, img);
+  setupScrollIndicators(target);
+}}
+
 function renderLandscapeModeSwitch(target, mode) {{
   let controls = target.querySelector(".landscape-mode-switch");
+  if (isDragonstarStoreViewImage(target)) {{
+    controls?.remove();
+    return;
+  }}
   if (!controls) {{
     controls = document.createElement("span");
     controls.className = "landscape-mode-switch";
@@ -3753,13 +3823,14 @@ function renderLandscapeView(target, img) {{
   const isStoreViewImage = target.classList.contains("store-post-image");
   const isDragonstarTableImage = isDragonstarStoreViewImage(target);
   const mode = isDragonstarTableImage
-    ? (savedMode === "table" ? "table" : "original")
+    ? (target.dataset.storeTableMode === "table" ? "table" : "original")
     : (savedMode === "table" ? "half" : savedMode);
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
   target.classList.toggle("landscape-mode-table", mode === "table");
   renderLandscapeModeSwitch(target, mode);
+  if (isDragonstarTableImage) syncStoreTableControls(target, mode);
   let split = target.querySelector(".landscape-split");
   if (!split) {{
     split = document.createElement("div");
