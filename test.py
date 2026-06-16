@@ -3384,13 +3384,23 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-table .landscape-slice-frame img {
-  width: calc(var(--table-cols, 3) * 100%);
-  height: calc(var(--table-rows, 2) * 100%);
-  transform: translate(
-    calc(var(--table-col, 0) * -100% / var(--table-cols, 3)),
-    calc(var(--table-row, 0) * -100% / var(--table-rows, 2))
-  );
-  transform-origin: top left;
+  display: none;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-table .table-split-frame {
+  aspect-ratio: var(--table-slice-ratio, 1.35);
+  min-height: min(44vh, 360px);
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-table .table-split-slice {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: var(--table-image);
+  background-repeat: no-repeat;
+  background-size: calc(var(--table-cols, 3) * 100%) calc(var(--table-rows, 2) * 100%);
+  background-position: var(--table-bg-x, 0%) var(--table-bg-y, 0%);
+  background-color: rgba(0,0,0,.92);
 }
 
 #storeView .store-post-image .landscape-slice-label {
@@ -3813,7 +3823,7 @@ function renderLandscapeModeSwitch(target, mode) {{
 }}
 
 function getDragonstarTableGrid(ratio) {{
-  return ratio >= 2.65 ? {{ cols: 3, rows: 2 }} : {{ cols: 3, rows: 3 }};
+  return ratio >= 2.7 ? {{ cols: 3, rows: 1 }} : {{ cols: 3, rows: 2 }};
 }}
 
 function renderLandscapeView(target, img) {{
@@ -3846,15 +3856,18 @@ function renderLandscapeView(target, img) {{
     const grid = getDragonstarTableGrid(ratio);
     split.style.setProperty("--table-cols", grid.cols);
     split.style.setProperty("--table-rows", grid.rows);
+    split.style.setProperty("--table-slice-ratio", ((ratio * grid.rows) / grid.cols).toFixed(4));
     split.style.removeProperty("--landscape-panel-ratio");
     const slices = [];
     for (let row = 0; row < grid.rows; row += 1) {{
       for (let col = 0; col < grid.cols; col += 1) {{
         const index = row * grid.cols + col + 1;
+        const x = grid.cols === 1 ? 0 : (col / (grid.cols - 1)) * 100;
+        const y = grid.rows === 1 ? 0 : (row / (grid.rows - 1)) * 100;
         slices.push(`
-    <div class="landscape-slice store-table-slice" style="--table-col:${{col}}; --table-row:${{row}}; --table-cols:${{grid.cols}}; --table-rows:${{grid.rows}}">
-      <span class="landscape-slice-label">表 ${{index}} / ${{grid.cols * grid.rows}}</span>
-      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
+    <div class="landscape-slice store-table-slice" style="--table-cols:${{grid.cols}}; --table-rows:${{grid.rows}}; --table-slice-ratio:${{((ratio * grid.rows) / grid.cols).toFixed(4)}}; --table-bg-x:${{x}}%; --table-bg-y:${{y}}%; --table-image:url('${{sourceUrl}}')">
+      <span class="landscape-slice-label">表${{index}} / ${{grid.cols * grid.rows}}</span>
+      <span class="landscape-slice-frame table-split-frame"><span class="table-split-slice" aria-hidden="true"></span></span>
     </div>`);
       }}
     }}
