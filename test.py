@@ -815,6 +815,93 @@ def matching_words(text, words):
     return [word for word in words if word.lower() in lower_text]
 
 
+STRONG_BUYLIST_WORDS = [
+    "買取表",
+    "買取リスト",
+    "買取価格",
+    "買取保証",
+    "強化買取",
+    "買取強化",
+    "高価買取",
+    "買取更新",
+    "買取情報",
+    "ポケカ買取",
+    "ポケモンカード買取",
+    "WANTED",
+    "募集",
+    "最低保証",
+    "定額",
+    "一律",
+    "まとめ買取",
+    "PSA買取",
+    "BOX買取",
+]
+
+NON_BUYLIST_NOTICE_WORDS = [
+    "営業時間",
+    "営業案内",
+    "営業時間案内",
+    "営業日",
+    "休業",
+    "臨時休業",
+    "定休日",
+    "開店",
+    "閉店",
+    "本日の営業時間",
+    "年末年始",
+    "棚卸",
+    "買取時間",
+    "買取受付時間",
+    "受付時間",
+]
+
+NON_BUYLIST_SALES_WORDS = [
+    "販売",
+    "販売中",
+    "販売開始",
+    "入荷",
+    "在庫",
+    "特価",
+    "セール",
+    "抽選販売",
+    "大会",
+    "イベント",
+    "抽選",
+    "予約",
+    "受付中",
+]
+
+NON_BUYLIST_AFTER_BUY_WORDS = [
+    "買取しました",
+    "買取させていただきました",
+    "お買取り",
+    "お買取",
+    "買取ありがとうございます",
+    "買取実績",
+    "買取成立",
+    "買取後",
+    "お売りいただき",
+    "お持ち込み",
+]
+
+STRICT_BUYLIST_SHOP_SLUGS = {
+    "tonton-osaka-nihonbashi",
+}
+
+
+def has_strong_buylist_signal(text):
+    return contains_any(text, STRONG_BUYLIST_WORDS)
+
+
+def is_non_buylist_text(text):
+    if has_strong_buylist_signal(text):
+        return False
+    return contains_any(
+        text,
+        NON_BUYLIST_NOTICE_WORDS + NON_BUYLIST_SALES_WORDS + NON_BUYLIST_AFTER_BUY_WORDS,
+    )
+
+
 def is_target_post(text, source_type):
     pokemon_words = [
         "ポケカ",
@@ -857,7 +944,17 @@ def is_target_post(text, source_type):
     if not contains_any(text, pokemon_words):
         return False
 
-    return contains_any(text, buy_words)
+    if not contains_any(text, buy_words):
+        return False
+
+    return not is_non_buylist_text(text)
+
+
+def is_strict_shop_non_buylist_post(post):
+    if post.get("shop_slug") not in STRICT_BUYLIST_SHOP_SLUGS:
+        return False
+    text = display_filter_text(post)
+    return not has_strong_buylist_signal(text)
 
 
 def classify_display_type(text, source_type):
@@ -931,23 +1028,9 @@ def is_non_pokemon_post(post):
 
 def is_non_buy_notice_post(post):
     text = display_filter_text(post)
-    buy_check_text = " ".join([
-        str(post.get("full_text", "")),
-        str(post.get("text", "")),
-        str(post.get("summary", "")),
-        str(post.get("shop_name", "")),
-        str(post.get("brand", "")),
-    ]).replace("買取受付時間", "").replace("買取受付", "")
-    notice_words = [
-        "営業時間", "営業案内", "営業日", "休業", "臨時休業", "定休日",
-        "開店", "閉店", "本日の営業時間", "年末年始", "棚卸",
-        "大会", "イベント", "入荷", "販売", "抽選", "予約", "受付中",
-    ]
-    buy_words = [
-        "買取", "高価買取", "買取表", "WANTED", "募集", "最低保証",
-        "定額", "一律", "まとめ買取", "PSA買取", "BOX買取",
-    ]
-    return contains_any(text, notice_words) and not contains_any(buy_check_text, buy_words)
+    if is_strict_shop_non_buylist_post(post):
+        return True
+    return is_non_buylist_text(text)
 
 
 def filter_display_posts(posts):
