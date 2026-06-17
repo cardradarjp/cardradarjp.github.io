@@ -730,6 +730,39 @@ def get_type_labels(types):
     return [TYPE_META[t]["label"] for t in types if t in TYPE_META]
 
 
+SHOP_DISPLAY_ORDER = [
+    "dragonstar-nihonbashi-honten",
+    "dragonstar-nihonbashi-2",
+    "dragonstar-nihonbashi-3",
+    "dragonstar-otaroad-chuo",
+    "dragonstar-nansan",
+    "cardlabo-namba",
+    "cardlabo-osaka-nihonbashi",
+    "girafull-namba",
+    "girafull-osaka-nihonbashi",
+    "girafull-otaroad",
+    "magi-nihonbashi",
+    "magi-otaroad",
+    "preyz-nihonbashi-honten",
+    "preyz-otaroad",
+    "hareruya2-namba",
+    "fullcomp-nihonbashi",
+    "cardbox-nihonbashi",
+]
+
+
+def sort_shops_for_display(shops):
+    order = {shop_slug: index for index, shop_slug in enumerate(SHOP_DISPLAY_ORDER)}
+    original_order = {shop["shop_slug"]: index for index, shop in enumerate(shops)}
+    return sorted(
+        shops,
+        key=lambda shop: (
+            order.get(shop["shop_slug"], len(SHOP_DISPLAY_ORDER)),
+            original_order.get(shop["shop_slug"], len(shops)),
+        ),
+    )
+
+
 def get_status_url(tweet):
     links = tweet.locator("a")
 
@@ -3096,7 +3129,8 @@ main {
 """
 
 
-def html_shell(title, content, base_prefix=""):
+def html_shell(title, content, base_prefix="", extra_head=""):
+    head_extra_html = f"{extra_head}\n" if extra_head else ""
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -3109,7 +3143,7 @@ def html_shell(title, content, base_prefix=""):
 <meta name="theme-color" content="#050505">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<style>
+{head_extra_html}<style>
 {COMMON_CSS}
 </style>
 </head>
@@ -3142,38 +3176,30 @@ def build_index_page(updated_at):
   <section class="hero-large">
     {logo_html()}
 
-    <div class="hero-title">AREA<br>SELECT</div>
+    <div class="hero-title">CardRadar</div>
 
     <p class="hero-copy">
-      ポケカ買取情報を、地域・店舗・買取タイプ別に。<br>
-      X買取表、BOX買取、定額買取、PSA買取、公式Web買取表、相場確認まで。
+      大阪・日本橋ページへ移動します。<br>
+      移動しない場合は下のリンクをクリックしてください。
     </p>
 
     <div class="selector-grid">
-      <a class="select-card" href="osaka.html">
-        <small>KANSAI</small>
-        <strong>大阪</strong>
-        <p>日本橋エリアのポケカ買取表・BOX買取・定額買取を確認。</p>
-      </a>
-
-      <a class="select-card" href="#">
-        <small>KANTO</small>
-        <strong>東京</strong>
-        <p>秋葉原など、今後追加予定。</p>
-      </a>
-
-      <a class="select-card" href="#">
-        <small>CHUBU</small>
-        <strong>愛知</strong>
-        <p>大須など、今後追加予定。</p>
+      <a class="select-card" href="osaka-nihonbashi.html">
+        <small>OSAKA</small>
+        <strong>大阪・日本橋</strong>
+        <p>大阪・日本橋周辺のポケカ買取表画像を見る。</p>
       </a>
     </div>
 
     <div class="updated">LAST UPDATE : {h(updated_at)}</div>
   </section>
 </div>
+<script>
+window.location.replace("osaka-nihonbashi.html");
+</script>
 """
-    return html_shell("CardRadar｜ポケカ買取情報を探す", content)
+    extra_head = '<meta http-equiv="refresh" content="0; url=osaka-nihonbashi.html">'
+    return html_shell("CardRadar｜大阪・日本橋へ移動", content, extra_head=extra_head)
 
 
 # =========================
@@ -3229,7 +3255,7 @@ def build_osaka_page(updated_at):
 # =========================
 
 def build_area_page(posts_by_source, updated_at):
-    shops = get_physical_shops("osaka-nihonbashi")
+    shops = sort_shops_for_display(get_physical_shops("osaka-nihonbashi"))
     support_sources = get_support_sources()
     brands = get_unique_brands("osaka-nihonbashi")
     all_timeline_posts = get_timeline_posts(posts_by_source, "osaka-nihonbashi")
