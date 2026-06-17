@@ -903,6 +903,19 @@ ART_STORE_SALES_WORDS = [
     "発売",
 ]
 
+ART_STORE_STRONG_BUYLIST_WORDS = [
+    "買取表",
+    "買取リスト",
+    "買取価格",
+    "買取保証",
+    "強化買取",
+    "買取更新",
+    "ポケカ買取",
+    "ポケモンカード買取",
+    "高価買取",
+    "買取募集",
+]
+
 STRICT_BUYLIST_SHOP_SLUGS = {
     "tonton-osaka-nihonbashi",
 }
@@ -980,9 +993,9 @@ def is_art_store_sales_post(post):
     if post.get("shop_slug") != "cardshop-art":
         return False
     text = display_filter_text(post)
-    if has_strong_buylist_signal(text):
+    if contains_any(text, ART_STORE_STRONG_BUYLIST_WORDS):
         return False
-    return contains_any(text, ART_STORE_SALES_WORDS)
+    return True
 
 
 def classify_display_type(text, source_type):
