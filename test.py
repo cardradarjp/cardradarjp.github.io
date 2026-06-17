@@ -884,6 +884,25 @@ NON_BUYLIST_AFTER_BUY_WORDS = [
     "お持ち込み",
 ]
 
+ART_STORE_SALES_WORDS = [
+    "販売",
+    "販売中",
+    "販売開始",
+    "販売情報",
+    "販売価格",
+    "入荷",
+    "入荷情報",
+    "再入荷",
+    "在庫",
+    "在庫情報",
+    "特価",
+    "セール",
+    "オリパ",
+    "抽選販売",
+    "予約",
+    "発売",
+]
+
 STRICT_BUYLIST_SHOP_SLUGS = {
     "tonton-osaka-nihonbashi",
 }
@@ -957,6 +976,15 @@ def is_strict_shop_non_buylist_post(post):
     return not has_strong_buylist_signal(text)
 
 
+def is_art_store_sales_post(post):
+    if post.get("shop_slug") != "cardshop-art":
+        return False
+    text = display_filter_text(post)
+    if has_strong_buylist_signal(text):
+        return False
+    return contains_any(text, ART_STORE_SALES_WORDS)
+
+
 def classify_display_type(text, source_type):
     psa_words = ["PSA", "PSA10", "PSA9", "PSA 10", "PSA 9", "鑑定品", "鑑定", "ARS", "BGS", "ケース付き", "グレーディング"]
     psa_ng_words = ["PSA買取不可", "PSA対象外", "PSAは対象外", "PSA買取なし"]
@@ -1028,6 +1056,8 @@ def is_non_pokemon_post(post):
 
 def is_non_buy_notice_post(post):
     text = display_filter_text(post)
+    if is_art_store_sales_post(post):
+        return True
     if is_strict_shop_non_buylist_post(post):
         return True
     return is_non_buylist_text(text)
