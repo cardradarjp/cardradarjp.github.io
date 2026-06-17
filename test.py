@@ -2991,7 +2991,7 @@ def build_area_page(posts_by_source, updated_at):
                 if is_table_split_candidate:
                     table_controls = """
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3149,7 +3149,7 @@ def build_area_page(posts_by_source, updated_at):
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 14px 0 16px;
+  padding: 12px 0 14px;
   overflow-x: hidden;
 }
 
@@ -3158,7 +3158,7 @@ def build_area_page(posts_by_source, updated_at):
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
   align-items: center;
-  padding: 0 12px 8px;
+  padding: 0 10px 7px;
 }
 
 #storeView .store-post-carousel {
@@ -3176,7 +3176,7 @@ def build_area_page(posts_by_source, updated_at):
   min-width: 0 !important;
   max-width: 100% !important;
   box-sizing: border-box;
-  padding: 8px 0 10px;
+  padding: 6px 0 8px;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -3184,13 +3184,13 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-card + .store-post-card {
-  margin-top: 12px;
+  margin-top: 10px;
   border-top: 1px solid rgba(255,255,255,.10);
-  padding-top: 12px;
+  padding-top: 10px;
 }
 
 #storeView .store-post-shop {
-  margin: 0 12px 4px;
+  margin: 0 10px 3px;
   color: rgba(255,255,255,.90);
   font-size: 12px;
   font-weight: 650;
@@ -3198,8 +3198,8 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-meta {
-  margin: 0 12px 9px;
-  padding-bottom: 7px;
+  margin: 0 10px 7px;
+  padding-bottom: 6px;
   border-bottom: 1px solid rgba(255,255,255,.09);
   color: rgba(255,255,255,.66);
   font-size: 10.5px;
@@ -3210,23 +3210,23 @@ def build_area_page(posts_by_source, updated_at):
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 0 9vw 9px;
+  padding: 0 5vw 7px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 9vw;
+  scroll-padding-inline: 5vw;
 }
 
 #storeView .store-image-item {
-  flex: 0 0 82% !important;
-  min-width: 82% !important;
-  max-width: 82% !important;
+  flex: 0 0 90% !important;
+  min-width: 90% !important;
+  max-width: 90% !important;
   scroll-snap-align: center;
 }
 
@@ -3234,7 +3234,7 @@ def build_area_page(posts_by_source, updated_at):
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
-  height: min(54vh, 420px);
+  height: min(58vh, 460px);
   background: rgba(0,0,0,.82);
   border-color: rgba(255,255,255,.13);
 }
@@ -3262,17 +3262,17 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-image-controls {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
-  margin-top: 6px;
+  gap: 4px;
+  margin-top: 5px;
 }
 
 #storeView .store-table-mode-button {
-  min-height: 28px;
+  min-height: 26px;
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 8px;
   background: rgba(255,255,255,.06);
   color: rgba(255,255,255,.78);
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 650;
 }
 
@@ -3416,18 +3416,18 @@ def build_area_page(posts_by_source, updated_at):
 
 #storeView .store-post-actions {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 5px;
-  margin: 6px 12px 0;
+  margin: 5px 10px 0;
   padding: 0;
 }
 
 #storeView .store-post-actions a,
 #storeView .store-post-actions button {
   width: 100%;
-  min-height: 29px;
-  padding: 6px 4px;
-  font-size: 10.5px;
+  min-height: 27px;
+  padding: 5px 4px;
+  font-size: 10px;
   white-space: normal;
 }
 
@@ -3439,13 +3439,13 @@ def build_area_page(posts_by_source, updated_at):
   }
 
   #storeView .store-image-item {
-    flex-basis: min(420px, 48%) !important;
-    min-width: min(420px, 48%) !important;
-    max-width: min(420px, 48%) !important;
+    flex-basis: min(460px, 52%) !important;
+    min-width: min(460px, 52%) !important;
+    max-width: min(460px, 52%) !important;
   }
 
   #storeView .store-post-image {
-    height: 430px;
+    height: 460px;
   }
 }
 </style>
