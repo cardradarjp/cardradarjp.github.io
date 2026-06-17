@@ -2991,12 +2991,14 @@ def build_area_page(posts_by_source, updated_at):
                 if is_table_split_candidate:
                     table_controls = """
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
-            <button type="button" class="store-table-mode-button" data-table-mode="table" onclick="setStoreTableMode(event, this, 'table')">表ごと</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
           </div>"""
                 store_image_buttons.append(f"""
         <div class="store-image-item" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-enabled="{str(is_table_split_candidate).lower()}">
-          <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="original" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
+          <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="row3" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
             <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
             <span class="zoom-badge">拡大</span>
             <span class="image-count">画像 {image_index + 1} / {image_count}</span>
@@ -3261,12 +3263,13 @@ def build_area_page(posts_by_source, updated_at):
 
 #storeView .store-image-controls {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-top: 6px;
 }
 
 #storeView .store-table-mode-button {
-  flex: 1;
+  flex: 1 1 calc(50% - 6px);
   min-height: 30px;
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 8px;
@@ -3780,7 +3783,7 @@ function setStoreTableMode(event, button, mode) {{
   const target = item?.querySelector(".store-post-image");
   const img = target?.querySelector(":scope > img");
   if (!target || !img) return;
-  const nextMode = mode === "table" ? "table" : "original";
+  const nextMode = ["row3", "grid3x2", "grid2x2"].includes(mode) ? mode : "original";
   target.dataset.storeTableMode = nextMode;
   target.classList.add("is-landscape");
   renderLandscapeView(target, img);
@@ -3822,8 +3825,10 @@ function renderLandscapeModeSwitch(target, mode) {{
   }});
 }}
 
-function getDragonstarTableGrid(ratio) {{
-  return ratio >= 2.7 ? {{ cols: 3, rows: 1 }} : {{ cols: 3, rows: 2 }};
+function getDragonstarTableGrid(mode) {{
+  if (mode === "grid2x2") return {{ cols: 2, rows: 2, className: "table-split-mode-grid2x2" }};
+  if (mode === "grid3x2") return {{ cols: 3, rows: 2, className: "table-split-mode-grid3x2" }};
+  return {{ cols: 3, rows: 1, className: "table-split-mode-row3" }};
 }}
 
 function renderLandscapeView(target, img) {{
@@ -3832,15 +3837,16 @@ function renderLandscapeView(target, img) {{
   const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   const isStoreViewImage = target.classList.contains("store-post-image");
   const isDragonstarTableImage = isDragonstarStoreViewImage(target);
+  const storeTableMode = isDragonstarTableImage ? (target.dataset.storeTableMode || "row3") : "";
   const mode = isDragonstarTableImage
-    ? (target.dataset.storeTableMode === "table" ? "table" : "original")
+    ? (storeTableMode === "original" ? "original" : "table")
     : (savedMode === "table" ? "half" : savedMode);
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
   target.classList.toggle("landscape-mode-table", mode === "table");
   renderLandscapeModeSwitch(target, mode);
-  if (isDragonstarTableImage) syncStoreTableControls(target, mode);
+  if (isDragonstarTableImage) syncStoreTableControls(target, storeTableMode);
   let split = target.querySelector(".landscape-split");
   if (!split) {{
     split = document.createElement("div");
@@ -3848,12 +3854,14 @@ function renderLandscapeView(target, img) {{
     img.insertAdjacentElement("afterend", split);
   }}
   split.classList.toggle("store-view-landscape-split", target.classList.contains("store-post-image"));
+  split.classList.remove("table-split-mode-row3", "table-split-mode-grid3x2", "table-split-mode-grid2x2");
   if (mode === "original") {{
     split.innerHTML = "";
     return;
   }}
   if (mode === "table") {{
-    const grid = getDragonstarTableGrid(ratio);
+    const grid = getDragonstarTableGrid(storeTableMode);
+    split.classList.add(grid.className);
     split.style.setProperty("--table-cols", grid.cols);
     split.style.setProperty("--table-rows", grid.rows);
     split.style.setProperty("--table-slice-ratio", ((ratio * grid.rows) / grid.cols).toFixed(4));
