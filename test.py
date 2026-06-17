@@ -2991,14 +2991,14 @@ def build_area_page(posts_by_source, updated_at):
                 if is_table_split_candidate:
                     table_controls = """
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
           </div>"""
                 store_image_buttons.append(f"""
         <div class="store-image-item" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-enabled="{str(is_table_split_candidate).lower()}">
-          <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="row3" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
+          <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="original" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
             <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
             <span class="zoom-badge">拡大</span>
             <span class="image-count">画像 {image_index + 1} / {image_count}</span>
@@ -3837,7 +3837,7 @@ function renderLandscapeView(target, img) {{
   const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
   const isStoreViewImage = target.classList.contains("store-post-image");
   const isDragonstarTableImage = isDragonstarStoreViewImage(target);
-  const storeTableMode = isDragonstarTableImage ? (target.dataset.storeTableMode || "row3") : "";
+  const storeTableMode = isDragonstarTableImage ? (target.dataset.storeTableMode || "original") : "";
   const mode = isDragonstarTableImage
     ? (storeTableMode === "original" ? "original" : "table")
     : (savedMode === "table" ? "half" : savedMode);
