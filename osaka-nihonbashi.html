@@ -1754,8 +1754,7 @@ main {
 }
 
 #storeView .store-post-image .landscape-mode-switch {
-  gap: 4px;
-  margin-top: 5px;
+  display: none;
 }
 
 #storeView .store-post-image .landscape-mode-button {
@@ -1764,20 +1763,19 @@ main {
 }
 
 #storeView .store-image-controls {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
   margin-top: 6px;
 }
 
 #storeView .store-table-mode-button {
-  flex: 1 1 calc(50% - 6px);
-  min-height: 30px;
+  min-height: 28px;
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 8px;
   background: rgba(255,255,255,.06);
   color: rgba(255,255,255,.78);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 650;
 }
 
@@ -1798,6 +1796,11 @@ main {
 
 #storeView .store-post-image .image-count {
   display: none;
+}
+
+#storeView .store-post-image .zoom-badge,
+#storeView .store-post-image .landscape-hint {
+  display: none !important;
 }
 
 #storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-split,
@@ -3296,7 +3299,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3305,7 +3308,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-otachu-single_2064686623392923913', 0)">拡大</button>
           <a href="https://x.com/ds_otaroad_chuo/status/2064686623392923913" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-otaroad-chuo.html">この店舗を見る</a>
         </div>
@@ -3351,7 +3353,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3366,7 +3368,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3375,7 +3377,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-honten-single_2058463825397964918', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi/status/2058463825397964918" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-honten.html">この店舗を見る</a>
         </div>
@@ -3402,7 +3403,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3417,7 +3418,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3426,7 +3427,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-honten-single_2058409687582757168', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi/status/2058409687582757168" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-honten.html">この店舗を見る</a>
         </div>
@@ -3453,7 +3453,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3462,7 +3462,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-honten-single_2058027028322926884', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi/status/2058027028322926884" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-honten.html">この店舗を見る</a>
         </div>
@@ -3489,7 +3488,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3504,7 +3503,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3519,7 +3518,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3534,7 +3533,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3543,7 +3542,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-honten-single_2057649627227193432', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi/status/2057649627227193432" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-honten.html">この店舗を見る</a>
         </div>
@@ -3589,7 +3587,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3604,7 +3602,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3613,7 +3611,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2059459932554989689', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi2/status/2059459932554989689" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-2.html">この店舗を見る</a>
         </div>
@@ -3640,7 +3637,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3649,7 +3646,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058345278269227220', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi2/status/2058345278269227220" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-2.html">この店舗を見る</a>
         </div>
@@ -3676,7 +3672,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3691,7 +3687,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3700,7 +3696,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058344852522213799', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi2/status/2058344852522213799" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-2.html">この店舗を見る</a>
         </div>
@@ -3727,7 +3722,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3742,7 +3737,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3751,7 +3746,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058342602072605173', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi2/status/2058342602072605173" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-2.html">この店舗を見る</a>
         </div>
@@ -3778,7 +3772,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3793,7 +3787,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3802,7 +3796,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-dora2-single_2058114688903217320', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi2/status/2058114688903217320" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-2.html">この店舗を見る</a>
         </div>
@@ -3848,7 +3841,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3863,7 +3856,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3872,7 +3865,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2062526154037235932', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi3/status/2062526154037235932" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-3.html">この店舗を見る</a>
         </div>
@@ -3899,7 +3891,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3908,7 +3900,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-dora3-single_2060885784547225916', 0)">拡大</button>
           <a href="https://x.com/ds_nipponbashi3/status/2060885784547225916" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nihonbashi-3.html">この店舗を見る</a>
         </div>
@@ -3954,7 +3945,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3963,7 +3954,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058457648865968394', 0)">拡大</button>
           <a href="https://x.com/ds_namba_nansan/status/2058457648865968394" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nansan.html">この店舗を見る</a>
         </div>
@@ -3990,7 +3980,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3999,7 +3989,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058379517635207621', 0)">拡大</button>
           <a href="https://x.com/ds_namba_nansan/status/2058379517635207621" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nansan.html">この店舗を見る</a>
         </div>
@@ -4026,7 +4015,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -4035,7 +4024,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058363098759573946', 0)">拡大</button>
           <a href="https://x.com/ds_namba_nansan/status/2058363098759573946" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nansan.html">この店舗を見る</a>
         </div>
@@ -4062,7 +4050,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -4077,7 +4065,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -4086,7 +4074,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2058053645611000198', 0)">拡大</button>
           <a href="https://x.com/ds_namba_nansan/status/2058053645611000198" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nansan.html">この店舗を見る</a>
         </div>
@@ -4113,7 +4100,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -4122,7 +4109,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2057985103230280156', 0)">拡大</button>
           <a href="https://x.com/ds_namba_nansan/status/2057985103230280156" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nansan.html">この店舗を見る</a>
         </div>
@@ -4149,7 +4135,7 @@ main {
             <span class="landscape-hint">横スクロールで確認</span>
           </div>
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -4158,7 +4144,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_ds-nansan-single_2057730738909270331', 0)">拡大</button>
           <a href="https://x.com/ds_namba_nansan/status/2057730738909270331" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/dragonstar-nansan.html">この店舗を見る</a>
         </div>
@@ -4207,7 +4192,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2065607119840428205', 0)">拡大</button>
           <a href="https://x.com/hareruya2namba/status/2065607119840428205" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/hareruya2-namba.html">この店舗を見る</a>
         </div>
@@ -4237,7 +4221,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2065414729569603649', 0)">拡大</button>
           <a href="https://x.com/hareruya2namba/status/2065414729569603649" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/hareruya2-namba.html">この店舗を見る</a>
         </div>
@@ -4267,7 +4250,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_hareruya2-namba-single_2065414684094963782', 0)">拡大</button>
           <a href="https://x.com/hareruya2namba/status/2065414684094963782" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/hareruya2-namba.html">この店舗を見る</a>
         </div>
@@ -4325,7 +4307,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2066145612945576045', 0)">拡大</button>
           <a href="https://x.com/namba_clabo/status/2066145612945576045" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-namba.html">この店舗を見る</a>
         </div>
@@ -4355,7 +4336,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2066145500165021848', 0)">拡大</button>
           <a href="https://x.com/namba_clabo/status/2066145500165021848" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-namba.html">この店舗を見る</a>
         </div>
@@ -4385,7 +4365,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2066145409337376931', 0)">拡大</button>
           <a href="https://x.com/namba_clabo/status/2066145409337376931" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-namba.html">この店舗を見る</a>
         </div>
@@ -4424,7 +4403,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2066145332208308258', 0)">拡大</button>
           <a href="https://x.com/namba_clabo/status/2066145332208308258" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-namba.html">この店舗を見る</a>
         </div>
@@ -4454,7 +4432,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2066145230047567961', 0)">拡大</button>
           <a href="https://x.com/namba_clabo/status/2066145230047567961" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-namba.html">この店舗を見る</a>
         </div>
@@ -4493,7 +4470,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-namba-single_2066145105384493473', 0)">拡大</button>
           <a href="https://x.com/namba_clabo/status/2066145105384493473" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-namba.html">この店舗を見る</a>
         </div>
@@ -4569,7 +4545,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2056197259906474048', 0)">拡大</button>
           <a href="https://x.com/nipponbashi_lab/status/2056197259906474048" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-osaka-nihonbashi.html">この店舗を見る</a>
         </div>
@@ -4626,7 +4601,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2054883099318837336', 0)">拡大</button>
           <a href="https://x.com/nipponbashi_lab/status/2054883099318837336" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-osaka-nihonbashi.html">この店舗を見る</a>
         </div>
@@ -4674,7 +4648,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2054741575348138307', 0)">拡大</button>
           <a href="https://x.com/nipponbashi_lab/status/2054741575348138307" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-osaka-nihonbashi.html">この店舗を見る</a>
         </div>
@@ -4704,7 +4677,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2054740941513396418', 0)">拡大</button>
           <a href="https://x.com/nipponbashi_lab/status/2054740941513396418" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-osaka-nihonbashi.html">この店舗を見る</a>
         </div>
@@ -4734,7 +4706,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_cardlabo-nihonbashi-single_2054391448154537993', 0)">拡大</button>
           <a href="https://x.com/nipponbashi_lab/status/2054391448154537993" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/cardlabo-osaka-nihonbashi.html">この店舗を見る</a>
         </div>
@@ -4792,7 +4763,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2066339629197107253', 0)">拡大</button>
           <a href="https://x.com/GIRAFULL_Namba/status/2066339629197107253" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-namba.html">この店舗を見る</a>
         </div>
@@ -4831,7 +4801,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2066339533239754928', 0)">拡大</button>
           <a href="https://x.com/GIRAFULL_Namba/status/2066339533239754928" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-namba.html">この店舗を見る</a>
         </div>
@@ -4870,7 +4839,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2065625368174944430', 0)">拡大</button>
           <a href="https://x.com/GIRAFULL_Namba/status/2065625368174944430" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-namba.html">この店舗を見る</a>
         </div>
@@ -4909,7 +4877,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2065625083104858127', 0)">拡大</button>
           <a href="https://x.com/GIRAFULL_Namba/status/2065625083104858127" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-namba.html">この店舗を見る</a>
         </div>
@@ -4948,7 +4915,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-namba-single_2065624975214825731', 0)">拡大</button>
           <a href="https://x.com/GIRAFULL_Namba/status/2065624975214825731" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-namba.html">この店舗を見る</a>
         </div>
@@ -4997,7 +4963,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2062026807696851454', 0)">拡大</button>
           <a href="https://x.com/girafull_o_n/status/2062026807696851454" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-osaka-nihonbashi.html">この店舗を見る</a>
         </div>
@@ -5054,7 +5019,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2062017311960453348', 0)">拡大</button>
           <a href="https://x.com/girafull_o_n/status/2062017311960453348" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-osaka-nihonbashi.html">この店舗を見る</a>
         </div>
@@ -5093,7 +5057,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-nihonbashi-single_2062007455702560935', 0)">拡大</button>
           <a href="https://x.com/girafull_o_n/status/2062007455702560935" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-osaka-nihonbashi.html">この店舗を見る</a>
         </div>
@@ -5151,7 +5114,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2059106338203148569', 0)">拡大</button>
           <a href="https://x.com/GIRAFULLOTARODO/status/2059106338203148569" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-otaroad.html">この店舗を見る</a>
         </div>
@@ -5190,7 +5152,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058376116919062851', 0)">拡大</button>
           <a href="https://x.com/GIRAFULLOTARODO/status/2058376116919062851" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-otaroad.html">この店舗を見る</a>
         </div>
@@ -5229,7 +5190,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058097882348269748', 0)">拡大</button>
           <a href="https://x.com/GIRAFULLOTARODO/status/2058097882348269748" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-otaroad.html">この店舗を見る</a>
         </div>
@@ -5268,7 +5228,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2058014730938364108', 0)">拡大</button>
           <a href="https://x.com/GIRAFULLOTARODO/status/2058014730938364108" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-otaroad.html">この店舗を見る</a>
         </div>
@@ -5316,7 +5275,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2057657752105968038', 0)">拡大</button>
           <a href="https://x.com/GIRAFULLOTARODO/status/2057657752105968038" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-otaroad.html">この店舗を見る</a>
         </div>
@@ -5355,7 +5313,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_girafull-otaroad-single_2057622773820965118', 0)">拡大</button>
           <a href="https://x.com/GIRAFULLOTARODO/status/2057622773820965118" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/girafull-otaroad.html">この店舗を見る</a>
         </div>
@@ -5404,7 +5361,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_amtaf-single_2064903635923079366', 0)">拡大</button>
           <a href="https://x.com/AMTAF_SHOP/status/2064903635923079366" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/amtaf.html">この店舗を見る</a>
         </div>
@@ -5434,7 +5390,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_amtaf-single_2064541802015908229', 0)">拡大</button>
           <a href="https://x.com/AMTAF_SHOP/status/2064541802015908229" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/amtaf.html">この店舗を見る</a>
         </div>
@@ -5492,7 +5447,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-box_2066738290548732321', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2066738290548732321" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5522,7 +5476,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-box_2066381793377628206', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2066381793377628206" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5552,7 +5505,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-box_2066381587986698364', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2066381587986698364" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5591,7 +5543,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-box_2066377839667196206', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2066377839667196206" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5621,7 +5572,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-single_2066353642534473899', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2066353642534473899" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5660,7 +5610,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-single_2066008683759452581', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2066008683759452581" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5699,7 +5648,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-single_2066005512693645418', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2066005512693645418" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5738,7 +5686,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-single_2065643970487877972', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2065643970487877972" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5768,7 +5715,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_gotcha-single_2065633227843448960', 0)">拡大</button>
           <a href="https://x.com/cardshop_gotcha/status/2065633227843448960" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/gotcha.html">この店舗を見る</a>
         </div>
@@ -5817,7 +5763,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_kuro-single_2066369750369017967', 0)">拡大</button>
           <a href="https://x.com/kuro_tcg/status/2066369750369017967" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kuro.html">この店舗を見る</a>
         </div>
@@ -5874,7 +5819,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_kuro-single_2066369614117064831', 0)">拡大</button>
           <a href="https://x.com/kuro_tcg/status/2066369614117064831" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kuro.html">この店舗を見る</a>
         </div>
@@ -5931,7 +5875,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_kuro-single_2066369357543100697', 0)">拡大</button>
           <a href="https://x.com/kuro_tcg/status/2066369357543100697" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kuro.html">この店舗を見る</a>
         </div>
@@ -5961,7 +5904,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_kuro-box_2066368960636010703', 0)">拡大</button>
           <a href="https://x.com/kuro_tcg/status/2066368960636010703" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kuro.html">この店舗を見る</a>
         </div>
@@ -5991,7 +5933,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_kuro-box_2066368763365384299', 0)">拡大</button>
           <a href="https://x.com/kuro_tcg/status/2066368763365384299" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kuro.html">この店舗を見る</a>
         </div>
@@ -6067,7 +6008,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_mimi-single_2056567364385431665', 0)">拡大</button>
           <a href="https://x.com/mimi_kaitori/status/2056567364385431665" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kaitori-mimi.html">この店舗を見る</a>
         </div>
@@ -6124,7 +6064,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_mimi-single_2056204524453495103', 0)">拡大</button>
           <a href="https://x.com/mimi_kaitori/status/2056204524453495103" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kaitori-mimi.html">この店舗を見る</a>
         </div>
@@ -6181,7 +6120,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_mimi-single_2055841362126455053', 0)">拡大</button>
           <a href="https://x.com/mimi_kaitori/status/2055841362126455053" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kaitori-mimi.html">この店舗を見る</a>
         </div>
@@ -6238,7 +6176,6 @@ main {
 
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('timeline_mimi-single_2055478989150720148', 0)">拡大</button>
           <a href="https://x.com/mimi_kaitori/status/2055478989150720148" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/kaitori-mimi.html">この店舗を見る</a>
         </div>

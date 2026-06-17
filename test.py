@@ -2991,7 +2991,7 @@ def build_area_page(posts_by_source, updated_at):
                 if is_table_split_candidate:
                     table_controls = """
           <div class="store-image-controls" aria-label="表ごと表示切替">
-            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
+            <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
@@ -3023,7 +3023,6 @@ def build_area_page(posts_by_source, updated_at):
 {''.join(store_image_buttons)}
         </div>
         <div class="store-post-actions">
-          <button type="button" onclick="openTimelineMedia('{h(media_id)}', 0)">拡大</button>
           <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
           <a href="stores/{h(post["shop_slug"])}.html">この店舗を見る</a>
         </div>
@@ -3252,8 +3251,7 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-image .landscape-mode-switch {
-  gap: 4px;
-  margin-top: 5px;
+  display: none;
 }
 
 #storeView .store-post-image .landscape-mode-button {
@@ -3262,20 +3260,19 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-image-controls {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
   margin-top: 6px;
 }
 
 #storeView .store-table-mode-button {
-  flex: 1 1 calc(50% - 6px);
-  min-height: 30px;
+  min-height: 28px;
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 8px;
   background: rgba(255,255,255,.06);
   color: rgba(255,255,255,.78);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 650;
 }
 
@@ -3296,6 +3293,11 @@ def build_area_page(posts_by_source, updated_at):
 
 #storeView .store-post-image .image-count {
   display: none;
+}
+
+#storeView .store-post-image .zoom-badge,
+#storeView .store-post-image .landscape-hint {
+  display: none !important;
 }
 
 #storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-split,
