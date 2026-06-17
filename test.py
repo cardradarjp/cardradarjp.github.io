@@ -3000,9 +3000,6 @@ def build_area_page(posts_by_source, updated_at):
         <div class="store-image-item" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-enabled="{str(is_table_split_candidate).lower()}">
           <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="original" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
             <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
-            <span class="zoom-badge">拡大</span>
-            <span class="image-count">画像 {image_index + 1} / {image_count}</span>
-            <span class="landscape-hint">横スクロールで確認</span>
           </div>{table_controls}
         </div>
 """)
