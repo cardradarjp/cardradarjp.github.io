@@ -19,14 +19,19 @@ Path(USER_DATA_DIR).mkdir(exist_ok=True)
 STORES_DIR = Path("stores")
 STORES_DIR.mkdir(exist_ok=True)
 
-SAFETY_POSTS_PER_SOURCE = 20
+DATA_RETENTION_DAYS = 30
+MAX_SAVED_POSTS_PER_SOURCE = 30
+STORE_VIEW_DEFAULT_DAYS = 7
+STORE_VIEW_EXPANDED_DAYS = 30
+STORE_VIEW_FALLBACK_POSTS = 3
+SAFETY_POSTS_PER_SOURCE = MAX_SAVED_POSTS_PER_SOURCE
 FALLBACK_POSTS_PER_SOURCE = 5
 CHECK_POSTS_PER_SOURCE = 60
 MIN_LATEST_DAY_POSTS = 8
 MAX_TIMELINE_POSTS = 30
 TIMELINE_FALLBACK_DAYS = 7
-STORE_VIEW_RANGE_DAYS = 7
-MAX_STORE_VIEW_POSTS_PER_SHOP = 10
+STORE_VIEW_RANGE_DAYS = STORE_VIEW_DEFAULT_DAYS
+MAX_STORE_VIEW_POSTS_PER_SHOP = 30
 
 
 # =========================
@@ -1202,31 +1207,31 @@ def select_latest_posts(candidates):
     posted_candidates = [post for post in candidates if parse_jst_date(post.get("posted_date_jst"))]
     if posted_candidates:
         latest_date_obj = max(parse_jst_date(post["posted_date_jst"]) for post in posted_candidates)
-        week_posts = []
+        retained_posts = []
         for post in candidates:
             post_date = parse_jst_date(post.get("posted_date_jst"))
             if not post_date:
                 continue
             days_old = (latest_date_obj - post_date).days
-            if 0 <= days_old < STORE_VIEW_RANGE_DAYS:
-                week_posts.append(post)
-        return week_posts[:SAFETY_POSTS_PER_SOURCE]
+            if 0 <= days_old < DATA_RETENTION_DAYS:
+                retained_posts.append(post)
+        return retained_posts[:MAX_SAVED_POSTS_PER_SOURCE]
     return candidates[:FALLBACK_POSTS_PER_SOURCE]
 
 
 def build_source_selection_log(candidates, posts):
     dated_candidates = [post for post in candidates if parse_jst_date(post.get("posted_date_jst"))]
     latest_date = "-"
-    week_saved = "なし"
+    retention_saved = "なし"
     if dated_candidates:
         latest_date_obj = max(parse_jst_date(post["posted_date_jst"]) for post in dated_candidates)
         latest_date = latest_date_obj.strftime("%Y-%m-%d")
-        week_saved = "あり"
+        retention_saved = "あり"
     return (
         f"取得候補：{len(candidates)}件 / "
         f"保存対象：{len(posts)}件 / "
         f"最新日：{latest_date} / "
-        f"過去7日保存：{week_saved}"
+        f"過去{DATA_RETENTION_DAYS}日保存：{retention_saved}"
     )
 
 
@@ -1423,53 +1428,93 @@ def build_store_view_meta(mode_label, start_date, end_date, posts):
     return f"{mode_label}：{date_text} / 投稿{len(posts)}件 / {type_text}"
 
 
-def select_store_view_posts(shop_posts):
+def store_post_age_badge(post, reference_date):
+    latest_date_obj = parse_jst_date(reference_date)
+    post_date = parse_jst_date(post.get("posted_date_jst"))
+    if not latest_date_obj or not post_date:
+        return ""
+    days_old = (latest_date_obj - post_date).days
+    if days_old >= 14:
+        return "14日超"
+    if days_old >= STORE_VIEW_DEFAULT_DAYS:
+        return "7日超"
+    return ""
+
+
+def select_store_view_posts(shop_posts, reference_date=None):
     posts = [normalize_post(post) for post in shop_posts]
     posts.sort(key=sort_post_key, reverse=True)
     meta = {
-        "latest_meta": "最新のみ：未取得 / 投稿0件 / 未分類",
-        "week_meta": "過去7日：未取得 / 投稿0件 / 未分類",
-        "latest_keys": set(),
+        "default_meta": "過去7日：未取得 / 投稿0件 / 未分類",
+        "expanded_meta": "過去30日：未取得 / 投稿0件 / 未分類",
+        "default_keys": set(),
+        "expanded_keys": set(),
+        "latest_date": "",
     }
     if not posts:
         return [], [], meta
 
     dated_posts = [post for post in posts if post.get("posted_date_jst")]
     if not dated_posts:
-        fallback_posts = posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
-        latest_keys = {post_identity(post) for post in fallback_posts}
-        meta["latest_meta"] = build_store_view_meta("最新のみ", "", "", fallback_posts)
-        meta["week_meta"] = build_store_view_meta("過去7日", "", "", fallback_posts)
-        meta["latest_keys"] = latest_keys
-        return fallback_posts, fallback_posts, meta
+        fallback_posts = posts[:STORE_VIEW_FALLBACK_POSTS]
+        expanded_posts = posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
+        meta["default_meta"] = build_store_view_meta("過去7日", "", "", fallback_posts)
+        meta["expanded_meta"] = build_store_view_meta("過去30日", "", "", expanded_posts)
+        meta["default_keys"] = {post_identity(post) for post in fallback_posts}
+        meta["expanded_keys"] = {post_identity(post) for post in expanded_posts}
+        return fallback_posts, expanded_posts, meta
 
     latest_date = max(post["posted_date_jst"] for post in dated_posts)
     latest_date_obj = parse_jst_date(latest_date)
-    latest_posts = [post for post in posts if post.get("posted_date_jst") == latest_date]
-    latest_posts.sort(key=sort_post_key, reverse=True)
+    reference_date_obj = parse_jst_date(reference_date) or latest_date_obj
+    reference_date_text = reference_date_obj.strftime("%Y-%m-%d") if reference_date_obj else latest_date
+    meta["latest_date"] = latest_date
 
-    week_posts = []
-    if latest_date_obj:
+    default_posts = []
+    expanded_posts = []
+    default_count_before_fallback = 0
+    if reference_date_obj:
         for post in posts:
             post_date = parse_jst_date(post.get("posted_date_jst"))
             if not post_date:
                 continue
-            days_old = (latest_date_obj - post_date).days
-            if 0 <= days_old < STORE_VIEW_RANGE_DAYS:
-                week_posts.append(post)
+            days_old = (reference_date_obj - post_date).days
+            if 0 <= days_old < STORE_VIEW_DEFAULT_DAYS:
+                default_posts.append(post)
+            if 0 <= days_old < STORE_VIEW_EXPANDED_DAYS:
+                expanded_posts.append(post)
+        default_count_before_fallback = len(default_posts)
     else:
-        week_posts = list(latest_posts)
+        default_posts = posts[:STORE_VIEW_FALLBACK_POSTS]
+        expanded_posts = posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
+        default_count_before_fallback = len(default_posts)
 
-    week_posts.sort(key=sort_post_key, reverse=True)
-    week_posts = week_posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
-    range_start_obj = latest_date_obj - timedelta(days=STORE_VIEW_RANGE_DAYS - 1) if latest_date_obj else None
-    range_start = range_start_obj.strftime("%Y-%m-%d") if range_start_obj else latest_date
-    latest_keys = {post_identity(post) for post in latest_posts}
+    default_posts.sort(key=sort_post_key, reverse=True)
+    expanded_posts.sort(key=sort_post_key, reverse=True)
+    if len(default_posts) <= 1:
+        seen_keys = {post_identity(post) for post in default_posts}
+        for post in posts:
+            key = post_identity(post)
+            if key in seen_keys:
+                continue
+            default_posts.append(post)
+            seen_keys.add(key)
+            if len(default_posts) >= STORE_VIEW_FALLBACK_POSTS:
+                break
+    default_posts = default_posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
+    expanded_posts = expanded_posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
 
-    meta["latest_meta"] = build_store_view_meta("最新のみ", latest_date, latest_date, latest_posts)
-    meta["week_meta"] = build_store_view_meta("過去7日", range_start, latest_date, week_posts)
-    meta["latest_keys"] = latest_keys
-    return latest_posts, week_posts, meta
+    default_start_obj = reference_date_obj - timedelta(days=STORE_VIEW_DEFAULT_DAYS - 1) if reference_date_obj else None
+    expanded_start_obj = reference_date_obj - timedelta(days=STORE_VIEW_EXPANDED_DAYS - 1) if reference_date_obj else None
+    default_start = default_start_obj.strftime("%Y-%m-%d") if default_start_obj else reference_date_text
+    expanded_start = expanded_start_obj.strftime("%Y-%m-%d") if expanded_start_obj else reference_date_text
+    meta["default_meta"] = build_store_view_meta("過去7日", default_start, reference_date_text, default_posts)
+    if default_count_before_fallback <= 1 and default_posts:
+        meta["default_meta"] += f" / 最新投稿：{format_date_label(latest_date)}"
+    meta["expanded_meta"] = build_store_view_meta("過去30日", expanded_start, reference_date_text, expanded_posts)
+    meta["default_keys"] = {post_identity(post) for post in default_posts}
+    meta["expanded_keys"] = {post_identity(post) for post in expanded_posts}
+    return default_posts, expanded_posts, meta
 
 
 def short_type_label(label_or_type):
@@ -3264,8 +3309,6 @@ def build_area_page(posts_by_source, updated_at):
     media_items = {}
     timeline_html = ""
     timeline_initial_count = len(timeline_posts)
-    no_result_class = "no-result hidden" if timeline_initial_count else "no-result"
-    no_result_attrs = ' hidden aria-hidden="true" style="display:none"' if timeline_initial_count else ' aria-hidden="false"'
     latest_timeline_date = timeline_meta.get("latest_date", "")
     same_day_count = timeline_meta.get("latest_count", 0)
     if timeline_posts:
@@ -3298,7 +3341,7 @@ def build_area_page(posts_by_source, updated_at):
             for image_index, image_url in enumerate(image_urls):
                 image_buttons.append(f"""
     <button class="timeline-image" type="button" onclick="openTimelineMedia('{h(media_id)}', {image_index})">
-      <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
+      <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy" decoding="async">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 {image_index + 1} / {image_count}</span>
       <span class="landscape-hint">横スクロールで確認</span>
@@ -3337,26 +3380,30 @@ def build_area_page(posts_by_source, updated_at):
 """
 
     store_groups_html = ""
+    store_initial_count = 0
 
     for shop in shops:
         shop_posts = [normalize_post(post) for post in all_timeline_posts if post.get("shop_slug") == shop["shop_slug"]]
         if not shop_posts:
             continue
 
-        latest_shop_posts, week_shop_posts, store_view_meta = select_store_view_posts(shop_posts)
-        if not week_shop_posts:
+        default_shop_posts, expanded_shop_posts, store_view_meta = select_store_view_posts(shop_posts, latest_timeline_date)
+        if not expanded_shop_posts:
             continue
 
         display_types = []
-        for post in week_shop_posts:
+        for post in expanded_shop_posts:
             display_type = post.get("display_type", infer_display_type(post))
             if display_type not in display_types:
                 display_types.append(display_type)
         type_text = " / ".join(short_type_label(t) for t in display_types) if display_types else "未分類"
-        latest_keys = store_view_meta["latest_keys"]
+        default_keys = store_view_meta["default_keys"]
+        expanded_keys = store_view_meta["expanded_keys"]
+        latest_store_date = store_view_meta.get("latest_date", "")
 
         store_post_cards = ""
-        for post in week_shop_posts:
+        has_default_posts = False
+        for post in expanded_shop_posts:
             image_urls = post.get("image_urls", [])
             if not image_urls:
                 continue
@@ -3365,7 +3412,11 @@ def build_area_page(posts_by_source, updated_at):
             media_id = f'timeline_{post.get("source_id", "post")}_{post.get("status_id", 0)}'
             image_count = len(image_urls)
             checked_label = format_update_label(post.get("posted_at") or post.get("collected_at", updated_at))
-            in_latest_range = "1" if post_identity(post) in latest_keys else "0"
+            identity = post_identity(post)
+            in_default_range = "1" if identity in default_keys else "0"
+            in_expanded_range = "1" if identity in expanded_keys else "0"
+            age_badge = store_post_age_badge(post, latest_timeline_date or latest_store_date)
+            age_badge_html = f' / <span class="store-age-badge">{h(age_badge)}</span>' if age_badge else ""
             is_table_split_candidate = post.get("brand_id") == "dragonstar"
             store_image_buttons = []
             for image_index, image_url in enumerate(image_urls):
@@ -3381,7 +3432,7 @@ def build_area_page(posts_by_source, updated_at):
                 store_image_buttons.append(f"""
         <div class="store-image-item" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-enabled="{str(is_table_split_candidate).lower()}">
           <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="original" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
-            <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
+            <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy" decoding="async">
           </div>{table_controls}
         </div>
 """)
@@ -3393,11 +3444,11 @@ def build_area_page(posts_by_source, updated_at):
         data-types="{h(display_type)}"
         data-brand="{h(post.get("brand_id", ""))}"
         data-search="{h(post.get("shop_name", "") + ' ' + post.get("brand", "") + ' ' + post.get("buy_type_label", "") + ' ' + type_label + ' ' + post.get("summary", ""))}"
-        data-range-latest="{in_latest_range}"
-        data-range-week="1"
+        data-range-default="{in_default_range}"
+        data-range-expanded="{in_expanded_range}"
       >
         <div class="store-post-shop">{h(post.get("shop_name", ""))}</div>
-        <div class="store-post-meta">確認：{h(checked_label)} / {h(type_label)} / 画像 {image_count}枚</div>
+        <div class="store-post-meta">確認：{h(checked_label)} / {h(type_label)} / 画像 {image_count}枚{age_badge_html}</div>
         <div class="store-post-image-list">
 {''.join(store_image_buttons)}
         </div>
@@ -3407,30 +3458,40 @@ def build_area_page(posts_by_source, updated_at):
         </div>
       </article>
 """
+            if in_default_range == "1":
+                has_default_posts = True
 
         if not store_post_cards:
             continue
+        if has_default_posts:
+            store_initial_count += 1
 
         store_groups_html += f"""
 <section class="store-group"
   data-types="{h(' '.join(display_types))}"
   data-brand="{h(shop["brand_id"])}"
   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + type_text)}"
-  data-latest-meta="{h(store_view_meta["latest_meta"])}"
-  data-week-meta="{h(store_view_meta["week_meta"])}"
+  data-default-meta="{h(store_view_meta["default_meta"])}"
+  data-expanded-meta="{h(store_view_meta["expanded_meta"])}"
+  data-expanded="false"
 >
   <div class="store-group-header">
     <div>
       <div class="store-group-name">{h(shop["shop_name"])}</div>
-      <div class="store-group-meta">{h(store_view_meta["latest_meta"])}</div>
+      <div class="store-group-meta">{h(store_view_meta["default_meta"])}</div>
     </div>
     <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
   </div>
   <div class="store-post-carousel">
 {store_post_cards}
   </div>
+  <button class="store-expand-button" type="button" onclick="toggleStoreGroupExpanded(this)">もっと見る</button>
 </section>
 """
+
+    initial_result_count = store_initial_count
+    no_result_class = "no-result hidden" if initial_result_count else "no-result"
+    no_result_attrs = ' hidden aria-hidden="true" style="display:none"' if initial_result_count else ' aria-hidden="false"'
 
     store_panel_active_html = ""
     store_panel_waiting_html = ""
@@ -3583,6 +3644,16 @@ def build_area_page(posts_by_source, updated_at):
   color: rgba(255,255,255,.66);
   font-size: 10.5px;
   line-height: 1.35;
+}
+
+#storeView .store-age-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  color: rgba(255,255,255,.78);
+  font-size: 10px;
 }
 
 #storeView .store-post-image-list {
@@ -3810,6 +3881,18 @@ def build_area_page(posts_by_source, updated_at):
   white-space: normal;
 }
 
+#storeView .store-expand-button {
+  display: block;
+  width: calc(100% - 24px);
+  min-height: 34px;
+  margin: 10px auto 0;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  background: rgba(255,255,255,.055);
+  color: rgba(255,255,255,.82);
+  font-weight: 700;
+}
+
 @media (min-width: 900px) {
   #storeView .store-post-card {
     width: 100% !important;
@@ -3854,12 +3937,12 @@ def build_area_page(posts_by_source, updated_at):
   <div class="search-area" id="searchArea">
     <div class="search-line">
       <input id="searchInput" class="search-input" type="search" placeholder="店舗・カード名で検索">
-      <div class="result-line">表示中：<span class="result-count">{timeline_initial_count}</span>件</div>
+      <div class="result-line">表示中：<span class="result-count">{initial_result_count}</span>件</div>
     </div>
 
     <div class="view-switch" role="group" aria-label="表示切替">
-      <button id="timelineViewButton" class="view-toggle active" type="button" onclick="setViewMode('timeline')">新着TL</button>
-      <button id="storeViewButton" class="view-toggle" type="button" onclick="setViewMode('store')">店舗別ビュー</button>
+      <button id="storeViewButton" class="view-toggle active" type="button" onclick="setViewMode('store')">店舗別で見る</button>
+      <button id="timelineViewButton" class="view-toggle" type="button" onclick="setViewMode('timeline')">新着順で見る</button>
     </div>
 
     <div class="type-row">
@@ -3902,7 +3985,7 @@ def build_area_page(posts_by_source, updated_at):
     <div class="compact-line">
       <button class="tool-button menu-button" type="button" aria-label="メニュー" onclick="openMenu()">☰</button>
       <input id="compactSearchInput" class="search-input" type="search" placeholder="検索">
-      <div class="result-line"><span class="result-count">{timeline_initial_count}</span>件</div>
+      <div class="result-line"><span class="result-count">{initial_result_count}</span>件</div>
     </div>
     <div class="type-row compact-type-row">
       {type_buttons}
@@ -3910,7 +3993,7 @@ def build_area_page(posts_by_source, updated_at):
   </div>
 
   <main>
-    <div id="timelineView" class="view-panel">
+    <div id="timelineView" class="view-panel hidden">
       <div class="section-head">
         <h2>新着TL</h2>
         <p>1ツイート1カードで表示 / {h(timeline_notice)}</p>
@@ -3921,17 +4004,11 @@ def build_area_page(posts_by_source, updated_at):
       </div>
     </div>
 
-    <div id="storeView" class="view-panel hidden store-view-section">
+    <div id="storeView" class="view-panel store-view-section">
       <!-- 店舗別ビューの表示範囲 controls are generated from test.py for the published Osaka/Nipponbashi HTML. -->
       <div class="section-head">
         <h2>店舗別ビュー</h2>
-        <p>店舗別ビューで投稿を横スライド表示</p>
-        <div class="store-view-tools" aria-label="店舗別ビュー表示範囲">
-          <div class="store-range-toggle">
-            <button id="storeRangeLatestButton" class="store-range-button active" type="button" onclick="setStoreRangeMode('latest')">最新のみ</button>
-            <button id="storeRangeWeekButton" class="store-range-button" type="button" onclick="setStoreRangeMode('week')">過去7日</button>
-          </div>
-        </div>
+        <p>店舗ごとに過去7日を表示。投稿が少ない店舗は最新投稿も補完します。</p>
       </div>
 
       <div class="store-group-list" id="storeGroupList">
@@ -3999,8 +4076,8 @@ const selectedTypes = new Set();
 const selectedBrands = new Set();
 const TIMELINE_MEDIA = {media_json};
 let currentSort = "new";
-let currentView = "timeline";
-let currentStoreRange = "latest";
+let currentView = "store";
+let currentStoreRange = "week";
 let currentMediaItem = null;
 let currentMediaIndex = 0;
 
@@ -4513,8 +4590,9 @@ function updateStoreRangeButtons() {{
 
 function isStoreCardInCurrentRange(card) {{
   if (!card) return false;
-  if (currentStoreRange === "week") return card.dataset.rangeWeek === "1";
-  return card.dataset.rangeLatest === "1";
+  const group = card.closest(".store-group");
+  if (group && group.dataset.expanded === "true") return card.dataset.rangeExpanded === "1";
+  return card.dataset.rangeDefault === "1";
 }}
 
 function updateStoreRangeVisibility() {{
@@ -4524,15 +4602,30 @@ function updateStoreRangeVisibility() {{
     card.dataset.rangeVisible = shouldShow ? "1" : "0";
   }});
   document.querySelectorAll(".store-group").forEach(group => {{
-    const meta = currentStoreRange === "week" ? group.dataset.weekMeta : group.dataset.latestMeta;
+    const expanded = group.dataset.expanded === "true";
+    const meta = expanded ? group.dataset.expandedMeta : group.dataset.defaultMeta;
     const metaEl = group.querySelector(".store-group-meta");
     if (metaEl && meta) metaEl.textContent = meta;
+    const button = group.querySelector(".store-expand-button");
+    if (button) {{
+      button.textContent = expanded ? "7日表示に戻す" : "もっと見る";
+      button.setAttribute("aria-expanded", expanded ? "true" : "false");
+    }}
   }});
 }}
 
 function setStoreRangeMode(mode) {{
-  currentStoreRange = mode === "week" ? "week" : "latest";
+  currentStoreRange = "week";
   updateStoreRangeButtons();
+  updateStoreRangeVisibility();
+  applyFilters();
+  requestAnimationFrame(() => setupScrollIndicators());
+}}
+
+function toggleStoreGroupExpanded(button) {{
+  const group = button.closest(".store-group");
+  if (!group) return;
+  group.dataset.expanded = group.dataset.expanded === "true" ? "false" : "true";
   updateStoreRangeVisibility();
   applyFilters();
   requestAnimationFrame(() => setupScrollIndicators());
@@ -4619,11 +4712,11 @@ document.addEventListener("DOMContentLoaded", () => {{
   bindLandscapeImages();
   setupScrollIndicators();
   syncTypeButtons();
-  currentStoreRange = "latest";
+  currentStoreRange = "week";
   updateStoreRangeButtons();
   updateStoreRangeVisibility();
   applyFilters();
-  setViewMode("timeline");
+  setViewMode("store");
   requestAnimationFrame(updateResultCount);
 }});
 </script>
@@ -4668,7 +4761,7 @@ def build_store_page(shop, posts_by_source, updated_at):
 
             image_buttons.append(f"""
     <button class="timeline-image" type="button" onclick="openMedia('{h(media_id)}')">
-      <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy">
+      <img src="{h(image_url)}" alt="{h(shop["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy" decoding="async">
       <span class="zoom-badge">拡大</span>
       <span class="image-count">画像 {image_index + 1} / {image_count}</span>
       <span class="landscape-hint">横スクロールで確認</span>
