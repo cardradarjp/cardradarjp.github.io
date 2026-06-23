@@ -3484,7 +3484,6 @@ def build_area_page(posts_by_source, updated_at):
             age_badge = store_post_age_badge(post, latest_timeline_date or latest_store_date)
             age_badge_html = f' / <span class="store-age-badge">{h(age_badge)}</span>' if age_badge else ""
             is_table_split_candidate = post.get("brand_id") == "dragonstar"
-            store_image_buttons = []
             for image_index, image_url in enumerate(image_urls):
                 table_controls = ""
                 if is_table_split_candidate:
@@ -3495,15 +3494,8 @@ def build_area_page(posts_by_source, updated_at):
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
           </div>"""
-                store_image_buttons.append(f"""
-        <div class="store-image-item" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-enabled="{str(is_table_split_candidate).lower()}">
-          <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="original" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
-            <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy" decoding="async">
-          </div>{table_controls}
-        </div>
-""")
-
-            store_post_cards += f"""
+                image_position_label = f"画像 {image_index + 1}/{image_count}" if image_count > 1 else "画像"
+                store_post_cards += f"""
       <article class="store-post-card"
         data-status="{h(post.get("status_id", 0))}"
         data-store="{h(post.get("shop_name", ""))}"
@@ -3514,9 +3506,11 @@ def build_area_page(posts_by_source, updated_at):
         data-range-expanded="{in_expanded_range}"
       >
         <div class="store-post-shop">{h(post.get("shop_name", ""))}</div>
-        <div class="store-post-meta">確認：{h(checked_label)} / {h(type_label)} / 画像 {image_count}枚{age_badge_html}</div>
-        <div class="store-post-image-list">
-{''.join(store_image_buttons)}
+        <div class="store-post-meta">確認：{h(checked_label)} / {h(type_label)} / {h(image_position_label)}{age_badge_html}</div>
+        <div class="store-image-item" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-enabled="{str(is_table_split_candidate).lower()}">
+          <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="original" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
+            <img src="{h(image_url)}" alt="{h(post["shop_name"])}の買取表画像 {image_index + 1}" loading="lazy" decoding="async">
+          </div>{table_controls}
         </div>
         <div class="store-post-actions">
           <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
@@ -3750,10 +3744,10 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-image-item {
-  flex: 0 0 90% !important;
-  min-width: 90% !important;
-  max-width: 90% !important;
-  scroll-snap-align: center;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 #storeView .store-post-image {
@@ -3978,9 +3972,9 @@ def build_area_page(posts_by_source, updated_at):
   }
 
   #storeView .store-image-item {
-    flex-basis: min(460px, 52%) !important;
-    min-width: min(460px, 52%) !important;
-    max-width: min(460px, 52%) !important;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   #storeView .store-post-image {
