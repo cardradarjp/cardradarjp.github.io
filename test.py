@@ -937,6 +937,10 @@ ART_STORE_SALES_WORDS = [
     "特価",
     "セール",
     "オリパ",
+    "サプライ",
+    "完売",
+    "購入",
+    "ご購入",
     "抽選販売",
     "予約",
     "発売",
@@ -948,6 +952,7 @@ ART_STORE_STRONG_BUYLIST_WORDS = [
     "買取価格",
     "買取保証",
     "強化買取",
+    "買取強化",
     "買取更新",
     "ポケカ買取",
     "ポケモンカード買取",
@@ -969,7 +974,9 @@ LOTUS_NOTICE_WORDS = [
     "お知らせ",
     "買取時間",
     "買取受付時間",
+    "買取受付",
     "受付時間",
+    "延長営業",
 ]
 
 STRICT_BUYLIST_SHOP_SLUGS = {
@@ -1059,16 +1066,18 @@ def is_art_store_sales_post(post):
     text = display_filter_text(post)
     if contains_any(text, ART_STORE_STRONG_BUYLIST_WORDS):
         return False
-    return True
+    return contains_any(text, ART_STORE_SALES_WORDS)
 
 
 def is_lotus_hours_notice_post(post):
     if post.get("shop_slug") != "lotus-osaka-nihonbashi":
         return False
     text = display_filter_text(post)
-    if has_strong_buylist_signal(text):
+    if not contains_any(text, LOTUS_NOTICE_WORDS):
         return False
-    return contains_any(text, LOTUS_NOTICE_WORDS)
+    if contains_any(text, ART_STORE_STRONG_BUYLIST_WORDS):
+        return False
+    return True
 
 
 def classify_display_type(text, source_type):
