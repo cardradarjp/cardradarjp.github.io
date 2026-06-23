@@ -3494,6 +3494,7 @@ def build_area_page(posts_by_source, updated_at):
             if expanded_shop_posts
             else f"最新日：未取得 / 表示中：0件 / 30日内：0件<br>{h(type_text)}"
         )
+        expanded_meta_html = store_view_meta["expanded_meta"]
 
         store_post_cards = ""
         has_default_posts = False
@@ -3569,7 +3570,9 @@ def build_area_page(posts_by_source, updated_at):
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
     </div>
-    <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
+    <div class="store-group-actions">
+      <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
+    </div>
   </div>
 </section>
 """
@@ -3578,7 +3581,7 @@ def build_area_page(posts_by_source, updated_at):
         if has_default_posts:
             store_initial_count += 1
         expand_button_html = (
-            f'<button class="store-expand-button" type="button" data-more-label="過去の投稿をもっと見る（+{extra_post_count}件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">過去の投稿をもっと見る（+{extra_post_count}件）</button>'
+            f'<button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+{extra_post_count}件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+{extra_post_count}件）</button>'
             if extra_post_count > 0 else ""
         )
 
@@ -3591,6 +3594,8 @@ def build_area_page(posts_by_source, updated_at):
   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + type_text)}"
   data-default-meta="{h(status_meta)}"
   data-expanded-meta="{h(store_view_meta["expanded_meta"])}"
+  data-default-meta-html="{h(status_meta_html)}"
+  data-expanded-meta-html="{h(expanded_meta_html)}"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -3601,12 +3606,14 @@ def build_area_page(posts_by_source, updated_at):
       </div>
       <div class="store-group-meta">{status_meta_html}</div>
     </div>
-    <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
+    <div class="store-group-actions">
+      <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
+      {expand_button_html}
+    </div>
   </div>
   <div class="store-post-carousel">
 {store_post_cards}
   </div>
-  {expand_button_html}
 </section>
 """
         ))
@@ -3728,9 +3735,9 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-group-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
-  align-items: center;
-  padding: 0 10px 7px;
+  gap: 8px;
+  align-items: start;
+  padding: 0 9px 5px;
 }
 
 #storeView .store-group-title {
@@ -3763,21 +3770,28 @@ def build_area_page(posts_by_source, updated_at):
   color: rgba(255,255,255,.52);
 }
 
+#storeView .store-group-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
 #storeView .store-post-carousel {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 14px;
+  gap: 8px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 4px 10px 14px;
+  padding: 2px 8px 10px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  scroll-padding-inline: 10px;
+  scroll-padding-inline: 8px;
 }
 
 #storeView .store-post-card {
@@ -3786,7 +3800,7 @@ def build_area_page(posts_by_source, updated_at):
   min-width: min(86vw, 420px) !important;
   max-width: min(86vw, 420px) !important;
   box-sizing: border-box;
-  padding: 4px 0 8px;
+  padding: 2px 0 6px;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -3799,8 +3813,8 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-meta {
-  margin: 0 10px 7px;
-  padding-bottom: 6px;
+  margin: 0 8px 4px;
+  padding-bottom: 4px;
   border-bottom: 1px solid rgba(255,255,255,.09);
   color: rgba(255,255,255,.66);
   font-size: 10.5px;
@@ -4011,8 +4025,8 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-post-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 5px;
-  margin: 5px 10px 0;
+  gap: 4px;
+  margin: 4px 8px 0;
   padding: 0;
 }
 
@@ -4026,15 +4040,20 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-expand-button {
-  display: block;
-  width: calc(100% - 24px);
-  min-height: 34px;
-  margin: 10px auto 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 30px;
+  margin: 0;
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 999px;
   background: rgba(255,255,255,.055);
   color: rgba(255,255,255,.82);
   font-weight: 700;
+  padding: 5px 10px;
+  font-size: 11px;
+  white-space: nowrap;
 }
 
 @media (min-width: 900px) {
@@ -4437,7 +4456,7 @@ function renderLandscapeView(target, img) {{
   const storeTableMode = isDragonstarTableImage ? (target.dataset.storeTableMode || "original") : "";
   const mode = isDragonstarTableImage
     ? (storeTableMode === "original" ? "original" : "table")
-    : (savedMode === "table" ? "half" : savedMode);
+    : (isStoreViewImage ? "original" : (savedMode === "table" ? "half" : savedMode));
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
@@ -4743,8 +4762,9 @@ function updateStoreRangeVisibility() {{
   document.querySelectorAll(".store-group").forEach(group => {{
     const expanded = group.dataset.expanded === "true";
     const meta = expanded ? group.dataset.expandedMeta : group.dataset.defaultMeta;
+    const metaHtml = expanded ? group.dataset.expandedMetaHtml : group.dataset.defaultMetaHtml;
     const metaEl = group.querySelector(".store-group-meta");
-    if (metaEl && meta) metaEl.textContent = meta;
+    if (metaEl && (metaHtml || meta)) metaEl.innerHTML = metaHtml || meta;
     const button = group.querySelector(".store-expand-button");
     if (button) {{
       button.textContent = expanded ? (button.dataset.lessLabel || "最新表示に戻す") : (button.dataset.moreLabel || "過去の投稿をもっと見る");
