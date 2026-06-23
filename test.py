@@ -3657,6 +3657,9 @@ def build_area_page(posts_by_source, updated_at):
   box-sizing: border-box;
   padding: 12px 0 14px;
   overflow-x: hidden;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(18,18,18,.94), rgba(8,8,8,.94));
 }
 
 #storeView .store-group-header {
@@ -3690,11 +3693,11 @@ def build_area_page(posts_by_source, updated_at):
   min-width: min(86vw, 420px) !important;
   max-width: min(86vw, 420px) !important;
   box-sizing: border-box;
-  padding: 8px 0 10px;
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 14px;
-  background: rgba(255,255,255,.035);
-  box-shadow: 0 10px 22px rgba(0,0,0,.22);
+  padding: 4px 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   scroll-snap-align: start;
 }
 
@@ -4041,17 +4044,11 @@ def build_area_page(posts_by_source, updated_at):
       {support_quick_links}
     </div>
 
-    <button class="store-toggle" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
-
     <div class="brand-panel" id="brandPanel" aria-hidden="true">
       <div class="brand-row">
         {brand_buttons}
       </div>
       <button class="reset-button" onclick="resetFilters()">リセット</button>
-    </div>
-
-    <div class="store-panel" id="storePanel" aria-hidden="true">
-      {store_panel_html}
     </div>
   </div>
 

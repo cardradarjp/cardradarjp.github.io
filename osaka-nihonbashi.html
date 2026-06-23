@@ -1654,6 +1654,9 @@ main {
   box-sizing: border-box;
   padding: 12px 0 14px;
   overflow-x: hidden;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(18,18,18,.94), rgba(8,8,8,.94));
 }
 
 #storeView .store-group-header {
@@ -1687,11 +1690,11 @@ main {
   min-width: min(86vw, 420px) !important;
   max-width: min(86vw, 420px) !important;
   box-sizing: border-box;
-  padding: 8px 0 10px;
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 14px;
-  background: rgba(255,255,255,.035);
-  box-shadow: 0 10px 22px rgba(0,0,0,.22);
+  padding: 4px 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   scroll-snap-align: start;
 }
 
@@ -2031,8 +2034,6 @@ main {
 
     </div>
 
-    <button class="store-toggle" type="button" onclick="toggleStorePanel()">店舗別で見る</button>
-
     <div class="brand-panel" id="brandPanel" aria-hidden="true">
       <div class="brand-row">
         
@@ -2086,214 +2087,6 @@ main {
 
       </div>
       <button class="reset-button" onclick="resetFilters()">リセット</button>
-    </div>
-
-    <div class="store-panel" id="storePanel" aria-hidden="true">
-      
-<a class="store-panel-card" href="stores/dragonstar-nihonbashi-honten.html">
-  <div class="store-panel-name">ドラスタ 日本橋本店</div>
-  <div class="store-panel-meta">ドラゴンスター / シングル / 05/29投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/dragonstar-nihonbashi-2.html">
-  <div class="store-panel-name">ドラスタ 日本橋2号店</div>
-  <div class="store-panel-meta">ドラゴンスター / シングル / 05/29投稿：5件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/dragonstar-nihonbashi-3.html">
-  <div class="store-panel-name">ドラスタ 日本橋3号店</div>
-  <div class="store-panel-meta">ドラゴンスター / シングル / 06/16投稿：4件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/dragonstar-otaroad-chuo.html">
-  <div class="store-panel-name">ドラスタ オタロード中央</div>
-  <div class="store-panel-meta">ドラゴンスター / シングル / 05/30投稿：4件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/dragonstar-nansan.html">
-  <div class="store-panel-name">ドラスタ なんさん通り店</div>
-  <div class="store-panel-meta">ドラゴンスター / シングル / 05/28投稿：5件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/cardlabo-namba.html">
-  <div class="store-panel-name">カードラボなんば店</div>
-  <div class="store-panel-meta">カードラボ / シングル / 06/22投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/cardlabo-osaka-nihonbashi.html">
-  <div class="store-panel-name">カードラボ大阪日本橋店</div>
-  <div class="store-panel-meta">カードラボ / シングル / 05/14投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/girafull-namba.html">
-  <div class="store-panel-name">GIRAFULLなんば店</div>
-  <div class="store-panel-meta">GIRAFULL / シングル / 06/19投稿：5件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/girafull-osaka-nihonbashi.html">
-  <div class="store-panel-name">GIRAFULL大阪日本橋店</div>
-  <div class="store-panel-meta">GIRAFULL / シングル / 06/03投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/girafull-otaroad.html">
-  <div class="store-panel-name">GIRAFULLオタロード店</div>
-  <div class="store-panel-meta">GIRAFULL / シングル / 05/28投稿：7件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/magi-nihonbashi.html">
-  <div class="store-panel-name">magi 日本橋店</div>
-  <div class="store-panel-meta">magi / シングル / 06/21投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/magi-otaroad.html">
-  <div class="store-panel-name">magi オタロード店</div>
-  <div class="store-panel-meta">magi / シングル / 06/22投稿：2件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/preyz-nihonbashi-honten.html">
-  <div class="store-panel-name">プレイズ 日本橋本店</div>
-  <div class="store-panel-meta">プレイズ / シングル / 05/22投稿：4件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/preyz-otaroad.html">
-  <div class="store-panel-name">プレイズ オタロード店</div>
-  <div class="store-panel-meta">プレイズ / シングル / 05/19投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/hareruya2-namba.html">
-  <div class="store-panel-name">晴れる屋2なんば</div>
-  <div class="store-panel-meta">晴れる屋2 / シングル / 06/20投稿：4件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/fullcomp-nihonbashi.html">
-  <div class="store-panel-name">フルコンプ 日本橋店</div>
-  <div class="store-panel-meta">フルコンプ / シングル / 04/14投稿：7件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/cardbox-nihonbashi.html">
-  <div class="store-panel-name">カードボックス 日本橋店</div>
-  <div class="store-panel-meta">カードボックス / シングル / 06/17投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/amtaf.html">
-  <div class="store-panel-name">アムタフ</div>
-  <div class="store-panel-meta">アムタフ / シングル / BOX / 定額 / 06/17投稿：9件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/gotcha.html">
-  <div class="store-panel-name">GOTCHA!</div>
-  <div class="store-panel-meta">GOTCHA! / シングル / BOX / 06/19投稿：10件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/kuro.html">
-  <div class="store-panel-name">KURO</div>
-  <div class="store-panel-meta">KURO / シングル / BOX / 06/22投稿：8件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/kaitori-mimi.html">
-  <div class="store-panel-name">買取ミミ</div>
-  <div class="store-panel-meta">買取ミミ / シングル / 定額 / 05/24投稿：7件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/cardshop-art.html">
-  <div class="store-panel-name">カードショップあーと</div>
-  <div class="store-panel-meta">カードショップあーと / シングル / 06/22投稿：2件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/sunrise-cardshop.html">
-  <div class="store-panel-name">サンライズカードショップ</div>
-  <div class="store-panel-meta">サンライズカードショップ / シングル / 06/16投稿：5件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/adrenaline.html">
-  <div class="store-panel-name">アドレナリン</div>
-  <div class="store-panel-meta">アドレナリン / シングル / 06/22投稿：5件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/treca-champion.html">
-  <div class="store-panel-name">トレカチャンピオン</div>
-  <div class="store-panel-meta">トレカチャンピオン / シングル / 05/13投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/kaitori-champion.html">
-  <div class="store-panel-name">買取チャンピオン</div>
-  <div class="store-panel-meta">買取チャンピオン / シングル / 06/17投稿：3件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/kaitori-v.html">
-  <div class="store-panel-name">買取V</div>
-  <div class="store-panel-meta">買取V / シングル / 02/02投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/tonton-osaka-nihonbashi.html">
-  <div class="store-panel-name">カードショップとんとん大阪日本橋店</div>
-  <div class="store-panel-meta">カードショップとんとん / シングル / 06/23投稿：2件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/hiki-card-osaka.html">
-  <div class="store-panel-name">トレカショップ 比希商店</div>
-  <div class="store-panel-meta">比希商店 / シングル / 06/18投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/lotus-osaka-nihonbashi.html">
-  <div class="store-panel-name">Lotus 大阪日本橋店</div>
-  <div class="store-panel-meta">Lotus / シングル / 06/09投稿：7件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/torecaline-otaroad.html">
-  <div class="store-panel-name">トレカライン オタロード店</div>
-  <div class="store-panel-meta">トレカライン / シングル / 06/22投稿：5件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/torecaline-namba-ekimae.html">
-  <div class="store-panel-name">トレカライン 難波駅前店</div>
-  <div class="store-panel-meta">トレカライン / シングル / 06/23投稿：4件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/toreka-douraku.html">
-  <div class="store-panel-name">トレカ道楽</div>
-  <div class="store-panel-meta">トレカ道楽 / シングル / 06/23投稿：1件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
-<a class="store-panel-card" href="stores/toreca-bomb.html">
-  <div class="store-panel-name">トレカボム</div>
-  <div class="store-panel-meta">トレカボム / シングル / 06/18投稿：6件</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-
     </div>
   </div>
 
