@@ -3726,23 +3726,6 @@ def build_area_page(posts_by_source, updated_at):
   font-size: 10px;
 }
 
-#storeView .store-post-image-list {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  gap: 8px;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  padding: 0 5vw 7px;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 5vw;
-}
-
 #storeView .store-image-item {
   width: 100%;
   min-width: 0;
