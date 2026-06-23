@@ -3483,10 +3483,16 @@ def build_area_page(posts_by_source, updated_at):
         latest_date_label = format_date_label(latest_store_date) if latest_store_date else "未取得"
         default_post_count = len(default_shop_posts)
         expanded_post_count = len(expanded_shop_posts)
+        extra_post_count = max(0, expanded_post_count - default_post_count)
         status_meta = (
             f"最新日：{latest_date_label} / 表示中：{default_post_count}件 / 30日内：{expanded_post_count}件 / {type_text}"
             if expanded_shop_posts
             else f"最新日：未取得 / 表示中：0件 / 30日内：0件 / {type_text}"
+        )
+        status_meta_html = (
+            f"最新日：{h(latest_date_label)} / 表示中：{default_post_count}件 / 30日内：{expanded_post_count}件<br>{h(type_text)}"
+            if expanded_shop_posts
+            else f"最新日：未取得 / 表示中：0件 / 30日内：0件<br>{h(type_text)}"
         )
 
         store_post_cards = ""
@@ -3516,7 +3522,7 @@ def build_area_page(posts_by_source, updated_at):
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
           </div>"""
-                image_position_label = f"画像 {image_index + 1}/{image_count}" if image_count > 1 else "画像"
+                image_position_label = f"画像 {image_index + 1} / {image_count}" if image_count > 1 else "画像"
                 store_post_cards += f"""
       <article class="store-post-card"
         data-status="{h(post.get("status_id", 0))}"
@@ -3527,7 +3533,6 @@ def build_area_page(posts_by_source, updated_at):
         data-range-default="{in_default_range}"
         data-range-expanded="{in_expanded_range}"
       >
-        <div class="store-post-shop">{h(post.get("shop_name", ""))}</div>
         <div class="store-post-meta">確認：{h(checked_label)} / {h(type_label)} / {h(image_position_label)}{age_badge_html}</div>
         <div class="store-image-item" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-enabled="{str(is_table_split_candidate).lower()}">
           <div class="timeline-image store-post-image" role="button" tabindex="0" data-brand-id="{h(post.get("brand_id", ""))}" data-shop-slug="{h(post.get("shop_slug", ""))}" data-table-split-candidate="{str(is_table_split_candidate).lower()}" data-store-table-mode="original" onclick="openTimelineMedia('{h(media_id)}', {image_index})" onkeydown="handleStoreImageKey(event, '{h(media_id)}', {image_index})">
@@ -3536,7 +3541,7 @@ def build_area_page(posts_by_source, updated_at):
         </div>
         <div class="store-post-actions">
           <a href="{h(post["tweet_url"])}" target="_blank" rel="noopener noreferrer">Xで開く</a>
-          <a href="stores/{h(post["shop_slug"])}.html">この店舗を見る</a>
+          <button type="button" onclick="openTimelineMedia('{h(media_id)}', {image_index})">拡大</button>
         </div>
       </article>
 """
@@ -3572,6 +3577,10 @@ def build_area_page(posts_by_source, updated_at):
             continue
         if has_default_posts:
             store_initial_count += 1
+        expand_button_html = (
+            f'<button class="store-expand-button" type="button" data-more-label="過去の投稿をもっと見る（+{extra_post_count}件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">過去の投稿をもっと見る（+{extra_post_count}件）</button>'
+            if extra_post_count > 0 else ""
+        )
 
         store_group_records.append((
             (status_order, shop_index),
@@ -3590,14 +3599,14 @@ def build_area_page(posts_by_source, updated_at):
         <div class="store-group-name">{h(shop["shop_name"])}</div>
         <span class="store-status-badge {h(status_class)}">{h(status_label)}</span>
       </div>
-      <div class="store-group-meta">{h(status_meta)}</div>
+      <div class="store-group-meta">{status_meta_html}</div>
     </div>
     <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
   </div>
   <div class="store-post-carousel">
 {store_post_cards}
   </div>
-  <button class="store-expand-button" type="button" onclick="toggleStoreGroupExpanded(this)">もっと見る</button>
+  {expand_button_html}
 </section>
 """
         ))
@@ -3787,14 +3796,6 @@ def build_area_page(posts_by_source, updated_at):
 
 #storeView .store-post-card + .store-post-card {
   margin-top: 0;
-}
-
-#storeView .store-post-shop {
-  margin: 0 10px 3px;
-  color: rgba(255,255,255,.90);
-  font-size: 12px;
-  font-weight: 650;
-  line-height: 1.35;
 }
 
 #storeView .store-post-meta {
@@ -4746,7 +4747,7 @@ function updateStoreRangeVisibility() {{
     if (metaEl && meta) metaEl.textContent = meta;
     const button = group.querySelector(".store-expand-button");
     if (button) {{
-      button.textContent = expanded ? "7日表示に戻す" : "もっと見る";
+      button.textContent = expanded ? (button.dataset.lessLabel || "最新表示に戻す") : (button.dataset.moreLabel || "過去の投稿をもっと見る");
       button.setAttribute("aria-expanded", expanded ? "true" : "false");
     }}
   }});
