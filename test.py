@@ -98,6 +98,7 @@ def x_search_url(account, words):
 
 
 SINGLE_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (買取 OR 高価買取 OR 買取表 OR WANTED OR 募集)"
+ART_CARD_WORDS = "(ポケカ OR ポケモンカード OR Pokemon OR 買取表 OR 買取リスト OR 買取価格 OR 強化買取 OR 高価買取 OR 買取募集) (買取 OR 買取表 OR 買取リスト OR 買取価格 OR 強化買取 OR 高価買取 OR 募集)"
 BOX_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (BOX OR box OR 未開封 OR シュリンク OR パック OR カートン OR ボックス) (買取 OR 高価買取 OR 募集)"
 FIXED_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (定額 OR 一律 OR まとめ買取 OR 最低保証 OR ノーマル OR RR OR AR OR 汎用 OR ストレージ) (買取 OR 募集)"
 PSA_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (PSA OR PSA10 OR PSA9 OR 鑑定品 OR ARS OR BGS OR 鑑定) (買取 OR 高価買取 OR 募集)"
@@ -399,7 +400,7 @@ SOURCES = [
         "area": "大阪・日本橋",
         "area_id": "osaka-nihonbashi",
         "description": "カードショップあーとのポケカ買取情報。",
-        "url": x_search_url("art_card_", SINGLE_WORDS),
+        "url": x_search_url("art_card_", ART_CARD_WORDS),
     },
     {
         "id": "cardbox-nihonbashi-single",
@@ -954,6 +955,23 @@ ART_STORE_STRONG_BUYLIST_WORDS = [
     "買取募集",
 ]
 
+LOTUS_NOTICE_WORDS = [
+    "営業時間",
+    "営業案内",
+    "営業時間案内",
+    "本日の営業時間",
+    "営業時間のお知らせ",
+    "営業中",
+    "開店",
+    "閉店",
+    "本日営業",
+    "店舗案内",
+    "お知らせ",
+    "買取時間",
+    "買取受付時間",
+    "受付時間",
+]
+
 STRICT_BUYLIST_SHOP_SLUGS = {
     "tonton-osaka-nihonbashi",
 }
@@ -1020,6 +1038,14 @@ def is_target_post(text, source_type):
     return not is_non_buylist_text(text)
 
 
+def is_art_store_target_post(text):
+    if contains_any(text, ART_STORE_STRONG_BUYLIST_WORDS):
+        return True
+    if contains_any(text, ART_STORE_SALES_WORDS):
+        return False
+    return is_target_post(text, "x_post_single")
+
+
 def is_strict_shop_non_buylist_post(post):
     if post.get("shop_slug") not in STRICT_BUYLIST_SHOP_SLUGS:
         return False
@@ -1034,6 +1060,15 @@ def is_art_store_sales_post(post):
     if contains_any(text, ART_STORE_STRONG_BUYLIST_WORDS):
         return False
     return True
+
+
+def is_lotus_hours_notice_post(post):
+    if post.get("shop_slug") != "lotus-osaka-nihonbashi":
+        return False
+    text = display_filter_text(post)
+    if has_strong_buylist_signal(text):
+        return False
+    return contains_any(text, LOTUS_NOTICE_WORDS)
 
 
 def classify_display_type(text, source_type):
@@ -1108,6 +1143,8 @@ def is_non_pokemon_post(post):
 def is_non_buy_notice_post(post):
     text = display_filter_text(post)
     if is_art_store_sales_post(post):
+        return True
+    if is_lotus_hours_notice_post(post):
         return True
     if is_strict_shop_non_buylist_post(post):
         return True
@@ -5296,7 +5333,12 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
                     if url in seen_urls:
                         continue
 
-                    if not is_target_post(text, source["source_type"]):
+                    if source.get("shop_slug") == "cardshop-art":
+                        is_target = is_art_store_target_post(text)
+                    else:
+                        is_target = is_target_post(text, source["source_type"])
+
+                    if not is_target:
                         print(f"[除外] {source['shop_name']} source={source['source_type']} display=- date=- reason=not target")
                         continue
 
