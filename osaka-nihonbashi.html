@@ -1665,31 +1665,38 @@ main {
 }
 
 #storeView .store-post-carousel {
-  display: block !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 14px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 4px 0 14px;
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
+  padding: 4px 10px 14px;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 10px;
 }
 
 #storeView .store-post-card {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
+  flex: 0 0 min(86vw, 420px) !important;
+  width: min(86vw, 420px) !important;
+  min-width: min(86vw, 420px) !important;
+  max-width: min(86vw, 420px) !important;
   box-sizing: border-box;
-  padding: 6px 0 8px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  padding: 8px 0 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  background: rgba(255,255,255,.035);
+  box-shadow: 0 10px 22px rgba(0,0,0,.22);
+  scroll-snap-align: start;
 }
 
 #storeView .store-post-card + .store-post-card {
-  margin-top: 10px;
-  border-top: 1px solid rgba(255,255,255,.10);
-  padding-top: 10px;
+  margin-top: 0;
 }
 
 #storeView .store-post-shop {
@@ -1958,9 +1965,10 @@ main {
 
 @media (min-width: 900px) {
   #storeView .store-post-card {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
+    flex-basis: min(430px, 42vw) !important;
+    width: min(430px, 42vw) !important;
+    min-width: min(430px, 42vw) !important;
+    max-width: min(430px, 42vw) !important;
   }
 
   #storeView .store-image-item {
