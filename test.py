@@ -3951,14 +3951,14 @@ def build_area_page(posts_by_source, updated_at):
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 8px;
+  gap: 4px;
   width: 100%;
   height: calc(100% - 34px);
   min-height: 0;
-  overflow-x: auto !important;
+  overflow-x: hidden !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: none;
 }
 
 #storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-slice {
@@ -3968,17 +3968,17 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-half .landscape-slice {
-  flex: 0 0 82% !important;
-  min-width: 82% !important;
-  max-width: 82% !important;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
   scroll-snap-align: start;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-split {
   display: grid !important;
-  grid-auto-flow: column !important;
-  grid-auto-columns: 72% !important;
-  grid-template-columns: none !important;
+  grid-auto-flow: row !important;
+  grid-auto-columns: auto !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice {
@@ -3988,27 +3988,43 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  gap: 10px;
+  display: grid !important;
+  gap: 4px;
   width: 100%;
   height: calc(100% - 34px);
   min-height: 0;
-  overflow-x: auto !important;
+  overflow-x: hidden !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: none;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-table .landscape-slice {
-  flex: 0 0 82% !important;
+  flex: none !important;
   min-width: 82% !important;
   max-width: 82% !important;
   display: flex;
   flex-direction: column;
   min-height: 0;
   scroll-snap-align: center;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split.table-split-mode-row3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split.table-split-mode-grid3x2 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split.table-split-mode-grid2x2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split .landscape-slice {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
 }
 
 #storeView .store-post-image.is-landscape .landscape-slice-frame img {
