@@ -99,6 +99,7 @@ def x_search_url(account, words):
 
 SINGLE_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (買取 OR 高価買取 OR 買取表 OR WANTED OR 募集)"
 ART_CARD_WORDS = "(ポケカ OR ポケモンカード OR Pokemon OR 買取表 OR 買取リスト OR 買取価格 OR 強化買取 OR 高価買取 OR 買取募集) (買取 OR 買取表 OR 買取リスト OR 買取価格 OR 強化買取 OR 高価買取 OR 募集)"
+ADRENALINE_WORDS = "(ポケカ OR ポケモンカード OR Pokemon OR 買取表 OR 買取価格 OR 高価買取 OR 強化買取) (買取 OR 買取表 OR 買取価格 OR 高価買取 OR 強化買取 OR 募集)"
 BOX_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (BOX OR box OR 未開封 OR シュリンク OR パック OR カートン OR ボックス) (買取 OR 高価買取 OR 募集)"
 FIXED_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (定額 OR 一律 OR まとめ買取 OR 最低保証 OR ノーマル OR RR OR AR OR 汎用 OR ストレージ) (買取 OR 募集)"
 PSA_WORDS = "(ポケカ OR ポケモンカード OR Pokemon) (PSA OR PSA10 OR PSA9 OR 鑑定品 OR ARS OR BGS OR 鑑定) (買取 OR 高価買取 OR 募集)"
@@ -472,7 +473,7 @@ SOURCES = [
         "area": "大阪・日本橋",
         "area_id": "osaka-nihonbashi",
         "description": "アドレナリンのポケカ買取情報。",
-        "url": x_search_url("Ado_renalinemax877", SINGLE_WORDS),
+        "url": x_search_url("Ado_renalinemax", ADRENALINE_WORDS),
     },
     {
         "id": "treca-champion-single",
