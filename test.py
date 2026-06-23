@@ -1046,6 +1046,25 @@ def is_target_post(text, source_type):
     return not is_non_buylist_text(text)
 
 
+def target_exclusion_reason(text):
+    pokemon_words = ["ポケカ", "ポケモンカード", "ポケモンカードゲーム", "Pokemon", "pokemon"]
+    buy_words = ["買取", "高価買取", "買取表", "WANTED", "募集", "買取強化", "買取情報"]
+    ng_words = [
+        "大会", "優勝", "抽選", "販売開始", "BOX争奪戦", "争奪戦",
+        "ワンピース", "遊戯王", "デュエマ", "MTG", "ヴァイス",
+        "バトスピ", "ドラゴンボール",
+    ]
+    if contains_any(text, ng_words):
+        return "NGワード"
+    if not contains_any(text, pokemon_words):
+        return "ポケカ外"
+    if not contains_any(text, buy_words):
+        return "買取表ではない"
+    if is_non_buylist_text(text):
+        return "お知らせ系"
+    return "買取表ではない"
+
+
 def is_art_store_target_post(text):
     if contains_any(text, ART_STORE_STRONG_BUYLIST_WORDS):
         return True
@@ -5279,6 +5298,14 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
     print(f"取得対象source数: {len(target_sources)}")
     if quick:
         print("quickモード: wait短縮 / scroll短縮 / article確認数削減")
+    overall_log = {
+        "target_sources": len(target_sources),
+        "success_sources": 0,
+        "failed_sources": 0,
+        "adopted_posts": 0,
+        "kept_previous_posts": 0,
+        "exclude_counts": {},
+    }
 
     with sync_playwright() as p:
         browser = p.chromium.launch_persistent_context(
@@ -5315,12 +5342,32 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
 
             candidates = []
             seen_urls = set()
+            source_log = {
+                "url": source["url"],
+                "article_status": "未実行",
+                "article_count": 0,
+                "target_passed": 0,
+                "with_images": 0,
+                "adopted": 0,
+                "exclude_counts": {
+                    "status URLなし": 0,
+                    "重複": 0,
+                    "ポケカ外": 0,
+                    "買取表ではない": 0,
+                    "お知らせ系": 0,
+                    "NGワード": 0,
+                    "画像なし": 0,
+                    "古すぎる": 0,
+                },
+            }
 
             try:
-                page.goto(source["url"], wait_until="domcontentloaded", timeout=60000)
+                print("URL:", source_log["url"])
+                page.goto(source_log["url"], wait_until="domcontentloaded", timeout=60000)
                 time.sleep(initial_wait)
 
                 page.wait_for_selector("article", timeout=30000)
+                source_log["article_status"] = "成功"
 
                 for _ in range(scroll_count):
                     page.mouse.wheel(0, 1400)
@@ -5328,6 +5375,7 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
 
                 tweets = page.locator("article")
                 count = tweets.count()
+                source_log["article_count"] = count
 
                 print("検出article数:", count)
 
@@ -5338,9 +5386,11 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
                     url = get_status_url(tweet)
 
                     if not url:
+                        source_log["exclude_counts"]["status URLなし"] += 1
                         continue
 
                     if url in seen_urls:
+                        source_log["exclude_counts"]["重複"] += 1
                         continue
 
                     if source.get("shop_slug") == "cardshop-art":
@@ -5349,14 +5399,19 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
                         is_target = is_target_post(text, source["source_type"])
 
                     if not is_target:
-                        print(f"[除外] {source['shop_name']} source={source['source_type']} display=- date=- reason=not target")
+                        reason = target_exclusion_reason(text)
+                        source_log["exclude_counts"][reason] = source_log["exclude_counts"].get(reason, 0) + 1
+                        print(f"[除外] {source['shop_name']} source={source['source_type']} display=- date=- reason={reason}")
                         continue
+                    source_log["target_passed"] += 1
 
                     image_urls = get_image_urls(tweet)
 
                     if not image_urls:
+                        source_log["exclude_counts"]["画像なし"] += 1
                         print(f"[除外] {source['shop_name']} source={source['source_type']} display=- date=- reason=no image")
                         continue
+                    source_log["with_images"] += 1
 
                     seen_urls.add(url)
                     posted_at = get_posted_at(tweet)
@@ -5391,6 +5446,9 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
 
                 print(f"[候補] {source['shop_name']} {source['source_type']} candidates={len(candidates)}")
                 posts = select_latest_posts(candidates)
+                adopted_keys = {post_identity(post) for post in posts}
+                source_log["exclude_counts"]["古すぎる"] = sum(1 for post in candidates if post_identity(post) not in adopted_keys)
+                source_log["adopted"] = len(posts)
                 print(f"[保存範囲] {source['shop_name']} {source['source_type']} {build_source_selection_log(candidates, posts)}")
 
                 posts_by_source[source["id"]] = posts
@@ -5402,12 +5460,55 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
                 print(f"[採用] {len(posts)}件")
                 for post in posts:
                     print(f"[分類] {post['shop_name']} source={post['source_type']} display={post['display_type']} date={post.get('posted_date_jst') or '-'} reason={post.get('classify_reason') or '-'}")
+                overall_log["success_sources"] += 1
+                overall_log["adopted_posts"] += len(posts)
+                for reason, value in source_log["exclude_counts"].items():
+                    overall_log["exclude_counts"][reason] = overall_log["exclude_counts"].get(reason, 0) + value
+                print("---- source summary ----")
+                print("article取得:", source_log["article_status"])
+                print("候補article数:", source_log["article_count"])
+                print("is_target通過:", source_log["target_passed"])
+                print("画像あり:", source_log["with_images"])
+                print("採用:", source_log["adopted"])
+                print("除外:")
+                for reason, value in source_log["exclude_counts"].items():
+                    print(f"  {reason}: {value}")
 
             except Exception as e:
+                source_log["article_status"] = "失敗"
+                previous_count = len(posts_by_source.get(source["id"], []))
+                overall_log["failed_sources"] += 1
+                overall_log["kept_previous_posts"] += previous_count
                 print(f"[失敗] {source['id']} reason={e}")
+                print("URL:", source_log["url"])
+                print("article取得: 失敗")
+                print("失敗理由:", type(e).__name__)
+                try:
+                    print("current_url:", page.url)
+                    print("page_title:", page.title())
+                except Exception as page_error:
+                    print("page_info_error:", page_error)
+                print(f"前回data.json: 残す ({previous_count}件)")
                 print("前回data.jsonのデータを残します")
 
         browser.close()
+
+    final_posts_by_source = posts_by_source_from_data(all_data)
+    print("")
+    print("================================")
+    print("取得サマリー")
+    print("================================")
+    print(f"対象source数: {overall_log['target_sources']}")
+    print(f"成功source数: {overall_log['success_sources']}")
+    print(f"失敗source数: {overall_log['failed_sources']}")
+    print(f"新規採用: {overall_log['adopted_posts']}")
+    print(f"前回保持: {overall_log['kept_previous_posts']}")
+    print(f"ポケカ外として除外: {count_non_pokemon_exclusions(final_posts_by_source)}")
+    print(f"お知らせ系として除外: {count_notice_exclusions(final_posts_by_source)}")
+    print("除外理由:")
+    for reason, value in overall_log["exclude_counts"].items():
+        print(f"  {reason}: {value}")
+    print("================================")
 
     return posts_by_source_from_data(all_data), dedupe_data_items(all_data), updated_at
 
