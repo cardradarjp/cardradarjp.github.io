@@ -1665,10 +1665,8 @@ main {
 }
 
 #storeView .store-group-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: block;
   gap: 8px;
-  align-items: start;
   padding: 0 9px 5px;
 }
 
@@ -1677,6 +1675,31 @@ main {
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
+  min-width: 0;
+}
+
+#storeView .store-group-name {
+  max-width: 100%;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: strict;
+}
+
+#storeView .store-group-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  margin-top: 5px;
+  line-height: 1.45;
+}
+
+#storeView .store-group-meta span {
+  white-space: nowrap;
+}
+
+#storeView .store-group-meta .store-group-types {
+  flex-basis: 100%;
+  white-space: normal;
 }
 
 #storeView .store-status-badge {
@@ -1705,8 +1728,17 @@ main {
 #storeView .store-group-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 6px;
+  margin-top: 7px;
+}
+
+#storeView .store-group-link,
+#storeView .store-expand-button {
+  flex: 1 1 132px;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 #storeView .store-post-carousel {
@@ -3253,8 +3285,8 @@ main {
   data-search="カードショップとんとん大阪日本橋店 カードショップとんとん シングル / BOX"
   data-default-meta="最新日：06/23 / 表示中：2件 / 30日内：2件 / シングル / BOX"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿2件 / シングル / BOX"
-  data-default-meta-html="最新日：06/23 / 表示中：2件 / 30日内：2件&lt;br&gt;シングル / BOX"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿2件 / シングル / BOX"
+  data-default-meta-html="&lt;span&gt;最新日：06/23&lt;/span&gt;&lt;span&gt;表示中：2件&lt;/span&gt;&lt;span&gt;30日内：2件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / BOX&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿2件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / BOX&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -3263,7 +3295,7 @@ main {
         <div class="store-group-name">カードショップとんとん大阪日本橋店</div>
         <span class="store-status-badge is-fresh">今日更新</span>
       </div>
-      <div class="store-group-meta">最新日：06/23 / 表示中：2件 / 30日内：2件<br>シングル / BOX</div>
+      <div class="store-group-meta"><span>最新日：06/23</span><span>表示中：2件</span><span>30日内：2件</span><span class="store-group-types">シングル / BOX</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/tonton-osaka-nihonbashi.html">この店舗を見る</a>
@@ -3344,8 +3376,8 @@ main {
   data-search="トレカライン 難波駅前店 トレカライン BOX / PSA"
   data-default-meta="最新日：06/23 / 表示中：4件 / 30日内：4件 / BOX / PSA"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿4件 / BOX / PSA"
-  data-default-meta-html="最新日：06/23 / 表示中：4件 / 30日内：4件&lt;br&gt;BOX / PSA"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿4件 / BOX / PSA"
+  data-default-meta-html="&lt;span&gt;最新日：06/23&lt;/span&gt;&lt;span&gt;表示中：4件&lt;/span&gt;&lt;span&gt;30日内：4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX / PSA&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX / PSA&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -3354,7 +3386,7 @@ main {
         <div class="store-group-name">トレカライン 難波駅前店</div>
         <span class="store-status-badge is-fresh">今日更新</span>
       </div>
-      <div class="store-group-meta">最新日：06/23 / 表示中：4件 / 30日内：4件<br>BOX / PSA</div>
+      <div class="store-group-meta"><span>最新日：06/23</span><span>表示中：4件</span><span>30日内：4件</span><span class="store-group-types">BOX / PSA</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/torecaline-namba-ekimae.html">この店舗を見る</a>
@@ -3456,8 +3488,8 @@ main {
   data-search="トレカ道楽 トレカ道楽 BOX"
   data-default-meta="最新日：06/23 / 表示中：1件 / 30日内：1件 / BOX"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿1件 / BOX"
-  data-default-meta-html="最新日：06/23 / 表示中：1件 / 30日内：1件&lt;br&gt;BOX"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿1件 / BOX"
+  data-default-meta-html="&lt;span&gt;最新日：06/23&lt;/span&gt;&lt;span&gt;表示中：1件&lt;/span&gt;&lt;span&gt;30日内：1件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿1件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -3466,7 +3498,7 @@ main {
         <div class="store-group-name">トレカ道楽</div>
         <span class="store-status-badge is-fresh">今日更新</span>
       </div>
-      <div class="store-group-meta">最新日：06/23 / 表示中：1件 / 30日内：1件<br>BOX</div>
+      <div class="store-group-meta"><span>最新日：06/23</span><span>表示中：1件</span><span>30日内：1件</span><span class="store-group-types">BOX</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/toreka-douraku.html">この店舗を見る</a>
@@ -3547,8 +3579,8 @@ main {
   data-search="カードラボなんば店 カードラボ シングル / BOX"
   data-default-meta="最新日：06/22 / 表示中：6件 / 30日内：6件 / シングル / BOX"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿6件 / シングル / BOX"
-  data-default-meta-html="最新日：06/22 / 表示中：6件 / 30日内：6件&lt;br&gt;シングル / BOX"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿6件 / シングル / BOX"
+  data-default-meta-html="&lt;span&gt;最新日：06/22&lt;/span&gt;&lt;span&gt;表示中：6件&lt;/span&gt;&lt;span&gt;30日内：6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / BOX&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / BOX&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -3557,7 +3589,7 @@ main {
         <div class="store-group-name">カードラボなんば店</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/22 / 表示中：6件 / 30日内：6件<br>シングル / BOX</div>
+      <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">シングル / BOX</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/cardlabo-namba.html">この店舗を見る</a>
@@ -3785,8 +3817,8 @@ main {
   data-search="GIRAFULLなんば店 GIRAFULL シングル"
   data-default-meta="最新日：06/19 / 表示中：3件 / 30日内：5件 / シングル"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿5件 / シングル"
-  data-default-meta-html="最新日：06/19 / 表示中：3件 / 30日内：5件&lt;br&gt;シングル"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿5件 / シングル"
+  data-default-meta-html="&lt;span&gt;最新日：06/19&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：5件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿5件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -3795,7 +3827,7 @@ main {
         <div class="store-group-name">GIRAFULLなんば店</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/19 / 表示中：3件 / 30日内：5件<br>シングル</div>
+      <div class="store-group-meta"><span>最新日：06/19</span><span>表示中：3件</span><span>30日内：5件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/girafull-namba.html">この店舗を見る</a>
@@ -4023,8 +4055,8 @@ main {
   data-search="magi 日本橋店 magi PSA / BOX"
   data-default-meta="最新日：06/21 / 表示中：6件 / 30日内：6件 / PSA / BOX"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿6件 / PSA / BOX"
-  data-default-meta-html="最新日：06/21 / 表示中：6件 / 30日内：6件&lt;br&gt;PSA / BOX"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿6件 / PSA / BOX"
+  data-default-meta-html="&lt;span&gt;最新日：06/21&lt;/span&gt;&lt;span&gt;表示中：6件&lt;/span&gt;&lt;span&gt;30日内：6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA / BOX&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA / BOX&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -4033,7 +4065,7 @@ main {
         <div class="store-group-name">magi 日本橋店</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/21 / 表示中：6件 / 30日内：6件<br>PSA / BOX</div>
+      <div class="store-group-meta"><span>最新日：06/21</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">PSA / BOX</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/magi-nihonbashi.html">この店舗を見る</a>
@@ -4324,8 +4356,8 @@ main {
   data-search="magi オタロード店 magi 定額"
   data-default-meta="最新日：06/22 / 表示中：2件 / 30日内：2件 / 定額"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿2件 / 定額"
-  data-default-meta-html="最新日：06/22 / 表示中：2件 / 30日内：2件&lt;br&gt;定額"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿2件 / 定額"
+  data-default-meta-html="&lt;span&gt;最新日：06/22&lt;/span&gt;&lt;span&gt;表示中：2件&lt;/span&gt;&lt;span&gt;30日内：2件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿2件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -4334,7 +4366,7 @@ main {
         <div class="store-group-name">magi オタロード店</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/22 / 表示中：2件 / 30日内：2件<br>定額</div>
+      <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：2件</span><span>30日内：2件</span><span class="store-group-types">定額</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/magi-otaroad.html">この店舗を見る</a>
@@ -4394,8 +4426,8 @@ main {
   data-search="晴れる屋2なんば 晴れる屋2 シングル"
   data-default-meta="最新日：06/20 / 表示中：4件 / 30日内：4件 / シングル"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿4件 / シングル"
-  data-default-meta-html="最新日：06/20 / 表示中：4件 / 30日内：4件&lt;br&gt;シングル"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿4件 / シングル"
+  data-default-meta-html="&lt;span&gt;最新日：06/20&lt;/span&gt;&lt;span&gt;表示中：4件&lt;/span&gt;&lt;span&gt;30日内：4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -4404,7 +4436,7 @@ main {
         <div class="store-group-name">晴れる屋2なんば</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/20 / 表示中：4件 / 30日内：4件<br>シングル</div>
+      <div class="store-group-meta"><span>最新日：06/20</span><span>表示中：4件</span><span>30日内：4件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/hareruya2-namba.html">この店舗を見る</a>
@@ -4527,8 +4559,8 @@ main {
   data-search="カードボックス 日本橋店 カードボックス BOX"
   data-default-meta="最新日：06/17 / 表示中：3件 / 30日内：6件 / BOX"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿6件 / BOX"
-  data-default-meta-html="最新日：06/17 / 表示中：3件 / 30日内：6件&lt;br&gt;BOX"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿6件 / BOX"
+  data-default-meta-html="&lt;span&gt;最新日：06/17&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -4537,7 +4569,7 @@ main {
         <div class="store-group-name">カードボックス 日本橋店</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/17 / 表示中：3件 / 30日内：6件<br>BOX</div>
+      <div class="store-group-meta"><span>最新日：06/17</span><span>表示中：3件</span><span>30日内：6件</span><span class="store-group-types">BOX</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/cardbox-nihonbashi.html">この店舗を見る</a>
@@ -4996,8 +5028,8 @@ main {
   data-search="アムタフ アムタフ PSA / BOX"
   data-default-meta="最新日：06/17 / 表示中：3件 / 30日内：4件 / PSA / BOX"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿4件 / PSA / BOX"
-  data-default-meta-html="最新日：06/17 / 表示中：3件 / 30日内：4件&lt;br&gt;PSA / BOX"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿4件 / PSA / BOX"
+  data-default-meta-html="&lt;span&gt;最新日：06/17&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA / BOX&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA / BOX&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -5006,7 +5038,7 @@ main {
         <div class="store-group-name">アムタフ</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/17 / 表示中：3件 / 30日内：4件<br>PSA / BOX</div>
+      <div class="store-group-meta"><span>最新日：06/17</span><span>表示中：3件</span><span>30日内：4件</span><span class="store-group-types">PSA / BOX</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/amtaf.html">この店舗を見る</a>
@@ -5129,8 +5161,8 @@ main {
   data-search="GOTCHA! GOTCHA! BOX / PSA"
   data-default-meta="最新日：06/19 / 表示中：5件 / 30日内：10件 / BOX / PSA"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿10件 / BOX / PSA"
-  data-default-meta-html="最新日：06/19 / 表示中：5件 / 30日内：10件&lt;br&gt;BOX / PSA"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿10件 / BOX / PSA"
+  data-default-meta-html="&lt;span&gt;最新日：06/19&lt;/span&gt;&lt;span&gt;表示中：5件&lt;/span&gt;&lt;span&gt;30日内：10件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX / PSA&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿10件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX / PSA&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -5139,7 +5171,7 @@ main {
         <div class="store-group-name">GOTCHA!</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/19 / 表示中：5件 / 30日内：10件<br>BOX / PSA</div>
+      <div class="store-group-meta"><span>最新日：06/19</span><span>表示中：5件</span><span>30日内：10件</span><span class="store-group-types">BOX / PSA</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/gotcha.html">この店舗を見る</a>
@@ -5472,8 +5504,8 @@ main {
   data-search="KURO KURO BOX / シングル / PSA"
   data-default-meta="最新日：06/22 / 表示中：6件 / 30日内：6件 / BOX / シングル / PSA"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿6件 / BOX / シングル / PSA"
-  data-default-meta-html="最新日：06/22 / 表示中：6件 / 30日内：6件&lt;br&gt;BOX / シングル / PSA"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿6件 / BOX / シングル / PSA"
+  data-default-meta-html="&lt;span&gt;最新日：06/22&lt;/span&gt;&lt;span&gt;表示中：6件&lt;/span&gt;&lt;span&gt;30日内：6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX / シングル / PSA&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX / シングル / PSA&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -5482,7 +5514,7 @@ main {
         <div class="store-group-name">KURO</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/22 / 表示中：6件 / 30日内：6件<br>BOX / シングル / PSA</div>
+      <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">BOX / シングル / PSA</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/kuro.html">この店舗を見る</a>
@@ -5794,8 +5826,8 @@ main {
   data-search="カードショップあーと カードショップあーと PSA"
   data-default-meta="最新日：06/22 / 表示中：2件 / 30日内：2件 / PSA"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿2件 / PSA"
-  data-default-meta-html="最新日：06/22 / 表示中：2件 / 30日内：2件&lt;br&gt;PSA"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿2件 / PSA"
+  data-default-meta-html="&lt;span&gt;最新日：06/22&lt;/span&gt;&lt;span&gt;表示中：2件&lt;/span&gt;&lt;span&gt;30日内：2件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿2件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -5804,7 +5836,7 @@ main {
         <div class="store-group-name">カードショップあーと</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/22 / 表示中：2件 / 30日内：2件<br>PSA</div>
+      <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：2件</span><span>30日内：2件</span><span class="store-group-types">PSA</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/cardshop-art.html">この店舗を見る</a>
@@ -5948,8 +5980,8 @@ main {
   data-search="アドレナリン アドレナリン シングル / PSA"
   data-default-meta="最新日：06/22 / 表示中：5件 / 30日内：5件 / シングル / PSA"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿5件 / シングル / PSA"
-  data-default-meta-html="最新日：06/22 / 表示中：5件 / 30日内：5件&lt;br&gt;シングル / PSA"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿5件 / シングル / PSA"
+  data-default-meta-html="&lt;span&gt;最新日：06/22&lt;/span&gt;&lt;span&gt;表示中：5件&lt;/span&gt;&lt;span&gt;30日内：5件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / PSA&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿5件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / PSA&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -5958,7 +5990,7 @@ main {
         <div class="store-group-name">アドレナリン</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/22 / 表示中：5件 / 30日内：5件<br>シングル / PSA</div>
+      <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：5件</span><span>30日内：5件</span><span class="store-group-types">シングル / PSA</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/adrenaline.html">この店舗を見る</a>
@@ -6081,8 +6113,8 @@ main {
   data-search="買取チャンピオン 買取チャンピオン シングル"
   data-default-meta="最新日：06/17 / 表示中：3件 / 30日内：3件 / シングル"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿3件 / シングル"
-  data-default-meta-html="最新日：06/17 / 表示中：3件 / 30日内：3件&lt;br&gt;シングル"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿3件 / シングル"
+  data-default-meta-html="&lt;span&gt;最新日：06/17&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：3件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿3件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -6091,7 +6123,7 @@ main {
         <div class="store-group-name">買取チャンピオン</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/17 / 表示中：3件 / 30日内：3件<br>シングル</div>
+      <div class="store-group-meta"><span>最新日：06/17</span><span>表示中：3件</span><span>30日内：3件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/kaitori-champion.html">この店舗を見る</a>
@@ -6235,8 +6267,8 @@ main {
   data-search="トレカショップ 比希商店 比希商店 PSA"
   data-default-meta="最新日：06/18 / 表示中：6件 / 30日内：6件 / PSA"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿6件 / PSA"
-  data-default-meta-html="最新日：06/18 / 表示中：6件 / 30日内：6件&lt;br&gt;PSA"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿6件 / PSA"
+  data-default-meta-html="&lt;span&gt;最新日：06/18&lt;/span&gt;&lt;span&gt;表示中：6件&lt;/span&gt;&lt;span&gt;30日内：6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -6245,7 +6277,7 @@ main {
         <div class="store-group-name">トレカショップ 比希商店</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/18 / 表示中：6件 / 30日内：6件<br>PSA</div>
+      <div class="store-group-meta"><span>最新日：06/18</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">PSA</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/hiki-card-osaka.html">この店舗を見る</a>
@@ -6410,8 +6442,8 @@ main {
   data-search="トレカライン オタロード店 トレカライン PSA"
   data-default-meta="最新日：06/22 / 表示中：5件 / 30日内：5件 / PSA"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿5件 / PSA"
-  data-default-meta-html="最新日：06/22 / 表示中：5件 / 30日内：5件&lt;br&gt;PSA"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿5件 / PSA"
+  data-default-meta-html="&lt;span&gt;最新日：06/22&lt;/span&gt;&lt;span&gt;表示中：5件&lt;/span&gt;&lt;span&gt;30日内：5件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿5件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;PSA&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -6420,7 +6452,7 @@ main {
         <div class="store-group-name">トレカライン オタロード店</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/22 / 表示中：5件 / 30日内：5件<br>PSA</div>
+      <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：5件</span><span>30日内：5件</span><span class="store-group-types">PSA</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/torecaline-otaroad.html">この店舗を見る</a>
@@ -6543,8 +6575,8 @@ main {
   data-search="トレカボム トレカボム BOX / シングル"
   data-default-meta="最新日：06/18 / 表示中：6件 / 30日内：6件 / BOX / シングル"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿6件 / BOX / シングル"
-  data-default-meta-html="最新日：06/18 / 表示中：6件 / 30日内：6件&lt;br&gt;BOX / シングル"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿6件 / BOX / シングル"
+  data-default-meta-html="&lt;span&gt;最新日：06/18&lt;/span&gt;&lt;span&gt;表示中：6件&lt;/span&gt;&lt;span&gt;30日内：6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX / シングル&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿6件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;BOX / シングル&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -6553,7 +6585,7 @@ main {
         <div class="store-group-name">トレカボム</div>
         <span class="store-status-badge ">過去7日あり</span>
       </div>
-      <div class="store-group-meta">最新日：06/18 / 表示中：6件 / 30日内：6件<br>BOX / シングル</div>
+      <div class="store-group-meta"><span>最新日：06/18</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">BOX / シングル</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/toreca-bomb.html">この店舗を見る</a>
@@ -6697,8 +6729,8 @@ main {
   data-search="ドラスタ 日本橋本店 ドラゴンスター 定額"
   data-default-meta="最新日：05/29 / 表示中：3件 / 30日内：1件 / 定額"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿1件 / 定額"
-  data-default-meta-html="最新日：05/29 / 表示中：3件 / 30日内：1件&lt;br&gt;定額"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿1件 / 定額"
+  data-default-meta-html="&lt;span&gt;最新日：05/29&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：1件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿1件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -6707,7 +6739,7 @@ main {
         <div class="store-group-name">ドラスタ 日本橋本店</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：05/29 / 表示中：3件 / 30日内：1件<br>定額</div>
+      <div class="store-group-meta"><span>最新日：05/29</span><span>表示中：3件</span><span>30日内：1件</span><span class="store-group-types">定額</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/dragonstar-nihonbashi-honten.html">この店舗を見る</a>
@@ -6752,8 +6784,8 @@ main {
   data-search="ドラスタ 日本橋2号店 ドラゴンスター 定額 / シングル"
   data-default-meta="最新日：05/29 / 表示中：3件 / 30日内：3件 / 定額 / シングル"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿3件 / 定額 / シングル"
-  data-default-meta-html="最新日：05/29 / 表示中：3件 / 30日内：3件&lt;br&gt;定額 / シングル"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿3件 / 定額 / シングル"
+  data-default-meta-html="&lt;span&gt;最新日：05/29&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：3件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額 / シングル&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿3件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額 / シングル&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -6762,7 +6794,7 @@ main {
         <div class="store-group-name">ドラスタ 日本橋2号店</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：05/29 / 表示中：3件 / 30日内：3件<br>定額 / シングル</div>
+      <div class="store-group-meta"><span>最新日：05/29</span><span>表示中：3件</span><span>30日内：3件</span><span class="store-group-types">定額 / シングル</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/dragonstar-nihonbashi-2.html">この店舗を見る</a>
@@ -6888,8 +6920,8 @@ main {
   data-search="ドラスタ 日本橋3号店 ドラゴンスター 定額 / シングル"
   data-default-meta="最新日：06/16 / 表示中：3件 / 30日内：4件 / 定額 / シングル"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿4件 / 定額 / シングル"
-  data-default-meta-html="最新日：06/16 / 表示中：3件 / 30日内：4件&lt;br&gt;定額 / シングル"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿4件 / 定額 / シングル"
+  data-default-meta-html="&lt;span&gt;最新日：06/16&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額 / シングル&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額 / シングル&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -6898,7 +6930,7 @@ main {
         <div class="store-group-name">ドラスタ 日本橋3号店</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：06/16 / 表示中：3件 / 30日内：4件<br>定額 / シングル</div>
+      <div class="store-group-meta"><span>最新日：06/16</span><span>表示中：3件</span><span>30日内：4件</span><span class="store-group-types">定額 / シングル</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/dragonstar-nihonbashi-3.html">この店舗を見る</a>
@@ -7078,8 +7110,8 @@ main {
   data-search="ドラスタ オタロード中央 ドラゴンスター シングル"
   data-default-meta="最新日：05/30 / 表示中：3件 / 30日内：4件 / シングル"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿4件 / シングル"
-  data-default-meta-html="最新日：05/30 / 表示中：3件 / 30日内：4件&lt;br&gt;シングル"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿4件 / シングル"
+  data-default-meta-html="&lt;span&gt;最新日：05/30&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -7088,7 +7120,7 @@ main {
         <div class="store-group-name">ドラスタ オタロード中央</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：05/30 / 表示中：3件 / 30日内：4件<br>シングル</div>
+      <div class="store-group-meta"><span>最新日：05/30</span><span>表示中：3件</span><span>30日内：4件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/dragonstar-otaroad-chuo.html">この店舗を見る</a>
@@ -7430,8 +7462,8 @@ main {
   data-search="ドラスタ なんさん通り店 ドラゴンスター 定額"
   data-default-meta="最新日：05/28 / 表示中：3件 / 30日内：1件 / 定額"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿1件 / 定額"
-  data-default-meta-html="最新日：05/28 / 表示中：3件 / 30日内：1件&lt;br&gt;定額"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿1件 / 定額"
+  data-default-meta-html="&lt;span&gt;最新日：05/28&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：1件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿1件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;定額&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -7440,7 +7472,7 @@ main {
         <div class="store-group-name">ドラスタ なんさん通り店</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：05/28 / 表示中：3件 / 30日内：1件<br>定額</div>
+      <div class="store-group-meta"><span>最新日：05/28</span><span>表示中：3件</span><span>30日内：1件</span><span class="store-group-types">定額</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/dragonstar-nansan.html">この店舗を見る</a>
@@ -7485,8 +7517,8 @@ main {
   data-search="GIRAFULL大阪日本橋店 GIRAFULL シングル / 定額"
   data-default-meta="最新日：06/03 / 表示中：3件 / 30日内：4件 / シングル / 定額"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿4件 / シングル / 定額"
-  data-default-meta-html="最新日：06/03 / 表示中：3件 / 30日内：4件&lt;br&gt;シングル / 定額"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿4件 / シングル / 定額"
+  data-default-meta-html="&lt;span&gt;最新日：06/03&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / 定額&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿4件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / 定額&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -7495,7 +7527,7 @@ main {
         <div class="store-group-name">GIRAFULL大阪日本橋店</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：06/03 / 表示中：3件 / 30日内：4件<br>シングル / 定額</div>
+      <div class="store-group-meta"><span>最新日：06/03</span><span>表示中：3件</span><span>30日内：4件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/girafull-osaka-nihonbashi.html">この店舗を見る</a>
@@ -7723,8 +7755,8 @@ main {
   data-search="GIRAFULLオタロード店 GIRAFULL シングル / 定額"
   data-default-meta="最新日：05/28 / 表示中：3件 / 30日内：3件 / シングル / 定額"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿3件 / シングル / 定額"
-  data-default-meta-html="最新日：05/28 / 表示中：3件 / 30日内：3件&lt;br&gt;シングル / 定額"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿3件 / シングル / 定額"
+  data-default-meta-html="&lt;span&gt;最新日：05/28&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：3件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / 定額&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿3件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / 定額&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -7733,7 +7765,7 @@ main {
         <div class="store-group-name">GIRAFULLオタロード店</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：05/28 / 表示中：3件 / 30日内：3件<br>シングル / 定額</div>
+      <div class="store-group-meta"><span>最新日：05/28</span><span>表示中：3件</span><span>30日内：3件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/girafull-otaroad.html">この店舗を見る</a>
@@ -7919,8 +7951,8 @@ main {
   data-search="サンライズカードショップ サンライズカードショップ シングル"
   data-default-meta="最新日：06/16 / 表示中：3件 / 30日内：5件 / シングル"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿5件 / シングル"
-  data-default-meta-html="最新日：06/16 / 表示中：3件 / 30日内：5件&lt;br&gt;シングル"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿5件 / シングル"
+  data-default-meta-html="&lt;span&gt;最新日：06/16&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：5件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿5件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -7929,7 +7961,7 @@ main {
         <div class="store-group-name">サンライズカードショップ</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：06/16 / 表示中：3件 / 30日内：5件<br>シングル</div>
+      <div class="store-group-meta"><span>最新日：06/16</span><span>表示中：3件</span><span>30日内：5件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/sunrise-cardshop.html">この店舗を見る</a>
@@ -8094,8 +8126,8 @@ main {
   data-search="Lotus 大阪日本橋店 Lotus シングル / 定額"
   data-default-meta="最新日：06/09 / 表示中：3件 / 30日内：7件 / シングル / 定額"
   data-expanded-meta="過去30日：05/25〜06/23 / 投稿7件 / シングル / 定額"
-  data-default-meta-html="最新日：06/09 / 表示中：3件 / 30日内：7件&lt;br&gt;シングル / 定額"
-  data-expanded-meta-html="過去30日：05/25〜06/23 / 投稿7件 / シングル / 定額"
+  data-default-meta-html="&lt;span&gt;最新日：06/09&lt;/span&gt;&lt;span&gt;表示中：3件&lt;/span&gt;&lt;span&gt;30日内：7件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / 定額&lt;/span&gt;"
+  data-expanded-meta-html="&lt;span&gt;過去30日：05/25〜06/23&lt;/span&gt;&lt;span&gt;投稿7件&lt;/span&gt;&lt;span class=&quot;store-group-types&quot;&gt;シングル / 定額&lt;/span&gt;"
   data-expanded="false"
 >
   <div class="store-group-header">
@@ -8104,7 +8136,7 @@ main {
         <div class="store-group-name">Lotus 大阪日本橋店</div>
         <span class="store-status-badge ">30日以内</span>
       </div>
-      <div class="store-group-meta">最新日：06/09 / 表示中：3件 / 30日内：7件<br>シングル / 定額</div>
+      <div class="store-group-meta"><span>最新日：06/09</span><span>表示中：3件</span><span>30日内：7件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
     <div class="store-group-actions">
       <a class="store-group-link" href="stores/lotus-osaka-nihonbashi.html">この店舗を見る</a>
@@ -9031,7 +9063,7 @@ function bindLandscapeImages(root = document) {
 }
 
 function getScrollIndicatorHost(el) {
-  if (el.matches(".store-post-carousel, .store-post-strip, .store-post-image-list")) return el.parentElement || el;
+  if (el.matches(".store-post-strip, .store-post-image-list")) return el.parentElement || el;
   return el;
 }
 
@@ -9045,7 +9077,7 @@ function ensureScrollIndicator(el) {
     indicator.className = "scroll-progress";
     indicator.id = `scrollIndicator_${Math.random().toString(36).slice(2)}`;
     el.dataset.scrollIndicatorId = indicator.id;
-    if (el.matches(".store-post-carousel, .store-post-strip, .store-post-image-list")) {
+    if (el.matches(".store-post-strip, .store-post-image-list")) {
       el.insertAdjacentElement("afterend", indicator);
     } else {
       host.appendChild(indicator);
@@ -9072,8 +9104,8 @@ function updateScrollIndicator(el) {
 function setupScrollIndicators(root = document) {
   const scope = root instanceof Element ? root : document;
   const targets = new Set();
-  if (scope.matches?.(".store-post-carousel, .store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split")) targets.add(scope);
-  scope.querySelectorAll?.(".store-post-carousel, .store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split").forEach(el => targets.add(el));
+  if (scope.matches?.(".store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split")) targets.add(scope);
+  scope.querySelectorAll?.(".store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split").forEach(el => targets.add(el));
   targets.forEach(el => {
     if (!el.dataset.scrollAwareBound) {
       el.dataset.scrollAwareBound = "1";
@@ -9252,7 +9284,7 @@ function updateStoreRangeVisibility() {
     if (metaEl && (metaHtml || meta)) metaEl.innerHTML = metaHtml || meta;
     const button = group.querySelector(".store-expand-button");
     if (button) {
-      button.textContent = expanded ? (button.dataset.lessLabel || "最新表示に戻す") : (button.dataset.moreLabel || "過去の投稿をもっと見る");
+      button.textContent = expanded ? (button.dataset.lessLabel || "最新表示に戻す") : (button.dataset.moreLabel || "表示件数を増やす");
       button.setAttribute("aria-expanded", expanded ? "true" : "false");
     }
   });

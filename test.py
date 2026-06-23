@@ -3490,11 +3490,17 @@ def build_area_page(posts_by_source, updated_at):
             else f"最新日：未取得 / 表示中：0件 / 30日内：0件 / {type_text}"
         )
         status_meta_html = (
-            f"最新日：{h(latest_date_label)} / 表示中：{default_post_count}件 / 30日内：{expanded_post_count}件<br>{h(type_text)}"
+            f'<span>最新日：{h(latest_date_label)}</span><span>表示中：{default_post_count}件</span><span>30日内：{expanded_post_count}件</span><span class="store-group-types">{h(type_text)}</span>'
             if expanded_shop_posts
-            else f"最新日：未取得 / 表示中：0件 / 30日内：0件<br>{h(type_text)}"
+            else f'<span>最新日：未取得</span><span>表示中：0件</span><span>30日内：0件</span><span class="store-group-types">{h(type_text)}</span>'
         )
-        expanded_meta_html = store_view_meta["expanded_meta"]
+        expanded_meta_parts = store_view_meta["expanded_meta"].split(" / ")
+        expanded_meta_html = (
+            "".join(f"<span>{h(part)}</span>" for part in expanded_meta_parts[:2])
+            + (f'<span class="store-group-types">{h(" / ".join(expanded_meta_parts[2:]))}</span>' if len(expanded_meta_parts) > 2 else "")
+            if expanded_shop_posts
+            else status_meta_html
+        )
 
         store_post_cards = ""
         has_default_posts = False
@@ -3733,10 +3739,8 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-group-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: block;
   gap: 8px;
-  align-items: start;
   padding: 0 9px 5px;
 }
 
@@ -3745,6 +3749,31 @@ def build_area_page(posts_by_source, updated_at):
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
+  min-width: 0;
+}
+
+#storeView .store-group-name {
+  max-width: 100%;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: strict;
+}
+
+#storeView .store-group-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  margin-top: 5px;
+  line-height: 1.45;
+}
+
+#storeView .store-group-meta span {
+  white-space: nowrap;
+}
+
+#storeView .store-group-meta .store-group-types {
+  flex-basis: 100%;
+  white-space: normal;
 }
 
 #storeView .store-status-badge {
@@ -3773,8 +3802,17 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-group-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 6px;
+  margin-top: 7px;
+}
+
+#storeView .store-group-link,
+#storeView .store-expand-button {
+  flex: 1 1 132px;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 #storeView .store-post-carousel {
@@ -4546,7 +4584,7 @@ function bindLandscapeImages(root = document) {{
 }}
 
 function getScrollIndicatorHost(el) {{
-  if (el.matches(".store-post-carousel, .store-post-strip, .store-post-image-list")) return el.parentElement || el;
+  if (el.matches(".store-post-strip, .store-post-image-list")) return el.parentElement || el;
   return el;
 }}
 
@@ -4560,7 +4598,7 @@ function ensureScrollIndicator(el) {{
     indicator.className = "scroll-progress";
     indicator.id = `scrollIndicator_${{Math.random().toString(36).slice(2)}}`;
     el.dataset.scrollIndicatorId = indicator.id;
-    if (el.matches(".store-post-carousel, .store-post-strip, .store-post-image-list")) {{
+    if (el.matches(".store-post-strip, .store-post-image-list")) {{
       el.insertAdjacentElement("afterend", indicator);
     }} else {{
       host.appendChild(indicator);
@@ -4587,8 +4625,8 @@ function updateScrollIndicator(el) {{
 function setupScrollIndicators(root = document) {{
   const scope = root instanceof Element ? root : document;
   const targets = new Set();
-  if (scope.matches?.(".store-post-carousel, .store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split")) targets.add(scope);
-  scope.querySelectorAll?.(".store-post-carousel, .store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split").forEach(el => targets.add(el));
+  if (scope.matches?.(".store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split")) targets.add(scope);
+  scope.querySelectorAll?.(".store-post-strip, .store-post-image-list, .timeline-image.is-landscape, .image-card.is-landscape, .modal-image-wrap.is-landscape, .landscape-split").forEach(el => targets.add(el));
   targets.forEach(el => {{
     if (!el.dataset.scrollAwareBound) {{
       el.dataset.scrollAwareBound = "1";
@@ -4767,7 +4805,7 @@ function updateStoreRangeVisibility() {{
     if (metaEl && (metaHtml || meta)) metaEl.innerHTML = metaHtml || meta;
     const button = group.querySelector(".store-expand-button");
     if (button) {{
-      button.textContent = expanded ? (button.dataset.lessLabel || "最新表示に戻す") : (button.dataset.moreLabel || "過去の投稿をもっと見る");
+      button.textContent = expanded ? (button.dataset.lessLabel || "最新表示に戻す") : (button.dataset.moreLabel || "表示件数を増やす");
       button.setAttribute("aria-expanded", expanded ? "true" : "false");
     }}
   }});
