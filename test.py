@@ -3445,17 +3445,30 @@ def build_area_page(posts_by_source, updated_at):
 </article>
 """
 
-    store_groups_html = ""
+    store_group_records = []
     store_initial_count = 0
+    today_jst = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
 
-    for shop in shops:
+    def store_view_status(meta, expanded_posts):
+        latest_date = meta.get("latest_date", "")
+        latest_obj = parse_jst_date(latest_date)
+        reference_obj = parse_jst_date(latest_timeline_date) or latest_obj
+        if not expanded_posts or not latest_obj:
+            return 3, "取得待ち", "is-waiting"
+        if latest_date == today_jst:
+            return 0, "今日更新", "is-fresh"
+        if latest_timeline_date and latest_date == latest_timeline_date:
+            return 0, "最新日あり", "is-fresh"
+        days_old = (reference_obj - latest_obj).days if reference_obj else 999
+        if 0 <= days_old < STORE_VIEW_DEFAULT_DAYS:
+            return 1, "過去7日あり", ""
+        if 0 <= days_old < STORE_VIEW_EXPANDED_DAYS:
+            return 2, "30日以内", ""
+        return 3, "取得待ち", "is-waiting"
+
+    for shop_index, shop in enumerate(shops):
         shop_posts = [normalize_post(post) for post in all_timeline_posts if post.get("shop_slug") == shop["shop_slug"]]
-        if not shop_posts:
-            continue
-
         default_shop_posts, expanded_shop_posts, store_view_meta = select_store_view_posts(shop_posts, latest_timeline_date)
-        if not expanded_shop_posts:
-            continue
 
         display_types = []
         for post in expanded_shop_posts:
@@ -3466,6 +3479,15 @@ def build_area_page(posts_by_source, updated_at):
         default_keys = store_view_meta["default_keys"]
         expanded_keys = store_view_meta["expanded_keys"]
         latest_store_date = store_view_meta.get("latest_date", "")
+        status_order, status_label, status_class = store_view_status(store_view_meta, expanded_shop_posts)
+        latest_date_label = format_date_label(latest_store_date) if latest_store_date else "未取得"
+        default_post_count = len(default_shop_posts)
+        expanded_post_count = len(expanded_shop_posts)
+        status_meta = (
+            f"最新日：{latest_date_label} / 表示中：{default_post_count}件 / 30日内：{expanded_post_count}件 / {type_text}"
+            if expanded_shop_posts
+            else f"最新日：未取得 / 表示中：0件 / 30日内：0件 / {type_text}"
+        )
 
         store_post_cards = ""
         has_default_posts = False
@@ -3522,23 +3544,53 @@ def build_area_page(posts_by_source, updated_at):
                 has_default_posts = True
 
         if not store_post_cards:
+            store_group_records.append((
+                (3, shop_index),
+                f"""
+<section class="store-group is-waiting"
+  data-types=""
+  data-brand="{h(shop["brand_id"])}"
+  data-search="{h(shop["shop_name"] + ' ' + shop["brand"])}"
+  data-default-meta="{h(status_meta)}"
+  data-expanded-meta="{h(status_meta)}"
+  data-expanded="false"
+  data-waiting="true"
+>
+  <div class="store-group-header">
+    <div>
+      <div class="store-group-title">
+        <div class="store-group-name">{h(shop["shop_name"])}</div>
+        <span class="store-status-badge is-waiting">取得待ち</span>
+      </div>
+      <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
+    </div>
+    <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
+  </div>
+</section>
+"""
+            ))
             continue
         if has_default_posts:
             store_initial_count += 1
 
-        store_groups_html += f"""
+        store_group_records.append((
+            (status_order, shop_index),
+            f"""
 <section class="store-group"
   data-types="{h(' '.join(display_types))}"
   data-brand="{h(shop["brand_id"])}"
   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + type_text)}"
-  data-default-meta="{h(store_view_meta["default_meta"])}"
+  data-default-meta="{h(status_meta)}"
   data-expanded-meta="{h(store_view_meta["expanded_meta"])}"
   data-expanded="false"
 >
   <div class="store-group-header">
     <div>
-      <div class="store-group-name">{h(shop["shop_name"])}</div>
-      <div class="store-group-meta">{h(store_view_meta["default_meta"])}</div>
+      <div class="store-group-title">
+        <div class="store-group-name">{h(shop["shop_name"])}</div>
+        <span class="store-status-badge {h(status_class)}">{h(status_label)}</span>
+      </div>
+      <div class="store-group-meta">{h(status_meta)}</div>
     </div>
     <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
   </div>
@@ -3548,6 +3600,9 @@ def build_area_page(posts_by_source, updated_at):
   <button class="store-expand-button" type="button" onclick="toggleStoreGroupExpanded(this)">もっと見る</button>
 </section>
 """
+        ))
+
+    store_groups_html = "".join(html for _, html in sorted(store_group_records, key=lambda item: item[0]))
 
     initial_result_count = store_initial_count
     no_result_class = "no-result hidden" if initial_result_count else "no-result"
@@ -3656,12 +3711,47 @@ def build_area_page(posts_by_source, updated_at):
   background: linear-gradient(180deg, rgba(18,18,18,.94), rgba(8,8,8,.94));
 }
 
+#storeView .store-group.is-waiting {
+  opacity: .72;
+  border-style: dashed;
+}
+
 #storeView .store-group-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
   align-items: center;
   padding: 0 10px 7px;
+}
+
+#storeView .store-group-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+#storeView .store-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 2px 7px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.76);
+  font-size: 10px;
+  line-height: 1;
+}
+
+#storeView .store-status-badge.is-fresh {
+  border-color: rgba(111,255,176,.32);
+  color: rgba(177,255,207,.92);
+}
+
+#storeView .store-status-badge.is-waiting {
+  border-style: dashed;
+  color: rgba(255,255,255,.52);
 }
 
 #storeView .store-post-carousel {
@@ -4683,6 +4773,10 @@ function applyFilters() {{
   const search = document.getElementById("searchInput").value.trim().toLowerCase();
   document.querySelectorAll(".timeline-post").forEach(post => post.classList.toggle("hidden", !matchesItem(post, search)));
   document.querySelectorAll(".store-group").forEach(group => {{
+    if (group.dataset.waiting === "true") {{
+      group.classList.toggle("hidden", !matchesItem(group, search));
+      return;
+    }}
     let visibleChildren = 0;
     group.querySelectorAll(".store-post-card").forEach(card => {{
       const rangeOk = isStoreCardInCurrentRange(card);
