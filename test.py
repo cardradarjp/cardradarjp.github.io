@@ -3957,13 +3957,14 @@ def build_area_page(posts_by_source, updated_at):
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 4px;
+  gap: 8px;
   width: 100%;
   height: calc(100% - 34px);
   min-height: 0;
   overflow-x: hidden !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   scroll-snap-type: none;
 }
 
@@ -3974,63 +3975,64 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-half .landscape-slice {
-  flex: 1 1 0 !important;
-  min-width: 0 !important;
-  max-width: none !important;
+  flex: 0 0 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
   scroll-snap-align: start;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-split {
-  display: grid !important;
-  grid-auto-flow: row !important;
-  grid-auto-columns: auto !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  grid-template-columns: none !important;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice {
-  width: auto !important;
-  min-width: 0 !important;
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
   scroll-snap-align: start;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split {
-  display: grid !important;
-  gap: 4px;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 8px;
   width: 100%;
   height: calc(100% - 34px);
   min-height: 0;
   overflow-x: hidden !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   scroll-snap-type: none;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-table .landscape-slice {
-  flex: none !important;
-  min-width: 82% !important;
-  max-width: 82% !important;
+  flex: 0 0 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
   display: flex;
   flex-direction: column;
   min-height: 0;
-  scroll-snap-align: center;
-}
-
-#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split.table-split-mode-row3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-}
-
-#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split.table-split-mode-grid3x2 {
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-}
-
-#storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split.table-split-mode-grid2x2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  scroll-snap-align: start;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-table .landscape-split .landscape-slice {
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: none !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+}
+
+#storeView .store-table-slice-card .store-post-meta {
+  color: rgba(255,255,255,.72);
+}
+
+#storeView .store-table-slice-card .store-table-slice-image {
+  cursor: zoom-in;
 }
 
 #storeView .store-post-image.is-landscape .landscape-slice-frame img {
@@ -4518,6 +4520,64 @@ function getDragonstarTableGrid(mode) {{
   return {{ cols: 3, rows: 1, className: "table-split-mode-row3" }};
 }}
 
+function getStoreTableSliceKey(card) {{
+  if (!card) return "";
+  if (!card.dataset.storeTableSliceKey) {{
+    card.dataset.storeTableSliceKey = `storeTable_${{Math.random().toString(36).slice(2)}}`;
+  }}
+  return card.dataset.storeTableSliceKey;
+}}
+
+function clearStoreTableRailSlices(target) {{
+  const card = target?.closest(".store-post-card");
+  const carousel = card?.closest(".store-post-carousel");
+  if (!card || !carousel) return;
+  const key = card.dataset.storeTableSliceKey;
+  if (!key) return;
+  carousel.querySelectorAll(`[data-store-table-slice-for="${{key}}"]`).forEach(item => item.remove());
+}}
+
+function makeStoreTableSliceHtml(sourceUrl, grid, ratio, index, x, y) {{
+  const total = grid.cols * grid.rows;
+  return `
+    <div class="landscape-slice store-table-slice" style="--table-cols:${{grid.cols}}; --table-rows:${{grid.rows}}; --table-slice-ratio:${{((ratio * grid.rows) / grid.cols).toFixed(4)}}; --table-bg-x:${{x}}%; --table-bg-y:${{y}}%; --table-image:url('${{sourceUrl}}')">
+      <span class="landscape-slice-label">表${{index}} / ${{total}}</span>
+      <span class="landscape-slice-frame table-split-frame"><span class="table-split-slice" aria-hidden="true"></span></span>
+    </div>`;
+}}
+
+function renderStoreTableRailSlices(target, grid, ratio, sourceUrl, slices) {{
+  const card = target?.closest(".store-post-card");
+  const carousel = card?.closest(".store-post-carousel");
+  if (!card || !carousel) return;
+  clearStoreTableRailSlices(target);
+  const key = getStoreTableSliceKey(card);
+  const actionHtml = card.querySelector(".store-post-actions")?.outerHTML || "";
+  const baseMeta = card.querySelector(".store-post-meta")?.textContent?.trim() || "";
+  let insertAfter = card;
+  slices.slice(1).forEach(slice => {{
+    const clone = document.createElement("article");
+    clone.className = "store-post-card store-table-slice-card";
+    Object.entries(card.dataset).forEach(([name, value]) => {{
+      clone.dataset[name] = value;
+    }});
+    clone.dataset.storeTableSliceFor = key;
+    clone.innerHTML = `
+      <div class="store-post-meta">${{baseMeta}} / 表${{slice.index}} / ${{slices.length}}</div>
+      <div class="store-image-item" data-brand-id="${{target.dataset.brandId || ""}}" data-shop-slug="${{target.dataset.shopSlug || ""}}">
+        <div class="timeline-image store-post-image store-table-slice-image is-landscape landscape-mode-table" role="button" tabindex="0" onclick="${{target.getAttribute("onclick") || ""}}" onkeydown="${{target.getAttribute("onkeydown") || ""}}">
+          <div class="landscape-split store-view-landscape-split ${{grid.className}}">
+            ${{makeStoreTableSliceHtml(sourceUrl, grid, ratio, slice.index, slice.x, slice.y)}}
+          </div>
+        </div>
+      </div>
+      ${{actionHtml}}
+    `;
+    insertAfter.insertAdjacentElement("afterend", clone);
+    insertAfter = clone;
+  }});
+}}
+
 function renderLandscapeView(target, img) {{
   const savedMode = getLandscapeMode();
   const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
@@ -4543,6 +4603,7 @@ function renderLandscapeView(target, img) {{
   split.classList.toggle("store-view-landscape-split", target.classList.contains("store-post-image"));
   split.classList.remove("table-split-mode-row3", "table-split-mode-grid3x2", "table-split-mode-grid2x2");
   if (mode === "original") {{
+    clearStoreTableRailSlices(target);
     split.innerHTML = "";
     return;
   }}
@@ -4559,16 +4620,14 @@ function renderLandscapeView(target, img) {{
         const index = row * grid.cols + col + 1;
         const x = grid.cols === 1 ? 0 : (col / (grid.cols - 1)) * 100;
         const y = grid.rows === 1 ? 0 : (row / (grid.rows - 1)) * 100;
-        slices.push(`
-    <div class="landscape-slice store-table-slice" style="--table-cols:${{grid.cols}}; --table-rows:${{grid.rows}}; --table-slice-ratio:${{((ratio * grid.rows) / grid.cols).toFixed(4)}}; --table-bg-x:${{x}}%; --table-bg-y:${{y}}%; --table-image:url('${{sourceUrl}}')">
-      <span class="landscape-slice-label">表${{index}} / ${{grid.cols * grid.rows}}</span>
-      <span class="landscape-slice-frame table-split-frame"><span class="table-split-slice" aria-hidden="true"></span></span>
-    </div>`);
+        slices.push({{ index, x, y }});
       }}
     }}
-    split.innerHTML = slices.join("");
+    split.innerHTML = makeStoreTableSliceHtml(sourceUrl, grid, ratio, slices[0].index, slices[0].x, slices[0].y);
+    if (isDragonstarTableImage) renderStoreTableRailSlices(target, grid, ratio, sourceUrl, slices);
     return;
   }}
+  clearStoreTableRailSlices(target);
   if (mode === "quarter") {{
     split.style.setProperty("--landscape-panel-ratio", ratio.toFixed(4));
     const labels = isStoreViewImage
