@@ -3446,6 +3446,7 @@ def build_area_page(posts_by_source, updated_at):
 """
 
     store_group_records = []
+    store_panel_records = []
     store_initial_count = 0
     today_jst = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
 
@@ -3501,6 +3502,24 @@ def build_area_page(posts_by_source, updated_at):
             if expanded_shop_posts
             else status_meta_html
         )
+        store_panel_waiting_class = " is-waiting" if not expanded_shop_posts else ""
+        store_panel_latest = f"最新日：{h(latest_date_label)}" if expanded_shop_posts else "最新日：未取得"
+        store_panel_count = f"30日内：{expanded_post_count}件" if expanded_shop_posts else "取得待ち"
+        store_panel_records.append((
+            (status_order, shop_index),
+            f"""
+<a class="store-panel-card{store_panel_waiting_class}"
+   href="stores/{h(shop["shop_slug"])}.html"
+   data-types="{h(' '.join(display_types))}"
+   data-brand="{h(shop["brand_id"])}"
+   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + type_text)}">
+  <div class="store-panel-name">{h(shop["shop_name"])}</div>
+  <div class="store-panel-meta"><span class="store-status-badge {h(status_class)}">{h(status_label)}</span> {store_panel_latest} / {h(store_panel_count)}</div>
+  <div class="store-panel-meta">{h(type_text)}</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+"""
+        ))
 
         store_post_cards = ""
         has_default_posts = False
@@ -3576,9 +3595,6 @@ def build_area_page(posts_by_source, updated_at):
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
     </div>
-    <div class="store-group-actions">
-      <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
-    </div>
   </div>
 </section>
 """
@@ -3613,7 +3629,6 @@ def build_area_page(posts_by_source, updated_at):
       <div class="store-group-meta">{status_meta_html}</div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/{h(shop["shop_slug"])}.html">この店舗を見る</a>
       {expand_button_html}
     </div>
   </div>
@@ -3625,40 +3640,11 @@ def build_area_page(posts_by_source, updated_at):
         ))
 
     store_groups_html = "".join(html for _, html in sorted(store_group_records, key=lambda item: item[0]))
+    store_panel_html = "".join(html for _, html in sorted(store_panel_records, key=lambda item: item[0]))
 
     initial_result_count = store_initial_count
     no_result_class = "no-result hidden" if initial_result_count else "no-result"
     no_result_attrs = ' hidden aria-hidden="true" style="display:none"' if initial_result_count else ' aria-hidden="false"'
-
-    store_panel_active_html = ""
-    store_panel_waiting_html = ""
-
-    for shop in shops:
-        posts = get_posts_for_shop(posts_by_source, shop["shop_slug"])
-        latest = get_latest_post(posts)
-        types = get_shop_types(shop["sources"])
-        type_labels = [short_type_label(t) for t in types]
-        latest_date = format_date_label(latest.get("posted_date_jst")) if latest else "未取得"
-        latest_count = len(posts)
-        type_text = " / ".join(type_labels)
-        has_posts = latest_count > 0
-        waiting_class = "" if has_posts else " is-waiting"
-        post_count_label = f"{latest_date}投稿：{latest_count}件" if has_posts else "取得待ち"
-
-        store_panel_card_html = f"""
-<a class="store-panel-card{waiting_class}" href="stores/{h(shop["shop_slug"])}.html">
-  <div class="store-panel-name">{h(shop["shop_name"])}</div>
-  <div class="store-panel-meta">{h(shop["brand"])} / {h(type_text)} / {h(post_count_label)}</div>
-  <div class="store-panel-link">この店舗を見る →</div>
-</a>
-"""
-
-        if has_posts:
-            store_panel_active_html += store_panel_card_html
-        else:
-            store_panel_waiting_html += store_panel_card_html
-
-    store_panel_html = store_panel_active_html + store_panel_waiting_html
     nav_store_links = "\n".join(
         f'<a href="stores/{h(shop["shop_slug"])}.html" onclick="closeMenu()">{h(shop["shop_name"])}</a>'
         for shop in shops
@@ -3714,6 +3700,26 @@ def build_area_page(posts_by_source, updated_at):
     media_json = json_for_script(media_items)
     store_view_css = """
 <style>
+#storeListView .store-panel {
+  display: grid;
+  gap: 10px;
+  max-width: 760px;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+#storeListView .store-panel-card {
+  border-radius: 12px;
+}
+
+#storeListView .store-panel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+
 #storeView,
 #storeView .store-group-list {
   width: 100%;
@@ -4161,6 +4167,7 @@ def build_area_page(posts_by_source, updated_at):
     <div class="view-switch" role="group" aria-label="表示切替">
       <button id="storeViewButton" class="view-toggle active" type="button" onclick="setViewMode('store')">店舗別で見る</button>
       <button id="timelineViewButton" class="view-toggle" type="button" onclick="setViewMode('timeline')">新着順で見る</button>
+      <button id="storeListViewButton" class="view-toggle" type="button" onclick="setViewMode('list')">店舗リスト</button>
     </div>
 
     <div class="type-row">
@@ -4225,6 +4232,16 @@ def build_area_page(posts_by_source, updated_at):
 
       <div class="store-group-list" id="storeGroupList">
         {store_groups_html}
+      </div>
+    </div>
+
+    <div id="storeListView" class="view-panel hidden">
+      <div class="section-head">
+        <h2>店舗リスト</h2>
+        <p>店舗詳細ページで過去投稿をまとめて確認できます。</p>
+      </div>
+      <div class="store-panel" id="storePanel">
+        {store_panel_html}
       </div>
     </div>
 
@@ -4766,8 +4783,20 @@ function getVisibleStoreGroups() {{
   }});
 }}
 
+function getVisibleStoreListCards() {{
+  const list = document.getElementById("storePanel");
+  if (!list) return [];
+  return Array.from(list.querySelectorAll(":scope > .store-panel-card")).filter(card => {{
+    if (card.classList.contains("hidden")) return false;
+    if (card.closest(".view-panel.hidden")) return false;
+    return !!(card.offsetWidth || card.offsetHeight || card.getClientRects().length);
+  }});
+}}
+
 function getVisibleActiveCards() {{
-  return currentView === "store" ? getVisibleStoreGroups() : getVisibleTimelineCards();
+  if (currentView === "store") return getVisibleStoreGroups();
+  if (currentView === "list") return getVisibleStoreListCards();
+  return getVisibleTimelineCards();
 }}
 
 function updateNoResult(count) {{
@@ -4863,17 +4892,24 @@ function applyFilters() {{
     }});
     group.classList.toggle("hidden", visibleChildren === 0);
   }});
+  document.querySelectorAll("#storePanel .store-panel-card").forEach(card => {{
+    card.classList.toggle("hidden", !matchesItem(card, search));
+  }});
   sortTimeline();
   updateResultCount();
   setupScrollIndicators();
 }}
 
 function setViewMode(mode) {{
-  currentView = mode === "store" ? "store" : "timeline";
+  currentView = mode === "store" || mode === "list" ? mode : "timeline";
   document.getElementById("timelineView").classList.toggle("hidden", currentView !== "timeline");
   document.getElementById("storeView").classList.toggle("hidden", currentView !== "store");
+  document.getElementById("storeListView").classList.toggle("hidden", currentView !== "list");
   document.getElementById("timelineViewButton").classList.toggle("active", currentView === "timeline");
   document.getElementById("storeViewButton").classList.toggle("active", currentView === "store");
+  document.getElementById("storeListViewButton").classList.toggle("active", currentView === "list");
+  const storePanel = document.getElementById("storePanel");
+  if (storePanel) storePanel.setAttribute("aria-hidden", currentView === "list" ? "false" : "true");
   updateStoreRangeButtons();
   updateStoreRangeVisibility();
   applyFilters();
@@ -4900,6 +4936,7 @@ document.addEventListener("DOMContentLoaded", () => {{
   if (brandPanel) brandPanel.setAttribute("aria-hidden", "true");
   document.getElementById("timelineViewButton").addEventListener("click", () => setViewMode("timeline"));
   document.getElementById("storeViewButton").addEventListener("click", () => setViewMode("store"));
+  document.getElementById("storeListViewButton").addEventListener("click", () => setViewMode("list"));
   document.querySelectorAll(".search-input").forEach(input => {{
     const handleSearchInput = () => {{
       syncSearchInputs(input);

@@ -1640,6 +1640,26 @@ main {
 
   
 <style>
+#storeListView .store-panel {
+  display: grid;
+  gap: 10px;
+  max-width: 760px;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+#storeListView .store-panel-card {
+  border-radius: 12px;
+}
+
+#storeListView .store-panel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+
 #storeView,
 #storeView .store-group-list {
   width: 100%;
@@ -2066,6 +2086,7 @@ main {
     <div class="view-switch" role="group" aria-label="表示切替">
       <button id="storeViewButton" class="view-toggle active" type="button" onclick="setViewMode('store')">店舗別で見る</button>
       <button id="timelineViewButton" class="view-toggle" type="button" onclick="setViewMode('timeline')">新着順で見る</button>
+      <button id="storeListViewButton" class="view-toggle" type="button" onclick="setViewMode('list')">店舗リスト</button>
     </div>
 
     <div class="type-row">
@@ -3314,7 +3335,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/23</span><span>表示中：2件</span><span>30日内：2件</span><span class="store-group-types">シングル / BOX</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/tonton-osaka-nihonbashi.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -3405,7 +3425,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/23</span><span>表示中：4件</span><span>30日内：4件</span><span class="store-group-types">BOX / PSA</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/torecaline-namba-ekimae.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -3517,7 +3536,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/23</span><span>表示中：1件</span><span>30日内：1件</span><span class="store-group-types">BOX</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/toreka-douraku.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -3608,7 +3626,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">シングル / BOX</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/cardlabo-namba.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -3846,7 +3863,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/19</span><span>表示中：3件</span><span>30日内：5件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/girafull-namba.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+2件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+2件）</button>
     </div>
   </div>
@@ -4084,7 +4100,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/21</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">PSA / BOX</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/magi-nihonbashi.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -4385,7 +4400,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：2件</span><span>30日内：2件</span><span class="store-group-types">定額</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/magi-otaroad.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -4455,7 +4469,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/20</span><span>表示中：4件</span><span>30日内：4件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/hareruya2-namba.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -4588,7 +4601,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/17</span><span>表示中：3件</span><span>30日内：6件</span><span class="store-group-types">BOX</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/cardbox-nihonbashi.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+3件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+3件）</button>
     </div>
   </div>
@@ -5057,7 +5069,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/17</span><span>表示中：3件</span><span>30日内：4件</span><span class="store-group-types">PSA / BOX</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/amtaf.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+1件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+1件）</button>
     </div>
   </div>
@@ -5190,7 +5201,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/19</span><span>表示中：5件</span><span>30日内：10件</span><span class="store-group-types">BOX / PSA</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/gotcha.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+5件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+5件）</button>
     </div>
   </div>
@@ -5533,7 +5543,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">BOX / シングル / PSA</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/kuro.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -5855,7 +5864,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：2件</span><span>30日内：2件</span><span class="store-group-types">PSA</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/cardshop-art.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -6009,7 +6017,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：5件</span><span>30日内：5件</span><span class="store-group-types">シングル / PSA</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/adrenaline.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -6142,7 +6149,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/17</span><span>表示中：3件</span><span>30日内：3件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/kaitori-champion.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -6296,7 +6302,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/18</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">PSA</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/hiki-card-osaka.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -6471,7 +6476,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/22</span><span>表示中：5件</span><span>30日内：5件</span><span class="store-group-types">PSA</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/torecaline-otaroad.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -6604,7 +6608,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/18</span><span>表示中：6件</span><span>30日内：6件</span><span class="store-group-types">BOX / シングル</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/toreca-bomb.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -6758,7 +6761,6 @@ main {
       <div class="store-group-meta"><span>最新日：05/29</span><span>表示中：3件</span><span>30日内：1件</span><span class="store-group-types">定額</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/dragonstar-nihonbashi-honten.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -6813,7 +6815,6 @@ main {
       <div class="store-group-meta"><span>最新日：05/29</span><span>表示中：3件</span><span>30日内：3件</span><span class="store-group-types">定額 / シングル</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/dragonstar-nihonbashi-2.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -6949,7 +6950,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/16</span><span>表示中：3件</span><span>30日内：4件</span><span class="store-group-types">定額 / シングル</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/dragonstar-nihonbashi-3.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+1件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+1件）</button>
     </div>
   </div>
@@ -7139,7 +7139,6 @@ main {
       <div class="store-group-meta"><span>最新日：05/30</span><span>表示中：3件</span><span>30日内：4件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/dragonstar-otaroad-chuo.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+1件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+1件）</button>
     </div>
   </div>
@@ -7491,7 +7490,6 @@ main {
       <div class="store-group-meta"><span>最新日：05/28</span><span>表示中：3件</span><span>30日内：1件</span><span class="store-group-types">定額</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/dragonstar-nansan.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -7546,7 +7544,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/03</span><span>表示中：3件</span><span>30日内：4件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/girafull-osaka-nihonbashi.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+1件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+1件）</button>
     </div>
   </div>
@@ -7784,7 +7781,6 @@ main {
       <div class="store-group-meta"><span>最新日：05/28</span><span>表示中：3件</span><span>30日内：3件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/girafull-otaroad.html">この店舗を見る</a>
       
     </div>
   </div>
@@ -7980,7 +7976,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/16</span><span>表示中：3件</span><span>30日内：5件</span><span class="store-group-types">シングル</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/sunrise-cardshop.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+2件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+2件）</button>
     </div>
   </div>
@@ -8155,7 +8150,6 @@ main {
       <div class="store-group-meta"><span>最新日：06/09</span><span>表示中：3件</span><span>30日内：7件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
     <div class="store-group-actions">
-      <a class="store-group-link" href="stores/lotus-osaka-nihonbashi.html">この店舗を見る</a>
       <button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+4件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+4件）</button>
     </div>
   </div>
@@ -8517,9 +8511,6 @@ main {
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
     </div>
-    <div class="store-group-actions">
-      <a class="store-group-link" href="stores/cardlabo-osaka-nihonbashi.html">この店舗を見る</a>
-    </div>
   </div>
 </section>
 
@@ -8539,9 +8530,6 @@ main {
         <span class="store-status-badge is-waiting">取得待ち</span>
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
-    </div>
-    <div class="store-group-actions">
-      <a class="store-group-link" href="stores/preyz-nihonbashi-honten.html">この店舗を見る</a>
     </div>
   </div>
 </section>
@@ -8563,9 +8551,6 @@ main {
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
     </div>
-    <div class="store-group-actions">
-      <a class="store-group-link" href="stores/preyz-otaroad.html">この店舗を見る</a>
-    </div>
   </div>
 </section>
 
@@ -8585,9 +8570,6 @@ main {
         <span class="store-status-badge is-waiting">取得待ち</span>
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
-    </div>
-    <div class="store-group-actions">
-      <a class="store-group-link" href="stores/fullcomp-nihonbashi.html">この店舗を見る</a>
     </div>
   </div>
 </section>
@@ -8609,9 +8591,6 @@ main {
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
     </div>
-    <div class="store-group-actions">
-      <a class="store-group-link" href="stores/kaitori-mimi.html">この店舗を見る</a>
-    </div>
   </div>
 </section>
 
@@ -8631,9 +8610,6 @@ main {
         <span class="store-status-badge is-waiting">取得待ち</span>
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
-    </div>
-    <div class="store-group-actions">
-      <a class="store-group-link" href="stores/treca-champion.html">この店舗を見る</a>
     </div>
   </div>
 </section>
@@ -8655,11 +8631,392 @@ main {
       </div>
       <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
     </div>
-    <div class="store-group-actions">
-      <a class="store-group-link" href="stores/kaitori-v.html">この店舗を見る</a>
-    </div>
   </div>
 </section>
+
+      </div>
+    </div>
+
+    <div id="storeListView" class="view-panel hidden">
+      <div class="section-head">
+        <h2>店舗リスト</h2>
+        <p>店舗詳細ページで過去投稿をまとめて確認できます。</p>
+      </div>
+      <div class="store-panel" id="storePanel">
+        
+<a class="store-panel-card"
+   href="stores/tonton-osaka-nihonbashi.html"
+   data-types="x_post_single x_post_box"
+   data-brand="tonton"
+   data-search="カードショップとんとん大阪日本橋店 カードショップとんとん シングル / BOX">
+  <div class="store-panel-name">カードショップとんとん大阪日本橋店</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：06/23 / 30日内：2件</div>
+  <div class="store-panel-meta">シングル / BOX</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/torecaline-namba-ekimae.html"
+   data-types="x_post_box x_post_psa"
+   data-brand="torecaline"
+   data-search="トレカライン 難波駅前店 トレカライン BOX / PSA">
+  <div class="store-panel-name">トレカライン 難波駅前店</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：06/23 / 30日内：4件</div>
+  <div class="store-panel-meta">BOX / PSA</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/toreka-douraku.html"
+   data-types="x_post_box"
+   data-brand="toreka-douraku"
+   data-search="トレカ道楽 トレカ道楽 BOX">
+  <div class="store-panel-name">トレカ道楽</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：06/23 / 30日内：1件</div>
+  <div class="store-panel-meta">BOX</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/cardlabo-namba.html"
+   data-types="x_post_single x_post_box"
+   data-brand="cardlabo"
+   data-search="カードラボなんば店 カードラボ シングル / BOX">
+  <div class="store-panel-name">カードラボなんば店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/22 / 30日内：6件</div>
+  <div class="store-panel-meta">シングル / BOX</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/girafull-namba.html"
+   data-types="x_post_single"
+   data-brand="girafull"
+   data-search="GIRAFULLなんば店 GIRAFULL シングル">
+  <div class="store-panel-name">GIRAFULLなんば店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/19 / 30日内：5件</div>
+  <div class="store-panel-meta">シングル</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/magi-nihonbashi.html"
+   data-types="x_post_psa x_post_box"
+   data-brand="magi"
+   data-search="magi 日本橋店 magi PSA / BOX">
+  <div class="store-panel-name">magi 日本橋店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/21 / 30日内：6件</div>
+  <div class="store-panel-meta">PSA / BOX</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/magi-otaroad.html"
+   data-types="x_post_fixed"
+   data-brand="magi"
+   data-search="magi オタロード店 magi 定額">
+  <div class="store-panel-name">magi オタロード店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/22 / 30日内：2件</div>
+  <div class="store-panel-meta">定額</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/hareruya2-namba.html"
+   data-types="x_post_single"
+   data-brand="hareruya2"
+   data-search="晴れる屋2なんば 晴れる屋2 シングル">
+  <div class="store-panel-name">晴れる屋2なんば</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/20 / 30日内：4件</div>
+  <div class="store-panel-meta">シングル</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/cardbox-nihonbashi.html"
+   data-types="x_post_box"
+   data-brand="cardbox"
+   data-search="カードボックス 日本橋店 カードボックス BOX">
+  <div class="store-panel-name">カードボックス 日本橋店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/17 / 30日内：6件</div>
+  <div class="store-panel-meta">BOX</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/amtaf.html"
+   data-types="x_post_psa x_post_box"
+   data-brand="amtaf"
+   data-search="アムタフ アムタフ PSA / BOX">
+  <div class="store-panel-name">アムタフ</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/17 / 30日内：4件</div>
+  <div class="store-panel-meta">PSA / BOX</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/gotcha.html"
+   data-types="x_post_box x_post_psa"
+   data-brand="gotcha"
+   data-search="GOTCHA! GOTCHA! BOX / PSA">
+  <div class="store-panel-name">GOTCHA!</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/19 / 30日内：10件</div>
+  <div class="store-panel-meta">BOX / PSA</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/kuro.html"
+   data-types="x_post_box x_post_single x_post_psa"
+   data-brand="kuro"
+   data-search="KURO KURO BOX / シングル / PSA">
+  <div class="store-panel-name">KURO</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/22 / 30日内：6件</div>
+  <div class="store-panel-meta">BOX / シングル / PSA</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/cardshop-art.html"
+   data-types="x_post_psa"
+   data-brand="art-card"
+   data-search="カードショップあーと カードショップあーと PSA">
+  <div class="store-panel-name">カードショップあーと</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/22 / 30日内：2件</div>
+  <div class="store-panel-meta">PSA</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/adrenaline.html"
+   data-types="x_post_single x_post_psa"
+   data-brand="adrenaline"
+   data-search="アドレナリン アドレナリン シングル / PSA">
+  <div class="store-panel-name">アドレナリン</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/22 / 30日内：5件</div>
+  <div class="store-panel-meta">シングル / PSA</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/kaitori-champion.html"
+   data-types="x_post_single"
+   data-brand="kaitori-champion"
+   data-search="買取チャンピオン 買取チャンピオン シングル">
+  <div class="store-panel-name">買取チャンピオン</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/17 / 30日内：3件</div>
+  <div class="store-panel-meta">シングル</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/hiki-card-osaka.html"
+   data-types="x_post_psa"
+   data-brand="hiki-card"
+   data-search="トレカショップ 比希商店 比希商店 PSA">
+  <div class="store-panel-name">トレカショップ 比希商店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/18 / 30日内：6件</div>
+  <div class="store-panel-meta">PSA</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/torecaline-otaroad.html"
+   data-types="x_post_psa"
+   data-brand="torecaline"
+   data-search="トレカライン オタロード店 トレカライン PSA">
+  <div class="store-panel-name">トレカライン オタロード店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/22 / 30日内：5件</div>
+  <div class="store-panel-meta">PSA</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/toreca-bomb.html"
+   data-types="x_post_box x_post_single"
+   data-brand="toreca-bomb"
+   data-search="トレカボム トレカボム BOX / シングル">
+  <div class="store-panel-name">トレカボム</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">過去7日あり</span> 最新日：06/18 / 30日内：6件</div>
+  <div class="store-panel-meta">BOX / シングル</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/dragonstar-nihonbashi-honten.html"
+   data-types="x_post_fixed"
+   data-brand="dragonstar"
+   data-search="ドラスタ 日本橋本店 ドラゴンスター 定額">
+  <div class="store-panel-name">ドラスタ 日本橋本店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/29 / 30日内：1件</div>
+  <div class="store-panel-meta">定額</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/dragonstar-nihonbashi-2.html"
+   data-types="x_post_fixed x_post_single"
+   data-brand="dragonstar"
+   data-search="ドラスタ 日本橋2号店 ドラゴンスター 定額 / シングル">
+  <div class="store-panel-name">ドラスタ 日本橋2号店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/29 / 30日内：3件</div>
+  <div class="store-panel-meta">定額 / シングル</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/dragonstar-nihonbashi-3.html"
+   data-types="x_post_fixed x_post_single"
+   data-brand="dragonstar"
+   data-search="ドラスタ 日本橋3号店 ドラゴンスター 定額 / シングル">
+  <div class="store-panel-name">ドラスタ 日本橋3号店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/16 / 30日内：4件</div>
+  <div class="store-panel-meta">定額 / シングル</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/dragonstar-otaroad-chuo.html"
+   data-types="x_post_single"
+   data-brand="dragonstar"
+   data-search="ドラスタ オタロード中央 ドラゴンスター シングル">
+  <div class="store-panel-name">ドラスタ オタロード中央</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/30 / 30日内：4件</div>
+  <div class="store-panel-meta">シングル</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/dragonstar-nansan.html"
+   data-types="x_post_fixed"
+   data-brand="dragonstar"
+   data-search="ドラスタ なんさん通り店 ドラゴンスター 定額">
+  <div class="store-panel-name">ドラスタ なんさん通り店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/28 / 30日内：1件</div>
+  <div class="store-panel-meta">定額</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/girafull-osaka-nihonbashi.html"
+   data-types="x_post_single x_post_fixed"
+   data-brand="girafull"
+   data-search="GIRAFULL大阪日本橋店 GIRAFULL シングル / 定額">
+  <div class="store-panel-name">GIRAFULL大阪日本橋店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/03 / 30日内：4件</div>
+  <div class="store-panel-meta">シングル / 定額</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/girafull-otaroad.html"
+   data-types="x_post_single x_post_fixed"
+   data-brand="girafull"
+   data-search="GIRAFULLオタロード店 GIRAFULL シングル / 定額">
+  <div class="store-panel-name">GIRAFULLオタロード店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/28 / 30日内：3件</div>
+  <div class="store-panel-meta">シングル / 定額</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/sunrise-cardshop.html"
+   data-types="x_post_single"
+   data-brand="sunrise-cardshop"
+   data-search="サンライズカードショップ サンライズカードショップ シングル">
+  <div class="store-panel-name">サンライズカードショップ</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/16 / 30日内：5件</div>
+  <div class="store-panel-meta">シングル</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card"
+   href="stores/lotus-osaka-nihonbashi.html"
+   data-types="x_post_single x_post_fixed"
+   data-brand="lotus"
+   data-search="Lotus 大阪日本橋店 Lotus シングル / 定額">
+  <div class="store-panel-name">Lotus 大阪日本橋店</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/09 / 30日内：7件</div>
+  <div class="store-panel-meta">シングル / 定額</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card is-waiting"
+   href="stores/cardlabo-osaka-nihonbashi.html"
+   data-types=""
+   data-brand="cardlabo"
+   data-search="カードラボ大阪日本橋店 カードラボ 未分類">
+  <div class="store-panel-name">カードラボ大阪日本橋店</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-waiting">取得待ち</span> 最新日：未取得 / 取得待ち</div>
+  <div class="store-panel-meta">未分類</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card is-waiting"
+   href="stores/preyz-nihonbashi-honten.html"
+   data-types=""
+   data-brand="preyz"
+   data-search="プレイズ 日本橋本店 プレイズ 未分類">
+  <div class="store-panel-name">プレイズ 日本橋本店</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-waiting">取得待ち</span> 最新日：未取得 / 取得待ち</div>
+  <div class="store-panel-meta">未分類</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card is-waiting"
+   href="stores/preyz-otaroad.html"
+   data-types=""
+   data-brand="preyz"
+   data-search="プレイズ オタロード店 プレイズ 未分類">
+  <div class="store-panel-name">プレイズ オタロード店</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-waiting">取得待ち</span> 最新日：未取得 / 取得待ち</div>
+  <div class="store-panel-meta">未分類</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card is-waiting"
+   href="stores/fullcomp-nihonbashi.html"
+   data-types=""
+   data-brand="fullcomp"
+   data-search="フルコンプ 日本橋店 フルコンプ 未分類">
+  <div class="store-panel-name">フルコンプ 日本橋店</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-waiting">取得待ち</span> 最新日：未取得 / 取得待ち</div>
+  <div class="store-panel-meta">未分類</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card is-waiting"
+   href="stores/kaitori-mimi.html"
+   data-types=""
+   data-brand="mimi"
+   data-search="買取ミミ 買取ミミ 未分類">
+  <div class="store-panel-name">買取ミミ</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-waiting">取得待ち</span> 最新日：未取得 / 取得待ち</div>
+  <div class="store-panel-meta">未分類</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card is-waiting"
+   href="stores/treca-champion.html"
+   data-types=""
+   data-brand="treca-champion"
+   data-search="トレカチャンピオン トレカチャンピオン 未分類">
+  <div class="store-panel-name">トレカチャンピオン</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-waiting">取得待ち</span> 最新日：未取得 / 取得待ち</div>
+  <div class="store-panel-meta">未分類</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
+
+<a class="store-panel-card is-waiting"
+   href="stores/kaitori-v.html"
+   data-types=""
+   data-brand="kaitori-v"
+   data-search="買取V 買取V 未分類">
+  <div class="store-panel-name">買取V</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-waiting">取得待ち</span> 最新日：未取得 / 取得待ち</div>
+  <div class="store-panel-meta">未分類</div>
+  <div class="store-panel-link">店舗ページへ →</div>
+</a>
 
       </div>
     </div>
@@ -9245,8 +9602,20 @@ function getVisibleStoreGroups() {
   });
 }
 
+function getVisibleStoreListCards() {
+  const list = document.getElementById("storePanel");
+  if (!list) return [];
+  return Array.from(list.querySelectorAll(":scope > .store-panel-card")).filter(card => {
+    if (card.classList.contains("hidden")) return false;
+    if (card.closest(".view-panel.hidden")) return false;
+    return !!(card.offsetWidth || card.offsetHeight || card.getClientRects().length);
+  });
+}
+
 function getVisibleActiveCards() {
-  return currentView === "store" ? getVisibleStoreGroups() : getVisibleTimelineCards();
+  if (currentView === "store") return getVisibleStoreGroups();
+  if (currentView === "list") return getVisibleStoreListCards();
+  return getVisibleTimelineCards();
 }
 
 function updateNoResult(count) {
@@ -9342,17 +9711,24 @@ function applyFilters() {
     });
     group.classList.toggle("hidden", visibleChildren === 0);
   });
+  document.querySelectorAll("#storePanel .store-panel-card").forEach(card => {
+    card.classList.toggle("hidden", !matchesItem(card, search));
+  });
   sortTimeline();
   updateResultCount();
   setupScrollIndicators();
 }
 
 function setViewMode(mode) {
-  currentView = mode === "store" ? "store" : "timeline";
+  currentView = mode === "store" || mode === "list" ? mode : "timeline";
   document.getElementById("timelineView").classList.toggle("hidden", currentView !== "timeline");
   document.getElementById("storeView").classList.toggle("hidden", currentView !== "store");
+  document.getElementById("storeListView").classList.toggle("hidden", currentView !== "list");
   document.getElementById("timelineViewButton").classList.toggle("active", currentView === "timeline");
   document.getElementById("storeViewButton").classList.toggle("active", currentView === "store");
+  document.getElementById("storeListViewButton").classList.toggle("active", currentView === "list");
+  const storePanel = document.getElementById("storePanel");
+  if (storePanel) storePanel.setAttribute("aria-hidden", currentView === "list" ? "false" : "true");
   updateStoreRangeButtons();
   updateStoreRangeVisibility();
   applyFilters();
@@ -9379,6 +9755,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (brandPanel) brandPanel.setAttribute("aria-hidden", "true");
   document.getElementById("timelineViewButton").addEventListener("click", () => setViewMode("timeline"));
   document.getElementById("storeViewButton").addEventListener("click", () => setViewMode("store"));
+  document.getElementById("storeListViewButton").addEventListener("click", () => setViewMode("list"));
   document.querySelectorAll(".search-input").forEach(input => {
     const handleSearchInput = () => {
       syncSearchInputs(input);
