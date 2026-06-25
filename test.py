@@ -3450,12 +3450,16 @@ def build_area_page(posts_by_source, updated_at):
     store_initial_count = 0
     today_jst = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
 
-    def store_view_status(meta, expanded_posts):
+    def store_view_status(meta, expanded_posts, shop_posts):
         latest_date = meta.get("latest_date", "")
+        if not latest_date:
+            dated_shop_posts = [post for post in shop_posts if post.get("posted_date_jst")]
+            if dated_shop_posts:
+                latest_date = max(post["posted_date_jst"] for post in dated_shop_posts)
         latest_obj = parse_jst_date(latest_date)
         reference_obj = parse_jst_date(latest_timeline_date) or latest_obj
-        if not expanded_posts or not latest_obj:
-            return 3, "取得待ち", "is-waiting"
+        if not shop_posts or not latest_obj:
+            return 4, "投稿なし / 取得待ち", "is-waiting"
         if latest_date == today_jst:
             return 0, "今日更新", "is-fresh"
         if latest_timeline_date and latest_date == latest_timeline_date:
@@ -3465,14 +3469,15 @@ def build_area_page(posts_by_source, updated_at):
             return 1, "過去7日あり", ""
         if 0 <= days_old < STORE_VIEW_EXPANDED_DAYS:
             return 2, "30日以内", ""
-        return 3, "取得待ち", "is-waiting"
+        return 3, "過去投稿あり", "is-past"
 
     for shop_index, shop in enumerate(shops):
         shop_posts = [normalize_post(post) for post in all_timeline_posts if post.get("shop_slug") == shop["shop_slug"]]
         default_shop_posts, expanded_shop_posts, store_view_meta = select_store_view_posts(shop_posts, latest_timeline_date)
 
         display_types = []
-        for post in expanded_shop_posts:
+        status_source_posts = expanded_shop_posts or shop_posts
+        for post in status_source_posts:
             display_type = post.get("display_type", infer_display_type(post))
             if display_type not in display_types:
                 display_types.append(display_type)
@@ -3480,19 +3485,19 @@ def build_area_page(posts_by_source, updated_at):
         default_keys = store_view_meta["default_keys"]
         expanded_keys = store_view_meta["expanded_keys"]
         latest_store_date = store_view_meta.get("latest_date", "")
-        status_order, status_label, status_class = store_view_status(store_view_meta, expanded_shop_posts)
+        status_order, status_label, status_class = store_view_status(store_view_meta, expanded_shop_posts, shop_posts)
         latest_date_label = format_date_label(latest_store_date) if latest_store_date else "未取得"
         default_post_count = len(default_shop_posts)
         expanded_post_count = len(expanded_shop_posts)
         extra_post_count = max(0, expanded_post_count - default_post_count)
         status_meta = (
             f"最新日：{latest_date_label} / 表示中：{default_post_count}件 / 30日内：{expanded_post_count}件 / {type_text}"
-            if expanded_shop_posts
+            if shop_posts
             else f"最新日：未取得 / 表示中：0件 / 30日内：0件 / {type_text}"
         )
         status_meta_html = (
             f'<span>最新日：{h(latest_date_label)}</span><span>表示中：{default_post_count}件</span><span>30日内：{expanded_post_count}件</span><span class="store-group-types">{h(type_text)}</span>'
-            if expanded_shop_posts
+            if shop_posts
             else f'<span>最新日：未取得</span><span>表示中：0件</span><span>30日内：0件</span><span class="store-group-types">{h(type_text)}</span>'
         )
         expanded_meta_parts = store_view_meta["expanded_meta"].split(" / ")
@@ -3502,11 +3507,11 @@ def build_area_page(posts_by_source, updated_at):
             if expanded_shop_posts
             else status_meta_html
         )
-        store_panel_waiting_class = " is-waiting" if not expanded_shop_posts else ""
-        store_panel_latest = f"最新日：{h(latest_date_label)}" if expanded_shop_posts else "最新日：未取得"
-        store_panel_count = f"30日内：{expanded_post_count}件" if expanded_shop_posts else "取得待ち"
+        store_panel_waiting_class = " is-waiting" if not shop_posts else ""
+        store_panel_latest = f"最新日：{h(latest_date_label)}" if shop_posts else "最新日：未取得"
+        store_panel_count = f"30日内：{expanded_post_count}件" if shop_posts else "投稿なし / 取得待ち"
         store_panel_records.append((
-            (status_order, shop_index),
+            (1 if not shop_posts else 0, shop_index),
             f"""
 <a class="store-panel-card{store_panel_waiting_class}"
    href="stores/{h(shop["shop_slug"])}.html"
@@ -3575,8 +3580,37 @@ def build_area_page(posts_by_source, updated_at):
                 has_default_posts = True
 
         if not store_post_cards:
+            if shop_posts:
+                store_group_records.append((
+                    (status_order, shop_index),
+                    f"""
+<section class="store-group is-past"
+  data-types="{h(' '.join(display_types))}"
+  data-brand="{h(shop["brand_id"])}"
+  data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + type_text)}"
+  data-default-meta="{h(status_meta)}"
+  data-expanded-meta="{h(status_meta)}"
+  data-default-meta-html="{h(status_meta_html)}"
+  data-expanded-meta-html="{h(status_meta_html)}"
+  data-expanded="false"
+  data-no-visible-posts="true"
+>
+  <div class="store-group-header">
+    <div>
+      <div class="store-group-title">
+        <div class="store-group-name">{h(shop["shop_name"])}</div>
+        <span class="store-status-badge {h(status_class)}">{h(status_label)}</span>
+      </div>
+      <div class="store-group-meta">{status_meta_html}</div>
+      <div class="store-group-note">30日以内の表示対象投稿はありません。店舗ページで過去投稿を確認できます。</div>
+    </div>
+  </div>
+</section>
+"""
+                ))
+                continue
             store_group_records.append((
-                (3, shop_index),
+                (4, shop_index),
                 f"""
 <section class="store-group is-waiting"
   data-types=""
@@ -3702,7 +3736,7 @@ def build_area_page(posts_by_source, updated_at):
 <style>
 #storeListView .store-panel {
   display: grid;
-  gap: 10px;
+  gap: 7px;
   max-width: 760px;
   margin-top: 0;
   padding-top: 0;
@@ -3710,14 +3744,53 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeListView .store-panel-card {
-  border-radius: 12px;
+  display: grid;
+  gap: 4px;
+  border-radius: 10px;
+  padding: 9px 10px;
+}
+
+#storeListView .store-panel-name {
+  line-height: 1.35;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: strict;
 }
 
 #storeListView .store-panel-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 8px;
+  gap: 3px 7px;
   align-items: center;
+  line-height: 1.35;
+}
+
+#storeListView .store-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 18px;
+  padding: 2px 6px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.76);
+  font-size: 10px;
+  line-height: 1;
+}
+
+#storeListView .store-status-badge.is-fresh {
+  border-color: rgba(111,255,176,.32);
+  color: rgba(177,255,207,.92);
+}
+
+#storeListView .store-status-badge.is-waiting {
+  border-style: dashed;
+  color: rgba(255,255,255,.52);
+}
+
+#storeListView .store-panel-link {
+  margin-top: 0;
+  font-size: 12px;
 }
 
 #storeView,
@@ -3742,6 +3815,10 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-group.is-waiting {
   opacity: .72;
   border-style: dashed;
+}
+
+#storeView .store-group.is-past {
+  opacity: .86;
 }
 
 #storeView .store-group-header {
@@ -3780,6 +3857,13 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-group-meta .store-group-types {
   flex-basis: 100%;
   white-space: normal;
+}
+
+#storeView .store-group-note {
+  margin-top: 6px;
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 #storeView .store-status-badge {
@@ -4937,7 +5021,7 @@ function applyFilters() {{
   const search = document.getElementById("searchInput").value.trim().toLowerCase();
   document.querySelectorAll(".timeline-post").forEach(post => post.classList.toggle("hidden", !matchesItem(post, search)));
   document.querySelectorAll(".store-group").forEach(group => {{
-    if (group.dataset.waiting === "true") {{
+    if (group.dataset.waiting === "true" || group.dataset.noVisiblePosts === "true") {{
       group.classList.toggle("hidden", !matchesItem(group, search));
       return;
     }}
