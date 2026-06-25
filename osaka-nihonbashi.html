@@ -9689,6 +9689,7 @@ function renderStoreTableRailSlices(target, grid, ratio, sourceUrl, slices) {
       </div>
       ${actionHtml}
     `;
+    clone.querySelectorAll(".landscape-slice-label").forEach(label => label.remove());
     insertAfter.insertAdjacentElement("afterend", clone);
     insertAfter = clone;
   });
