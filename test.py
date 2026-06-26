@@ -3493,14 +3493,14 @@ def build_area_page(posts_by_source, updated_at):
         expanded_post_count = len(expanded_shop_posts)
         extra_post_count = max(0, expanded_post_count - default_post_count)
         status_meta = (
-            f"最新日：{latest_date_label} / 表示中：{default_post_count}件 / 30日内：{expanded_post_count}件 / {type_text}"
+            f"最新日：{latest_date_label} / 表示：{default_post_count}件 / 履歴：{expanded_post_count}件 / {type_text}"
             if shop_posts
-            else f"最新日：未取得 / 表示中：0件 / 30日内：0件 / {type_text}"
+            else f"最新日：未取得 / 表示：0件 / 履歴：0件 / {type_text}"
         )
         status_meta_html = (
-            f'<span>最新日：{h(latest_date_label)}</span><span>表示中：{default_post_count}件</span><span>30日内：{expanded_post_count}件</span><span class="store-group-types">{h(type_text)}</span>'
+            f'<span>最新日：{h(latest_date_label)}</span><span>表示：{default_post_count}件</span><span>履歴：{expanded_post_count}件</span><span class="store-group-types">{h(type_text)}</span>'
             if shop_posts
-            else f'<span>最新日：未取得</span><span>表示中：0件</span><span>30日内：0件</span><span class="store-group-types">{h(type_text)}</span>'
+            else f'<span>最新日：未取得</span><span>表示：0件</span><span>履歴：0件</span><span class="store-group-types">{h(type_text)}</span>'
         )
         expanded_meta_parts = store_view_meta["expanded_meta"].split(" / ")
         expanded_meta_html = (
@@ -3511,7 +3511,7 @@ def build_area_page(posts_by_source, updated_at):
         )
         store_panel_waiting_class = " is-waiting" if not shop_posts else ""
         store_panel_latest = f"最新日：{h(latest_date_label)}" if shop_posts else "最新日：未取得"
-        store_panel_count = f"30日内：{expanded_post_count}件" if shop_posts else "投稿なし / 取得待ち"
+        store_panel_count = f"履歴：{expanded_post_count}件" if shop_posts else "投稿なし / 取得待ち"
         store_panel_records.append((
             (1 if not shop_posts else 0, shop_index),
             f"""
@@ -3523,7 +3523,7 @@ def build_area_page(posts_by_source, updated_at):
   <div class="store-panel-name">{h(shop["shop_name"])}</div>
   <div class="store-panel-meta"><span class="store-status-badge {h(status_class)}">{h(status_label)}</span> {store_panel_latest} / {h(store_panel_count)}</div>
   <div class="store-panel-meta">{h(type_text)}</div>
-  <div class="store-panel-link">店舗ページへ →</div>
+  <div class="store-panel-link">店舗ページを見る →</div>
 </a>
 """
         ))
@@ -3586,7 +3586,7 @@ def build_area_page(posts_by_source, updated_at):
                 store_group_records.append((
                     (status_order, shop_index),
                     f"""
-<section class="store-group is-past"
+<section class="store-group is-past is-past-no-image"
   data-types="{h(' '.join(display_types))}"
   data-brand="{h(shop["brand_id"])}"
   data-search="{h(shop["shop_name"] + ' ' + shop["brand"] + ' ' + type_text)}"
@@ -3604,7 +3604,8 @@ def build_area_page(posts_by_source, updated_at):
         <span class="store-status-badge {h(status_class)}">{h(status_label)}</span>
       </div>
       <div class="store-group-meta">{status_meta_html}</div>
-      <div class="store-group-note">30日以内の表示対象投稿はありません。店舗ページで過去投稿を確認できます。</div>
+      <div class="store-group-note">直近の表示対象はありません。<br>店舗ページで過去投稿を確認できます。</div>
+      <a class="store-group-link store-group-past-link" href="stores/{h(shop["shop_slug"])}.html">店舗ページを見る →</a>
     </div>
   </div>
 </section>
@@ -3629,7 +3630,7 @@ def build_area_page(posts_by_source, updated_at):
         <div class="store-group-name">{h(shop["shop_name"])}</div>
         <span class="store-status-badge is-waiting">取得待ち</span>
       </div>
-      <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示中：0件</div>
+      <div class="store-group-meta">最新の買取表はまだ取得できていません / 表示：0件</div>
     </div>
   </div>
 </section>
@@ -3639,7 +3640,7 @@ def build_area_page(posts_by_source, updated_at):
         if has_default_posts:
             store_initial_count += 1
         expand_button_html = (
-            f'<button class="store-expand-button" type="button" data-more-label="表示件数を増やす（+{extra_post_count}件）" data-less-label="最新表示に戻す" onclick="toggleStoreGroupExpanded(this)">表示件数を増やす（+{extra_post_count}件）</button>'
+            f'<button class="store-expand-button" type="button" data-more-label="さらに表示（+{extra_post_count}件）" data-less-label="最新だけ表示" onclick="toggleStoreGroupExpanded(this)">さらに表示（+{extra_post_count}件）</button>'
             if extra_post_count > 0 else ""
         )
 
@@ -3823,6 +3824,22 @@ def build_area_page(posts_by_source, updated_at):
   opacity: .86;
 }
 
+#storeView .store-group.is-past-no-image {
+  padding: 10px 0 11px;
+}
+
+#storeView .store-group.is-past-no-image .store-group-header {
+  padding-bottom: 0;
+}
+
+#storeView .store-group-past-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  margin-top: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+}
+
 #storeView .store-group-header {
   display: block;
   gap: 8px;
@@ -3905,6 +3922,11 @@ def build_area_page(posts_by_source, updated_at):
   max-width: 100%;
   box-sizing: border-box;
   text-align: center;
+}
+
+#storeView .store-group-link.store-group-past-link {
+  flex: 0 0 auto;
+  align-self: flex-start;
 }
 
 #storeView .store-post-carousel {
@@ -4249,7 +4271,7 @@ def build_area_page(posts_by_source, updated_at):
   <div class="search-area" id="searchArea">
     <div class="search-line">
       <input id="searchInput" class="search-input" type="search" placeholder="店舗・カード名で検索">
-      <div class="result-line">表示中：<span class="result-count">{initial_result_count}</span>件</div>
+      <div class="result-line">表示：<span class="result-count">{initial_result_count}</span>件</div>
     </div>
 
     <div class="view-switch" role="group" aria-label="表示切替">
@@ -4996,7 +5018,7 @@ function updateStoreRangeVisibility() {{
     if (metaEl && (metaHtml || meta)) metaEl.innerHTML = metaHtml || meta;
     const button = group.querySelector(".store-expand-button");
     if (button) {{
-      button.textContent = expanded ? (button.dataset.lessLabel || "最新表示に戻す") : (button.dataset.moreLabel || "表示件数を増やす");
+      button.textContent = expanded ? (button.dataset.lessLabel || "最新だけ表示") : (button.dataset.moreLabel || "さらに表示");
       button.setAttribute("aria-expanded", expanded ? "true" : "false");
     }}
   }});
