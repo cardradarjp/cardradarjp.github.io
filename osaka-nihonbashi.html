@@ -1640,9 +1640,20 @@ main {
 
   
 <style>
+.view-switch {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.view-toggle {
+  min-height: 32px;
+  padding: 6px 7px;
+  font-size: 12px;
+}
+
 #storeListView .store-panel {
   display: grid;
-  gap: 7px;
+  gap: 6px;
   max-width: 760px;
   margin-top: 0;
   padding-top: 0;
@@ -1651,13 +1662,13 @@ main {
 
 #storeListView .store-panel-card {
   display: grid;
-  gap: 4px;
+  gap: 3px;
   border-radius: 10px;
-  padding: 9px 10px;
+  padding: 8px 10px;
 }
 
 #storeListView .store-panel-name {
-  line-height: 1.35;
+  line-height: 1.3;
   word-break: keep-all;
   overflow-wrap: anywhere;
   line-break: strict;
@@ -1666,9 +1677,9 @@ main {
 #storeListView .store-panel-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px 7px;
+  gap: 2px 7px;
   align-items: center;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 #storeListView .store-status-badge {
@@ -1695,8 +1706,9 @@ main {
 }
 
 #storeListView .store-panel-link {
-  margin-top: 0;
+  margin-top: 2px;
   font-size: 12px;
+  color: rgba(255,255,255,.78);
 }
 
 #storeView,
@@ -1711,7 +1723,7 @@ main {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 12px 0 14px;
+  padding: 11px 0 13px;
   overflow-x: hidden;
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 16px;
@@ -1728,7 +1740,7 @@ main {
 }
 
 #storeView .store-group.is-past-no-image {
-  padding: 10px 0 11px;
+  padding: 10px 0 12px;
 }
 
 #storeView .store-group.is-past-no-image .store-group-header {
@@ -1738,22 +1750,22 @@ main {
 #storeView .store-group-past-link {
   display: inline-flex;
   flex: 0 0 auto;
-  margin-top: 8px;
-  padding: 7px 10px;
+  margin-top: 9px;
+  padding: 8px 11px;
   font-size: 12px;
 }
 
 #storeView .store-group-header {
   display: block;
   gap: 8px;
-  padding: 0 9px 5px;
+  padding: 0 10px 7px;
 }
 
 #storeView .store-group-title {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   min-width: 0;
 }
 
@@ -1767,8 +1779,8 @@ main {
 #storeView .store-group-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px 10px;
-  margin-top: 5px;
+  gap: 3px 10px;
+  margin-top: 6px;
   line-height: 1.45;
 }
 
@@ -1782,7 +1794,7 @@ main {
 }
 
 #storeView .store-group-note {
-  margin-top: 6px;
+  margin-top: 7px;
   color: rgba(255,255,255,.58);
   font-size: 12px;
   line-height: 1.45;
@@ -1816,7 +1828,7 @@ main {
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 6px;
-  margin-top: 7px;
+  margin-top: 9px;
 }
 
 #storeView .store-group-link,
@@ -1836,24 +1848,24 @@ main {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 8px;
+  gap: 9px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 2px 8px 10px;
+  padding: 3px 9px 11px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  scroll-padding-inline: 8px;
+  scroll-padding-inline: 9px;
 }
 
 #storeView .store-post-card {
-  flex: 0 0 min(86vw, 420px) !important;
-  width: min(86vw, 420px) !important;
-  min-width: min(86vw, 420px) !important;
-  max-width: min(86vw, 420px) !important;
+  flex: 0 0 min(84vw, 420px) !important;
+  width: min(84vw, 420px) !important;
+  min-width: min(84vw, 420px) !important;
+  max-width: min(84vw, 420px) !important;
   box-sizing: border-box;
   padding: 2px 0 6px;
   border: 0;
@@ -1897,7 +1909,7 @@ main {
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
-  height: min(58vh, 460px);
+  height: min(57vh, 455px);
   background: rgba(0,0,0,.82);
   border-color: rgba(255,255,255,.13);
 }
@@ -2098,16 +2110,16 @@ main {
 #storeView .store-post-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px;
-  margin: 4px 8px 0;
+  gap: 5px;
+  margin: 5px 8px 0;
   padding: 0;
 }
 
 #storeView .store-post-actions a,
 #storeView .store-post-actions button {
   width: 100%;
-  min-height: 27px;
-  padding: 5px 4px;
+  min-height: 29px;
+  padding: 6px 4px;
   font-size: 10px;
   white-space: normal;
 }
@@ -2157,8 +2169,8 @@ main {
     </div>
 
     <div class="view-switch" role="group" aria-label="表示切替">
-      <button id="storeViewButton" class="view-toggle active" type="button" onclick="setViewMode('store')">店舗別で見る</button>
-      <button id="timelineViewButton" class="view-toggle" type="button" onclick="setViewMode('timeline')">新着順で見る</button>
+      <button id="storeViewButton" class="view-toggle active" type="button" onclick="setViewMode('store')">店舗別</button>
+      <button id="timelineViewButton" class="view-toggle" type="button" onclick="setViewMode('timeline')">新着順</button>
       <button id="storeListViewButton" class="view-toggle" type="button" onclick="setViewMode('list')">店舗リスト</button>
     </div>
 
@@ -6373,7 +6385,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">ドラスタ 日本橋本店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/06</span><span>表示：6件</span><span>履歴：6件</span><span class="store-group-types">定額 / シングル</span></div>
     </div>
@@ -6751,7 +6763,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">ドラスタ 日本橋3号店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/16</span><span>表示：3件</span><span>履歴：4件</span><span class="store-group-types">定額 / シングル</span></div>
     </div>
@@ -6940,7 +6952,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">ドラスタ なんさん通り店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/17</span><span>表示：3件</span><span>履歴：6件</span><span class="store-group-types">定額 / シングル</span></div>
     </div>
@@ -7156,7 +7168,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">カードラボ大阪日本橋店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：05/14</span><span>表示：6件</span><span>履歴：6件</span><span class="store-group-types">シングル</span></div>
     </div>
@@ -7393,7 +7405,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">GIRAFULL大阪日本橋店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/03</span><span>表示：2件</span><span>履歴：6件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
@@ -7714,7 +7726,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">GIRAFULLオタロード店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：05/28</span><span>表示：7件</span><span>履歴：7件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
@@ -8098,7 +8110,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">プレイズ 日本橋本店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：05/22</span><span>表示：2件</span><span>履歴：4件</span><span class="store-group-types">シングル</span></div>
     </div>
@@ -8293,7 +8305,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">プレイズ オタロード店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：05/19</span><span>表示：2件</span><span>履歴：6件</span><span class="store-group-types">シングル</span></div>
     </div>
@@ -8467,7 +8479,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">フルコンプ 日本橋店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：04/14</span><span>表示：3件</span><span>履歴：7件</span><span class="store-group-types">シングル / PSA</span></div>
     </div>
@@ -8746,7 +8758,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">カードボックス 日本橋店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/17</span><span>表示：6件</span><span>履歴：6件</span><span class="store-group-types">BOX</span></div>
     </div>
@@ -9214,7 +9226,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">アムタフ</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/17</span><span>表示：4件</span><span>履歴：4件</span><span class="store-group-types">PSA / BOX</span></div>
     </div>
@@ -9346,7 +9358,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">買取ミミ</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：05/24</span><span>表示：5件</span><span>履歴：7件</span><span class="store-group-types">シングル / BOX</span></div>
     </div>
@@ -9919,7 +9931,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">サンライズカードショップ</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/16</span><span>表示：5件</span><span>履歴：5件</span><span class="store-group-types">シングル</span></div>
     </div>
@@ -10093,7 +10105,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">トレカチャンピオン</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：05/13</span><span>表示：5件</span><span>履歴：6件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
@@ -10456,7 +10468,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">買取チャンピオン</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/17</span><span>表示：3件</span><span>履歴：3件</span><span class="store-group-types">シングル</span></div>
     </div>
@@ -10609,7 +10621,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">買取V</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：02/02</span><span>表示：5件</span><span>履歴：6件</span><span class="store-group-types">BOX</span></div>
     </div>
@@ -11014,7 +11026,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">Lotus 大阪日本橋店</div>
-        <span class="store-status-badge ">30日以内</span>
+        <span class="store-status-badge ">履歴あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/09</span><span>表示：5件</span><span>履歴：7件</span><span class="store-group-types">シングル / 定額</span></div>
     </div>
@@ -11379,7 +11391,7 @@ main {
    data-brand="dragonstar"
    data-search="ドラスタ 日本橋本店 ドラゴンスター 定額 / シングル">
   <div class="store-panel-name">ドラスタ 日本橋本店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/06 / 履歴：6件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/06 / 履歴：6件</div>
   <div class="store-panel-meta">定額 / シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11401,7 +11413,7 @@ main {
    data-brand="dragonstar"
    data-search="ドラスタ 日本橋3号店 ドラゴンスター 定額 / シングル">
   <div class="store-panel-name">ドラスタ 日本橋3号店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/16 / 履歴：4件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/16 / 履歴：4件</div>
   <div class="store-panel-meta">定額 / シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11423,7 +11435,7 @@ main {
    data-brand="dragonstar"
    data-search="ドラスタ なんさん通り店 ドラゴンスター 定額 / シングル">
   <div class="store-panel-name">ドラスタ なんさん通り店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/17 / 履歴：6件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/17 / 履歴：6件</div>
   <div class="store-panel-meta">定額 / シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11445,7 +11457,7 @@ main {
    data-brand="cardlabo"
    data-search="カードラボ大阪日本橋店 カードラボ シングル">
   <div class="store-panel-name">カードラボ大阪日本橋店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/14 / 履歴：6件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：05/14 / 履歴：6件</div>
   <div class="store-panel-meta">シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11467,7 +11479,7 @@ main {
    data-brand="girafull"
    data-search="GIRAFULL大阪日本橋店 GIRAFULL シングル / 定額">
   <div class="store-panel-name">GIRAFULL大阪日本橋店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/03 / 履歴：6件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/03 / 履歴：6件</div>
   <div class="store-panel-meta">シングル / 定額</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11478,7 +11490,7 @@ main {
    data-brand="girafull"
    data-search="GIRAFULLオタロード店 GIRAFULL シングル / 定額">
   <div class="store-panel-name">GIRAFULLオタロード店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/28 / 履歴：7件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：05/28 / 履歴：7件</div>
   <div class="store-panel-meta">シングル / 定額</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11511,7 +11523,7 @@ main {
    data-brand="preyz"
    data-search="プレイズ 日本橋本店 プレイズ シングル">
   <div class="store-panel-name">プレイズ 日本橋本店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/22 / 履歴：4件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：05/22 / 履歴：4件</div>
   <div class="store-panel-meta">シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11522,7 +11534,7 @@ main {
    data-brand="preyz"
    data-search="プレイズ オタロード店 プレイズ シングル">
   <div class="store-panel-name">プレイズ オタロード店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/19 / 履歴：6件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：05/19 / 履歴：6件</div>
   <div class="store-panel-meta">シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11544,7 +11556,7 @@ main {
    data-brand="fullcomp"
    data-search="フルコンプ 日本橋店 フルコンプ シングル / PSA">
   <div class="store-panel-name">フルコンプ 日本橋店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：04/14 / 履歴：7件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：04/14 / 履歴：7件</div>
   <div class="store-panel-meta">シングル / PSA</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11555,7 +11567,7 @@ main {
    data-brand="cardbox"
    data-search="カードボックス 日本橋店 カードボックス BOX">
   <div class="store-panel-name">カードボックス 日本橋店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/17 / 履歴：6件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/17 / 履歴：6件</div>
   <div class="store-panel-meta">BOX</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11566,7 +11578,7 @@ main {
    data-brand="amtaf"
    data-search="アムタフ アムタフ PSA / BOX">
   <div class="store-panel-name">アムタフ</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/17 / 履歴：4件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/17 / 履歴：4件</div>
   <div class="store-panel-meta">PSA / BOX</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11599,7 +11611,7 @@ main {
    data-brand="mimi"
    data-search="買取ミミ 買取ミミ シングル / BOX">
   <div class="store-panel-name">買取ミミ</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/24 / 履歴：7件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：05/24 / 履歴：7件</div>
   <div class="store-panel-meta">シングル / BOX</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11621,7 +11633,7 @@ main {
    data-brand="sunrise-cardshop"
    data-search="サンライズカードショップ サンライズカードショップ シングル">
   <div class="store-panel-name">サンライズカードショップ</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/16 / 履歴：5件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/16 / 履歴：5件</div>
   <div class="store-panel-meta">シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11643,7 +11655,7 @@ main {
    data-brand="treca-champion"
    data-search="トレカチャンピオン トレカチャンピオン シングル / 定額">
   <div class="store-panel-name">トレカチャンピオン</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：05/13 / 履歴：6件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：05/13 / 履歴：6件</div>
   <div class="store-panel-meta">シングル / 定額</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11654,7 +11666,7 @@ main {
    data-brand="kaitori-champion"
    data-search="買取チャンピオン 買取チャンピオン シングル">
   <div class="store-panel-name">買取チャンピオン</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/17 / 履歴：3件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/17 / 履歴：3件</div>
   <div class="store-panel-meta">シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11665,7 +11677,7 @@ main {
    data-brand="kaitori-v"
    data-search="買取V 買取V BOX">
   <div class="store-panel-name">買取V</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：02/02 / 履歴：6件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：02/02 / 履歴：6件</div>
   <div class="store-panel-meta">BOX</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11698,7 +11710,7 @@ main {
    data-brand="lotus"
    data-search="Lotus 大阪日本橋店 Lotus シングル / 定額">
   <div class="store-panel-name">Lotus 大阪日本橋店</div>
-  <div class="store-panel-meta"><span class="store-status-badge ">30日以内</span> 最新日：06/09 / 履歴：7件</div>
+  <div class="store-panel-meta"><span class="store-status-badge ">履歴あり</span> 最新日：06/09 / 履歴：7件</div>
   <div class="store-panel-meta">シングル / 定額</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>

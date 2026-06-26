@@ -3468,9 +3468,9 @@ def build_area_page(posts_by_source, updated_at):
         if 0 <= days_old < STORE_VIEW_DEFAULT_DAYS:
             return 1, "過去7日あり", ""
         if 0 <= days_old < STORE_VIEW_EXPANDED_DAYS:
-            return 2, "30日以内", ""
+            return 2, "履歴あり", ""
         if expanded_posts:
-            return 2, "30日以内", ""
+            return 2, "履歴あり", ""
         return 3, "過去投稿あり", "is-past"
 
     for shop_index, shop in enumerate(shops):
@@ -3737,9 +3737,20 @@ def build_area_page(posts_by_source, updated_at):
     media_json = json_for_script(media_items)
     store_view_css = """
 <style>
+.view-switch {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.view-toggle {
+  min-height: 32px;
+  padding: 6px 7px;
+  font-size: 12px;
+}
+
 #storeListView .store-panel {
   display: grid;
-  gap: 7px;
+  gap: 6px;
   max-width: 760px;
   margin-top: 0;
   padding-top: 0;
@@ -3748,13 +3759,13 @@ def build_area_page(posts_by_source, updated_at):
 
 #storeListView .store-panel-card {
   display: grid;
-  gap: 4px;
+  gap: 3px;
   border-radius: 10px;
-  padding: 9px 10px;
+  padding: 8px 10px;
 }
 
 #storeListView .store-panel-name {
-  line-height: 1.35;
+  line-height: 1.3;
   word-break: keep-all;
   overflow-wrap: anywhere;
   line-break: strict;
@@ -3763,9 +3774,9 @@ def build_area_page(posts_by_source, updated_at):
 #storeListView .store-panel-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px 7px;
+  gap: 2px 7px;
   align-items: center;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 #storeListView .store-status-badge {
@@ -3792,8 +3803,9 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeListView .store-panel-link {
-  margin-top: 0;
+  margin-top: 2px;
   font-size: 12px;
+  color: rgba(255,255,255,.78);
 }
 
 #storeView,
@@ -3808,7 +3820,7 @@ def build_area_page(posts_by_source, updated_at):
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 12px 0 14px;
+  padding: 11px 0 13px;
   overflow-x: hidden;
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 16px;
@@ -3825,7 +3837,7 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-group.is-past-no-image {
-  padding: 10px 0 11px;
+  padding: 10px 0 12px;
 }
 
 #storeView .store-group.is-past-no-image .store-group-header {
@@ -3835,22 +3847,22 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-group-past-link {
   display: inline-flex;
   flex: 0 0 auto;
-  margin-top: 8px;
-  padding: 7px 10px;
+  margin-top: 9px;
+  padding: 8px 11px;
   font-size: 12px;
 }
 
 #storeView .store-group-header {
   display: block;
   gap: 8px;
-  padding: 0 9px 5px;
+  padding: 0 10px 7px;
 }
 
 #storeView .store-group-title {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   min-width: 0;
 }
 
@@ -3864,8 +3876,8 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-group-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px 10px;
-  margin-top: 5px;
+  gap: 3px 10px;
+  margin-top: 6px;
   line-height: 1.45;
 }
 
@@ -3879,7 +3891,7 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-group-note {
-  margin-top: 6px;
+  margin-top: 7px;
   color: rgba(255,255,255,.58);
   font-size: 12px;
   line-height: 1.45;
@@ -3913,7 +3925,7 @@ def build_area_page(posts_by_source, updated_at):
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 6px;
-  margin-top: 7px;
+  margin-top: 9px;
 }
 
 #storeView .store-group-link,
@@ -3933,24 +3945,24 @@ def build_area_page(posts_by_source, updated_at):
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 8px;
+  gap: 9px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 2px 8px 10px;
+  padding: 3px 9px 11px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  scroll-padding-inline: 8px;
+  scroll-padding-inline: 9px;
 }
 
 #storeView .store-post-card {
-  flex: 0 0 min(86vw, 420px) !important;
-  width: min(86vw, 420px) !important;
-  min-width: min(86vw, 420px) !important;
-  max-width: min(86vw, 420px) !important;
+  flex: 0 0 min(84vw, 420px) !important;
+  width: min(84vw, 420px) !important;
+  min-width: min(84vw, 420px) !important;
+  max-width: min(84vw, 420px) !important;
   box-sizing: border-box;
   padding: 2px 0 6px;
   border: 0;
@@ -3994,7 +4006,7 @@ def build_area_page(posts_by_source, updated_at):
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
-  height: min(58vh, 460px);
+  height: min(57vh, 455px);
   background: rgba(0,0,0,.82);
   border-color: rgba(255,255,255,.13);
 }
@@ -4195,16 +4207,16 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-post-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px;
-  margin: 4px 8px 0;
+  gap: 5px;
+  margin: 5px 8px 0;
   padding: 0;
 }
 
 #storeView .store-post-actions a,
 #storeView .store-post-actions button {
   width: 100%;
-  min-height: 27px;
-  padding: 5px 4px;
+  min-height: 29px;
+  padding: 6px 4px;
   font-size: 10px;
   white-space: normal;
 }
@@ -4275,8 +4287,8 @@ def build_area_page(posts_by_source, updated_at):
     </div>
 
     <div class="view-switch" role="group" aria-label="表示切替">
-      <button id="storeViewButton" class="view-toggle active" type="button" onclick="setViewMode('store')">店舗別で見る</button>
-      <button id="timelineViewButton" class="view-toggle" type="button" onclick="setViewMode('timeline')">新着順で見る</button>
+      <button id="storeViewButton" class="view-toggle active" type="button" onclick="setViewMode('store')">店舗別</button>
+      <button id="timelineViewButton" class="view-toggle" type="button" onclick="setViewMode('timeline')">新着順</button>
       <button id="storeListViewButton" class="view-toggle" type="button" onclick="setViewMode('list')">店舗リスト</button>
     </div>
 
