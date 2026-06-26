@@ -3469,11 +3469,13 @@ def build_area_page(posts_by_source, updated_at):
             return 1, "過去7日あり", ""
         if 0 <= days_old < STORE_VIEW_EXPANDED_DAYS:
             return 2, "30日以内", ""
+        if expanded_posts:
+            return 2, "30日以内", ""
         return 3, "過去投稿あり", "is-past"
 
     for shop_index, shop in enumerate(shops):
         shop_posts = [normalize_post(post) for post in all_timeline_posts if post.get("shop_slug") == shop["shop_slug"]]
-        default_shop_posts, expanded_shop_posts, store_view_meta = select_store_view_posts(shop_posts, latest_timeline_date)
+        default_shop_posts, expanded_shop_posts, store_view_meta = select_store_view_posts(shop_posts)
 
         display_types = []
         status_source_posts = expanded_shop_posts or shop_posts
