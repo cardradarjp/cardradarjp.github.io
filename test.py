@@ -3532,7 +3532,7 @@ def build_area_page(posts_by_source, updated_at):
                     table_controls = """
           <div class="store-image-controls" aria-label="表ごと表示切替">
             <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
-            <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">横3つ</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">横3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">6分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">4分割</button>
           </div>"""
@@ -4518,13 +4518,32 @@ function getHighResImageUrl(url) {{
 function upgradeImageElement(img) {{
   if (!img) return "";
   const highResUrl = getHighResImageUrl(img.getAttribute("src") || img.src);
+  if (highResUrl) img.dataset.highresUrl = highResUrl;
   if (highResUrl && highResUrl !== img.src) img.src = highResUrl;
   return highResUrl;
 }}
 
+function getStableLandscapeMetrics(img) {{
+  if (!img) return {{ ratio: 1.6, sourceUrl: "" }};
+  const sourceUrl = img.dataset.highresUrl || getHighResImageUrl(img.getAttribute("src") || img.currentSrc || img.src);
+  if (sourceUrl) img.dataset.highresUrl = sourceUrl;
+  const naturalWidth = Number(img.dataset.naturalWidth) || img.naturalWidth || 0;
+  const naturalHeight = Number(img.dataset.naturalHeight) || img.naturalHeight || 0;
+  if (!img.dataset.naturalWidth && img.naturalWidth && img.naturalHeight) {{
+    img.dataset.naturalWidth = String(img.naturalWidth);
+    img.dataset.naturalHeight = String(img.naturalHeight);
+  }}
+  const cachedRatio = Number(img.dataset.landscapeRatio);
+  const ratio = cachedRatio || (naturalWidth && naturalHeight ? naturalWidth / naturalHeight : 1.6);
+  if (!img.dataset.landscapeRatio && naturalWidth && naturalHeight) {{
+    img.dataset.landscapeRatio = String(ratio);
+  }}
+  return {{ ratio, sourceUrl: sourceUrl || img.currentSrc || img.src }};
+}}
+
 function markLandscapeImage(img) {{
   if (!img || !img.naturalWidth || !img.naturalHeight) return;
-  const ratio = img.naturalWidth / img.naturalHeight;
+  const {{ ratio }} = getStableLandscapeMetrics(img);
   const target = img.closest(".timeline-image, .image-card, .modal-image-wrap");
   if (!target) return;
   const isLandscape = ratio >= 1.35 || isDragonstarStoreViewImage(target);
@@ -4688,8 +4707,7 @@ function renderStoreTableRailSlices(target, grid, ratio, sourceUrl, slices) {{
 
 function renderLandscapeView(target, img) {{
   const savedMode = getLandscapeMode();
-  const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1.6;
-  const sourceUrl = getHighResImageUrl(img.currentSrc || img.src);
+  const {{ ratio, sourceUrl }} = getStableLandscapeMetrics(img);
   const isStoreViewImage = target.classList.contains("store-post-image");
   const isDragonstarTableImage = isDragonstarStoreViewImage(target);
   const storeTableMode = isDragonstarTableImage ? (target.dataset.storeTableMode || "original") : "";
