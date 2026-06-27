@@ -4022,6 +4022,19 @@ def build_area_page(posts_by_source, updated_at):
   object-position: center center;
 }
 
+#storeView .store-post-image.is-landscape {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: auto;
+}
+
+#storeView .store-post-image.is-landscape > img,
+#storeView .store-post-image.is-landscape .landscape-split,
+#storeView .store-post-image.is-landscape .landscape-slice-frame {
+  max-width: 100%;
+  min-width: 0;
+}
+
 #storeView .store-post-image.is-landscape:not(.landscape-mode-original) > img {
   display: none;
 }
