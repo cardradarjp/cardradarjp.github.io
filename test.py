@@ -3533,8 +3533,8 @@ def build_area_page(posts_by_source, updated_at):
           <div class="store-image-controls" aria-label="表ごと表示切替">
             <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
             <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">横3分割</button>
-            <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">6分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">4分割</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">6分割</button>
           </div>"""
                 image_position_label = f"画像 {image_index + 1} / {image_count}" if image_count > 1 else "画像"
                 store_post_cards += f"""
@@ -4195,7 +4195,7 @@ def build_area_page(posts_by_source, updated_at):
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
-  margin: 4px 6px 0;
+  margin: 8px 6px 0;
   padding: 0;
 }
 
