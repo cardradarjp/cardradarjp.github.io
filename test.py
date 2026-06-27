@@ -3532,9 +3532,9 @@ def build_area_page(posts_by_source, updated_at):
                     table_controls = """
           <div class="store-image-controls" aria-label="表ごと表示切替">
             <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
-            <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">3分割</button>
-            <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">3×2</button>
-            <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">2×2</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">横3つ</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">6分割</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">4分割</button>
           </div>"""
                 image_position_label = f"画像 {image_index + 1} / {image_count}" if image_count > 1 else "画像"
                 store_post_cards += f"""
@@ -4004,7 +4004,7 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-image .landscape-mode-switch {
-  display: none;
+  display: flex;
 }
 
 #storeView .store-post-image .landscape-mode-button {
@@ -4087,6 +4087,12 @@ def build_area_page(posts_by_source, updated_at):
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   grid-template-columns: none !important;
+}
+
+#storeView .store-post-image.is-landscape.landscape-mode-half .landscape-split,
+#storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-split {
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice {
@@ -4689,7 +4695,7 @@ function renderLandscapeView(target, img) {{
   const storeTableMode = isDragonstarTableImage ? (target.dataset.storeTableMode || "original") : "";
   const mode = isDragonstarTableImage
     ? (storeTableMode === "original" ? "original" : "table")
-    : (isStoreViewImage ? "original" : (savedMode === "table" ? "half" : savedMode));
+    : (savedMode === "table" ? "half" : savedMode);
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
