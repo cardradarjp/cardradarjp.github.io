@@ -4349,7 +4349,7 @@ def build_area_page(posts_by_source, updated_at):
       <!-- 店舗別ビューの表示範囲 controls are generated from test.py for the published Osaka/Nipponbashi HTML. -->
       <div class="section-head">
         <h2>店舗別ビュー</h2>
-        <p>店舗ごとに過去7日を表示。投稿が少ない店舗は最新投稿も補完します。</p>
+        <p>店舗別ビューでは過去7日を表示。投稿が少ない店舗は最新投稿も補完します。</p>
       </div>
 
       <div class="store-group-list" id="storeGroupList">
