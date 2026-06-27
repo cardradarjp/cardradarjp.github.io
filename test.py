@@ -3820,7 +3820,7 @@ def build_area_page(posts_by_source, updated_at):
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 11px 0 13px;
+  padding: 9px 0 11px;
   overflow-x: hidden;
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 16px;
@@ -3855,7 +3855,7 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-group-header {
   display: block;
   gap: 8px;
-  padding: 0 10px 7px;
+  padding: 0 8px 5px;
 }
 
 #storeView .store-group-title {
@@ -3945,17 +3945,17 @@ def build_area_page(posts_by_source, updated_at):
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  gap: 9px;
+  gap: 7px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 3px 9px 11px;
+  padding: 2px 7px 9px;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  scroll-padding-inline: 9px;
+  scroll-padding-inline: 7px;
 }
 
 #storeView .store-post-card {
@@ -3964,7 +3964,7 @@ def build_area_page(posts_by_source, updated_at):
   min-width: min(82vw, 410px) !important;
   max-width: min(82vw, 410px) !important;
   box-sizing: border-box;
-  padding: 2px 0 6px;
+  padding: 1px 0 5px;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -3977,8 +3977,8 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-meta {
-  margin: 0 8px 4px;
-  padding-bottom: 4px;
+  margin: 0 6px 3px;
+  padding-bottom: 3px;
   border-bottom: 1px solid rgba(255,255,255,.09);
   color: rgba(255,255,255,.66);
   font-size: 10.5px;
@@ -4207,8 +4207,8 @@ def build_area_page(posts_by_source, updated_at):
 #storeView .store-post-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 5px;
-  margin: 5px 8px 0;
+  gap: 4px;
+  margin: 4px 6px 0;
   padding: 0;
 }
 
