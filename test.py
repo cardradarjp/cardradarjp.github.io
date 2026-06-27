@@ -1538,45 +1538,26 @@ def select_store_view_posts(shop_posts, reference_date=None):
 
     default_posts = []
     expanded_posts = []
-    default_count_before_fallback = 0
     if reference_date_obj:
         for post in posts:
             post_date = parse_jst_date(post.get("posted_date_jst"))
             if not post_date:
                 continue
             days_old = (reference_date_obj - post_date).days
-            if 0 <= days_old < STORE_VIEW_DEFAULT_DAYS:
-                default_posts.append(post)
             if 0 <= days_old < STORE_VIEW_EXPANDED_DAYS:
                 expanded_posts.append(post)
-        default_count_before_fallback = len(default_posts)
     else:
-        default_posts = posts[:STORE_VIEW_FALLBACK_POSTS]
         expanded_posts = posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
-        default_count_before_fallback = len(default_posts)
 
-    default_posts.sort(key=sort_post_key, reverse=True)
     expanded_posts.sort(key=sort_post_key, reverse=True)
-    if len(default_posts) <= 1:
-        seen_keys = {post_identity(post) for post in default_posts}
-        for post in posts:
-            key = post_identity(post)
-            if key in seen_keys:
-                continue
-            default_posts.append(post)
-            seen_keys.add(key)
-            if len(default_posts) >= STORE_VIEW_FALLBACK_POSTS:
-                break
-    default_posts = default_posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
     expanded_posts = expanded_posts[:MAX_STORE_VIEW_POSTS_PER_SHOP]
+    default_posts = expanded_posts[:STORE_VIEW_FALLBACK_POSTS]
 
     default_start_obj = reference_date_obj - timedelta(days=STORE_VIEW_DEFAULT_DAYS - 1) if reference_date_obj else None
     expanded_start_obj = reference_date_obj - timedelta(days=STORE_VIEW_EXPANDED_DAYS - 1) if reference_date_obj else None
     default_start = default_start_obj.strftime("%Y-%m-%d") if default_start_obj else reference_date_text
     expanded_start = expanded_start_obj.strftime("%Y-%m-%d") if expanded_start_obj else reference_date_text
     meta["default_meta"] = build_store_view_meta("過去7日", default_start, reference_date_text, default_posts)
-    if default_count_before_fallback <= 1 and default_posts:
-        meta["default_meta"] += f" / 最新投稿：{format_date_label(latest_date)}"
     meta["expanded_meta"] = build_store_view_meta("過去30日", expanded_start, reference_date_text, expanded_posts)
     meta["default_keys"] = {post_identity(post) for post in default_posts}
     meta["expanded_keys"] = {post_identity(post) for post in expanded_posts}
@@ -3493,14 +3474,14 @@ def build_area_page(posts_by_source, updated_at):
         expanded_post_count = len(expanded_shop_posts)
         extra_post_count = max(0, expanded_post_count - default_post_count)
         status_meta = (
-            f"最新日：{latest_date_label} / 表示：{default_post_count}件 / 履歴：{expanded_post_count}件 / {type_text}"
+            f"最新日：{latest_date_label} / 表示：{default_post_count}件 / 過去投稿：{expanded_post_count}件 / {type_text}"
             if shop_posts
-            else f"最新日：未取得 / 表示：0件 / 履歴：0件 / {type_text}"
+            else f"最新日：未取得 / 表示：0件 / 過去投稿：0件 / {type_text}"
         )
         status_meta_html = (
-            f'<span>最新日：{h(latest_date_label)}</span><span>表示：{default_post_count}件</span><span>履歴：{expanded_post_count}件</span><span class="store-group-types">{h(type_text)}</span>'
+            f'<span>最新日：{h(latest_date_label)}</span><span>表示：{default_post_count}件</span><span>過去投稿：{expanded_post_count}件</span><span class="store-group-types">{h(type_text)}</span>'
             if shop_posts
-            else f'<span>最新日：未取得</span><span>表示：0件</span><span>履歴：0件</span><span class="store-group-types">{h(type_text)}</span>'
+            else f'<span>最新日：未取得</span><span>表示：0件</span><span>過去投稿：0件</span><span class="store-group-types">{h(type_text)}</span>'
         )
         expanded_meta_parts = store_view_meta["expanded_meta"].split(" / ")
         expanded_meta_html = (
@@ -3511,7 +3492,7 @@ def build_area_page(posts_by_source, updated_at):
         )
         store_panel_waiting_class = " is-waiting" if not shop_posts else ""
         store_panel_latest = f"最新日：{h(latest_date_label)}" if shop_posts else "最新日：未取得"
-        store_panel_count = f"履歴：{expanded_post_count}件" if shop_posts else "投稿なし / 取得待ち"
+        store_panel_count = f"過去投稿：{expanded_post_count}件" if shop_posts else "投稿なし / 取得待ち"
         store_panel_records.append((
             (1 if not shop_posts else 0, shop_index),
             f"""
