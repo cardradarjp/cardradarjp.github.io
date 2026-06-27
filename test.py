@@ -3550,7 +3550,7 @@ def build_area_page(posts_by_source, updated_at):
                     table_controls = """
           <div class="store-image-controls" aria-label="表ごと表示切替">
             <button type="button" class="store-table-mode-button is-active" data-table-mode="original" onclick="setStoreTableMode(event, this, 'original')">元画像</button>
-            <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">横3分割</button>
+            <button type="button" class="store-table-mode-button" data-table-mode="row3" onclick="setStoreTableMode(event, this, 'row3')">縦3分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid2x2" onclick="setStoreTableMode(event, this, 'grid2x2')">4分割</button>
             <button type="button" class="store-table-mode-button" data-table-mode="grid3x2" onclick="setStoreTableMode(event, this, 'grid3x2')">6分割</button>
           </div>"""
@@ -3963,7 +3963,7 @@ def build_area_page(posts_by_source, updated_at):
   min-width: min(86vw, 430px) !important;
   max-width: min(86vw, 430px) !important;
   box-sizing: border-box;
-  padding: 1px 0 5px;
+  padding: 1px 0 2px;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -4040,7 +4040,7 @@ def build_area_page(posts_by_source, updated_at):
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 4px;
   margin-top: 5px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 #storeView .store-table-mode-button {
@@ -4091,6 +4091,8 @@ def build_area_page(posts_by_source, updated_at):
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scroll-snap-type: none;
+  pointer-events: none;
+  touch-action: none;
 }
 
 #storeView .store-post-image.is-landscape:not(.landscape-mode-original) .landscape-slice {
@@ -4219,7 +4221,7 @@ def build_area_page(posts_by_source, updated_at):
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
-  margin: 12px 6px 0;
+  margin: 14px 6px 0;
   padding: 0;
 }
 
