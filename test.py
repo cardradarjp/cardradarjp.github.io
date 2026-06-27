@@ -3959,10 +3959,10 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-card {
-  flex: 0 0 min(82vw, 410px) !important;
-  width: min(82vw, 410px) !important;
-  min-width: min(82vw, 410px) !important;
-  max-width: min(82vw, 410px) !important;
+  flex: 0 0 min(86vw, 430px) !important;
+  width: min(86vw, 430px) !important;
+  min-width: min(86vw, 430px) !important;
+  max-width: min(86vw, 430px) !important;
   box-sizing: border-box;
   padding: 1px 0 5px;
   border: 0;
