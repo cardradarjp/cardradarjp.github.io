@@ -3953,7 +3953,7 @@ def build_area_page(posts_by_source, updated_at):
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
   scroll-padding-inline: 7px;
 }
 
@@ -3969,6 +3969,7 @@ def build_area_page(posts_by_source, updated_at):
   background: transparent;
   box-shadow: none;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 #storeView .store-post-card + .store-post-card {
@@ -4006,6 +4007,9 @@ def build_area_page(posts_by_source, updated_at):
   min-width: 100% !important;
   max-width: 100% !important;
   height: min(57vh, 455px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(0,0,0,.82);
   border-color: rgba(255,255,255,.13);
 }
@@ -4015,6 +4019,7 @@ def build_area_page(posts_by_source, updated_at):
   height: 100%;
   max-height: none;
   object-fit: contain;
+  object-position: center center;
 }
 
 #storeView .store-post-image.is-landscape:not(.landscape-mode-original) > img {
@@ -4035,6 +4040,7 @@ def build_area_page(posts_by_source, updated_at):
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 4px;
   margin-top: 5px;
+  margin-bottom: 4px;
 }
 
 #storeView .store-table-mode-button {
@@ -4109,8 +4115,8 @@ def build_area_page(posts_by_source, updated_at):
 
 #storeView .store-post-image.is-landscape.landscape-mode-half .landscape-split,
 #storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-split {
-  overflow-x: auto !important;
-  scroll-snap-type: x mandatory;
+  overflow-x: hidden !important;
+  scroll-snap-type: none;
 }
 
 #storeView .store-post-image.is-landscape.landscape-mode-quarter .landscape-slice {
@@ -4213,7 +4219,7 @@ def build_area_page(posts_by_source, updated_at):
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
-  margin: 8px 6px 0;
+  margin: 12px 6px 0;
   padding: 0;
 }
 
@@ -4690,6 +4696,47 @@ function makeStoreTableSliceHtml(sourceUrl, grid, ratio, index, x, y) {{
     </div>`;
 }}
 
+function makeStoreLandscapeSliceHtml(sourceUrl, label, sliceClass) {{
+  return `
+    <div class="landscape-slice ${{sliceClass}}">
+      <span class="landscape-slice-label">${{label}}</span>
+      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
+    </div>`;
+}}
+
+function renderStoreLandscapeRailSlices(target, mode, sourceUrl, slices) {{
+  const card = target?.closest(".store-post-card");
+  const carousel = card?.closest(".store-post-carousel");
+  if (!card || !carousel) return;
+  clearStoreTableRailSlices(target);
+  const key = getStoreTableSliceKey(card);
+  const actionHtml = card.querySelector(".store-post-actions")?.outerHTML || "";
+  const baseMeta = card.querySelector(".store-post-meta")?.textContent?.trim() || "";
+  const modeClass = mode === "quarter" ? "landscape-mode-quarter" : "landscape-mode-half";
+  let insertAfter = card;
+  slices.slice(1).forEach(slice => {{
+    const clone = document.createElement("article");
+    clone.className = "store-post-card store-table-slice-card";
+    Object.entries(card.dataset).forEach(([name, value]) => {{
+      clone.dataset[name] = value;
+    }});
+    clone.dataset.storeTableSliceFor = key;
+    clone.innerHTML = `
+      <div class="store-post-meta">${{baseMeta}} / ${{slice.label}}</div>
+      <div class="store-image-item" data-brand-id="${{target.dataset.brandId || ""}}" data-shop-slug="${{target.dataset.shopSlug || ""}}">
+        <div class="timeline-image store-post-image store-table-slice-image is-landscape ${{modeClass}}" role="button" tabindex="0" onclick="${{target.getAttribute("onclick") || ""}}" onkeydown="${{target.getAttribute("onkeydown") || ""}}">
+          <div class="landscape-split store-view-landscape-split">
+            ${{makeStoreLandscapeSliceHtml(sourceUrl, slice.label, slice.className)}}
+          </div>
+        </div>
+      </div>
+      ${{actionHtml}}
+    `;
+    insertAfter.insertAdjacentElement("afterend", clone);
+    insertAfter = clone;
+  }});
+}}
+
 function renderStoreTableRailSlices(target, grid, ratio, sourceUrl, slices) {{
   const card = target?.closest(".store-post-card");
   const carousel = card?.closest(".store-post-carousel");
@@ -4777,38 +4824,28 @@ function renderLandscapeView(target, img) {{
     const labels = isStoreViewImage
       ? ["4分割：左上", "4分割：右上", "4分割：左下", "4分割：右下"]
       : ["左上", "右上", "左下", "右下"];
-    split.innerHTML = `
-    <div class="landscape-slice is-top-left">
-      <span class="landscape-slice-label">${{labels[0]}}</span>
-      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
-    </div>
-    <div class="landscape-slice is-top-right">
-      <span class="landscape-slice-label">${{labels[1]}}</span>
-      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
-    </div>
-    <div class="landscape-slice is-bottom-left">
-      <span class="landscape-slice-label">${{labels[2]}}</span>
-      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
-    </div>
-    <div class="landscape-slice is-bottom-right">
-      <span class="landscape-slice-label">${{labels[3]}}</span>
-      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
-    </div>
-  `;
+    const quarterSlices = [
+      {{ label: labels[0], className: "is-top-left" }},
+      {{ label: labels[1], className: "is-top-right" }},
+      {{ label: labels[2], className: "is-bottom-left" }},
+      {{ label: labels[3], className: "is-bottom-right" }},
+    ];
+    split.innerHTML = isStoreViewImage
+      ? makeStoreLandscapeSliceHtml(sourceUrl, quarterSlices[0].label, quarterSlices[0].className)
+      : quarterSlices.map(slice => makeStoreLandscapeSliceHtml(sourceUrl, slice.label, slice.className)).join("");
+    if (isStoreViewImage) renderStoreLandscapeRailSlices(target, "quarter", sourceUrl, quarterSlices);
     return;
   }}
   split.style.removeProperty("--landscape-panel-ratio");
   const halfLabels = isStoreViewImage ? ["2分割：左", "2分割：右"] : ["左半分", "右半分"];
-  split.innerHTML = `
-    <div class="landscape-slice is-left">
-      <span class="landscape-slice-label">${{halfLabels[0]}}</span>
-      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
-    </div>
-    <div class="landscape-slice is-right">
-      <span class="landscape-slice-label">${{halfLabels[1]}}</span>
-      <span class="landscape-slice-frame"><img src="${{sourceUrl}}" alt=""></span>
-    </div>
-  `;
+  const halfSlices = [
+    {{ label: halfLabels[0], className: "is-left" }},
+    {{ label: halfLabels[1], className: "is-right" }},
+  ];
+  split.innerHTML = isStoreViewImage
+    ? makeStoreLandscapeSliceHtml(sourceUrl, halfSlices[0].label, halfSlices[0].className)
+    : halfSlices.map(slice => makeStoreLandscapeSliceHtml(sourceUrl, slice.label, slice.className)).join("");
+  if (isStoreViewImage) renderStoreLandscapeRailSlices(target, "half", sourceUrl, halfSlices);
 }}
 
 function bindLandscapeImages(root = document) {{
