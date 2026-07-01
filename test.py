@@ -3649,6 +3649,7 @@ def build_area_page(posts_by_source, updated_at):
 
         store_post_cards = ""
         has_default_posts = False
+        expandable_post_keys = set()
         for post in expanded_shop_posts:
             image_urls = post.get("image_urls", [])
             if not image_urls:
@@ -3661,6 +3662,8 @@ def build_area_page(posts_by_source, updated_at):
             identity = post_identity(post)
             in_default_range = "1" if identity in default_keys else "0"
             in_expanded_range = "1" if identity in expanded_keys else "0"
+            if in_default_range != "1" and in_expanded_range == "1":
+                expandable_post_keys.add(identity)
             age_badge = store_post_age_badge(post, latest_timeline_date or latest_store_date)
             age_badge_html = f' / <span class="store-age-badge">{h(age_badge)}</span>' if age_badge else ""
             is_table_split_candidate = post.get("brand_id") == "dragonstar"
@@ -3758,6 +3761,7 @@ def build_area_page(posts_by_source, updated_at):
             continue
         if has_default_posts:
             store_initial_count += 1
+        extra_post_count = len(expandable_post_keys)
         expand_button_html = (
             f'<button class="store-expand-button" type="button" data-more-label="さらに表示（+{extra_post_count}件）" data-less-label="最新だけ表示" onclick="toggleStoreGroupExpanded(this)">さらに表示（+{extra_post_count}件）</button>'
             if extra_post_count > 0 else ""
