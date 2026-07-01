@@ -43,6 +43,7 @@ TYPE_ORDER = [
     "x_post_box",
     "x_post_fixed",
     "x_post_psa",
+    "x_post_other",
     "official_price_list",
     "market_price_link",
 ]
@@ -52,6 +53,7 @@ MAIN_FILTER_TYPES = [
     "x_post_box",
     "x_post_fixed",
     "x_post_psa",
+    "x_post_other",
 ]
 
 TYPE_META = {
@@ -74,6 +76,11 @@ TYPE_META = {
         "label": "PSA買取",
         "en": "PSA",
         "desc": "PSA・鑑定品の買取",
+    },
+    "x_post_other": {
+        "label": "その他買取",
+        "en": "OTHER",
+        "desc": "サプライ・周辺グッズなどの買取",
     },
     "official_price_list": {
         "label": "公式Web買取表",
@@ -870,6 +877,11 @@ STRONG_BUYLIST_WORDS = [
     "定額買取",
     "定額保証",
     "保証買取",
+    "BOX買取",
+    "パック買取",
+    "カートン買取",
+    "サプライ買取",
+    "グッズ買取",
     "ポケカ買取",
     "ポケモンカード買取",
     "WANTED",
@@ -1027,6 +1039,11 @@ def is_target_post(text, source_type):
         "定額買取",
         "定額保証",
         "保証買取",
+        "BOX買取",
+        "パック買取",
+        "カートン買取",
+        "サプライ買取",
+        "グッズ買取",
     ]
 
     ng_words = [
@@ -1063,7 +1080,8 @@ def target_exclusion_reason(text):
     buy_words = [
         "買取", "高価買取", "買取表", "買取リスト", "買取価格", "WANTED",
         "募集", "買取強化", "買取情報", "シングル買取", "シングルカード買取",
-        "定額買取", "定額保証", "保証買取",
+        "定額買取", "定額保証", "保証買取", "BOX買取", "パック買取",
+        "カートン買取", "サプライ買取", "グッズ買取",
     ]
     ng_words = [
         "大会", "優勝", "抽選", "販売開始", "BOX争奪戦", "争奪戦",
@@ -1119,23 +1137,42 @@ def is_lotus_hours_notice_post(post):
 def classify_display_type(text, source_type):
     psa_words = ["PSA", "PSA10", "PSA9", "PSA 10", "PSA 9", "鑑定品", "鑑定", "ARS", "BGS", "ケース付き", "グレーディング"]
     psa_ng_words = ["PSA買取不可", "PSA対象外", "PSAは対象外", "PSA買取なし"]
-    fixed_words = ["定額", "一律", "最低保証", "保証買取", "まとめ買取", "RR定額", "AR定額", "SR定額", "UR定額", "ノーマル買取", "ノーマル", "ストレージ", "汎用", "大量買取"]
-    box_words = ["BOX", "box", "未開封", "シュリンク", "カートン", "1BOX", "ボックス", "パック", "パック買取", "未開封BOX", "未開封買取"]
+    fixed_words = ["定額", "一律", "一律買取", "最低保証", "買取保証", "保証買取", "定額保証", "まとめ買取", "RR定額", "AR定額", "SR定額", "UR定額", "ノーマル買取", "ノーマル", "ストレージ", "汎用", "大量買取"]
+    box_words = ["BOX", "未開封", "未開封BOX", "未開封商品", "未開封買取", "シュリンク", "シュリンク付き", "カートン", "カートン買取", "1BOX", "BOX買取", "パック", "パック買取"]
     box_ng_words = ["BOX以外", "BOX買取以外", "ボックス以外", "未開封BOX以外", "BOX対象外", "BOXは対象外", "BOX買取なし"]
+    other_words = [
+        "サプライ",
+        "スリーブ",
+        "デッキケース",
+        "プレイマット",
+        "ローダー",
+        "マグネットローダー",
+        "カードファイル",
+        "バインダー",
+        "ストレージボックス",
+        "デッキシールド",
+        "プレイヤーズグッズ",
+        "周辺グッズ",
+        "グッズ買取",
+    ]
 
     if not contains_any(text, psa_ng_words):
         matches = matching_words(text, psa_words)
         if matches:
             return "x_post_psa", ",".join(matches)
 
-    matches = matching_words(text, fixed_words)
-    if matches:
-        return "x_post_fixed", ",".join(matches)
-
     if not contains_any(text, box_ng_words):
         matches = matching_words(text, box_words)
         if matches:
             return "x_post_box", ",".join(matches)
+
+    matches = matching_words(text, fixed_words)
+    if matches:
+        return "x_post_fixed", ",".join(matches)
+
+    matches = matching_words(text, other_words)
+    if matches:
+        return "x_post_other", ",".join(matches)
 
     if source_type in TYPE_META and source_type.startswith("x_post_"):
         return source_type, "source_type fallback"
@@ -1273,12 +1310,12 @@ def normalize_post(item, source=None):
     post["source_type"] = source_type
     text_for_class = post.get("full_text") or post.get("summary") or ""
     display_type, reason = classify_display_type(text_for_class, source_type)
-    post["display_type"] = post.get("display_type") or display_type
-    post["display_type_label"] = post.get("display_type_label") or display_type_label(post["display_type"])
+    post["display_type"] = display_type
+    post["display_type_label"] = display_type_label(post["display_type"])
     post["buy_type_label"] = post.get("buy_type_label") or TYPE_META.get(source_type, TYPE_META["x_post_single"])["label"]
     post["posted_at"] = post.get("posted_at") or ""
     post["posted_date_jst"] = post.get("posted_date_jst") or posted_date_from_values(post.get("posted_at"), post.get("collected_at"))
-    post["classify_reason"] = post.get("classify_reason") or reason
+    post["classify_reason"] = reason
     post["image_urls"] = post.get("image_urls") or []
     post["image_count"] = len(post["image_urls"])
     post["status_id"] = post.get("status_id") or get_status_id(post.get("tweet_url", ""))
@@ -1584,9 +1621,9 @@ def select_store_view_posts(shop_posts, reference_date=None):
 
 def short_type_label(label_or_type):
     mapping = {
-        "x_post_single": "シングル", "x_post_box": "BOX", "x_post_fixed": "定額", "x_post_psa": "PSA",
+        "x_post_single": "シングル", "x_post_box": "BOX", "x_post_fixed": "定額", "x_post_psa": "PSA", "x_post_other": "その他",
         "official_price_list": "公式Web", "market_price_link": "相場",
-        "シングル買取": "シングル", "BOX買取": "BOX", "定額買取": "定額", "PSA買取": "PSA",
+        "シングル買取": "シングル", "BOX買取": "BOX", "定額買取": "定額", "PSA買取": "PSA", "その他買取": "その他",
         "公式Web買取表": "公式Web", "相場確認": "相場",
     }
     return mapping.get(label_or_type, label_or_type or "買取")
@@ -1595,9 +1632,10 @@ def short_type_label(label_or_type):
 def infer_type_priority(source_type):
     order = {
         "x_post_psa": 0,
-        "x_post_fixed": 1,
-        "x_post_box": 2,
+        "x_post_box": 1,
+        "x_post_fixed": 2,
         "x_post_single": 3,
+        "x_post_other": 4,
     }
     return order.get(source_type, 9)
 
