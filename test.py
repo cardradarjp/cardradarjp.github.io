@@ -910,35 +910,60 @@ NON_BUYLIST_NOTICE_WORDS = [
     "買取時間",
     "買取受付時間",
     "受付時間",
+    "本日営業",
+    "店舗案内",
+    "お知らせ",
 ]
 
 NON_BUYLIST_SALES_WORDS = [
     "販売",
     "販売中",
     "販売開始",
+    "販売情報",
+    "販売価格",
     "入荷",
+    "入荷情報",
+    "再入荷",
     "在庫",
+    "在庫情報",
     "特価",
     "セール",
+    "キャンペーン",
+    "オリパ",
+    "ガチャ",
+    "くじ",
     "抽選販売",
     "大会",
     "イベント",
     "抽選",
     "予約",
     "受付中",
+    "発売",
+    "店頭販売",
+    "購入",
+    "ご購入",
+    "完売",
 ]
 
 NON_BUYLIST_AFTER_BUY_WORDS = [
     "買取しました",
     "買取させていただきました",
+    "買取させて頂きました",
+    "買い取らせていただきました",
     "お買取り",
     "お買取",
     "買取ありがとうございます",
+    "買取ありがとうございました",
     "買取実績",
     "買取成立",
     "買取後",
+    "買取完了",
     "お売りいただき",
+    "お売りいただきました",
+    "お売り頂き",
+    "お売り頂きました",
     "お持ち込み",
+    "ご来店ありがとうございました",
 ]
 
 ART_STORE_SALES_WORDS = [
@@ -1110,14 +1135,14 @@ def is_art_store_target_post(text):
 def is_strict_shop_non_buylist_post(post):
     if post.get("shop_slug") not in STRICT_BUYLIST_SHOP_SLUGS:
         return False
-    text = display_filter_text(post)
+    text = post_content_filter_text(post)
     return not has_strong_buylist_signal(text)
 
 
 def is_art_store_sales_post(post):
     if post.get("shop_slug") != "cardshop-art":
         return False
-    text = display_filter_text(post)
+    text = post_content_filter_text(post)
     if contains_any(text, ART_STORE_STRONG_BUYLIST_WORDS):
         return False
     return contains_any(text, ART_STORE_SALES_WORDS)
@@ -1126,7 +1151,7 @@ def is_art_store_sales_post(post):
 def is_lotus_hours_notice_post(post):
     if post.get("shop_slug") != "lotus-osaka-nihonbashi":
         return False
-    text = display_filter_text(post)
+    text = post_content_filter_text(post)
     if not contains_any(text, LOTUS_NOTICE_WORDS):
         return False
     if contains_any(text, ART_STORE_STRONG_BUYLIST_WORDS):
@@ -1227,6 +1252,16 @@ def display_filter_text(post):
     ])
 
 
+def post_content_filter_text(post):
+    return " ".join([
+        str(post.get("full_text", "")),
+        str(post.get("text", "")),
+        str(post.get("summary", "")),
+        str(post.get("shop_name", "")),
+        str(post.get("brand", "")),
+    ])
+
+
 def is_non_pokemon_post(post):
     text = display_filter_text(post)
 
@@ -1255,7 +1290,7 @@ def is_non_pokemon_post(post):
 
 
 def is_non_buy_notice_post(post):
-    text = display_filter_text(post)
+    text = post_content_filter_text(post)
     if is_art_store_sales_post(post):
         return True
     if is_lotus_hours_notice_post(post):
