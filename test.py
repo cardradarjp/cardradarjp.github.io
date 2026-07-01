@@ -966,6 +966,16 @@ NON_BUYLIST_AFTER_BUY_WORDS = [
     "ご来店ありがとうございました",
 ]
 
+HARD_NON_BUYLIST_WORDS = [
+    "本日の営業は終了しました",
+    "営業は終了しました",
+    "買取停止中",
+    "トレカ買取停止中",
+    "高額PSA売るなら",
+    "PSA売るなら",
+    "全額現金払出し",
+]
+
 ART_STORE_SALES_WORDS = [
     "販売",
     "販売中",
@@ -1032,6 +1042,8 @@ def has_strong_buylist_signal(text):
 
 
 def is_non_buylist_text(text):
+    if contains_any(text, HARD_NON_BUYLIST_WORDS):
+        return True
     if has_strong_buylist_signal(text):
         return False
     return contains_any(
@@ -1091,6 +1103,9 @@ def is_target_post(text, source_type):
     if contains_any(text, ng_words):
         return False
 
+    if contains_any(text, HARD_NON_BUYLIST_WORDS):
+        return False
+
     if not contains_any(text, pokemon_words):
         return False
 
@@ -1115,6 +1130,8 @@ def target_exclusion_reason(text):
     ]
     if contains_any(text, ng_words):
         return "NGワード"
+    if contains_any(text, HARD_NON_BUYLIST_WORDS):
+        return "買取表ではない"
     if not contains_any(text, pokemon_words):
         return "ポケカ外"
     if not contains_any(text, buy_words):
