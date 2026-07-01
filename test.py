@@ -4670,6 +4670,13 @@ function renderLandscapeModeSwitch(target, mode) {{
     const activate = event => {{
       event.preventDefault();
       event.stopPropagation();
+      if (isStoreViewImage && !isDragonstarTableImage) {{
+        target.dataset.storeLandscapeMode = button.dataset.landscapeMode;
+        const img = target.querySelector(":scope > img");
+        if (img) renderLandscapeView(target, img);
+        setupScrollIndicators(target);
+        return;
+      }}
       setLandscapeMode(button.dataset.landscapeMode);
     }};
     button.addEventListener("click", activate);
@@ -4793,7 +4800,8 @@ function renderLandscapeView(target, img) {{
   const storeTableMode = isDragonstarTableImage ? (target.dataset.storeTableMode || "original") : "";
   const mode = isDragonstarTableImage
     ? (storeTableMode === "original" ? "original" : "table")
-    : (savedMode === "table" ? "half" : savedMode);
+    : (isStoreViewImage ? (target.dataset.storeLandscapeMode || "original")
+    : (savedMode === "table" ? "half" : savedMode));
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
