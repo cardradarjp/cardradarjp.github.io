@@ -1180,6 +1180,36 @@ def classify_display_type(text, source_type):
     return "x_post_single", "default single"
 
 
+def classification_text_for_post(post, source=None):
+    text = post.get("full_text") or post.get("summary") or ""
+    remove_values = [
+        "カードボックス",
+        "カードボックス日本橋店",
+        "CARD BOX",
+        "CARDBOX",
+        "Cardbox",
+        "cardbox",
+        "Cardbox_Japan",
+        "@Cardbox_Japan",
+    ]
+
+    for data in (source or {}, post or {}):
+        for key in ["shop_name", "brand", "account"]:
+            value = str(data.get(key, "") or "").strip()
+            if not value:
+                continue
+            remove_values.append(value)
+            remove_values.append(value.replace(" ", "").replace("　", ""))
+            if key == "account":
+                remove_values.append("@" + value.lstrip("@"))
+
+    for value in sorted(set(remove_values), key=len, reverse=True):
+        if not value:
+            continue
+        text = re.sub(re.escape(value), " ", text, flags=re.IGNORECASE)
+    return text
+
+
 def display_type_label(display_type):
     return short_type_label(TYPE_META.get(display_type, TYPE_META["x_post_single"])["label"])
 
@@ -1308,7 +1338,7 @@ def normalize_post(item, source=None):
 
     source_type = post.get("source_type") or (source or {}).get("source_type", "x_post_single")
     post["source_type"] = source_type
-    text_for_class = post.get("full_text") or post.get("summary") or ""
+    text_for_class = classification_text_for_post(post, source)
     display_type, reason = classify_display_type(text_for_class, source_type)
     post["display_type"] = display_type
     post["display_type_label"] = display_type_label(post["display_type"])
@@ -5905,7 +5935,8 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
                     seen_urls.add(url)
                     posted_at = get_posted_at(tweet)
                     posted_date_jst = posted_date_from_values(posted_at, updated_at)
-                    display_type, reason = classify_display_type(text, source["source_type"])
+                    text_for_class = classification_text_for_post({"full_text": text}, source)
+                    display_type, reason = classify_display_type(text_for_class, source["source_type"])
 
                     post = normalize_post({
                         "source_id": source["id"],
