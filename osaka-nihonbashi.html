@@ -445,14 +445,24 @@ a {
 }
 
 .brand-row {
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 168px), 1fr));
+  gap: 7px;
   max-height: min(44vh, 280px);
+  overflow-x: hidden;
   overflow-y: auto;
+  padding: 2px 2px 6px;
   -webkit-overflow-scrolling: touch;
 }
 
 .brand-row .filter-chip {
-  min-height: 36px;
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 11px;
+  text-align: left;
+  justify-content: flex-start;
+  white-space: normal;
+  line-height: 1.25;
 }
 
 .brand-row .filter-chip.hidden {
@@ -3615,7 +3625,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">買取チャンピオン</div>
-        <span class="store-status-badge is-fresh">今日更新</span>
+        <span class="store-status-badge is-fresh">最新日あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：07/01</span><span>表示：3件</span><span>過去投稿：5件</span><span class="store-group-types">シングル</span></div>
     </div>
@@ -3831,7 +3841,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">トレカライン オタロード店</div>
-        <span class="store-status-badge is-fresh">今日更新</span>
+        <span class="store-status-badge is-fresh">最新日あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：07/01</span><span>表示：3件</span><span>過去投稿：4件</span><span class="store-group-types">BOX / PSA</span></div>
     </div>
@@ -3942,7 +3952,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">トレカ道楽</div>
-        <span class="store-status-badge is-fresh">今日更新</span>
+        <span class="store-status-badge is-fresh">最新日あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：07/01</span><span>表示：1件</span><span>過去投稿：1件</span><span class="store-group-types">PSA</span></div>
     </div>
@@ -4053,7 +4063,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">MEETS TCG 大阪</div>
-        <span class="store-status-badge is-fresh">今日更新</span>
+        <span class="store-status-badge is-fresh">最新日あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：07/01</span><span>表示：3件</span><span>過去投稿：3件</span><span class="store-group-types">PSA</span></div>
     </div>
@@ -17234,7 +17244,7 @@ main {
    data-brand="kaitori-champion"
    data-search="買取チャンピオン 買取チャンピオン シングル">
   <div class="store-panel-name">買取チャンピオン</div>
-  <div class="store-panel-meta"><span class="store-status-badge is-fresh">今日更新</span> 最新日：07/01 / 過去投稿：5件</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：07/01 / 過去投稿：5件</div>
   <div class="store-panel-meta">シングル</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -17278,7 +17288,7 @@ main {
    data-brand="torecaline"
    data-search="トレカライン オタロード店 トレカライン BOX / PSA">
   <div class="store-panel-name">トレカライン オタロード店</div>
-  <div class="store-panel-meta"><span class="store-status-badge is-fresh">今日更新</span> 最新日：07/01 / 過去投稿：4件</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：07/01 / 過去投稿：4件</div>
   <div class="store-panel-meta">BOX / PSA</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -17300,7 +17310,7 @@ main {
    data-brand="toreka-douraku"
    data-search="トレカ道楽 トレカ道楽 PSA">
   <div class="store-panel-name">トレカ道楽</div>
-  <div class="store-panel-meta"><span class="store-status-badge is-fresh">今日更新</span> 最新日：07/01 / 過去投稿：1件</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：07/01 / 過去投稿：1件</div>
   <div class="store-panel-meta">PSA</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -17476,7 +17486,7 @@ main {
    data-brand="meets-tcg-osaka"
    data-search="MEETS TCG 大阪 MEETS TCG 大阪 PSA">
   <div class="store-panel-name">MEETS TCG 大阪</div>
-  <div class="store-panel-meta"><span class="store-status-badge is-fresh">今日更新</span> 最新日：07/01 / 過去投稿：3件</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：07/01 / 過去投稿：3件</div>
   <div class="store-panel-meta">PSA</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
