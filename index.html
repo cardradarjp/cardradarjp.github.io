@@ -383,6 +383,83 @@ a {
 
 .search-area.filters-open .brand-panel { display: block; }
 
+.brand-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.brand-search {
+  width: 100%;
+  height: 38px;
+  min-width: 0;
+  background: rgba(255,255,255,.075);
+  border: 1px solid rgba(255,255,255,.16);
+  color: white;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.brand-clear-button {
+  height: 38px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.055);
+  color: rgba(255,255,255,.86);
+  padding: 0 12px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.selected-brand-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+
+.selected-brand-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  border: 1px solid rgba(255,255,255,.24);
+  background: rgba(255,255,255,.12);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.selected-brand-chip button {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0,0,0,.28);
+  color: white;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.brand-row {
+  flex-wrap: wrap;
+  max-height: min(44vh, 280px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.brand-row .filter-chip {
+  min-height: 36px;
+}
+
+.brand-row .filter-chip.hidden {
+  display: none;
+}
+
 .support-quick-links {
   flex-wrap: wrap;
   align-items: center;

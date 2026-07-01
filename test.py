@@ -2446,6 +2446,83 @@ a {
 
 .search-area.filters-open .brand-panel { display: block; }
 
+.brand-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.brand-search {
+  width: 100%;
+  height: 38px;
+  min-width: 0;
+  background: rgba(255,255,255,.075);
+  border: 1px solid rgba(255,255,255,.16);
+  color: white;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.brand-clear-button {
+  height: 38px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.055);
+  color: rgba(255,255,255,.86);
+  padding: 0 12px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.selected-brand-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+
+.selected-brand-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  border: 1px solid rgba(255,255,255,.24);
+  background: rgba(255,255,255,.12);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.selected-brand-chip button {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0,0,0,.28);
+  color: white;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.brand-row {
+  flex-wrap: wrap;
+  max-height: min(44vh, 280px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.brand-row .filter-chip {
+  min-height: 36px;
+}
+
+.brand-row .filter-chip.hidden {
+  display: none;
+}
+
 .support-quick-links {
   flex-wrap: wrap;
   align-items: center;
@@ -4169,7 +4246,7 @@ def build_area_page(posts_by_source, updated_at):
 
     for brand in brands:
         brand_buttons += f"""
-<button class="filter-chip" onclick="toggleBrand('{h(brand["id"])}', this)">{h(brand["label"])}</button>
+<button class="filter-chip" data-brand-id="{h(brand["id"])}" data-brand-label="{h(brand["label"])}" onclick="toggleBrand('{h(brand["id"])}', this)">{h(brand["label"])}</button>
 """
 
     media_json = json_for_script(media_items)
@@ -4780,6 +4857,11 @@ def build_area_page(posts_by_source, updated_at):
     </div>
 
     <div class="brand-panel" id="brandPanel" aria-hidden="true">
+      <div class="brand-tools">
+        <input id="brandSearchInput" class="brand-search" type="search" placeholder="店舗名で検索" aria-label="店舗名で検索" oninput="filterBrandOptions()">
+        <button class="brand-clear-button" type="button" onclick="clearBrandFilters()">全解除</button>
+      </div>
+      <div class="selected-brand-row" id="selectedBrandRow" aria-live="polite"></div>
       <div class="brand-row">
         {brand_buttons}
       </div>
@@ -5386,6 +5468,61 @@ function syncTypeButtons() {{
   }});
 }}
 
+function getBrandButton(brand) {{
+  return Array.from(document.querySelectorAll(".brand-row .filter-chip")).find(btn => btn.dataset.brandId === brand);
+}}
+
+function syncBrandButtons() {{
+  document.querySelectorAll(".brand-row .filter-chip").forEach(btn => {{
+    btn.classList.toggle("active", selectedBrands.has(btn.dataset.brandId));
+  }});
+}}
+
+function renderSelectedBrands() {{
+  const row = document.getElementById("selectedBrandRow");
+  if (!row) return;
+  row.innerHTML = "";
+  selectedBrands.forEach(brand => {{
+    const button = getBrandButton(brand);
+    const label = button?.dataset?.brandLabel || brand;
+    const chip = document.createElement("span");
+    chip.className = "selected-brand-chip";
+    const labelText = document.createElement("span");
+    labelText.textContent = label;
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.textContent = "×";
+    removeButton.setAttribute("aria-label", `${{label}}を解除`);
+    removeButton.addEventListener("click", () => removeBrandFilter(brand));
+    chip.append(labelText, removeButton);
+    row.appendChild(chip);
+  }});
+}}
+
+function filterBrandOptions() {{
+  const input = document.getElementById("brandSearchInput");
+  const query = (input?.value || "").trim().toLowerCase();
+  document.querySelectorAll(".brand-row .filter-chip").forEach(btn => {{
+    const label = (btn.dataset.brandLabel || btn.textContent || "").toLowerCase();
+    const id = (btn.dataset.brandId || "").toLowerCase();
+    btn.classList.toggle("hidden", !!query && !label.includes(query) && !id.includes(query));
+  }});
+}}
+
+function removeBrandFilter(brand) {{
+  selectedBrands.delete(brand);
+  syncBrandButtons();
+  renderSelectedBrands();
+  applyFilters();
+}}
+
+function clearBrandFilters() {{
+  selectedBrands.clear();
+  syncBrandButtons();
+  renderSelectedBrands();
+  applyFilters();
+}}
+
 function toggleType(type, button) {{
   if (type === "all") {{
     selectedTypes.clear();
@@ -5400,8 +5537,10 @@ function toggleType(type, button) {{
 }}
 
 function toggleBrand(brand, button) {{
-  if (selectedBrands.has(brand)) {{ selectedBrands.delete(brand); button.classList.remove("active"); }}
-  else {{ selectedBrands.add(brand); button.classList.add("active"); }}
+  if (selectedBrands.has(brand)) {{ selectedBrands.delete(brand); }}
+  else {{ selectedBrands.add(brand); }}
+  syncBrandButtons();
+  renderSelectedBrands();
   applyFilters();
 }}
 
@@ -5409,8 +5548,13 @@ function resetFilters() {{
   selectedTypes.clear();
   selectedBrands.clear();
   document.querySelectorAll(".search-input").forEach(input => input.value = "");
+  const brandSearch = document.getElementById("brandSearchInput");
+  if (brandSearch) brandSearch.value = "";
   document.querySelectorAll(".filter-chip").forEach(btn => btn.classList.remove("active"));
   syncTypeButtons();
+  syncBrandButtons();
+  renderSelectedBrands();
+  filterBrandOptions();
   applyFilters();
 }}
 
@@ -5668,6 +5812,9 @@ document.addEventListener("DOMContentLoaded", () => {{
   bindLandscapeImages();
   setupScrollIndicators();
   syncTypeButtons();
+  syncBrandButtons();
+  renderSelectedBrands();
+  filterBrandOptions();
   currentStoreRange = "week";
   updateStoreRangeButtons();
   updateStoreRangeVisibility();
