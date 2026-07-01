@@ -3435,7 +3435,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">トレカライン オタロード店</div>
-        <span class="store-status-badge is-fresh">今日更新</span>
+        <span class="store-status-badge is-fresh">最新日あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/28</span><span>表示：3件</span><span>過去投稿：3件</span><span class="store-group-types">BOX / PSA</span></div>
     </div>
@@ -3525,7 +3525,7 @@ main {
     <div>
       <div class="store-group-title">
         <div class="store-group-name">トレカ道楽</div>
-        <span class="store-status-badge is-fresh">今日更新</span>
+        <span class="store-status-badge is-fresh">最新日あり</span>
       </div>
       <div class="store-group-meta"><span>最新日：06/28</span><span>表示：2件</span><span>過去投稿：2件</span><span class="store-group-types">PSA / BOX</span></div>
     </div>
@@ -11912,7 +11912,7 @@ main {
    data-brand="torecaline"
    data-search="トレカライン オタロード店 トレカライン BOX / PSA">
   <div class="store-panel-name">トレカライン オタロード店</div>
-  <div class="store-panel-meta"><span class="store-status-badge is-fresh">今日更新</span> 最新日：06/28 / 過去投稿：3件</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：06/28 / 過去投稿：3件</div>
   <div class="store-panel-meta">BOX / PSA</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -11934,7 +11934,7 @@ main {
    data-brand="toreka-douraku"
    data-search="トレカ道楽 トレカ道楽 PSA / BOX">
   <div class="store-panel-name">トレカ道楽</div>
-  <div class="store-panel-meta"><span class="store-status-badge is-fresh">今日更新</span> 最新日：06/28 / 過去投稿：2件</div>
+  <div class="store-panel-meta"><span class="store-status-badge is-fresh">最新日あり</span> 最新日：06/28 / 過去投稿：2件</div>
   <div class="store-panel-meta">PSA / BOX</div>
   <div class="store-panel-link">店舗ページを見る →</div>
 </a>
@@ -12284,6 +12284,13 @@ function renderLandscapeModeSwitch(target, mode) {
     const activate = event => {
       event.preventDefault();
       event.stopPropagation();
+      if (isStoreViewImage && !isDragonstarTableImage) {
+        target.dataset.storeLandscapeMode = button.dataset.landscapeMode;
+        const img = target.querySelector(":scope > img");
+        if (img) renderLandscapeView(target, img);
+        setupScrollIndicators(target);
+        return;
+      }
       setLandscapeMode(button.dataset.landscapeMode);
     };
     button.addEventListener("click", activate);
@@ -12407,7 +12414,8 @@ function renderLandscapeView(target, img) {
   const storeTableMode = isDragonstarTableImage ? (target.dataset.storeTableMode || "original") : "";
   const mode = isDragonstarTableImage
     ? (storeTableMode === "original" ? "original" : "table")
-    : (savedMode === "table" ? "half" : savedMode);
+    : (isStoreViewImage ? (target.dataset.storeLandscapeMode || "original")
+    : (savedMode === "table" ? "half" : savedMode));
   target.classList.toggle("landscape-mode-original", mode === "original");
   target.classList.toggle("landscape-mode-half", mode === "half");
   target.classList.toggle("landscape-mode-quarter", mode === "quarter");
