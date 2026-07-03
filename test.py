@@ -2622,9 +2622,12 @@ a {
 }
 
 .timeline-post {
-  background: linear-gradient(180deg, rgba(19,20,20,.97), rgba(9,10,10,.97));
-  border: 1px solid rgba(224,220,202,.22);
-  box-shadow: 0 20px 48px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.035);
+  background: linear-gradient(180deg, rgba(20,21,21,.98), rgba(8,9,9,.98));
+  border: 1px solid rgba(224,220,202,.28);
+  box-shadow:
+    0 20px 48px rgba(0,0,0,.44),
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 0 0 1px rgba(255,255,255,.025);
   padding: 13px;
 }
 
@@ -2719,11 +2722,14 @@ a {
   flex-wrap: wrap;
   align-items: flex-start;
   width: 100%;
-  background: rgba(255,255,255,.045);
-  border: 1px solid rgba(255,255,255,.12);
+  background:
+    linear-gradient(145deg, rgba(230,226,210,.13), rgba(105,108,105,.08) 46%, rgba(11,12,12,.72)),
+    rgba(15,16,16,.92);
+  border: 1px solid rgba(224,220,202,.22);
   overflow: hidden;
   cursor: zoom-in;
   padding: 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), inset 0 -12px 24px rgba(0,0,0,.20);
 }
 
 .timeline-image img {
@@ -4350,9 +4356,13 @@ def build_area_page(posts_by_source, updated_at):
   box-sizing: border-box;
   padding: 9px 0 11px;
   overflow-x: hidden;
-  border: 1px solid rgba(255,255,255,.16);
+  border: 1px solid rgba(224,220,202,.26);
   border-radius: 16px;
-  background: linear-gradient(180deg, rgba(18,18,18,.94), rgba(8,8,8,.94));
+  background: linear-gradient(180deg, rgba(18,19,19,.97), rgba(8,9,9,.97));
+  box-shadow:
+    0 16px 34px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.045),
+    inset 0 0 0 1px rgba(255,255,255,.02);
 }
 
 #storeView .store-group.is-waiting {
@@ -4384,6 +4394,8 @@ def build_area_page(posts_by_source, updated_at):
   display: block;
   gap: 8px;
   padding: 0 8px 5px;
+  border-bottom: 1px solid rgba(224,220,202,.10);
+  margin-bottom: 6px;
 }
 
 #storeView .store-group-title {
@@ -4492,11 +4504,11 @@ def build_area_page(posts_by_source, updated_at):
   min-width: min(86vw, 430px) !important;
   max-width: min(86vw, 430px) !important;
   box-sizing: border-box;
-  padding: 1px 0 2px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  padding: 4px;
+  border: 1px solid rgba(224,220,202,.16);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(15,16,16,.74), rgba(7,8,8,.74));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
@@ -4540,10 +4552,14 @@ def build_area_page(posts_by_source, updated_at):
   align-items: center;
   justify-content: center;
   background:
-    linear-gradient(145deg, rgba(224,220,202,.18), rgba(103,106,104,.10) 48%, rgba(14,15,15,.72)),
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,.20), transparent 11%),
+    linear-gradient(145deg, rgba(234,230,214,.22), rgba(123,126,121,.11) 48%, rgba(14,15,15,.70)),
     rgba(16,17,17,.92);
-  border-color: rgba(224,220,202,.24);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), inset 0 -14px 28px rgba(0,0,0,.22);
+  border-color: rgba(224,220,202,.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -14px 28px rgba(0,0,0,.22),
+    0 0 0 1px rgba(0,0,0,.30);
 }
 
 #storeView .store-post-image img {
@@ -4555,6 +4571,7 @@ def build_area_page(posts_by_source, updated_at):
 }
 
 #storeView .store-post-image.is-landscape {
+  height: min(52vh, 420px);
   overflow-x: hidden !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: auto;
@@ -4584,19 +4601,19 @@ def build_area_page(posts_by_source, updated_at):
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 4px;
-  margin-top: 5px;
+  margin-top: 6px;
   margin-bottom: 6px;
 }
 
 #storeView .store-table-mode-button {
   min-height: 26px;
-  border: 1px solid rgba(224,220,202,.24);
+  border: 1px solid rgba(224,220,202,.30);
   border-radius: 8px;
-  background: rgba(8,9,9,.82);
+  background: linear-gradient(180deg, rgba(18,19,19,.92), rgba(6,7,7,.92));
   color: rgba(229,225,210,.86);
   font-size: 9.5px;
   font-weight: 650;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 1px 0 rgba(0,0,0,.35);
 }
 
 #storeView .store-table-mode-button.is-active {
@@ -4767,7 +4784,7 @@ def build_area_page(posts_by_source, updated_at):
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
-  margin: 14px 6px 0;
+  margin: 12px 6px 0;
   padding: 0;
 }
 
@@ -4778,10 +4795,10 @@ def build_area_page(posts_by_source, updated_at):
   padding: 6px 4px;
   font-size: 10px;
   white-space: normal;
-  border-color: rgba(224,220,202,.24);
-  background: rgba(8,9,9,.84);
+  border-color: rgba(224,220,202,.30);
+  background: linear-gradient(180deg, rgba(18,19,19,.92), rgba(6,7,7,.92));
   color: rgba(236,232,214,.90);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 1px 0 rgba(0,0,0,.35);
 }
 
 #storeView .store-expand-button {
@@ -4791,15 +4808,15 @@ def build_area_page(posts_by_source, updated_at):
   width: auto;
   min-height: 30px;
   margin: 0;
-  border: 1px solid rgba(224,220,202,.24);
+  border: 1px solid rgba(224,220,202,.30);
   border-radius: 999px;
-  background: rgba(8,9,9,.84);
+  background: linear-gradient(180deg, rgba(18,19,19,.92), rgba(6,7,7,.92));
   color: rgba(236,232,214,.90);
   font-weight: 700;
   padding: 5px 10px;
   font-size: 11px;
   white-space: nowrap;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 1px 0 rgba(0,0,0,.35);
 }
 
 @media (min-width: 900px) {
