@@ -2015,9 +2015,10 @@ main {
 }
 
 #storeView .store-post-image img {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  max-height: min(57vh, 455px);
+  max-height: min(64vh, 550px);
   object-fit: contain;
   object-position: center center;
   background: rgba(5,6,6,.98);

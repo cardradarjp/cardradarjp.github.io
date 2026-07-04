@@ -2076,7 +2076,7 @@ def json_for_script(data):
 # =========================
 
 COMMON_CSS = ""
-CSS_VERSION = "20260704-auto-stage"
+CSS_VERSION = "20260704-image-size"
 
 
 def html_shell(title, content, base_prefix="", extra_head=""):
