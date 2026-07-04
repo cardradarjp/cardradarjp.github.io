@@ -2076,7 +2076,7 @@ def json_for_script(data):
 # =========================
 
 COMMON_CSS = ""
-CSS_VERSION = "20260704-rim"
+CSS_VERSION = "20260704-css-rim"
 
 
 def html_shell(title, content, base_prefix="", extra_head=""):
