@@ -2076,7 +2076,7 @@ def json_for_script(data):
 # =========================
 
 COMMON_CSS = ""
-CSS_VERSION = "20260704-assets"
+CSS_VERSION = "20260704-rim"
 
 
 def html_shell(title, content, base_prefix="", extra_head=""):
@@ -2105,7 +2105,7 @@ def html_shell(title, content, base_prefix="", extra_head=""):
 def logo_html(base_prefix=""):
     return f"""
 <div class="logo-row">
-  <div class="logo-mark"><img src="{base_prefix}assets/cardradar-logo.png" alt="" loading="lazy" decoding="async"></div>
+  <div class="logo-mark">CR</div>
   <div>
     <div class="logo-text">CARDRADAR</div>
     <div class="logo-sub">TRADING CARD PRICE RADAR</div>
