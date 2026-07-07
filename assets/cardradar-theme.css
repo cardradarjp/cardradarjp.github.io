@@ -52,14 +52,14 @@ a {
 }
 
 .hero {
-  padding: 18px 6vw 18px;
+  padding: 14px 6vw 18px;
 }
 
 .logo-row {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: min(520px, 68vw);
+  width: min(640px, 56vw);
   max-width: 100%;
   padding: 0;
   border: 0;
@@ -72,7 +72,8 @@ a {
 .brand-logo {
   display: block;
   width: 100%;
-  height: clamp(78px, 14vw, 124px);
+  height: auto;
+  max-height: min(34vh, 360px);
   object-fit: contain;
   object-position: left center;
 }
@@ -1562,16 +1563,17 @@ main {
 
 @media (max-width: 760px) {
   .hero {
-    padding: 14px 10px 14px;
+    padding: 10px 10px 12px;
   }
 
   .logo-row {
-    width: min(380px, 92vw);
+    width: min(390px, 90vw);
   }
 
   .brand-logo {
     width: 100%;
-    height: clamp(72px, 19vw, 98px);
+    height: auto;
+    max-height: min(26vh, 220px);
   }
 
   .hero-large {
