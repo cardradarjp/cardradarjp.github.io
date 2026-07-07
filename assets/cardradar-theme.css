@@ -58,11 +58,10 @@ a {
 .logo-row {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 14px;
+  justify-content: center;
   width: fit-content;
   max-width: 100%;
-  padding: 9px 14px 9px 10px;
+  padding: 5px 12px;
   border: 1px solid rgba(224,220,202,.18);
   border-radius: 20px;
   background:
@@ -75,13 +74,12 @@ a {
   overflow: hidden;
 }
 
-.logo-mark {
-  font-family: "Times New Roman", serif;
-  font-size: 54px;
-  letter-spacing: -.16em;
-  line-height: .85;
-  color: rgba(238,235,224,.92);
-  text-shadow: 0 0 24px rgba(255,255,255,.16);
+.brand-logo {
+  display: block;
+  width: min(330px, 78vw);
+  height: clamp(64px, 13vw, 92px);
+  object-fit: contain;
+  object-position: center;
 }
 
 .logo-text {
@@ -1573,13 +1571,13 @@ main {
   }
 
   .logo-row {
-    gap: 10px;
-    padding: 7px 11px 7px 8px;
+    padding: 4px 9px;
     border-radius: 16px;
   }
 
-  .logo-mark {
-    font-size: 46px;
+  .brand-logo {
+    width: min(290px, 84vw);
+    height: clamp(54px, 16vw, 76px);
   }
 
   .hero-large {
