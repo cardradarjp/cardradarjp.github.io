@@ -2076,7 +2076,7 @@ def json_for_script(data):
 # =========================
 
 COMMON_CSS = ""
-CSS_VERSION = "20260707-hero-tighter-mobile"
+CSS_VERSION = "20260707-hero-dense-mobile"
 
 
 def html_shell(title, content, base_prefix="", extra_head=""):
