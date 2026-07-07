@@ -52,33 +52,29 @@ a {
 }
 
 .hero {
-  padding: 22px 6vw 22px;
+  padding: 18px 6vw 18px;
 }
 
 .logo-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: min(520px, 68vw);
   max-width: 100%;
-  padding: 3px 4px;
-  border: 1px solid rgba(224,220,202,.08);
-  border-radius: 12px;
-  background:
-    linear-gradient(145deg, rgba(18,19,19,.38), rgba(4,5,5,.54)),
-    rgba(6,7,7,.30);
-  box-shadow:
-    0 8px 18px rgba(0,0,0,.18),
-    inset 0 1px 0 rgba(255,255,255,.025);
-  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
 }
 
 .brand-logo {
   display: block;
   width: 100%;
-  height: clamp(86px, 15vw, 132px);
+  height: clamp(78px, 14vw, 124px);
   object-fit: contain;
-  object-position: center;
+  object-position: left center;
 }
 
 .logo-text {
@@ -1566,18 +1562,16 @@ main {
 
 @media (max-width: 760px) {
   .hero {
-    padding: 18px 10px 16px;
+    padding: 14px 10px 14px;
   }
 
   .logo-row {
     width: min(380px, 92vw);
-    padding: 2px 3px;
-    border-radius: 10px;
   }
 
   .brand-logo {
     width: 100%;
-    height: clamp(82px, 20vw, 112px);
+    height: clamp(72px, 19vw, 98px);
   }
 
   .hero-large {
