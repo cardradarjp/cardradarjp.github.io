@@ -52,7 +52,36 @@ a {
 }
 
 .hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding: 12px 7vw 16px;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(5,5,5,.2), rgba(5,5,5,.72) 72%, rgba(5,5,5,.92)),
+    linear-gradient(180deg, rgba(5,5,5,.06), rgba(5,5,5,.82) 100%),
+    url("cardradar-header-radar-bg.png");
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  opacity: .58;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.1), transparent 24%),
+    linear-gradient(180deg, transparent 0%, rgba(5,5,5,.78) 100%);
+  pointer-events: none;
 }
 
 .logo-row {
@@ -1572,6 +1601,22 @@ main {
 @media (max-width: 760px) {
   .hero {
     padding: 0 18px 2px;
+  }
+
+  .hero::before {
+    background:
+      linear-gradient(90deg, rgba(5,5,5,.08), rgba(5,5,5,.58) 68%, rgba(5,5,5,.9)),
+      linear-gradient(180deg, rgba(5,5,5,.04), rgba(5,5,5,.84) 100%),
+      url("cardradar-header-radar-bg.png");
+    background-size: auto 132%;
+    background-position: left top;
+    opacity: .62;
+  }
+
+  .hero::after {
+    background:
+      radial-gradient(circle at 16% 8%, rgba(255,255,255,.08), transparent 22%),
+      linear-gradient(180deg, rgba(5,5,5,.08) 0%, rgba(5,5,5,.75) 100%);
   }
 
   .logo-row {
