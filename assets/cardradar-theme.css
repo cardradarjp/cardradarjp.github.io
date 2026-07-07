@@ -1571,38 +1571,42 @@ main {
 
 @media (max-width: 760px) {
   .hero {
-    padding: 4px 18px 6px;
+    padding: 0 18px 2px;
   }
 
   .logo-row {
-    width: min(350px, 84vw);
+    width: min(330px, 80vw);
+    margin-bottom: 0;
   }
 
   .brand-logo {
     width: 100%;
     height: auto;
-    max-height: min(24vh, 205px);
+    max-height: min(22vh, 185px);
   }
 
   .breadcrumb {
-    margin-top: 6px;
+    margin-top: 2px;
     font-size: 11px;
+    line-height: 1.35;
   }
 
   .area-title {
-    margin-top: 10px;
-    font-size: clamp(30px, 9.4vw, 46px);
+    margin: 5px 0 0;
+    font-size: clamp(28px, 8.8vw, 42px);
+    line-height: 1;
   }
 
   .area-description {
-    margin-top: 4px;
-    line-height: 1.55;
+    margin-top: 2px;
+    line-height: 1.45;
     letter-spacing: .04em;
-    font-size: 13px;
+    font-size: 12.5px;
   }
 
   .updated {
-    margin-top: 5px;
+    margin-top: 3px;
+    line-height: 1.35;
   }
 
   .hero-large {
@@ -1624,17 +1628,17 @@ main {
   }
 
   main {
-    padding: 12px 18px calc(112px + env(safe-area-inset-bottom));
+    padding: 8px 18px calc(112px + env(safe-area-inset-bottom));
   }
 
   .section-head {
     display: block;
-    margin: 14px 0 10px;
+    margin: 9px 0 8px;
   }
 
   .search-area,
   .compact-search-bar {
-    padding: 7px 14px;
+    padding: 5px 14px;
   }
 
   .compact-line {
