@@ -52,7 +52,7 @@ a {
 }
 
 .hero {
-  padding: 14px 6vw 18px;
+  padding: 12px 7vw 16px;
 }
 
 .logo-row {
@@ -161,7 +161,7 @@ a {
 }
 
 .breadcrumb {
-  margin-top: 24px;
+  margin-top: 18px;
   color: rgba(255,255,255,.5);
   font-size: 12px;
   letter-spacing: .12em;
@@ -173,7 +173,7 @@ a {
 }
 
 .area-title {
-  margin-top: 32px;
+  margin-top: 24px;
   font-family: "Times New Roman", serif;
   font-size: clamp(34px, 9vw, 62px);
   letter-spacing: .18em;
@@ -181,10 +181,18 @@ a {
 }
 
 .area-description {
+  margin: 10px 0 0;
   max-width: 720px;
   color: rgba(255,255,255,.72);
-  line-height: 1.9;
+  line-height: 1.75;
   letter-spacing: .08em;
+}
+
+.updated {
+  margin-top: 12px;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+  letter-spacing: .1em;
 }
 
 .sticky-search {
@@ -1563,17 +1571,38 @@ main {
 
 @media (max-width: 760px) {
   .hero {
-    padding: 10px 10px 12px;
+    padding: 8px 18px 9px;
   }
 
   .logo-row {
-    width: min(390px, 90vw);
+    width: min(360px, 86vw);
   }
 
   .brand-logo {
     width: 100%;
     height: auto;
     max-height: min(26vh, 220px);
+  }
+
+  .breadcrumb {
+    margin-top: 10px;
+    font-size: 11px;
+  }
+
+  .area-title {
+    margin-top: 16px;
+    font-size: clamp(32px, 10vw, 50px);
+  }
+
+  .area-description {
+    margin-top: 6px;
+    line-height: 1.65;
+    letter-spacing: .04em;
+    font-size: 13px;
+  }
+
+  .updated {
+    margin-top: 8px;
   }
 
   .hero-large {
@@ -1595,16 +1624,17 @@ main {
   }
 
   main {
-    padding: 24px 18px calc(112px + env(safe-area-inset-bottom));
+    padding: 18px 18px calc(112px + env(safe-area-inset-bottom));
   }
 
   .section-head {
     display: block;
+    margin: 22px 0 12px;
   }
 
   .search-area,
   .compact-search-bar {
-    padding: 9px 14px;
+    padding: 8px 14px;
   }
 
   .compact-line {
