@@ -2076,7 +2076,7 @@ def json_for_script(data):
 # =========================
 
 COMMON_CSS = ""
-CSS_VERSION = "20260707-logo-hero-large"
+CSS_VERSION = "20260707-hero-compact"
 
 
 def html_shell(title, content, base_prefix="", extra_head=""):
@@ -2586,8 +2586,7 @@ def build_area_page(posts_by_source, updated_at):
     <h1 class="area-title">NIHONBASHI</h1>
 
     <p class="area-description">
-      大阪・日本橋周辺のポケカ買取表画像を、新しい順に眺められるタイムラインです。
-      店舗別の詳細は各投稿または店舗一覧から確認できます。
+      大阪・日本橋のポケカ買取表を、新着順・店舗別にまとめて確認できます。
     </p>
 
     <div class="updated">LAST CHECK : {h(updated_at)}</div>
