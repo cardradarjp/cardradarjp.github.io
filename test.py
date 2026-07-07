@@ -2076,7 +2076,7 @@ def json_for_script(data):
 # =========================
 
 COMMON_CSS = ""
-CSS_VERSION = "20260707-header-logo"
+CSS_VERSION = "20260707-header-logo-wide"
 
 
 def html_shell(title, content, base_prefix="", extra_head=""):

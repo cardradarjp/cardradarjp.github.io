@@ -52,32 +52,31 @@ a {
 }
 
 .hero {
-  padding: 26px 7vw 24px;
+  padding: 22px 6vw 22px;
 }
 
 .logo-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: fit-content;
+  width: min(560px, 70vw);
   max-width: 100%;
-  padding: 5px 12px;
-  border: 1px solid rgba(224,220,202,.18);
-  border-radius: 20px;
+  padding: 3px 4px;
+  border: 1px solid rgba(224,220,202,.08);
+  border-radius: 12px;
   background:
-    radial-gradient(circle at 18% 10%, rgba(255,255,255,.055), transparent 42%),
-    linear-gradient(145deg, rgba(18,19,19,.90), rgba(4,5,5,.94)),
-    rgba(6,7,7,.94);
+    linear-gradient(145deg, rgba(18,19,19,.38), rgba(4,5,5,.54)),
+    rgba(6,7,7,.30);
   box-shadow:
-    0 12px 28px rgba(0,0,0,.28),
-    inset 0 1px 0 rgba(255,255,255,.05);
+    0 8px 18px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.025);
   overflow: hidden;
 }
 
 .brand-logo {
   display: block;
-  width: min(330px, 78vw);
-  height: clamp(64px, 13vw, 92px);
+  width: 100%;
+  height: clamp(76px, 14vw, 120px);
   object-fit: contain;
   object-position: center;
 }
@@ -1567,17 +1566,18 @@ main {
 
 @media (max-width: 760px) {
   .hero {
-    padding: 22px 14px 18px;
+    padding: 18px 10px 16px;
   }
 
   .logo-row {
-    padding: 4px 9px;
-    border-radius: 16px;
+    width: min(390px, 92vw);
+    padding: 2px 3px;
+    border-radius: 10px;
   }
 
   .brand-logo {
-    width: min(290px, 84vw);
-    height: clamp(54px, 16vw, 76px);
+    width: 100%;
+    height: clamp(66px, 18vw, 90px);
   }
 
   .hero-large {
