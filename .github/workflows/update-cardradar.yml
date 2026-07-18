@@ -1,0 +1,57 @@
+name: Update CardRadar
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Restore X storage state
+        env:
+          X_STORAGE_STATE: ${{ secrets.X_STORAGE_STATE }}
+        run: |
+          if [ -z "${X_STORAGE_STATE:-}" ]; then
+            echo "::error::Repository Secret X_STORAGE_STATE is empty or not configured."
+            exit 1
+          fi
+          printf '%s' "$X_STORAGE_STATE" > x-storage-state.json
+          python -m json.tool x-storage-state.json > /dev/null
+
+      - name: Collect X posts
+        run: xvfb-run -a python -u test.py
+
+      - name: Rebuild HTML
+        run: python test.py --rebuild-html
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json index.html osaka.html osaka-nihonbashi.html stores/*.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update CardRadar data"
+            git push
+          fi

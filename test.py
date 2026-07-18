@@ -3,6 +3,7 @@ import re
 import json
 import sys
 import argparse
+import os
 import html as html_lib
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -4075,16 +4076,32 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
         "exclude_counts": {},
     }
 
+    browser_args = [
+        "--disable-blink-features=AutomationControlled",
+        "--disable-dev-shm-usage",
+        "--no-sandbox",
+    ]
+    is_github_actions = os.environ.get("GITHUB_ACTIONS") == "true"
+
     with sync_playwright() as p:
-        browser = p.chromium.launch_persistent_context(
-            user_data_dir=USER_DATA_DIR,
-            headless=False,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--disable-dev-shm-usage",
-                "--no-sandbox",
-            ],
-        )
+        launched_browser = None
+        if is_github_actions:
+            if not X_STORAGE_STATE_PATH.exists():
+                raise RuntimeError("X_STORAGE_STATE is required on GitHub Actions. Restore x-storage-state.json before running test.py.")
+            launched_browser = p.chromium.launch(
+                headless=True,
+                args=browser_args,
+            )
+            browser = launched_browser.new_context(
+                storage_state=str(X_STORAGE_STATE_PATH),
+                viewport={"width": 1280, "height": 900},
+            )
+        else:
+            browser = p.chromium.launch_persistent_context(
+                user_data_dir=USER_DATA_DIR,
+                headless=False,
+                args=browser_args,
+            )
 
         page = browser.new_page()
 
@@ -4267,6 +4284,8 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
             print(f"X storage_state save failed: {type(e).__name__}")
 
         browser.close()
+        if launched_browser is not None:
+            launched_browser.close()
 
     final_posts_by_source = posts_by_source_from_data(all_data)
     print("")
