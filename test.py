@@ -15,6 +15,7 @@ from urllib.parse import quote
 
 USER_DATA_DIR = "userdata"
 Path(USER_DATA_DIR).mkdir(exist_ok=True)
+X_STORAGE_STATE_PATH = Path("x-storage-state.json")
 
 STORES_DIR = Path("stores")
 STORES_DIR.mkdir(exist_ok=True)
@@ -4258,6 +4259,12 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
                     print("page_info_error:", page_error)
                 print(f"前回data.json: 残す ({previous_count}件)")
                 print("前回data.jsonのデータを残します")
+
+        try:
+            browser.storage_state(path=str(X_STORAGE_STATE_PATH))
+            print(f"X storage_state saved: {X_STORAGE_STATE_PATH}")
+        except Exception as e:
+            print(f"X storage_state save failed: {type(e).__name__}")
 
         browser.close()
 
