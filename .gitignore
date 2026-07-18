@@ -6,3 +6,4 @@ __pycache__/
 Thumbs.db
 ocr_images/
 ocr_result.txt
+x-storage-state.json
