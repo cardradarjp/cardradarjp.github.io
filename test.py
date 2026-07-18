@@ -17,6 +17,7 @@ from urllib.parse import quote
 USER_DATA_DIR = "userdata"
 Path(USER_DATA_DIR).mkdir(exist_ok=True)
 X_STORAGE_STATE_PATH = Path("x-storage-state.json")
+IS_GITHUB_ACTIONS = os.environ.get("GITHUB_ACTIONS") == "true"
 
 STORES_DIR = Path("stores")
 STORES_DIR.mkdir(exist_ok=True)
@@ -4081,11 +4082,9 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
         "--disable-dev-shm-usage",
         "--no-sandbox",
     ]
-    is_github_actions = os.environ.get("GITHUB_ACTIONS") == "true"
-
     with sync_playwright() as p:
         launched_browser = None
-        if is_github_actions:
+        if IS_GITHUB_ACTIONS:
             if not X_STORAGE_STATE_PATH.exists():
                 raise RuntimeError("X_STORAGE_STATE is required on GitHub Actions. Restore x-storage-state.json before running test.py.")
             launched_browser = p.chromium.launch(
@@ -4418,7 +4417,7 @@ def main():
     print("data.json")
     print("================================")
 
-    if len(sys.argv) == 1:
+    if len(sys.argv) == 1 and not IS_GITHUB_ACTIONS and sys.stdin.isatty():
         input("Enterで終了")
     return 0
 
