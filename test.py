@@ -4303,7 +4303,7 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
         print(f"  {reason}: {value}")
     print("================================")
 
-    return posts_by_source_from_data(all_data), dedupe_data_items(all_data), updated_at
+    return posts_by_source_from_data(all_data), dedupe_data_items(all_data), updated_at, overall_log
 
 
 # =========================
@@ -4313,6 +4313,39 @@ def collect_posts(sources_to_fetch=None, quick=False, previous_data=None):
 def write_file(path, content):
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
+
+
+def build_update_summary(overall_log, page_meta):
+    lines = [
+        "========================================",
+        "CardRadar 更新サマリー",
+        f"対象source数: {overall_log.get('target_sources', 0)}",
+        f"取得成功source数: {overall_log.get('success_sources', 0)}",
+        f"取得失敗source数: {overall_log.get('failed_sources', 0)}",
+        f"新規採用投稿数: {overall_log.get('adopted_posts', 0)}",
+        f"前回保持投稿数: {overall_log.get('kept_previous_posts', 0)}",
+        f"ポケカ外として除外: {page_meta.get('excluded_count', 0)}",
+        f"お知らせ系として除外: {page_meta.get('notice_excluded_count', 0)}",
+        f"最新日投稿数: {page_meta.get('latest_count', 0)}",
+        f"補完後の表示投稿数: {page_meta.get('selected_count', 0)}",
+        "========================================",
+    ]
+    return "\n".join(lines)
+
+
+def print_update_summary(overall_log, page_meta):
+    summary = build_update_summary(overall_log, page_meta)
+    print("")
+    print(summary)
+
+    github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if github_step_summary:
+        with open(github_step_summary, "a", encoding="utf-8") as f:
+            f.write("## CardRadar 更新サマリー\n\n")
+            for line in summary.splitlines()[2:-1]:
+                label, _, value = line.partition(":")
+                f.write(f"- {label}: {value.strip()}\n")
+            f.write("\n")
 
 
 def build_all_pages(posts_by_source, updated_at):
@@ -4335,6 +4368,13 @@ def build_all_pages(posts_by_source, updated_at):
     for shop in shops:
         store_html = build_store_page(shop, posts_by_source, updated_at)
         write_file(STORES_DIR / f"{shop['shop_slug']}.html", store_html)
+
+    return {
+        "excluded_count": excluded_count,
+        "notice_excluded_count": notice_excluded_count,
+        "latest_count": timeline_meta.get("latest_count", 0),
+        "selected_count": timeline_meta.get("selected_count", 0),
+    }
 
 
 def rebuild_html_from_data():
@@ -4401,11 +4441,11 @@ def main():
         print(f"area_id のsourceが見つかりません: {args.area}")
         return 1
 
-    posts_by_source, all_data, updated_at = collect_posts(selected_sources, quick=args.quick)
+    posts_by_source, all_data, updated_at, overall_log = collect_posts(selected_sources, quick=args.quick)
     all_data = dedupe_data_items(all_data)
     save_data_items(all_data)
 
-    build_all_pages(posts_by_source, updated_at)
+    page_meta = build_all_pages(posts_by_source, updated_at)
 
     print("")
     print("================================")
@@ -4416,6 +4456,8 @@ def main():
     print("stores/*.html")
     print("data.json")
     print("================================")
+
+    print_update_summary(overall_log, page_meta)
 
     if len(sys.argv) == 1 and not IS_GITHUB_ACTIONS and sys.stdin.isatty():
         input("Enterで終了")
