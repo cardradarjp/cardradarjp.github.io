@@ -2079,7 +2079,7 @@ def json_for_script(data):
 # =========================
 
 COMMON_CSS = ""
-CSS_VERSION = "20260708-header-radar-logo"
+CSS_VERSION = "20260719-header-radar-position"
 
 
 def html_shell(title, content, base_prefix="", extra_head=""):
