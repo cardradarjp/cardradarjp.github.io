@@ -1609,8 +1609,8 @@ main {
 
 @media (max-width: 760px) {
   .hero {
-    --mobile-header-unified-y: -58px;
-    --mobile-header-unified-size: 102% auto;
+    --mobile-header-unified-y: -62px;
+    --mobile-header-unified-size: 95% auto;
     --header-logo-x: 10px;
     --header-radar-x: -44px;
     --header-radar-y: -64px;
