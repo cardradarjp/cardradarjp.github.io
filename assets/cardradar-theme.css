@@ -52,11 +52,13 @@ a {
 }
 
 .hero {
+  --header-logo-x: 8px;
+  --header-logo-y: 0px;
   --header-radar-x: calc(0% - 36px);
   --header-radar-y: calc(50% - 54px);
   --header-radar-size: cover;
-  --header-radar-opacity: .72;
-  --header-radar-overlay-opacity: .66;
+  --header-radar-opacity: .78;
+  --header-radar-overlay-opacity: .60;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -92,15 +94,17 @@ a {
 .logo-row {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   width: min(640px, 56vw);
   max-width: 100%;
+  margin-inline: auto;
   padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
   overflow: visible;
+  transform: translate(var(--header-logo-x), var(--header-logo-y));
 }
 
 .brand-logo {
@@ -1605,11 +1609,12 @@ main {
 
 @media (max-width: 760px) {
   .hero {
+    --header-logo-x: 10px;
     --header-radar-x: -44px;
     --header-radar-y: -64px;
     --header-radar-size: auto 150%;
-    --header-radar-opacity: .78;
-    --header-radar-overlay-opacity: .58;
+    --header-radar-opacity: .84;
+    --header-radar-overlay-opacity: .52;
     padding: 0 18px 2px;
   }
 
