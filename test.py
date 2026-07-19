@@ -2079,7 +2079,7 @@ def json_for_script(data):
 # =========================
 
 COMMON_CSS = ""
-CSS_VERSION = "20260719-mobile-header-unified-cropfade"
+CSS_VERSION = "20260719-mobile-header-unified-scale95"
 
 
 def html_shell(title, content, base_prefix="", extra_head=""):
