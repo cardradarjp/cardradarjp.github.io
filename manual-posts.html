@@ -10,12 +10,12 @@
     :root{color-scheme:dark;--bg:#090b10;--panel:#121722;--panel2:#182131;--text:#f5f7fb;--muted:#9ba7b8;--line:rgba(255,255,255,.1);--accent:#dce7f7;--danger:#ffb4b4}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,#111722 0,var(--bg) 230px);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     main{width:min(100%,680px);margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 16px max(36px,env(safe-area-inset-bottom))}
-    h1{margin:0;font-size:clamp(25px,7vw,34px)}.lead,.note{color:var(--muted);line-height:1.6}.lead{font-size:14px}.note{font-size:12px;margin:10px 0 0}
+    h1{margin:0;font-size:clamp(25px,7vw,34px)}h2{margin:0 0 10px;font-size:18px}.lead,.note{color:var(--muted);line-height:1.6}.lead{font-size:14px}.note{font-size:12px;margin:10px 0 0}
     section{margin-top:20px;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(18,23,34,.94)}
     label{display:block;margin:14px 0 6px;font-size:13px;font-weight:700}input,select,button{width:100%;min-height:50px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);font:inherit;padding:12px}
     button{margin-top:16px;font-weight:800;background:#e8eef8;color:#10141c}.secondary{background:var(--panel2);color:var(--text)}
     .status{min-height:22px;margin-top:12px;font-size:13px}.error{color:var(--danger)}
-    .list{display:grid;gap:12px}.item{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}.meta{font-size:12px;color:var(--muted);line-height:1.6}.url{display:block;margin-top:8px;color:var(--accent);word-break:break-all}.actions{display:flex;gap:8px;margin-top:12px}.actions button{margin:0;min-height:42px}.empty{color:var(--muted);font-size:13px}
+    .list{display:grid;gap:12px}.item{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}.meta{font-size:12px;color:var(--muted);line-height:1.6}.url{display:block;margin-top:8px;color:var(--accent);word-break:break-all}.empty{color:var(--muted);font-size:13px}
     a.back{display:inline-block;margin-top:18px;color:var(--accent);text-decoration:none}
   </style>
 </head>
@@ -23,7 +23,7 @@
 <main>
   <header>
     <h1>投稿URL登録</h1>
-    <p class="lead">X投稿URLを端末内に保存し、登録済み一覧で確認する骨組み版です。</p>
+    <p class="lead">X投稿をGitHub経由で登録し、どの端末からでも同じ一覧を確認します。</p>
   </header>
 
   <section>
@@ -43,29 +43,27 @@
         <option>シングル</option><option>BOX</option><option>PSA・鑑定品</option><option>定額</option><option>未分類</option>
       </select>
 
-      <button type="submit">この端末に登録</button>
+      <button type="submit">GitHubへ登録する</button>
       <p id="status" class="status" aria-live="polite"></p>
-      <p class="note">現段階ではSafariのこの端末内だけに保存されます。GitHubや他端末にはまだ同期されません。</p>
+      <p class="note">ボタン後にGitHubの登録確認画面が開きます。内容を確認して「Submit new issue」を押すと、ActionsがJSONへ反映します。</p>
     </form>
   </section>
 
   <section>
-    <h2>登録済み投稿</h2>
-    <div id="list" class="list"></div>
-    <button id="clearAll" class="secondary" type="button">端末内の登録をすべて削除</button>
+    <h2>GitHubに登録済みの投稿</h2>
+    <div id="list" class="list"><p class="empty">読み込み中です。</p></div>
+    <button id="reload" class="secondary" type="button">一覧を再読み込み</button>
+    <p class="note">登録直後はActionsの処理に少し時間がかかるため、反映されなければ再読み込みしてください。</p>
   </section>
 
   <a class="back" href="admin-search.html">← 管理検索へ戻る</a>
 </main>
 <script>
 (() => {
-  const KEY='cardradar_manual_posts_v1';
   const form=document.getElementById('postForm');
   const status=document.getElementById('status');
   const list=document.getElementById('list');
-  const clearAll=document.getElementById('clearAll');
-  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}};
-  const write=(items)=>localStorage.setItem(KEY,JSON.stringify(items));
+  const reload=document.getElementById('reload');
   const normalize=(value)=>{
     try{
       const u=new URL(value.trim());
@@ -75,27 +73,40 @@
       return {url:`https://x.com/${m[1]}/status/${m[2]}`,account:m[1],statusId:m[2]};
     }catch{return null}
   };
-  const render=()=>{
-    const items=read();
-    list.innerHTML='';
-    if(!items.length){list.innerHTML='<p class="empty">まだ登録はありません。</p>';return}
-    items.slice().reverse().forEach(item=>{
-      const card=document.createElement('article');card.className='item';
-      card.innerHTML=`<strong>${item.store}｜${item.category}</strong><div class="meta">@${item.account}<br>${new Date(item.registeredAt).toLocaleString('ja-JP')}</div><a class="url" href="${item.url}">${item.url}</a><div class="actions"><button class="secondary" type="button" data-delete="${item.statusId}">削除</button></div>`;
-      list.appendChild(card);
-    });
+  const render=async()=>{
+    list.innerHTML='<p class="empty">読み込み中です。</p>';
+    try{
+      const res=await fetch(`manual_posts.json?t=${Date.now()}`,{cache:'no-store'});
+      if(!res.ok) throw new Error('load failed');
+      const items=await res.json();
+      list.innerHTML='';
+      if(!items.length){list.innerHTML='<p class="empty">まだ登録はありません。</p>';return}
+      items.slice().reverse().forEach(item=>{
+        const card=document.createElement('article');card.className='item';
+        const title=document.createElement('strong');title.textContent=`${item.store}｜${item.category}`;
+        const meta=document.createElement('div');meta.className='meta';meta.textContent=`@${item.account}｜${new Date(item.registeredAt).toLocaleString('ja-JP')}`;
+        const link=document.createElement('a');link.className='url';link.href=item.url;link.target='_blank';link.rel='noopener';link.textContent=item.url;
+        card.append(title,meta,link);list.appendChild(card);
+      });
+    }catch{list.innerHTML='<p class="empty">一覧を読み込めませんでした。時間を置いて再読み込みしてください。</p>'}
   };
   form.addEventListener('submit',e=>{
     e.preventDefault();status.textContent='';status.className='status';
     const parsed=normalize(form.url.value);
     if(!parsed){status.textContent='Xの投稿URLを入力してください。';status.className='status error';return}
-    const items=read();
-    if(items.some(x=>x.statusId===parsed.statusId)){status.textContent='この投稿は登録済みです。';status.className='status error';return}
-    items.push({...parsed,store:form.store.value,category:form.category.value,registeredAt:new Date().toISOString()});
-    write(items);form.reset();status.textContent='登録しました。';render();
+    const body=[
+      'CardRadar manual post registration',
+      '',
+      `URL: ${parsed.url}`,
+      `STORE: ${form.store.value}`,
+      `CATEGORY: ${form.category.value}`,
+      `ACCOUNT: ${parsed.account}`,
+      `STATUS_ID: ${parsed.statusId}`
+    ].join('\n');
+    const params=new URLSearchParams({title:`[CardRadar登録] ${parsed.statusId}`,body});
+    window.location.href=`https://github.com/cardradarjp/cardradarjp.github.io/issues/new?${params}`;
   });
-  list.addEventListener('click',e=>{const id=e.target.dataset.delete;if(!id)return;write(read().filter(x=>x.statusId!==id));render()});
-  clearAll.addEventListener('click',()=>{if(confirm('この端末内の登録をすべて削除しますか？')){localStorage.removeItem(KEY);render()}});
+  reload.addEventListener('click',render);
   render();
 })();
 </script>
