@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0d12">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CardRadar 投稿登録</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090b10;--panel:#121722;--panel2:#182131;--text:#f5f7fb;--muted:#9ba7b8;--line:rgba(255,255,255,.1);--accent:#dce7f7;--danger:#ffb4b4}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,#111722 0,var(--bg) 230px);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    main{width:min(100%,680px);margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 16px max(36px,env(safe-area-inset-bottom))}
+    h1{margin:0;font-size:clamp(25px,7vw,34px)}.lead,.note{color:var(--muted);line-height:1.6}.lead{font-size:14px}.note{font-size:12px;margin:10px 0 0}
+    section{margin-top:20px;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(18,23,34,.94)}
+    label{display:block;margin:14px 0 6px;font-size:13px;font-weight:700}input,select,button{width:100%;min-height:50px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);font:inherit;padding:12px}
+    button{margin-top:16px;font-weight:800;background:#e8eef8;color:#10141c}.secondary{background:var(--panel2);color:var(--text)}
+    .status{min-height:22px;margin-top:12px;font-size:13px}.error{color:var(--danger)}
+    .list{display:grid;gap:12px}.item{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}.meta{font-size:12px;color:var(--muted);line-height:1.6}.url{display:block;margin-top:8px;color:var(--accent);word-break:break-all}.actions{display:flex;gap:8px;margin-top:12px}.actions button{margin:0;min-height:42px}.empty{color:var(--muted);font-size:13px}
+    a.back{display:inline-block;margin-top:18px;color:var(--accent);text-decoration:none}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>投稿URL登録</h1>
+    <p class="lead">X投稿URLを端末内に保存し、登録済み一覧で確認する骨組み版です。</p>
+  </header>
+
+  <section>
+    <form id="postForm">
+      <label for="url">X投稿URL</label>
+      <input id="url" name="url" type="url" inputmode="url" autocomplete="off" placeholder="https://x.com/account/status/123..." required>
+
+      <label for="store">店舗</label>
+      <select id="store" name="store" required>
+        <option value="">選択してください</option>
+        <option>ドラスタ日本橋</option><option>ドラスタ日本橋2号店</option><option>ドラスタ日本橋3号店</option><option>アムタフ</option><option>GOTCHA!</option><option>その他</option>
+      </select>
+
+      <label for="category">カテゴリ</label>
+      <select id="category" name="category" required>
+        <option value="">選択してください</option>
+        <option>シングル</option><option>BOX</option><option>PSA・鑑定品</option><option>定額</option><option>未分類</option>
+      </select>
+
+      <button type="submit">この端末に登録</button>
+      <p id="status" class="status" aria-live="polite"></p>
+      <p class="note">現段階ではSafariのこの端末内だけに保存されます。GitHubや他端末にはまだ同期されません。</p>
+    </form>
+  </section>
+
+  <section>
+    <h2>登録済み投稿</h2>
+    <div id="list" class="list"></div>
+    <button id="clearAll" class="secondary" type="button">端末内の登録をすべて削除</button>
+  </section>
+
+  <a class="back" href="admin-search.html">← 管理検索へ戻る</a>
+</main>
+<script>
+(() => {
+  const KEY='cardradar_manual_posts_v1';
+  const form=document.getElementById('postForm');
+  const status=document.getElementById('status');
+  const list=document.getElementById('list');
+  const clearAll=document.getElementById('clearAll');
+  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}};
+  const write=(items)=>localStorage.setItem(KEY,JSON.stringify(items));
+  const normalize=(value)=>{
+    try{
+      const u=new URL(value.trim());
+      if(!['x.com','www.x.com','twitter.com','www.twitter.com'].includes(u.hostname)) return null;
+      const m=u.pathname.match(/^\/([^/]+)\/status\/(\d+)/);
+      if(!m) return null;
+      return {url:`https://x.com/${m[1]}/status/${m[2]}`,account:m[1],statusId:m[2]};
+    }catch{return null}
+  };
+  const render=()=>{
+    const items=read();
+    list.innerHTML='';
+    if(!items.length){list.innerHTML='<p class="empty">まだ登録はありません。</p>';return}
+    items.slice().reverse().forEach(item=>{
+      const card=document.createElement('article');card.className='item';
+      card.innerHTML=`<strong>${item.store}｜${item.category}</strong><div class="meta">@${item.account}<br>${new Date(item.registeredAt).toLocaleString('ja-JP')}</div><a class="url" href="${item.url}">${item.url}</a><div class="actions"><button class="secondary" type="button" data-delete="${item.statusId}">削除</button></div>`;
+      list.appendChild(card);
+    });
+  };
+  form.addEventListener('submit',e=>{
+    e.preventDefault();status.textContent='';status.className='status';
+    const parsed=normalize(form.url.value);
+    if(!parsed){status.textContent='Xの投稿URLを入力してください。';status.className='status error';return}
+    const items=read();
+    if(items.some(x=>x.statusId===parsed.statusId)){status.textContent='この投稿は登録済みです。';status.className='status error';return}
+    items.push({...parsed,store:form.store.value,category:form.category.value,registeredAt:new Date().toISOString()});
+    write(items);form.reset();status.textContent='登録しました。';render();
+  });
+  list.addEventListener('click',e=>{const id=e.target.dataset.delete;if(!id)return;write(read().filter(x=>x.statusId!==id));render()});
+  clearAll.addEventListener('click',()=>{if(confirm('この端末内の登録をすべて削除しますか？')){localStorage.removeItem(KEY);render()}});
+  render();
+})();
+</script>
+</body>
+</html>
