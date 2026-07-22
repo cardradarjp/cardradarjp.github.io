@@ -1,0 +1,20 @@
+.manual-post-card.store-post-card {
+  flex: 0 0 auto !important;
+  align-self: flex-start !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+  block-size: auto !important;
+}
+
+.manual-post-card .manual-post-embed,
+.manual-post-card .manual-post-fallback {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+.manual-post-card .manual-post-fallback {
+  padding: 14px !important;
+}
