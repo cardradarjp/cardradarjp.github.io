@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0d12">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CardRadar 管理検索</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090b10;
+      --panel: #121722;
+      --panel-strong: #182131;
+      --text: #f5f7fb;
+      --muted: #9ba7b8;
+      --line: rgba(255, 255, 255, 0.1);
+      --accent: #dce7f7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #111722 0, var(--bg) 230px);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(100%, 680px);
+      margin: 0 auto;
+      padding: max(22px, env(safe-area-inset-top)) 16px max(36px, env(safe-area-inset-bottom));
+    }
+
+    header { margin-bottom: 24px; }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(25px, 7vw, 34px);
+      letter-spacing: 0.02em;
+    }
+
+    .lead {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    section {
+      margin-top: 20px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(18, 23, 34, 0.92);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .note {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .links {
+      display: grid;
+      gap: 10px;
+    }
+
+    a.search-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-strong);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a.search-link::after {
+      content: "Xで検索 ↗";
+      flex: 0 0 auto;
+      margin-left: 12px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    a.search-link:active { transform: scale(0.985); }
+
+    .footer {
+      margin: 22px 4px 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>CardRadar 管理検索</h1>
+      <p class="lead">Safariで買取投稿を確認するための管理用ページです。現在は検索導線だけを用意した骨組み版です。</p>
+    </header>
+
+    <section>
+      <h2>まとめて確認</h2>
+      <p class="note">まずは対象5アカウントの画像付き投稿をまとめて確認します。</p>
+      <div class="links">
+        <a class="search-link" href="https://x.com/search?q=%28from%3Ads_nipponbashi%20OR%20from%3Ads_nipponbashi2%20OR%20from%3Ads_nipponbashi3%20OR%20from%3AAMTAF_SHOP%20OR%20from%3Acardshop_gotcha%29%20filter%3Aimages%20-filter%3Areplies&src=typed_query&f=live">5店舗まとめて確認</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>店舗別</h2>
+      <p class="note">漏れや分類を確認したいときに、店舗単位で開きます。</p>
+      <div class="links">
+        <a class="search-link" href="https://x.com/search?q=from%3Ads_nipponbashi%20filter%3Aimages%20-filter%3Areplies&src=typed_query&f=live">ドラスタ日本橋</a>
+        <a class="search-link" href="https://x.com/search?q=from%3Ads_nipponbashi2%20filter%3Aimages%20-filter%3Areplies&src=typed_query&f=live">ドラスタ日本橋2号店</a>
+        <a class="search-link" href="https://x.com/search?q=from%3Ads_nipponbashi3%20filter%3Aimages%20-filter%3Areplies&src=typed_query&f=live">ドラスタ日本橋3号店</a>
+        <a class="search-link" href="https://x.com/search?q=from%3AAMTAF_SHOP%20filter%3Aimages%20-filter%3Areplies&src=typed_query&f=live">アムタフ</a>
+        <a class="search-link" href="https://x.com/search?q=from%3Acardshop_gotcha%20filter%3Aimages%20-filter%3Areplies&src=typed_query&f=live">GOTCHA!</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>広めに確認</h2>
+      <p class="note">本文キーワードで漏れやすいBOX系・画像中心の投稿を確認するための入口です。</p>
+      <div class="links">
+        <a class="search-link" href="https://x.com/search?q=from%3AAMTAF_SHOP%20filter%3Aimages%20-filter%3Areplies&src=typed_query&f=live">アムタフ画像投稿</a>
+      </div>
+    </section>
+
+    <p class="footer">このページからXの情報を自動取得しません。検索結果を人が確認するための導線のみです。</p>
+  </main>
+</body>
+</html>
