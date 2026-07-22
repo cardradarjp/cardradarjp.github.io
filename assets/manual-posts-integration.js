@@ -40,8 +40,10 @@
         width: 100%;
         min-height: 120px;
       }
-      .manual-post-card .twitter-tweet {
+      .manual-post-card .twitter-tweet,
+      .manual-post-card iframe {
         margin: 0 auto !important;
+        max-width: 100% !important;
       }
       .manual-post-card .manual-post-fallback {
         display: grid;
@@ -67,15 +69,23 @@
   };
 
   const loadWidgets = () => new Promise((resolve, reject) => {
-    if (window.twttr?.widgets) {
+    if (window.twttr?.widgets?.createTweet) {
       resolve(window.twttr);
       return;
     }
 
-    const existing = document.querySelector(`script[src="${WIDGETS_URL}"]`);
+    const finish = () => {
+      if (window.twttr?.widgets?.createTweet) resolve(window.twttr);
+      else reject(new Error('X widgets API unavailable'));
+    };
+
+    const existing = [...document.scripts].find(script => script.src === WIDGETS_URL);
     if (existing) {
-      existing.addEventListener('load', () => resolve(window.twttr), { once: true });
+      existing.addEventListener('load', finish, { once: true });
       existing.addEventListener('error', reject, { once: true });
+      setTimeout(() => {
+        if (window.twttr?.widgets?.createTweet) resolve(window.twttr);
+      }, 0);
       return;
     }
 
@@ -83,7 +93,7 @@
     script.src = WIDGETS_URL;
     script.async = true;
     script.charset = 'utf-8';
-    script.addEventListener('load', () => resolve(window.twttr), { once: true });
+    script.addEventListener('load', finish, { once: true });
     script.addEventListener('error', reject, { once: true });
     document.head.appendChild(script);
   });
@@ -123,16 +133,6 @@
 
     const embed = document.createElement('div');
     embed.className = 'manual-post-embed';
-    const quote = document.createElement('blockquote');
-    quote.className = 'twitter-tweet';
-    quote.dataset.theme = 'dark';
-    quote.dataset.dnt = 'true';
-    quote.dataset.conversation = 'none';
-    const link = document.createElement('a');
-    link.href = item.url;
-    link.textContent = 'Xの投稿を表示';
-    quote.appendChild(link);
-    embed.appendChild(quote);
 
     article.append(badge, embed);
     article._manualItem = item;
@@ -144,18 +144,28 @@
     try {
       const twttr = await loadWidgets();
       await Promise.all(cards.map(async card => {
+        const item = card._manualItem;
+        const embed = card.querySelector('.manual-post-embed');
         try {
-          await twttr.widgets.load(card);
-          if (!card.querySelector('iframe')) {
-            const embed = card.querySelector('.manual-post-embed');
-            embed.replaceChildren(makeFallback(card._manualItem));
-          }
-        } catch {
-          const embed = card.querySelector('.manual-post-embed');
-          embed.replaceChildren(makeFallback(card._manualItem));
+          const iframe = await twttr.widgets.createTweet(
+            String(item.statusId),
+            embed,
+            {
+              theme: 'dark',
+              dnt: true,
+              conversation: 'none',
+              align: 'center',
+              lang: 'ja'
+            }
+          );
+          if (!iframe) embed.replaceChildren(makeFallback(item));
+        } catch (error) {
+          console.warn('CardRadar X embed failed.', item.statusId, error);
+          embed.replaceChildren(makeFallback(item));
         }
       }));
-    } catch {
+    } catch (error) {
+      console.warn('CardRadar X widgets could not be loaded.', error);
       cards.forEach(card => {
         const embed = card.querySelector('.manual-post-embed');
         embed.replaceChildren(makeFallback(card._manualItem));
@@ -187,7 +197,7 @@
           group.dataset.types = `${group.dataset.types || ''} ${typeMap[item.category] || 'x_post_other'}`.trim();
         });
 
-      renderEmbeds(cards);
+      await renderEmbeds(cards);
     } catch (error) {
       console.warn('CardRadar manual posts could not be loaded.', error);
     }
