@@ -12,10 +12,12 @@
     main{width:min(100%,680px);margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 16px max(36px,env(safe-area-inset-bottom))}
     h1{margin:0;font-size:clamp(25px,7vw,34px)}h2{margin:0 0 10px;font-size:18px}.lead,.note{color:var(--muted);line-height:1.6}.lead{font-size:14px}.note{font-size:12px;margin:10px 0 0}
     section{margin-top:20px;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(18,23,34,.94)}
-    label{display:block;margin:14px 0 6px;font-size:13px;font-weight:700}input,select,button{width:100%;min-height:50px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);font:inherit;padding:12px}
+    label{display:block;margin:14px 0 6px;font-size:13px;font-weight:700}input,select,button,textarea{width:100%;min-height:50px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);font:inherit;padding:12px}
+    textarea{min-height:170px;resize:vertical;line-height:1.55}
     button{margin-top:16px;font-weight:800;background:#e8eef8;color:#10141c}.secondary{background:var(--panel2);color:var(--text)}
     .status{min-height:22px;margin-top:12px;font-size:13px}.error{color:var(--danger)}
     .list{display:grid;gap:12px}.item{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}.meta{font-size:12px;color:var(--muted);line-height:1.6}.url{display:block;margin-top:8px;color:var(--accent);word-break:break-all}.empty{color:var(--muted);font-size:13px}
+    .prepared{display:none}.prepared.is-visible{display:block}.actions{display:grid;gap:8px;margin-top:12px}.actions button,.actions a{margin:0;min-height:48px}.actions a{display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);font-weight:800;text-decoration:none;padding:12px}
     a.back{display:inline-block;margin-top:18px;color:var(--accent);text-decoration:none}
   </style>
 </head>
@@ -43,10 +45,24 @@
         <option>シングル</option><option>BOX</option><option>PSA・鑑定品</option><option>定額</option><option>未分類</option>
       </select>
 
-      <button type="submit">GitHubへ登録する</button>
+      <button type="submit">登録内容を作成</button>
       <p id="status" class="status" aria-live="polite"></p>
-      <p class="note">ボタン後にGitHubの登録確認画面が開きます。内容を確認して「Submit new issue」を押すと、ActionsがJSONへ反映します。</p>
     </form>
+
+    <div id="prepared" class="prepared">
+      <label for="issueTitle">GitHub Issueのタイトル</label>
+      <input id="issueTitle" readonly>
+      <button id="copyTitle" class="secondary" type="button">タイトルをコピー</button>
+
+      <label for="issueBody">GitHub Issueの本文</label>
+      <textarea id="issueBody" readonly></textarea>
+      <button id="copyBody" class="secondary" type="button">本文をコピー</button>
+
+      <div class="actions">
+        <a id="openGithub" href="https://github.com/cardradarjp/cardradarjp.github.io/issues/new" target="_blank" rel="noopener">GitHubのIssue作成画面を開く</a>
+      </div>
+      <p class="note">GitHub画面で、コピーしたタイトルと本文を貼り付けて「Submit new issue」を押してください。GitHubアプリで内容が空になる問題を避ける方式です。</p>
+    </div>
   </section>
 
   <section>
@@ -64,6 +80,11 @@
   const status=document.getElementById('status');
   const list=document.getElementById('list');
   const reload=document.getElementById('reload');
+  const prepared=document.getElementById('prepared');
+  const issueTitle=document.getElementById('issueTitle');
+  const issueBody=document.getElementById('issueBody');
+  const copyTitle=document.getElementById('copyTitle');
+  const copyBody=document.getElementById('copyBody');
   const normalize=(value)=>{
     try{
       const u=new URL(value.trim());
@@ -72,6 +93,10 @@
       if(!m) return null;
       return {url:`https://x.com/${m[1]}/status/${m[2]}`,account:m[1],statusId:m[2]};
     }catch{return null}
+  };
+  const copy=async(value,button)=>{
+    try{await navigator.clipboard.writeText(value);const old=button.textContent;button.textContent='コピーしました';setTimeout(()=>button.textContent=old,1200)}
+    catch{status.textContent='コピーできませんでした。入力欄を長押ししてコピーしてください。';status.className='status error'}
   };
   const render=async()=>{
     list.innerHTML='<p class="empty">読み込み中です。</p>';
@@ -94,18 +119,21 @@
     e.preventDefault();status.textContent='';status.className='status';
     const parsed=normalize(form.url.value);
     if(!parsed){status.textContent='Xの投稿URLを入力してください。';status.className='status error';return}
-    const body=[
-      'CardRadar manual post registration',
-      '',
+    issueTitle.value=`[CardRadar登録] ${parsed.statusId}`;
+    issueBody.value=[
+      'CardRadar manual post registration','',
       `URL: ${parsed.url}`,
       `STORE: ${form.store.value}`,
       `CATEGORY: ${form.category.value}`,
       `ACCOUNT: ${parsed.account}`,
       `STATUS_ID: ${parsed.statusId}`
     ].join('\n');
-    const params=new URLSearchParams({title:`[CardRadar登録] ${parsed.statusId}`,body});
-    window.location.href=`https://github.com/cardradarjp/cardradarjp.github.io/issues/new?${params}`;
+    prepared.classList.add('is-visible');
+    status.textContent='登録内容を作成しました。タイトルと本文をコピーしてGitHubへ貼り付けてください。';
+    prepared.scrollIntoView({behavior:'smooth',block:'start'});
   });
+  copyTitle.addEventListener('click',()=>copy(issueTitle.value,copyTitle));
+  copyBody.addEventListener('click',()=>copy(issueBody.value,copyBody));
   reload.addEventListener('click',render);
   render();
 })();
