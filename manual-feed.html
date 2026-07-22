@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050505">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CardRadar 手動登録投稿</title>
+  <style>
+    :root{color-scheme:dark;--bg:#050505;--panel:#11151d;--panel2:#181f2a;--text:#f7f7f7;--muted:#a9b0ba;--line:rgba(255,255,255,.11);--accent:#e5edf8}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,#10151d 0,var(--bg) 260px);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    main{width:min(100%,760px);margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 16px max(40px,env(safe-area-inset-bottom))}
+    h1{margin:0;font-size:clamp(26px,7vw,38px)}.lead{margin:9px 0 0;color:var(--muted);font-size:14px;line-height:1.65}
+    .toolbar{display:flex;gap:10px;margin:22px 0 16px}.toolbar a,.toolbar button{flex:1;min-height:48px;border:1px solid var(--line);border-radius:13px;background:var(--panel2);color:var(--text);font:inherit;font-weight:750;text-decoration:none;padding:12px;display:flex;align-items:center;justify-content:center}
+    .summary{margin:0 0 12px;color:var(--muted);font-size:13px}.list{display:grid;gap:14px}.card{padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(17,21,29,.95);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+    .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.store{font-size:17px;font-weight:800}.badge{flex:0 0 auto;padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:var(--panel2);font-size:11px;font-weight:750}
+    .meta{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.6}.actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:14px}.actions a{min-height:46px;border-radius:12px;background:#eef3fa;color:#111722;text-decoration:none;font-weight:800;display:flex;align-items:center;justify-content:center}
+    .empty{padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--panel);color:var(--muted);text-align:center}.error{color:#ffb8b8}.footer{margin-top:22px;text-align:center;color:var(--muted);font-size:12px;line-height:1.6}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>手動登録投稿</h1>
+    <p class="lead">管理画面から登録したX投稿を、CardRadarの表示用一覧として確認するページです。</p>
+  </header>
+  <div class="toolbar">
+    <a href="osaka-nihonbashi.html">CardRadarへ戻る</a>
+    <button id="reload" type="button">再読み込み</button>
+  </div>
+  <p id="summary" class="summary">読み込み中です。</p>
+  <div id="list" class="list"><div class="empty">読み込み中です。</div></div>
+  <p class="footer">現在は投稿URL・店舗・カテゴリのみを表示します。画像表示や既存店舗別ビューへの統合は次の段階で追加します。</p>
+</main>
+<script>
+(() => {
+  const list=document.getElementById('list');
+  const summary=document.getElementById('summary');
+  const reload=document.getElementById('reload');
+  const esc=(value)=>String(value??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+  const load=async()=>{
+    summary.textContent='読み込み中です。';
+    list.innerHTML='<div class="empty">読み込み中です。</div>';
+    try{
+      const res=await fetch(`manual_posts.json?t=${Date.now()}`,{cache:'no-store'});
+      if(!res.ok) throw new Error('load failed');
+      const items=await res.json();
+      const sorted=items.slice().sort((a,b)=>String(b.registeredAt||'').localeCompare(String(a.registeredAt||'')));
+      summary.textContent=`登録済み：${sorted.length}件`;
+      if(!sorted.length){list.innerHTML='<div class="empty">まだ登録はありません。</div>';return}
+      list.innerHTML=sorted.map(item=>{
+        const date=item.registeredAt?new Date(item.registeredAt).toLocaleString('ja-JP'):'日時不明';
+        return `<article class="card"><div class="top"><div><div class="store">${esc(item.store||'店舗未設定')}</div><div class="meta">@${esc(item.account||'unknown')}<br>${esc(date)}</div></div><span class="badge">${esc(item.category||'未分類')}</span></div><div class="actions"><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">Xで投稿を開く</a></div></article>`;
+      }).join('');
+    }catch(error){summary.textContent='読み込みに失敗しました。';list.innerHTML='<div class="empty error">登録データを読み込めませんでした。再読み込みしてください。</div>'}
+  };
+  reload.addEventListener('click',load);
+  load();
+})();
+</script>
+</body>
+</html>
