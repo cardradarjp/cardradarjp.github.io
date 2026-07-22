@@ -1,0 +1,48 @@
+name: Integrate manual posts into CardRadar
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - manual_posts.json
+      - assets/manual-posts-integration.js
+      - .github/workflows/integrate-manual-posts.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure integration script is loaded
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('osaka-nihonbashi.html')
+          html = path.read_text(encoding='utf-8')
+          marker = '<script src="assets/manual-posts-integration.js?v=20260722"></script>'
+
+          if marker not in html:
+              if '</body>' not in html:
+                  raise SystemExit('osaka-nihonbashi.html has no closing body tag')
+              html = html.replace('</body>', f'{marker}\n</body>', 1)
+              path.write_text(html, encoding='utf-8')
+          PY
+
+      - name: Commit generated integration
+        run: |
+          if git diff --quiet -- osaka-nihonbashi.html; then
+            echo "No integration change needed"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add osaka-nihonbashi.html
+          git commit -m "Integrate manual posts into CardRadar"
+          git push
