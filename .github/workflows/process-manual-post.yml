@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   register:
-    if: github.actor == 'cardradarjp' && startsWith(github.event.issue.title, '[CardRadar登録]')
+    if: github.actor == 'cardradarjp' && (startsWith(github.event.issue.title, '[CardRadar登録]') || startsWith(github.event.issue.title, '[CardRadar一括登録]'))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,7 +18,7 @@ jobs:
         with:
           ref: main
 
-      - name: Parse and append post
+      - name: Parse and append posts
         id: register
         env:
           EVENT_PATH: ${{ github.event_path }}
@@ -32,61 +32,78 @@ jobs:
 
           event = json.loads(Path(os.environ['EVENT_PATH']).read_text(encoding='utf-8'))
           body = event['issue'].get('body') or ''
+          blocks = [part.strip() for part in re.split(r'^---\s*$', body, flags=re.MULTILINE) if part.strip()]
 
-          def field(name):
-              match = re.search(rf'^{re.escape(name)}:\s*(.+)$', body, re.MULTILINE)
+          def field(block, name):
+              match = re.search(rf'^{re.escape(name)}:\s*(.+)$', block, re.MULTILINE)
               return match.group(1).strip() if match else ''
 
-          url = field('URL')
-          store = field('STORE')
-          category = field('CATEGORY')
-          account = field('ACCOUNT')
-          status_id = field('STATUS_ID')
+          candidates = []
+          for block in blocks:
+              url = field(block, 'URL')
+              store = field(block, 'STORE')
+              category = field(block, 'CATEGORY')
+              account = field(block, 'ACCOUNT')
+              status_id = field(block, 'STATUS_ID')
+              if not any([url, store, category, account, status_id]):
+                  continue
+              if not re.fullmatch(r'https://x\.com/[^/]+/status/\d+', url):
+                  raise SystemExit(f'Invalid X post URL: {url}')
+              if not re.fullmatch(r'\d+', status_id):
+                  raise SystemExit(f'Invalid status ID: {status_id}')
+              if not all([store, category, account]):
+                  raise SystemExit('Missing required field')
+              candidates.append({
+                  'url': url,
+                  'store': store,
+                  'category': category,
+                  'account': account,
+                  'statusId': status_id,
+              })
 
-          if not re.fullmatch(r'https://x\.com/[^/]+/status/\d+', url):
-              raise SystemExit('Invalid X post URL')
-          if not re.fullmatch(r'\d+', status_id):
-              raise SystemExit('Invalid status ID')
-          if not all([store, category, account]):
-              raise SystemExit('Missing required field')
+          if not candidates:
+              raise SystemExit('No posts found')
 
           path = Path('manual_posts.json')
           items = json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
+          known = {str(item.get('statusId')) for item in items}
+          added = 0
+          duplicates = 0
+          now = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
 
-          if any(str(item.get('statusId')) == status_id for item in items):
-              print('duplicate=true', file=open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8'))
-              raise SystemExit(0)
+          for candidate in candidates:
+              if candidate['statusId'] in known:
+                  duplicates += 1
+                  continue
+              candidate['registeredAt'] = now
+              items.append(candidate)
+              known.add(candidate['statusId'])
+              added += 1
 
-          items.append({
-              'url': url,
-              'store': store,
-              'category': category,
-              'account': account,
-              'statusId': status_id,
-              'registeredAt': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
-          })
-          path.write_text(json.dumps(items, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          print('duplicate=false', file=open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8'))
+          if added:
+              path.write_text(json.dumps(items, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          output = Path(os.environ['GITHUB_OUTPUT'])
+          with output.open('a', encoding='utf-8') as fh:
+              print(f'added={added}', file=fh)
+              print(f'duplicates={duplicates}', file=fh)
           PY
 
       - name: Commit registration
-        if: steps.register.outputs.duplicate == 'false'
+        if: steps.register.outputs.added != '0'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add manual_posts.json
-          git commit -m "Register manual CardRadar post"
+          git commit -m "Register manual CardRadar posts"
           git push origin main
 
       - name: Comment and close issue
         env:
           GH_TOKEN: ${{ github.token }}
           NUMBER: ${{ github.event.issue.number }}
-          DUPLICATE: ${{ steps.register.outputs.duplicate }}
+          ADDED: ${{ steps.register.outputs.added }}
+          DUPLICATES: ${{ steps.register.outputs.duplicates }}
         run: |
-          if [ "$DUPLICATE" = "true" ]; then
-            gh issue comment "$NUMBER" --body "この投稿はすでに登録済みです。"
-          else
-            gh issue comment "$NUMBER" --body "manual_posts.json への登録が完了しました。"
-          fi
+          gh issue comment "$NUMBER" --body "登録完了：追加 ${ADDED}件、重複スキップ ${DUPLICATES}件。"
           gh issue close "$NUMBER" --reason completed

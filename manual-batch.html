@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CardRadar 一括登録</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090b10;--panel:#121722;--panel2:#182131;--text:#f5f7fb;--muted:#9ba7b8;--line:rgba(255,255,255,.1);--accent:#e8eef8;--danger:#ffb4b4}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#111722 0,var(--bg) 230px);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    main{width:min(100%,720px);margin:auto;padding:max(22px,env(safe-area-inset-top)) 16px max(36px,env(safe-area-inset-bottom))}h1{margin:0;font-size:32px}.lead,.note{color:var(--muted);line-height:1.6}.lead{font-size:14px}.note{font-size:12px}
+    section{margin-top:20px;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(18,23,34,.94)}label{display:block;margin:0 0 8px;font-size:13px;font-weight:800}
+    textarea,input,button,a.button{width:100%;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);font:inherit;padding:12px}textarea{min-height:220px;line-height:1.55;resize:vertical}button,a.button{min-height:50px;margin-top:12px;font-weight:800;text-decoration:none;display:flex;align-items:center;justify-content:center}.primary{background:var(--accent);color:#10141c}.status{min-height:22px;margin-top:10px;font-size:13px}.error{color:var(--danger)}.prepared{display:none}.prepared.is-visible{display:block}.summary{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);font-size:13px;line-height:1.65}.actions{display:grid;gap:8px;margin-top:12px}.actions>*{margin:0!important}
+  </style>
+</head>
+<body>
+<main>
+  <h1>一括登録</h1>
+  <p class="lead">ストックしたX投稿URLをまとめて1件のGitHub Issueへ送ります。店舗はアカウントから自動判定し、カテゴリは未分類で登録します。</p>
+  <section>
+    <label for="urls">X投稿URL一覧</label>
+    <textarea id="urls" placeholder="1行に1件ずつ貼り付け"></textarea>
+    <button id="prepare" class="primary" type="button">一括登録内容を作成</button>
+    <p id="status" class="status" aria-live="polite"></p>
+  </section>
+  <section id="prepared" class="prepared">
+    <div id="summary" class="summary"></div>
+    <div class="actions">
+      <a id="openGithub" class="button primary" target="_blank" rel="noopener">GitHubで一括送信</a>
+      <button id="copyBody" type="button">本文をコピー</button>
+    </div>
+    <p class="note">GitHub画面では内容が入力済みです。「Submit new issue」を1回押してください。</p>
+  </section>
+</main>
+<script>
+(() => {
+  const storeMap={ds_nipponbashi:'ドラスタ日本橋',ds_nipponbashi2:'ドラスタ日本橋2号店',ds_nipponbashi3:'ドラスタ日本橋3号店',AMTAF_SHOP:'アムタフ',cardshop_gotcha:'GOTCHA!'};
+  const urls=document.getElementById('urls'),status=document.getElementById('status'),prepared=document.getElementById('prepared'),summary=document.getElementById('summary'),openGithub=document.getElementById('openGithub'),copyBody=document.getElementById('copyBody');
+  let issueBody='';
+  const normalize=value=>{try{const u=new URL(value.trim());if(!['x.com','www.x.com','twitter.com','www.twitter.com'].includes(u.hostname))return null;const m=u.pathname.match(/^\/([^/]+)\/status\/(\d+)/);if(!m)return null;return{url:`https://x.com/${m[1]}/status/${m[2]}`,account:m[1],statusId:m[2],store:storeMap[m[1]]||'その他'}}catch{return null}};
+  const parse=()=>{const seen=new Set();return urls.value.split(/\r?\n/).map(normalize).filter(item=>item&&!seen.has(item.statusId)&&seen.add(item.statusId));};
+  document.getElementById('prepare').addEventListener('click',()=>{status.textContent='';status.className='status';const items=parse();if(!items.length){status.textContent='有効なX投稿URLがありません。';status.className='status error';prepared.classList.remove('is-visible');return}issueBody=['CardRadar batch registration','',...items.flatMap(item=>['---',`URL: ${item.url}`,`STORE: ${item.store}`,'CATEGORY: 未分類',`ACCOUNT: ${item.account}`,`STATUS_ID: ${item.statusId}`,''])].join('\n');const title=`[CardRadar一括登録] ${items.length}件`;openGithub.href=`https://github.com/cardradarjp/cardradarjp.github.io/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(issueBody)}`;summary.textContent=`${items.length}件を一括登録します。`;prepared.classList.add('is-visible');prepared.scrollIntoView({behavior:'smooth',block:'start'});});
+  copyBody.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(issueBody);copyBody.textContent='コピーしました';setTimeout(()=>copyBody.textContent='本文をコピー',1200)}catch{status.textContent='コピーできませんでした。';status.className='status error'}});
+  const shared=new URLSearchParams(location.search).get('urls');if(shared){urls.value=shared;document.getElementById('prepare').click();}
+})();
+</script>
+</body>
+</html>
