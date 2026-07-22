@@ -1,0 +1,92 @@
+name: Process manual CardRadar post
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  register:
+    if: github.actor == 'cardradarjp' && startsWith(github.event.issue.title, '[CardRadar登録]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Parse and append post
+        id: register
+        env:
+          EVENT_PATH: ${{ github.event_path }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import re
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          event = json.loads(Path(os.environ['EVENT_PATH']).read_text(encoding='utf-8'))
+          body = event['issue'].get('body') or ''
+
+          def field(name):
+              match = re.search(rf'^{re.escape(name)}:\s*(.+)$', body, re.MULTILINE)
+              return match.group(1).strip() if match else ''
+
+          url = field('URL')
+          store = field('STORE')
+          category = field('CATEGORY')
+          account = field('ACCOUNT')
+          status_id = field('STATUS_ID')
+
+          if not re.fullmatch(r'https://x\.com/[^/]+/status/\d+', url):
+              raise SystemExit('Invalid X post URL')
+          if not re.fullmatch(r'\d+', status_id):
+              raise SystemExit('Invalid status ID')
+          if not all([store, category, account]):
+              raise SystemExit('Missing required field')
+
+          path = Path('manual_posts.json')
+          items = json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
+
+          if any(str(item.get('statusId')) == status_id for item in items):
+              print('duplicate=true', file=open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8'))
+              raise SystemExit(0)
+
+          items.append({
+              'url': url,
+              'store': store,
+              'category': category,
+              'account': account,
+              'statusId': status_id,
+              'registeredAt': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+          })
+          path.write_text(json.dumps(items, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print('duplicate=false', file=open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8'))
+          PY
+
+      - name: Commit registration
+        if: steps.register.outputs.duplicate == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manual_posts.json
+          git commit -m "Register manual CardRadar post"
+          git push origin main
+
+      - name: Comment and close issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          DUPLICATE: ${{ steps.register.outputs.duplicate }}
+        run: |
+          if [ "$DUPLICATE" = "true" ]; then
+            gh issue comment "$NUMBER" --body "この投稿はすでに登録済みです。"
+          else
+            gh issue comment "$NUMBER" --body "manual_posts.json への登録が完了しました。"
+          fi
+          gh issue close "$NUMBER" --reason completed
