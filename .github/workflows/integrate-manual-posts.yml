@@ -6,6 +6,7 @@ on:
     paths:
       - manual_posts.json
       - assets/manual-posts-integration.js
+      - assets/manual-posts-fallback-fix.css
       - .github/workflows/integrate-manual-posts.yml
   workflow_dispatch:
 
@@ -18,20 +19,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Ensure integration script is loaded
+      - name: Ensure integration assets are loaded
         run: |
           python - <<'PY'
           from pathlib import Path
 
           path = Path('osaka-nihonbashi.html')
           html = path.read_text(encoding='utf-8')
-          marker = '<script src="assets/manual-posts-integration.js?v=20260722"></script>'
+          style_marker = '<link rel="stylesheet" href="assets/manual-posts-fallback-fix.css?v=20260722-2">'
+          script_marker = '<script src="assets/manual-posts-integration.js?v=20260722"></script>'
 
-          if marker not in html:
+          if style_marker not in html:
+              if '</head>' not in html:
+                  raise SystemExit('osaka-nihonbashi.html has no closing head tag')
+              html = html.replace('</head>', f'{style_marker}\n</head>', 1)
+
+          if script_marker not in html:
               if '</body>' not in html:
                   raise SystemExit('osaka-nihonbashi.html has no closing body tag')
-              html = html.replace('</body>', f'{marker}\n</body>', 1)
-              path.write_text(html, encoding='utf-8')
+              html = html.replace('</body>', f'{script_marker}\n</body>', 1)
+
+          path.write_text(html, encoding='utf-8')
           PY
 
       - name: Commit generated integration
