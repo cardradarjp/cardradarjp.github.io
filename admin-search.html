@@ -100,6 +100,7 @@
       font-weight: 600;
     }
 
+    a.search-link.register::after { content: "開く →"; }
     a.search-link:active { transform: scale(0.985); }
 
     .footer {
@@ -115,8 +116,16 @@
   <main>
     <header>
       <h1>CardRadar 管理検索</h1>
-      <p class="lead">Safariで買取投稿を確認するための管理用ページです。現在は検索導線だけを用意した骨組み版です。</p>
+      <p class="lead">Safariで買取投稿を確認するための管理用ページです。現在は検索と端末内登録の骨組み版です。</p>
     </header>
+
+    <section>
+      <h2>投稿を登録</h2>
+      <p class="note">確認したX投稿のURL、店舗、カテゴリをこの端末内に保存します。</p>
+      <div class="links">
+        <a class="search-link register" href="manual-posts.html">投稿URL登録ページ</a>
+      </div>
+    </section>
 
     <section>
       <h2>まとめて確認</h2>
@@ -146,7 +155,7 @@
       </div>
     </section>
 
-    <p class="footer">このページからXの情報を自動取得しません。検索結果を人が確認するための導線のみです。</p>
+    <p class="footer">Xの情報は自動取得しません。登録データは現段階では利用中のSafari端末内だけに保存されます。</p>
   </main>
 </body>
 </html>
