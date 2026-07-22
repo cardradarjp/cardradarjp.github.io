@@ -27,6 +27,8 @@ jobs:
           import json
           import os
           import re
+          import urllib.parse
+          import urllib.request
           from datetime import datetime, timezone
           from pathlib import Path
 
@@ -37,6 +39,24 @@ jobs:
           def field(block, name):
               match = re.search(rf'^{re.escape(name)}:\s*(.+)$', block, re.MULTILINE)
               return match.group(1).strip() if match else ''
+
+          def fetch_oembed(url):
+              canonical = url.replace('https://x.com/', 'https://twitter.com/', 1)
+              query = urllib.parse.urlencode({
+                  'url': canonical,
+                  'omit_script': 'true',
+                  'dnt': 'true',
+                  'theme': 'dark',
+                  'align': 'center',
+              })
+              endpoint = f'https://publish.twitter.com/oembed?{query}'
+              request = urllib.request.Request(endpoint, headers={'User-Agent': 'CardRadar/1.0'})
+              try:
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      payload = json.load(response)
+                  return payload.get('html') or '', ''
+              except Exception as exc:
+                  return '', f'{type(exc).__name__}: {exc}'
 
           candidates = []
           for block in blocks:
@@ -53,13 +73,7 @@ jobs:
                   raise SystemExit(f'Invalid status ID: {status_id}')
               if not all([store, category, account]):
                   raise SystemExit('Missing required field')
-              candidates.append({
-                  'url': url,
-                  'store': store,
-                  'category': category,
-                  'account': account,
-                  'statusId': status_id,
-              })
+              candidates.append({'url':url,'store':store,'category':category,'account':account,'statusId':status_id})
 
           if not candidates:
               raise SystemExit('No posts found')
@@ -75,6 +89,11 @@ jobs:
               if candidate['statusId'] in known:
                   duplicates += 1
                   continue
+              html, error = fetch_oembed(candidate['url'])
+              if html:
+                  candidate['oembedHtml'] = html
+              if error:
+                  candidate['oembedError'] = error
               candidate['registeredAt'] = now
               items.append(candidate)
               known.add(candidate['statusId'])
