@@ -1,0 +1,76 @@
+name: Enrich manual posts with X oEmbed
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/enrich-manual-oembed.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Fetch X oEmbed HTML
+        run: |
+          python - <<'PY'
+          import json
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+
+          path = Path('manual_posts.json')
+          items = json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
+          changed = False
+
+          for item in items:
+              url = item.get('url') or ''
+              if not url:
+                  continue
+              canonical = url.replace('https://x.com/', 'https://twitter.com/', 1)
+              query = urllib.parse.urlencode({
+                  'url': canonical,
+                  'omit_script': 'true',
+                  'dnt': 'true',
+                  'theme': 'dark',
+                  'align': 'center',
+              })
+              endpoint = f'https://publish.twitter.com/oembed?{query}'
+              request = urllib.request.Request(endpoint, headers={'User-Agent': 'CardRadar/1.0'})
+              try:
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      payload = json.load(response)
+                  html = payload.get('html') or ''
+                  if html and item.get('oembedHtml') != html:
+                      item['oembedHtml'] = html
+                      item.pop('oembedError', None)
+                      changed = True
+              except Exception as exc:
+                  error = f'{type(exc).__name__}: {exc}'
+                  if item.get('oembedError') != error:
+                      item['oembedError'] = error
+                      changed = True
+
+          if changed:
+              path.write_text(json.dumps(items, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit oEmbed data
+        run: |
+          if git diff --quiet -- manual_posts.json; then
+            echo 'No oEmbed changes.'
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manual_posts.json
+          git commit -m "Enrich manual posts with X oEmbed"
+          git push origin main
