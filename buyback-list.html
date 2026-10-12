@@ -1,17 +1,270 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f5f7"><title>ポケモンカード 買取・売却管理</title><style>
-:root{--b:#f5f5f7;--c:#fff;--t:#111;--s:#6e6e73;--l:#ddd;--a:#07f;--g:#14833b;--h:#efeff4}@media(prefers-color-scheme:dark){:root{--b:#000;--c:#1c1c1e;--t:#f5f5f7;--s:#aaa;--l:#38383a;--a:#0a84ff;--g:#30d158;--h:#2c2c2e}}*{box-sizing:border-box}body{margin:0;background:var(--b);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.w{max-width:720px;margin:auto;padding:0 12px 30px}.H{position:sticky;top:0;z-index:9;background:color-mix(in srgb,var(--b) 92%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:max(9px,env(safe-area-inset-top)) 0 9px}h1{font-size:20px;margin:2px 0 8px}.S{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:8px}.B,.i{background:var(--c);border:1px solid var(--l);border-radius:12px}.B{padding:9px 10px}.N{font-size:18px;font-weight:850}.G{color:var(--g)}.L,.n,.src,.st{font-size:10px;color:var(--s)}.C{display:grid;grid-template-columns:1fr 1fr;gap:7px}.q{grid-column:1/-1}input,select{width:100%;font-size:16px;padding:10px;border-radius:11px;border:1px solid var(--l);background:var(--c);color:var(--t)}input[type=number]{font-variant-numeric:tabular-nums}.st{font-size:11px;margin:7px 2px 0}.note{font-size:10px;color:var(--s);line-height:1.5;margin:5px 2px 0}.list{display:grid;gap:9px;margin-top:10px}.i{padding:13px 14px}.top{display:flex;gap:10px}.title{flex:1}.name{font-size:17px;font-weight:780}.qty{font-size:19px;font-weight:850;color:var(--a)}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chips span{font-size:12px;background:var(--h);padding:5px 8px;border-radius:999px}.d{font-size:13px;color:var(--s);margin-top:8px}.pbox{display:flex;justify-content:space-between;align-items:flex-end;margin-top:11px;padding-top:10px;border-top:1px solid var(--l)}.p{font-size:23px;font-weight:900;color:var(--g)}.sub{text-align:right;font-size:18px;font-weight:850}.src{margin-top:6px}.empty{display:none;text-align:center;color:var(--s);padding:35px 0}.err{background:var(--c);border:1px solid var(--l);border-radius:12px;padding:14px;margin-top:10px;color:#c62828;font-size:13px}.manage{margin-top:11px;padding-top:10px;border-top:1px solid var(--l)}.manageHead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.manageTitle{font-size:12px;font-weight:800}.statusBadge{font-size:11px;font-weight:800;padding:4px 8px;border-radius:999px;background:var(--h)}.statusBadge.sold{color:var(--g)}.statusBadge.partial{color:#b26a00}.statusBadge.hold{color:#8b5cf6}.manageGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.manageGrid label{font-size:10px;color:var(--s)}.manageGrid select,.manageGrid input{margin-top:4px;padding:8px;font-size:14px}.manageWide{grid-column:1/-1}.actualAvg{font-size:10px;color:var(--s);margin-top:4px}.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}.toolbar button{border:1px solid var(--l);border-radius:11px;background:var(--c);color:var(--t);padding:9px;font-size:12px;font-weight:750}.soldCard{opacity:.58}.soldCard .name{text-decoration:line-through}@media(min-width:560px){.S{grid-template-columns:repeat(4,1fr)}.C{grid-template-columns:1.5fr 1fr 1fr}.q{grid-column:auto}}</style></head><body><div class="w"><section class="H"><h1>ポケモンカード 買取・売却管理</h1><div class="S"><div class="B"><div class="N" id="tc">—</div><div class="L">未売却種類</div></div><div class="B"><div class="N" id="tq">—</div><div class="L">未売却枚数</div></div><div class="B"><div class="N G" id="tv">—</div><div class="L">未売却目安</div></div><div class="B"><div class="N" id="ts">—</div><div class="L">実売却額</div></div></div><div class="C"><input class="q" id="q" type="search" placeholder="カード名・型番で検索"><select id="r"><option value="">全レアリティ</option></select><select id="m"><option value="">全ステータス</option><option value="stock">所持中</option><option value="partial">一部売却</option><option value="hold">保留</option><option value="sold">売却済</option></select><select id="o"><option value="sub">小計が高い順</option><option value="p">単価が高い順</option><option value="n">元のNo.順</option></select></div><div class="st" id="st">一覧データを読み込んでいます…</div><div class="note">以前確認済みのAR / AR仕様、今回確認したIMG_0800〜0808・0810、さらに確認済みのIMG_0811〜0814相当を表示しています。カードごとに売却済枚数・実売却額・自分で確認した最高価格・メモを管理できます。主要カードの買取相場は2026/10/12時点へ再検索・更新済みです。管理状態はこの端末のSafariに保存されます。</div><div class="toolbar"><button id="copyManage" type="button">管理データをコピー</button><button id="importManage" type="button">管理データを読み込み</button></div></section><main class="list" id="list"></main><div class="empty" id="e">該当するカードがありません。</div><div id="err"></div></div><script>
-const DATA='/assets/review/buyback-current.json?v=20261012-1522',STORE='buyback_sale_manage_v1';let D=[],MNG={};const q=document.querySelector('#q'),r=document.querySelector('#r'),m=document.querySelector('#m'),o=document.querySelector('#o'),L=document.querySelector('#list'),S=document.querySelector('#st'),E=document.querySelector('#e'),ER=document.querySelector('#err'),TC=document.querySelector('#tc'),TQ=document.querySelector('#tq'),TV=document.querySelector('#tv'),TS=document.querySelector('#ts'),x=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function extract(t){let p=t.indexOf('const D='),s=t.indexOf('[',p),d=0,qq=false,e=false;if(p<0||s<0)throw Error('data not found');for(let i=s;i<t.length;i++){let c=t[i];if(qq){if(e)e=false;else if(c==='\\')e=true;else if(c==='"')qq=false}else{if(c==='"')qq=true;else if(c==='[')d++;else if(c===']'&&!--d)return JSON.parse(t.slice(s,i+1))}}throw Error('data incomplete')}
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7">
+<title>ポケモンカード 売却管理</title>
+<style>
+:root{
+  --bg:#f2f2f7;--card:#fff;--text:#111;--muted:#73737a;--line:#e5e5ea;
+  --blue:#007aff;--green:#16833f;--orange:#b66a00;--purple:#7c3aed;--chip:#f2f2f7;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.04)
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--muted:#a1a1a6;--line:#38383a;--blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--purple:#bf5af2;--chip:#2c2c2e;--shadow:none}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}
+.wrap{max-width:720px;margin:auto;padding:0 12px calc(32px + env(safe-area-inset-bottom))}
+.header{padding:max(14px,env(safe-area-inset-top)) 2px 10px}
+.titlebar{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px}
+h1{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.4px}
+.updated{font-size:10px;color:var(--muted);white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 8px;min-width:0}
+.stat .v{font-size:16px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .k{font-size:9px;color:var(--muted);margin-top:2px}
+.stat.money .v{color:var(--green)}
+.controls{margin-top:10px;display:grid;gap:7px}
+.search{width:100%;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);font-size:16px;padding:11px 12px;outline:none}
+.filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+select{width:100%;min-width:0;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--text);font-size:12px;padding:9px 7px}
+.result{font-size:11px;color:var(--muted);margin:8px 2px 0}
+.settings{margin-top:7px}
+.settings summary{font-size:11px;color:var(--blue);cursor:pointer;list-style:none}
+.settings summary::-webkit-details-marker{display:none}
+.backup{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}
+.backup button,.actions button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:9px;font-size:12px;font-weight:700}
+.list{display:grid;gap:8px;margin-top:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.card.soldCard{opacity:.64}
+.main{padding:13px 14px 12px}
+.row1{display:flex;align-items:flex-start;gap:10px}
+.namebox{flex:1;min-width:0}
+.name{font-size:17px;font-weight:800;line-height:1.25}
+.meta{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:5px}
+.chip{font-size:10px;background:var(--chip);padding:4px 7px;border-radius:999px;color:var(--muted)}
+.qty{text-align:right;flex:none}
+.qty strong{display:block;font-size:18px;color:var(--blue)}
+.qty small{font-size:9px;color:var(--muted)}
+.status{font-size:10px;font-weight:800;padding:4px 7px;border-radius:999px;background:var(--chip)}
+.status.stock{color:var(--blue)}.status.partial{color:var(--orange)}.status.hold{color:var(--purple)}.status.sold{color:var(--green)}
+.prices{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:7px;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+.priceCell{min-width:0}
+.priceCell .k{font-size:9px;color:var(--muted);margin-bottom:2px}
+.priceCell .v{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.priceCell.current .v{font-size:19px;color:var(--green)}
+.quick{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.45}
+.quick b{color:var(--text)}
+.manage{border-top:1px solid var(--line);background:color-mix(in srgb,var(--card) 94%,var(--bg))}
+.manage>summary{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;list-style:none;color:var(--blue);font-size:12px;font-weight:750}
+.manage>summary::-webkit-details-marker{display:none}
+.manage>summary::after{content:"⌄";font-size:15px;color:var(--muted)}
+.manage[open]>summary::after{content:"⌃"}
+.editor{padding:2px 14px 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.field{font-size:10px;color:var(--muted)}
+.field.full{grid-column:1/-1}
+.field input,.field select{margin-top:4px;width:100%;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font-size:15px;padding:9px}
+.avg{grid-column:1/-1;font-size:11px;color:var(--muted);padding:2px 0}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.actions .markSold{color:var(--green)}
+.source{font-size:9px;color:var(--muted);margin-top:9px;line-height:1.4}
+.empty,.error{text-align:center;color:var(--muted);padding:30px 10px}
+.error{background:var(--card);border:1px solid var(--line);border-radius:14px;color:#c62828;margin-top:10px}
+@media(max-width:390px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:1fr 1fr}
+  .filters select:last-child{grid-column:1/-1}
+  .prices{grid-template-columns:1.2fr 1fr}
+  .priceCell.remaining{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="header">
+    <div class="titlebar">
+      <h1>カード売却管理</h1>
+      <div class="updated">相場 2026/10/12</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v" id="tc">—</div><div class="k">未売却種類</div></div>
+      <div class="stat"><div class="v" id="tq">—</div><div class="k">未売却枚数</div></div>
+      <div class="stat money"><div class="v" id="tv">—</div><div class="k">未売却目安</div></div>
+      <div class="stat"><div class="v" id="ts">—</div><div class="k">実売却額</div></div>
+    </div>
+    <div class="controls">
+      <input class="search" id="q" type="search" placeholder="カード名・型番・メモを検索">
+      <div class="filters">
+        <select id="m"><option value="">全ステータス</option><option value="stock">所持中</option><option value="partial">一部売却</option><option value="hold">保留</option><option value="sold">売却済</option></select>
+        <select id="r"><option value="">全レアリティ</option></select>
+        <select id="o"><option value="sub">残額が高い順</option><option value="p">単価が高い順</option><option value="n">登録順</option></select>
+      </div>
+    </div>
+    <div class="result" id="st">一覧データを読み込んでいます…</div>
+    <details class="settings">
+      <summary>バックアップ・データ移行</summary>
+      <div class="backup"><button id="copyManage" type="button">管理データをコピー</button><button id="importManage" type="button">管理データを読み込み</button></div>
+    </details>
+  </header>
+  <main class="list" id="list"></main>
+  <div class="empty" id="e">該当するカードがありません。</div>
+  <div id="err"></div>
+</div>
+<script>
+const DATA='/assets/review/buyback-current.json?v=20261012-1600',STORE='buyback_sale_manage_v1';
+let D=[],MNG={};
+const q=document.querySelector('#q'),r=document.querySelector('#r'),m=document.querySelector('#m'),o=document.querySelector('#o'),L=document.querySelector('#list'),S=document.querySelector('#st'),E=document.querySelector('#e'),ER=document.querySelector('#err'),TC=document.querySelector('#tc'),TQ=document.querySelector('#tq'),TV=document.querySelector('#tv'),TS=document.querySelector('#ts');
+const x=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const yen=n=>'¥'+Number(n||0).toLocaleString();
 const key=z=>[z[1],z[3],z[4],z[7]||''].join('|');
-function loadManage(){try{MNG=JSON.parse(localStorage.getItem(STORE)||'{}')}catch{MNG={}}const oldKey='ピカチュウex|SAR|M2a 234/193|SAR',newKey='ピカチュウex|SAR|SV8 132/106|超電ブレイカー／SAR';if(MNG[oldKey]&&!MNG[newKey]){MNG[newKey]=MNG[oldKey];delete MNG[oldKey];localStorage.setItem(STORE,JSON.stringify(MNG))}}
+
+function loadManage(){
+  try{MNG=JSON.parse(localStorage.getItem(STORE)||'{}')}catch{MNG={}}
+  const oldKey='ピカチュウex|SAR|M2a 234/193|SAR',newKey='ピカチュウex|SAR|SV8 132/106|超電ブレイカー／SAR';
+  if(MNG[oldKey]&&!MNG[newKey]){MNG[newKey]=MNG[oldKey];delete MNG[oldKey];localStorage.setItem(STORE,JSON.stringify(MNG))}
+}
 function saveManage(){localStorage.setItem(STORE,JSON.stringify(MNG))}
-function mg(z){let k=key(z),v=MNG[k]||{};let sold=Math.max(0,Math.min(+z[2],+(v.soldQty||0)));return{key:k,soldQty:sold,hold:!!v.hold,saleTotal:Math.max(0,+(v.saleTotal||0)),bestPrice:Math.max(0,+(v.bestPrice||0)),note:String(v.note||'')}}
-function state(z){let v=mg(z);if(v.soldQty>=+z[2])return'sold';if(v.soldQty>0)return'partial';if(v.hold)return'hold';return'stock'}
+function mg(z){
+  let k=key(z),v=MNG[k]||{},sold=Math.max(0,Math.min(+z[2],+(v.soldQty||0)));
+  return{key:k,soldQty:sold,hold:!!v.hold,saleTotal:Math.max(0,+(v.saleTotal||0)),bestPrice:Math.max(0,+(v.bestPrice||0)),note:String(v.note||'')}
+}
+function state(z){
+  let v=mg(z);
+  if(v.soldQty>=+z[2])return'sold';
+  if(v.soldQty>0)return'partial';
+  if(v.hold)return'hold';
+  return'stock'
+}
 const stateName=v=>({stock:'所持中',partial:'一部売却',hold:'保留',sold:'売却済'}[v]||'所持中');
-function totals(){let a=D.filter(z=>state(z)!=='sold'),qty=a.reduce((s,z)=>s+(+z[2]-mg(z).soldQty),0),val=a.reduce((s,z)=>s+(+z[2]-mg(z).soldQty)*(+z[5]),0),sold=D.reduce((s,z)=>s+mg(z).saleTotal,0);TC.textContent=a.length.toLocaleString();TQ.textContent=qty.toLocaleString();TV.textContent='¥'+val.toLocaleString();TS.textContent='¥'+sold.toLocaleString()}
-function opts(){[...new Set(D.map(z=>z[3]).filter(Boolean))].sort().forEach(v=>{let a=document.createElement('option');a.value=v;a.textContent=v;r.appendChild(a)})}
-function soldOptions(z,selected){let a=[];for(let i=0;i<=+z[2];i++)a.push('<option value="'+i+'" '+(i===selected?'selected':'')+'>'+i+'枚</option>');return a.join('')}
-function R(){let t=q.value.trim().toLowerCase(),a=D.filter(z=>{let st=state(z),v=mg(z);return(!r.value||z[3]===r.value)&&(!m.value||st===m.value)&&(!t||(z[1]+' '+z[4]+' '+z[7]+' '+(z[13]||'')+' '+v.note).toLowerCase().includes(t))});a.sort((A,B)=>o.value==='n'?A[0]-B[0]:o.value==='p'?B[5]-A[5]||A[0]-B[0]:B[6]-A[6]||A[0]-B[0]);let c=0,s=0;L.innerHTML=a.map(z=>{let v=mg(z),st=state(z),remain=+z[2]-v.soldQty,avg=v.soldQty&&v.saleTotal?Math.round(v.saleTotal/v.soldQty):0;c+=remain;s+=remain*(+z[5]);return '<article class="i '+(st==='sold'?'soldCard':'')+'" data-k="'+x(v.key)+'"><div class=top><div class=title><div class=n>No.'+z[0]+'</div><div class=name>'+x(z[1])+'</div></div><div class=qty>'+remain+' / '+z[2]+'枚</div></div><div class=chips><span>'+x(z[3])+'</span><span>'+x(z[4])+'</span>'+(z[12]?'<span>AR最低200円換算</span>':'')+(z[13]?'<span>'+x(z[13])+'</span>':'')+(v.bestPrice?'<span>自分確認最高 ¥'+v.bestPrice.toLocaleString()+'</span>':'')+'</div>'+(z[7]?'<div class=d>'+x(z[7])+'</div>':'')+'<div class=pbox><div><div class=L>現在の買取目安</div><div class=p>¥'+(+z[5]).toLocaleString()+'</div>'+(z[11]?'<div class=L>平均 ¥'+(+z[11]).toLocaleString()+'</div>':'')+'</div><div><div class=L>未売却 '+remain+'枚</div><div class=sub>¥'+(remain*(+z[5])).toLocaleString()+'</div></div></div><div class=src>'+x(z[8])+' ／ '+x(z[9])+' ／ '+x(z[10])+'</div><div class=manage><div class=manageHead><div class=manageTitle>売却・価格メモ</div><span class="statusBadge '+st+'">'+stateName(st)+'</span></div><div class=manageGrid><label>売却済枚数<select class=soldQty>'+soldOptions(z,v.soldQty)+'</select></label><label>状態<select class=holdSel><option value="stock" '+(!v.hold?'selected':'')+'>通常</option><option value="hold" '+(v.hold?'selected':'')+'>保留</option></select></label><label>実売却額（合計）<input class=saleTotal type=number min=0 inputmode=numeric placeholder="例 12000" value="'+(v.saleTotal||'')+'"></label><label>自分確認最高価格（1枚）<input class=bestPrice type=number min=0 inputmode=numeric placeholder="例 3500" value="'+(v.bestPrice||'')+'"></label>'+(avg?'<div class="manageWide actualAvg">実売却平均：¥'+avg.toLocaleString()+' / 枚</div>':'')+'<label class=manageWide>店舗・日付などのメモ<input class=manageNote type=text placeholder="例：ドラ2 10/12、満額査定" value="'+x(v.note)+'"></label></div><div class=toolbar><button class=markSold type=button>全部売却済</button><button class=resetSold type=button>未売却に戻す</button></div></div></article>'}).join('');S.textContent=a.length+'種類・未売却 '+c+'枚 ／ 小計 ¥'+s.toLocaleString();E.style.display=a.length?'none':'block';totals()}
-function updateCard(card){let k=card.dataset.k,z=D.find(z=>key(z)===k);if(!z)return;let sold=+card.querySelector('.soldQty').value,hold=card.querySelector('.holdSel').value==='hold',saleTotal=Math.max(0,+card.querySelector('.saleTotal').value||0),bestPrice=Math.max(0,+card.querySelector('.bestPrice').value||0),note=card.querySelector('.manageNote').value.trim();if(sold>=+z[2])hold=false;MNG[k]={soldQty:sold,hold,saleTotal,bestPrice,note};saveManage();R()}
-async function start(){try{loadManage();let res=await fetch(DATA,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);D=await res.json();opts();[q,r,m,o].forEach(el=>el.addEventListener(el===q?'input':'change',R));L.addEventListener('change',ev=>{let card=ev.target.closest('article.i');if(card&&(ev.target.classList.contains('soldQty')||ev.target.classList.contains('holdSel')||ev.target.classList.contains('saleTotal')||ev.target.classList.contains('bestPrice')||ev.target.classList.contains('manageNote')))updateCard(card)});L.addEventListener('click',ev=>{let card=ev.target.closest('article.i');if(!card)return;let z=D.find(z=>key(z)===card.dataset.k);if(!z)return;if(ev.target.classList.contains('markSold')){let v=mg(z);MNG[card.dataset.k]={soldQty:+z[2],hold:false,saleTotal:v.saleTotal,bestPrice:v.bestPrice,note:v.note};saveManage();R()}if(ev.target.classList.contains('resetSold')){let v=mg(z);MNG[card.dataset.k]={soldQty:0,hold:false,saleTotal:v.saleTotal,bestPrice:v.bestPrice,note:v.note};saveManage();R()}});document.querySelector('#copyManage').onclick=async()=>{let data=JSON.stringify(MNG);try{await navigator.clipboard.writeText(data);document.querySelector('#copyManage').textContent='コピーしました';setTimeout(()=>document.querySelector('#copyManage').textContent='管理データをコピー',1200)}catch(err){prompt('この内容をコピーしてください',data)}};document.querySelector('#importManage').onclick=()=>{let data=prompt('コピーした管理データを貼り付けてください');if(!data)return;try{let v=JSON.parse(data);if(!v||typeof v!=='object')throw Error();MNG=v;saveManage();R()}catch(err){alert('管理データを読み込めませんでした')}};R()}catch(err){S.textContent='読み込みに失敗しました';ER.innerHTML='<div class="err">一覧データを取得できませんでした。少し待ってから再読み込みしてください。<br><small>'+x(err.message||err)+'</small></div>'}}start();
-</script></body></html>
+
+function totals(){
+  let active=D.filter(z=>state(z)!=='sold');
+  let qty=active.reduce((s,z)=>s+(+z[2]-mg(z).soldQty),0);
+  let val=active.reduce((s,z)=>s+(+z[2]-mg(z).soldQty)*(+z[5]),0);
+  let sold=D.reduce((s,z)=>s+mg(z).saleTotal,0);
+  TC.textContent=active.length.toLocaleString();
+  TQ.textContent=qty.toLocaleString();
+  TV.textContent=yen(val);
+  TS.textContent=yen(sold)
+}
+function opts(){
+  [...new Set(D.map(z=>z[3]).filter(Boolean))].sort().forEach(v=>{
+    let a=document.createElement('option');a.value=v;a.textContent=v;r.appendChild(a)
+  })
+}
+function soldOptions(z,selected){
+  let a=[];for(let i=0;i<=+z[2];i++)a.push('<option value="'+i+'" '+(i===selected?'selected':'')+'>'+i+'枚</option>');
+  return a.join('')
+}
+function quickText(z,v,avg){
+  let out=[];
+  if(v.soldQty)out.push('売却 <b>'+v.soldQty+'/'+z[2]+'枚</b>');
+  if(v.saleTotal)out.push('実売却 <b>'+yen(v.saleTotal)+'</b>');
+  if(avg)out.push('平均 <b>'+yen(avg)+'/枚</b>');
+  if(v.note)out.push('<b>'+x(v.note)+'</b>');
+  return out.join(' ・ ')
+}
+function render(){
+  let t=q.value.trim().toLowerCase();
+  let a=D.filter(z=>{
+    let st=state(z),v=mg(z);
+    return(!r.value||z[3]===r.value)&&(!m.value||st===m.value)&&(!t||(z[1]+' '+z[4]+' '+z[7]+' '+(z[13]||'')+' '+v.note).toLowerCase().includes(t))
+  });
+  a.sort((A,B)=>{
+    if(o.value==='n')return A[0]-B[0];
+    if(o.value==='p')return B[5]-A[5]||A[0]-B[0];
+    let ar=(+A[2]-mg(A).soldQty)*(+A[5]),br=(+B[2]-mg(B).soldQty)*(+B[5]);
+    return br-ar||A[0]-B[0]
+  });
+  let count=0,sum=0;
+  L.innerHTML=a.map(z=>{
+    let v=mg(z),st=state(z),remain=+z[2]-v.soldQty,avg=v.soldQty&&v.saleTotal?Math.round(v.saleTotal/v.soldQty):0;
+    count+=remain;sum+=remain*(+z[5]);
+    let best=v.bestPrice?yen(v.bestPrice):'—';
+    let quick=quickText(z,v,avg);
+    return '<article class="card '+(st==='sold'?'soldCard':'')+'" data-k="'+x(v.key)+'">'+
+      '<div class="main">'+
+        '<div class="row1">'+
+          '<div class="namebox"><div class="name">'+x(z[1])+'</div><div class="meta"><span class="status '+st+'">'+stateName(st)+'</span><span class="chip">'+x(z[3])+'</span><span class="chip">'+x(z[4])+'</span></div></div>'+
+          '<div class="qty"><strong>'+remain+'枚</strong><small>所持 '+z[2]+'枚</small></div>'+
+        '</div>'+
+        '<div class="prices">'+
+          '<div class="priceCell current"><div class="k">現在買取</div><div class="v">'+yen(z[5])+'</div></div>'+
+          '<div class="priceCell"><div class="k">自分確認最高</div><div class="v">'+best+'</div></div>'+
+          '<div class="priceCell remaining"><div class="k">残り合計</div><div class="v">'+yen(remain*(+z[5]))+'</div></div>'+
+        '</div>'+
+        (quick?'<div class="quick">'+quick+'</div>':'')+
+      '</div>'+
+      '<details class="manage">'+
+        '<summary>売却・価格メモを編集</summary>'+
+        '<div class="editor">'+
+          '<div class="grid">'+
+            '<label class="field">売却済枚数<select class="soldQty">'+soldOptions(z,v.soldQty)+'</select></label>'+
+            '<label class="field">状態<select class="holdSel"><option value="stock" '+(!v.hold?'selected':'')+'>通常</option><option value="hold" '+(v.hold?'selected':'')+'>保留</option></select></label>'+
+            '<label class="field">実売却額（合計）<input class="saleTotal" type="number" min="0" inputmode="numeric" placeholder="例 12000" value="'+(v.saleTotal||'')+'"></label>'+
+            '<label class="field">自分確認最高（1枚）<input class="bestPrice" type="number" min="0" inputmode="numeric" placeholder="例 3500" value="'+(v.bestPrice||'')+'"></label>'+
+            (avg?'<div class="avg">実売却平均 '+yen(avg)+' / 枚</div>':'')+
+            '<label class="field full">店舗・日付・条件メモ<input class="manageNote" type="text" placeholder="例：ドラ2 10/12、満額査定" value="'+x(v.note)+'"></label>'+
+          '</div>'+
+          '<div class="actions"><button class="markSold" type="button">全部売却済</button><button class="resetSold" type="button">未売却に戻す</button></div>'+
+          '<div class="source">'+x(z[8])+' ／ '+x(z[9])+' ／ '+x(z[10])+'</div>'+
+        '</div>'+
+      '</details>'+
+    '</article>'
+  }).join('');
+  S.textContent=a.length+'種類・未売却 '+count+'枚 ／ '+yen(sum);
+  E.style.display=a.length?'none':'block';
+  totals()
+}
+function updateCard(card){
+  let k=card.dataset.k,z=D.find(z=>key(z)===k);if(!z)return;
+  let sold=+card.querySelector('.soldQty').value;
+  let hold=card.querySelector('.holdSel').value==='hold';
+  let saleTotal=Math.max(0,+card.querySelector('.saleTotal').value||0);
+  let bestPrice=Math.max(0,+card.querySelector('.bestPrice').value||0);
+  let note=card.querySelector('.manageNote').value.trim();
+  if(sold>=+z[2])hold=false;
+  MNG[k]={soldQty:sold,hold,saleTotal,bestPrice,note};
+  saveManage();render()
+}
+async function start(){
+  try{
+    loadManage();
+    let res=await fetch(DATA,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);
+    D=await res.json();opts();
+    [q,r,m,o].forEach(el=>el.addEventListener(el===q?'input':'change',render));
+    L.addEventListener('change',ev=>{
+      let card=ev.target.closest('.card');
+      if(card&&(ev.target.matches('.soldQty,.holdSel,.saleTotal,.bestPrice,.manageNote')))updateCard(card)
+    });
+    L.addEventListener('click',ev=>{
+      let card=ev.target.closest('.card');if(!card)return;
+      let z=D.find(z=>key(z)===card.dataset.k);if(!z)return;
+      let v=mg(z);
+      if(ev.target.classList.contains('markSold')){MNG[card.dataset.k]={soldQty:+z[2],hold:false,saleTotal:v.saleTotal,bestPrice:v.bestPrice,note:v.note};saveManage();render()}
+      if(ev.target.classList.contains('resetSold')){MNG[card.dataset.k]={soldQty:0,hold:false,saleTotal:v.saleTotal,bestPrice:v.bestPrice,note:v.note};saveManage();render()}
+    });
+    document.querySelector('#copyManage').onclick=async()=>{
+      let data=JSON.stringify(MNG);
+      try{await navigator.clipboard.writeText(data);let b=document.querySelector('#copyManage');b.textContent='コピーしました';setTimeout(()=>b.textContent='管理データをコピー',1200)}
+      catch(err){prompt('この内容をコピーしてください',data)}
+    };
+    document.querySelector('#importManage').onclick=()=>{
+      let data=prompt('コピーした管理データを貼り付けてください');if(!data)return;
+      try{let v=JSON.parse(data);if(!v||typeof v!=='object')throw Error();MNG=v;saveManage();render()}
+      catch(err){alert('管理データを読み込めませんでした')}
+    };
+    render()
+  }catch(err){
+    S.textContent='読み込みに失敗しました';
+    ER.innerHTML='<div class="error">一覧データを取得できませんでした。再読み込みしてください。<br><small>'+x(err.message||err)+'</small></div>'
+  }
+}
+start();
+</script>
+</body>
+</html>
