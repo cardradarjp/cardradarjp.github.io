@@ -1,0 +1,36 @@
+name: Build card thumbnails
+
+on:
+  push:
+    paths:
+      - "tools/split_card_thumbnails.py"
+      - ".github/workflows/build-card-thumbnails.yml"
+      - "assets/review/card-sprite.jpg"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Pillow
+        run: pip install pillow
+      - name: Split card photos
+        run: python tools/split_card_thumbnails.py
+      - name: Commit generated thumbnails
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/review/card-crops buyback-list.html buyback-list-clean.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Generate independent card thumbnails"
+            git push
+          fi
