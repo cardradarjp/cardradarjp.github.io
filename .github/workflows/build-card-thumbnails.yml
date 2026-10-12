@@ -6,6 +6,7 @@ on:
       - "tools/split_card_thumbnails.py"
       - ".github/workflows/build-card-thumbnails.yml"
       - "assets/review/card-sprite.jpg"
+      - "assets/review/sprite-b64/**"
   workflow_dispatch:
 
 permissions:
@@ -21,13 +22,16 @@ jobs:
           python-version: "3.12"
       - name: Install Pillow
         run: pip install pillow
+      - name: Restore clean card sprite
+        run: |
+          cat assets/review/sprite-b64/part{1..8}.txt | base64 -d > assets/review/card-sprite.jpg
       - name: Split card photos
         run: python tools/split_card_thumbnails.py
       - name: Commit generated thumbnails
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/review/card-crops buyback-list.html buyback-list-clean.html
+          git add assets/review/card-sprite.jpg assets/review/card-crops buyback-list.html buyback-list-clean.html
           if git diff --cached --quiet; then
             echo "No changes"
           else
