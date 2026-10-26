@@ -54,11 +54,11 @@ select{width:100%;min-width:0;border:1px solid var(--line);border-radius:11px;ba
 .qty small{font-size:9px;color:var(--muted)}
 .status{font-size:10px;font-weight:800;padding:4px 7px;border-radius:999px;background:var(--chip)}
 .status.stock{color:var(--blue)}.status.partial{color:var(--orange)}.status.hold{color:var(--purple)}.status.sold{color:var(--green)}
-.prices{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:7px;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+.prices{display:grid;grid-template-columns:1.1fr 1.1fr 1fr 1fr;gap:7px;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
 .priceCell{min-width:0}
 .priceCell .k{font-size:9px;color:var(--muted);margin-bottom:2px}
 .priceCell .v{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.priceCell.current .v{font-size:19px;color:var(--green)}
+.priceCell.current .v{font-size:19px;color:var(--green)}.priceCell.fullahead .v{font-size:17px}.priceCell.fullahead.better .v{color:var(--green)}.priceCell.fullahead.lower .v{color:var(--orange)}.priceCell.review .v{color:#c62828;font-size:12px}.delta{font-size:9px;color:var(--muted);margin-top:2px}
 .quick{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.45}
 .quick b{color:var(--text)}
 .manage{border-top:1px solid var(--line);background:color-mix(in srgb,var(--card) 94%,var(--bg))}
@@ -81,7 +81,7 @@ select{width:100%;min-width:0;border:1px solid var(--line);border-radius:11px;ba
   .stats{grid-template-columns:repeat(2,1fr)}
   .filters{grid-template-columns:1fr 1fr}
   .filters select:last-child{grid-column:1/-1}
-  .prices{grid-template-columns:1.2fr 1fr}
+  .prices{grid-template-columns:1fr 1fr}
   .priceCell.remaining{display:none}
 }
 </style>
@@ -91,7 +91,7 @@ select{width:100%;min-width:0;border:1px solid var(--line);border-radius:11px;ba
   <header class="header">
     <div class="titlebar">
       <h1>カード売却管理</h1>
-      <div class="updated">相場 2026/10/12</div>
+      <div class="updated">フルアヘッド 2026/10/26</div>
     </div>
     <div class="stats">
       <div class="stat"><div class="v" id="tc">—</div><div class="k">未売却種類</div></div>
@@ -104,7 +104,7 @@ select{width:100%;min-width:0;border:1px solid var(--line);border-radius:11px;ba
       <div class="filters">
         <select id="m"><option value="">全ステータス</option><option value="stock">所持中</option><option value="partial">一部売却</option><option value="hold">保留</option><option value="sold">売却済</option></select>
         <select id="r"><option value="">全レアリティ</option></select>
-        <select id="o"><option value="sub">残額が高い順</option><option value="p">単価が高い順</option><option value="n">登録順</option></select>
+        <select id="o"><option value="sub">残額が高い順</option><option value="p">単価が高い順</option><option value="fa">フルアヘッド高い順</option><option value="gap">フルアヘッド差額順</option><option value="n">登録順</option></select>
       </div>
     </div>
     <div class="result" id="st">一覧データを読み込んでいます…</div>
@@ -118,8 +118,8 @@ select{width:100%;min-width:0;border:1px solid var(--line);border-radius:11px;ba
   <div id="err"></div>
 </div>
 <script>
-const DATA='/assets/review/buyback-current.json?v=20261012-1800',STORE='buyback_sale_manage_v1';
-let D=[],MNG={};
+const DATA='/assets/review/buyback-current.json?v=20261026-1518',FADATA='/assets/review/fullahead-prices.json?v=20261026-1518',STORE='buyback_sale_manage_v1';
+let D=[],FA=new Map(),MNG={};
 const q=document.querySelector('#q'),r=document.querySelector('#r'),m=document.querySelector('#m'),o=document.querySelector('#o'),L=document.querySelector('#list'),S=document.querySelector('#st'),E=document.querySelector('#e'),ER=document.querySelector('#err'),TC=document.querySelector('#tc'),TQ=document.querySelector('#tq'),TV=document.querySelector('#tv'),TS=document.querySelector('#ts');
 const x=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>'¥'+Number(n||0).toLocaleString();
@@ -128,6 +128,15 @@ function photoHtml(z){
   const n=+z[0];
   if(!((n>=113&&n<=235)||(n>=237&&n<=247)))return '';
   return '<div class="photoWrap"><img class="photo" loading="lazy" decoding="async" src="/assets/review/card-crops/'+n+'.webp?v=20261012-1800" alt="'+x(z[1])+' 実物写真"><div class="photoLabel">実物</div></div>';
+}
+function fa(z){return FA.get(+z[0])||null}
+function faValue(z){let v=fa(z);return v&&v.status==='matched'?+v.price:0}
+function faHtml(z){
+  let v=fa(z);
+  if(!v)return '<div class="priceCell fullahead"><div class="k">フルアヘッド</div><div class="v">—</div></div>';
+  if(v.status==='review')return '<div class="priceCell fullahead review"><div class="k">フルアヘッド</div><div class="v">要確認</div><div class="delta">'+x(v.note||'型番不整合')+'</div></div>';
+  let p=+v.price,d=p-(+z[5]),cls=d>0?'better':d<0?'lower':'';
+  return '<div class="priceCell fullahead '+cls+'"><div class="k">フルアヘッド</div><div class="v">'+yen(p)+'</div><div class="delta">'+(d===0?'同額':(d>0?'+¥':'-¥')+Math.abs(d).toLocaleString())+'</div></div>';
 }
 
 function loadManage(){
@@ -185,6 +194,8 @@ function render(){
   a.sort((A,B)=>{
     if(o.value==='n')return A[0]-B[0];
     if(o.value==='p')return B[5]-A[5]||A[0]-B[0];
+    if(o.value==='fa')return faValue(B)-faValue(A)||A[0]-B[0];
+    if(o.value==='gap')return (faValue(B)-(+B[5]))-(faValue(A)-(+A[5]))||A[0]-B[0];
     let ar=(+A[2]-mg(A).soldQty)*(+A[5]),br=(+B[2]-mg(B).soldQty)*(+B[5]);
     return br-ar||A[0]-B[0]
   });
@@ -203,6 +214,7 @@ function render(){
         '</div>'+
         '<div class="prices">'+
           '<div class="priceCell current"><div class="k">現在買取</div><div class="v">'+yen(z[5])+'</div></div>'+
+          faHtml(z)+
           '<div class="priceCell"><div class="k">自分確認最高</div><div class="v">'+best+'</div></div>'+
           '<div class="priceCell remaining"><div class="k">残り合計</div><div class="v">'+yen(remain*(+z[5]))+'</div></div>'+
         '</div>'+
@@ -243,8 +255,12 @@ function updateCard(card){
 async function start(){
   try{
     loadManage();
-    let res=await fetch(DATA,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);
-    D=await res.json();opts();
+    let [res,fres]=await Promise.all([fetch(DATA,{cache:'no-store'}),fetch(FADATA,{cache:'no-store'})]);
+    if(!res.ok)throw Error('一覧 HTTP '+res.status);
+    if(!fres.ok)throw Error('フルアヘッド HTTP '+fres.status);
+    D=await res.json();
+    let fd=await fres.json();FA=new Map((fd.items||[]).map(v=>[+v.no,v]));
+    opts();
     [q,r,m,o].forEach(el=>el.addEventListener(el===q?'input':'change',render));
     L.addEventListener('change',ev=>{
       let card=ev.target.closest('.card');
