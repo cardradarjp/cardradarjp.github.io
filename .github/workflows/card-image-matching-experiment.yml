@@ -1,0 +1,22 @@
+name: Card image matching experiment
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r matching-test/requirements.txt
+      - run: python matching-test/test_matching.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: matching-experiment-results
+          path: matching-test/results/
+          if-no-files-found: ignore
