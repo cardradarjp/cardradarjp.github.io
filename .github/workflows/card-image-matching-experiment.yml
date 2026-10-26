@@ -1,0 +1,32 @@
+name: Card image matching experiment
+on:
+  workflow_dispatch:
+    inputs:
+      test_branch:
+        description: 'Experiment branch to check out'
+        required: true
+        default: 'experiment/card-image-matching-20261026'
+permissions:
+  contents: read
+jobs:
+  reference-download-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.test_branch }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install experiment dependencies
+        run: python -m pip install -r matching-test/requirements.txt
+      - name: Verify external reference image download
+        run: python matching-test/check_reference_download.py
+      - name: Upload diagnostic result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reference-download-diagnostic
+          path: matching-test/results/reference_download_check.json
+          if-no-files-found: ignore
