@@ -15,6 +15,7 @@ def get(url):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--batch",type=int,default=0)
+    p.add_argument("--all",action="store_true",help="Index all database cards in one run")
     p.add_argument("--batch-size",type=int,default=1500)
     p.add_argument("--workers",type=int,default=6)
     a=p.parse_args()
@@ -30,9 +31,6 @@ def main():
                     if d.get("img"):cards.append((member.name,d))
                 except Exception:pass
     cards.sort(key=lambda x:x[0])
-    start=a.batch*a.batch_size
-    selected=cards[start:start+a.batch_size]
-    if not selected:raise SystemExit(f"No cards in batch {a.batch}; total={len(cards)}")
     def process(item):
         path,d=item
         try:
@@ -50,21 +48,37 @@ def main():
             cv2.normalize(hist,hist)
             return (path,d.get("name",""),str(d.get("jp_id","")),bits,hist.flatten()),None
         except Exception as e:return None,{"path":path,"error":str(e)[:120]}
-    rows=[];fail=[]
-    with ThreadPoolExecutor(max_workers=a.workers) as pool:
-        for future in as_completed([pool.submit(process,item) for item in selected]):
-            row,error=future.result()
-            if row:rows.append(row)
-            else:fail.append(error)
-    rows.sort(key=lambda x:x[0])
-    if rows:
-        np.savez_compressed(out/f"batch_{a.batch:03d}.npz",
-            ids=np.array([x[0] for x in rows]),names=np.array([x[1] for x in rows]),
-            numbers=np.array([x[2] for x in rows]),bits=np.stack([x[3] for x in rows]),
-            hist=np.stack([x[4] for x in rows]))
-    summary={"batch":a.batch,"batch_size":a.batch_size,"total_metadata":len(cards),
-        "requested":len(selected),"indexed":len(rows),"failed":len(fail),"errors":fail[:10]}
-    (out/f"batch_{a.batch:03d}.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2))
-    print(json.dumps(summary,ensure_ascii=False))
-    if not rows:raise SystemExit("No images indexed")
+    batches=range((len(cards)+a.batch_size-1)//a.batch_size) if a.all else [a.batch]
+    totals={"total_metadata":len(cards),"indexed":0,"failed":0,"completed_batches":[]}
+    for batch in batches:
+        start=batch*a.batch_size
+        selected=cards[start:start+a.batch_size]
+        if not selected:raise SystemExit(f"No cards in batch {batch}; total={len(cards)}")
+        shard=out/f"batch_{batch:03d}.npz"
+        if shard.exists():
+            with np.load(shard) as existing:
+                n=len(existing["ids"])
+            print(f"SKIP batch={batch} existing={n}",flush=True)
+            totals["indexed"]+=n;totals["completed_batches"].append(batch)
+            continue
+        rows=[];fail=[]
+        with ThreadPoolExecutor(max_workers=a.workers) as pool:
+            for future in as_completed([pool.submit(process,item) for item in selected]):
+                row,error=future.result()
+                if row:rows.append(row)
+                else:fail.append(error)
+        rows.sort(key=lambda x:x[0])
+        if rows:
+            np.savez_compressed(shard,
+                ids=np.array([x[0] for x in rows]),names=np.array([x[1] for x in rows]),
+                numbers=np.array([x[2] for x in rows]),bits=np.stack([x[3] for x in rows]),
+                hist=np.stack([x[4] for x in rows]))
+        summary={"batch":batch,"batch_size":a.batch_size,"total_metadata":len(cards),
+            "requested":len(selected),"indexed":len(rows),"failed":len(fail),"errors":fail[:10]}
+        (out/f"batch_{batch:03d}.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2))
+        print(json.dumps(summary,ensure_ascii=False),flush=True)
+        totals["indexed"]+=len(rows);totals["failed"]+=len(fail);totals["completed_batches"].append(batch)
+        if not rows:raise SystemExit("No images indexed in batch "+str(batch))
+    (out/"full_index_summary.json").write_text(json.dumps(totals,ensure_ascii=False,indent=2))
+    print(json.dumps(totals,ensure_ascii=False),flush=True)
 if __name__=="__main__":main()
