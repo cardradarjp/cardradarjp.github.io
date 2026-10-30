@@ -7,9 +7,14 @@ on:
         required: false
         default: 'https://github.com/user-attachments/assets/1e80e0c3-8a57-42b8-b7c4-a1ae323892c5'
       index_batch:
-        description: 'Full database feature index batch (0, 1, 2, ...; 1500 cards per batch)'
+        description: 'Batch number if full_index is false'
         required: false
         default: '0'
+      full_index:
+        description: 'Index all Japanese card images in one run'
+        type: boolean
+        required: false
+        default: true
       test_branch:
         description: 'Experiment branch'
         required: true
@@ -19,7 +24,7 @@ permissions:
 jobs:
   reference-download-check:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,13 +35,24 @@ jobs:
       - run: python -m pip install -r matching-test/requirements.txt
       - name: Download and decode one reference image
         run: python matching-test/check_reference_download.py
-      - name: Build reusable full-database feature index shard
-        run: python matching-test/build_feature_index.py --batch "${{ inputs.index_batch }}" --batch-size 1500 --workers 6
-      - name: Cache completed feature index shard
+      - name: Restore latest cumulative feature index
+        uses: actions/cache/restore@v4
+        with:
+          path: matching-test/feature-index/
+          key: cardradar-full-index-v2-${{ github.run_id }}
+          restore-keys: |
+            cardradar-full-index-v2-
+      - name: Build full Japanese card feature index
+        if: inputs.full_index
+        run: python -u matching-test/build_feature_index.py --all --batch-size 1500 --workers 8
+      - name: Build one Japanese card feature index shard
+        if: ${{ !inputs.full_index }}
+        run: python -u matching-test/build_feature_index.py --batch "${{ inputs.index_batch }}" --batch-size 1500 --workers 8
+      - name: Save cumulative feature index
         uses: actions/cache/save@v4
         with:
           path: matching-test/feature-index/
-          key: cardradar-index-v1-batch-${{ inputs.index_batch }}-${{ github.run_id }}
+          key: cardradar-full-index-v2-${{ github.run_id }}
       - name: Prepare 25 query crops from GitHub image attachment
         if: inputs.image_url != ''
         env:
