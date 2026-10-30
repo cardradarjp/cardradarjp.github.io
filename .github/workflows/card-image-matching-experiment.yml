@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       test_branch:
-        description: 'Experiment branch to check out'
+        description: 'Experiment branch'
         required: true
         default: 'experiment/card-image-matching-20261026'
 permissions:
@@ -11,7 +11,7 @@ permissions:
 jobs:
   reference-download-check:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,14 +19,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install experiment dependencies
-        run: python -m pip install -r matching-test/requirements.txt
-      - name: Verify external reference image download
+      - run: python -m pip install -r matching-test/requirements.txt
+      - name: Download and decode one reference image
         run: python matching-test/check_reference_download.py
-      - name: Upload diagnostic result
-        if: always()
+      - name: Download 50 reference cards from one sample set
+        run: python matching-test/download_reference_batch.py --set 20th --limit 50
+      - name: Run matcher only when user card crops are available
+        run: |
+          if [ -d matching-test/queries ] && ls matching-test/queries/* >/dev/null 2>&1; then
+            python matching-test/test_matching.py
+          else
+            echo "25 query card images are not in this branch yet; no recognition accuracy claimed."
+          fi
+      - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: reference-download-diagnostic
-          path: matching-test/results/reference_download_check.json
+          name: matching-experiment-results
+          path: matching-test/results/
           if-no-files-found: ignore
