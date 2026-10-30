@@ -15,7 +15,7 @@ permissions:
 jobs:
   reference-download-check:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,8 +26,10 @@ jobs:
       - run: python -m pip install -r matching-test/requirements.txt
       - name: Download and decode one reference image
         run: python matching-test/check_reference_download.py
-      - name: Download 50 reference cards from one sample set
-        run: python matching-test/download_reference_batch.py --set 20th --limit 50
+      - name: Download up to 1200 Japanese reference cards across sets
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python matching-test/download_reference_large.py --limit 1200 --workers 8
       - name: Prepare 25 query crops from GitHub image attachment
         if: inputs.image_url != ''
         env:
