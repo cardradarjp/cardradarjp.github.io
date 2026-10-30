@@ -23,5 +23,6 @@ out=Path("matching-test/queries");out.mkdir(parents=True,exist_ok=True)
 for row in range(5):
     for col in range(5):
         x0=9+col*51;y0=53+row*61
-        im.crop((x0,y0,x0+47,y0+43)).resize((188,172)).save(out/f"card_{row+1}_{col+1}.png")
+        top_offset=0 if row==0 else 12
+        im.crop((x0,y0+top_offset,x0+47,y0+43)).resize((188,172)).save(out/f"card_{row+1}_{col+1}.png")
 print("Prepared 25 query crops from",im.size)
