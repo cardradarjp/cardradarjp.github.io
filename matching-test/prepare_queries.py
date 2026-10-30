@@ -16,8 +16,9 @@ im=Image.open(io.BytesIO(data)).convert("RGB")
 if im.width>400: 
     # The source composite has 4 columns of shop sheets.
     im=im.crop((0,0,round(im.width/4),round(im.height/4)))
-if not (230<=im.width<=320 and 330<=im.height<=440):
+if not (230<=im.width<=400 and 330<=im.height<=560):
     raise SystemExit(f"Unexpected shop-sheet dimensions: {im.size}; expected about 271x384")
+im=im.resize((271,384),Image.Resampling.LANCZOS)
 out=Path("matching-test/queries");out.mkdir(parents=True,exist_ok=True)
 for row in range(5):
     for col in range(5):
