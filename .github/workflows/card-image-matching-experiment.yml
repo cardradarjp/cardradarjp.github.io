@@ -94,6 +94,7 @@ jobs:
           if [ -d matching-test/queries ] && ls matching-test/queries/* >/dev/null 2>&1; then
             python matching-test/match_feature_index.py
             python matching-test/ocr_rerank.py
+            python matching-test/orb_rerank.py
           else
             echo "25 query card images are not in this branch yet; no recognition accuracy claimed."
           fi
