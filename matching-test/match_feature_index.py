@@ -32,7 +32,7 @@ for q in queries:
     hash_score=1.0-np.count_nonzero(B!=qb[None,:,:],axis=2)/B.shape[2]
     color_score=np.clip((np.einsum("nrd,rd->nr",H,qh)+1.0)/2.0,0.0,1.0)
     scores=np.max(.65*hash_score+.35*color_score,axis=1)
-    best=np.argsort(scores)[-10:][::-1]
+    best=np.argsort(scores)[-100:][::-1]
     for rank,i in enumerate(best,1):
         rows.append(dict(query=q.name,rank=rank,reference=ids[i],similarity=round(float(scores[i]),4),
             card_name=names[i],card_number=numbers[i],verified="NO"))
@@ -40,6 +40,6 @@ out=base/"results";out.mkdir(exist_ok=True)
 fields=["query","rank","reference","similarity","card_name","card_number","verified"]
 with (out/"candidates.csv").open("w",encoding="utf-8-sig",newline="") as f:
     w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows)
-summary={"queries":len(queries),"references":len(ids),"candidate_rows":len(rows),"shards":len(files),"accuracy":"NOT_MEASURED"}
+summary={"method":"partial_visual_top100_for_orb_rerank","queries":len(queries),"references":len(ids),"candidate_rows":len(rows),"shards":len(files),"accuracy":"NOT_MEASURED"}
 (out/"index_summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2))
 print(json.dumps(summary,ensure_ascii=False),flush=True)
