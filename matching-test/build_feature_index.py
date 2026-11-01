@@ -6,7 +6,7 @@ import argparse,csv,io,json,os,tarfile,time,urllib.request
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 import cv2,numpy as np
-from test_matching import signature
+from partial_features import features
 
 def get(url):
     req=urllib.request.Request(url,headers={"User-Agent":"CardRadar image matching research"})
@@ -37,16 +37,8 @@ def main():
             raw=get(d["img"])
             img=cv2.imdecode(np.frombuffer(raw,np.uint8),cv2.IMREAD_COLOR)
             if img is None:raise ValueError("image decode")
-            # Match existing signature() behavior without writing the original image.
-            h,w=img.shape[:2]
-            crop=img[int(h*.17):int(h*.66),int(w*.12):int(w*.88)]
-            gray=cv2.resize(cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY),(32,32),interpolation=cv2.INTER_AREA).astype(np.float32)
-            dct=cv2.dct(gray)[:8,:8]
-            bits=(dct[1:,:]>np.median(dct[1:,:])).ravel()
-            hsv=cv2.cvtColor(crop,cv2.COLOR_BGR2HSV)
-            hist=cv2.calcHist([hsv],[0,1],None,[16,8],[0,180,0,256])
-            cv2.normalize(hist,hist)
-            return (path,d.get("name",""),str(d.get("jp_id","")),bits,hist.flatten()),None
+            bits,hist=features(img)
+            return (path,d.get("name",""),str(d.get("jp_id","")),bits,hist),None
         except Exception as e:return None,{"path":path,"error":str(e)[:120]}
     batches=range((len(cards)+a.batch_size-1)//a.batch_size) if a.all else [a.batch]
     totals={"total_metadata":len(cards),"indexed":0,"failed":0,"completed_batches":[]}
