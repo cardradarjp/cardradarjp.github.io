@@ -22,8 +22,8 @@ ocr_rows=[]
 for q,group in byquery.items():
  img=cv2.imread(str(base/"queries"/q))
  if img is None:continue
- # Crop the uppermost name line, preserving the full top of the card.
- strip=img[:max(12,round(img.shape[0]*.23)),:]
+ # Crop the bottom card-name line just above the price banner, preserving the full top of the card.
+ strip=img[round(img.shape[0]*.79):round(img.shape[0]*.98),:]
  gray=cv2.cvtColor(strip,cv2.COLOR_BGR2GRAY)
  enlarged=cv2.resize(gray,None,fx=4,fy=4,interpolation=cv2.INTER_CUBIC)
  variants=(enlarged,cv2.threshold(enlarged,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1])
