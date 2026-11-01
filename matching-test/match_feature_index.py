@@ -7,7 +7,7 @@ from partial_features import features
 import cv2
 base=Path("matching-test")
 files=sorted((base/"feature-index").glob("batch_*.npz"))
-queries=sorted((base/"queries").glob("*.png"))
+queries=sorted((base/"queries").glob("card_*.png"))
 if not files or not queries:raise SystemExit("Missing indexed shards or queries; check cache restore")
 ids=[];names=[];numbers=[];bits=[];hists=[]
 for f in files:
