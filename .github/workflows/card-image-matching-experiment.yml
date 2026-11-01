@@ -47,12 +47,20 @@ jobs:
           path: matching-test/feature-index/
           key: cardradar-partial-index-v3-${{ github.run_id }}
           restore-keys: |
-            cardradar-full-index-v2-
+            cardradar-partial-index-v3-
       - name: Check restored feature index
         id: index_check
         shell: bash
         run: |
-          if compgen -G 'matching-test/feature-index/batch_*.npz' > /dev/null; then
+          if python - <<'PY'
+          import glob,numpy as np
+          files=glob.glob('matching-test/feature-index/batch_*.npz')
+          assert files, 'No cached shards'
+          with np.load(files[0]) as d:
+              assert d['bits'].ndim==3 and d['bits'].shape[1]==3
+              assert d['hist'].ndim==3 and d['hist'].shape[1]==3
+          PY
+          then
             echo 'available=true' >> "$GITHUB_OUTPUT"
           else
             echo 'available=false' >> "$GITHUB_OUTPUT"
@@ -68,7 +76,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: matching-test/feature-index/
-          key: cardradar-full-index-v2-${{ github.run_id }}
+          key: cardradar-partial-index-v3-${{ github.run_id }}
       - name: Prepare 25 query crops from GitHub image attachment
         if: inputs.image_url != ''
         env:
