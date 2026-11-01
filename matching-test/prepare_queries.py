@@ -20,9 +20,11 @@ if not (230<=im.width<=400 and 330<=im.height<=560):
     raise SystemExit(f"Unexpected shop-sheet dimensions: {im.size}; expected about 271x384")
 im=im.resize((271,384),Image.Resampling.LANCZOS)
 out=Path("matching-test/queries");out.mkdir(parents=True,exist_ok=True)
-for row in range(5):
+# The price banners have different vertical offsets between rows.
+# Keep only visible card artwork; do not include the yellow price strips.
+row_tops=(57,119,181,257,319)
+for row,y0 in enumerate(row_tops):
     for col in range(5):
-        x0=9+col*51;y0=53+row*61
-        top_offset=0 if row==0 else 12
-        im.crop((x0,y0+top_offset,x0+47,y0+43)).resize((188,172)).save(out/f"card_{row+1}_{col+1}.png")
-print("Prepared 25 query crops from",im.size)
+        x0=11+col*51
+        im.crop((x0,y0,x0+46,y0+36)).resize((188,172),Image.Resampling.LANCZOS).save(out/f"card_{row+1}_{col+1}.png")
+print("Prepared 25 price-free query crops from",im.size)
