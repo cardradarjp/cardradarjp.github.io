@@ -22,9 +22,9 @@ im=im.resize((271,384),Image.Resampling.LANCZOS)
 out=Path("matching-test/queries");out.mkdir(parents=True,exist_ok=True)
 # The price banners have different vertical offsets between rows.
 # Keep only visible card artwork; do not include the yellow price strips.
-row_tops=(57,119,181,257,319)
+row_tops=(53,115,177,253,315)
 for row,y0 in enumerate(row_tops):
     for col in range(5):
         x0=11+col*51
-        im.crop((x0,y0,x0+46,y0+36)).resize((188,172),Image.Resampling.LANCZOS).save(out/f"card_{row+1}_{col+1}.png")
-print("Prepared 25 price-free query crops from",im.size)
+        im.crop((x0,y0,x0+46,y0+40)).resize((188,172),Image.Resampling.LANCZOS).save(out/f"card_{row+1}_{col+1}.png")
+print("Prepared 25 top-preserving query crops from",im.size)
