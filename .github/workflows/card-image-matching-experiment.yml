@@ -48,14 +48,23 @@ jobs:
           key: cardradar-partial-index-v3-${{ github.run_id }}
           restore-keys: |
             cardradar-full-index-v2-
+      - name: Check restored feature index
+        id: index_check
+        shell: bash
+        run: |
+          if compgen -G 'matching-test/feature-index/batch_*.npz' > /dev/null; then
+            echo 'available=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'available=false' >> "$GITHUB_OUTPUT"
+          fi
       - name: Build full Japanese card feature index
-        if: ${{ !inputs.match_only && inputs.full_index }}
+        if: ${{ steps.index_check.outputs.available == 'false' || (!inputs.match_only && inputs.full_index) }}
         run: python -u matching-test/build_feature_index.py --all --batch-size 1500 --workers 8
       - name: Build one Japanese card feature index shard
-        if: ${{ !inputs.match_only && !inputs.full_index }}
+        if: ${{ steps.index_check.outputs.available == 'true' && !inputs.match_only && !inputs.full_index }}
         run: python -u matching-test/build_feature_index.py --batch "${{ inputs.index_batch }}" --batch-size 1500 --workers 8
       - name: Save cumulative feature index
-        if: ${{ !inputs.match_only }}
+        if: ${{ steps.index_check.outputs.available == 'false' || !inputs.match_only }}
         uses: actions/cache/save@v4
         with:
           path: matching-test/feature-index/
