@@ -14,7 +14,7 @@ on:
         description: 'Reuse saved index and only run matching (no image downloads)'
         type: boolean
         required: false
-        default: true
+        default: false
       full_index:
         description: 'Index all Japanese card images in one run'
         type: boolean
@@ -45,7 +45,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: matching-test/feature-index/
-          key: cardradar-full-index-v2-${{ github.run_id }}
+          key: cardradar-partial-index-v3-${{ github.run_id }}
           restore-keys: |
             cardradar-full-index-v2-
       - name: Build full Japanese card feature index
