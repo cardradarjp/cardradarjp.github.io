@@ -43,8 +43,9 @@ pitch=(right-left)/5
 out=Path("matching-test/queries");out.mkdir(parents=True,exist_ok=True)
 audit=im.copy();draw=ImageDraw.Draw(audit)
 for row,price_y in enumerate(tops):
-    card_top=max(0,price_y-row_pitch+1)
-    # Keep the card name and all artwork above the yellow price strip.
+    card_top=0 if row==0 else runs[row-1][1]+2
+    if card_top>=price_y:raise SystemExit(f'Invalid card region at row {row+1}')
+    # A card starts AFTER the previous row's price band and ends BEFORE its own price band.
     for col in range(5):
         x0=int(round(left+col*pitch));x1=int(round(left+(col+1)*pitch))
         crop=im.crop((x0,card_top,x1,price_y))
