@@ -3,7 +3,8 @@
 import csv,json,time
 from pathlib import Path
 import numpy as np
-from test_matching import signature
+from partial_features import features
+import cv2
 base=Path("matching-test")
 files=sorted((base/"feature-index").glob("batch_*.npz"))
 queries=sorted((base/"queries").glob("*.png"))
@@ -17,18 +18,20 @@ for f in files:
 B=np.concatenate(bits).astype(bool)
 H=np.concatenate(hists).astype(np.float32)
 # OpenCV HISTCMP_CORREL computes centered cosine similarity.
-H=H-H.mean(axis=1,keepdims=True)
-H/=np.maximum(np.linalg.norm(H,axis=1,keepdims=True),1e-10)
+H=H-H.mean(axis=2,keepdims=True)
+H/=np.maximum(np.linalg.norm(H,axis=2,keepdims=True),1e-10)
 rows=[]
 for q in queries:
-    qb,qh=signature(q)
+    img=cv2.imread(str(q))
+    qb,qh=features(img)
     qb=np.asarray(qb,dtype=bool)
-    qh=np.asarray(qh,dtype=np.float32).reshape(-1)
-    qh=qh-qh.mean()
-    qh/=max(float(np.linalg.norm(qh)),1e-10)
-    hash_score=1.0-np.count_nonzero(B!=qb,axis=1)/B.shape[1]
-    color_score=np.clip((H@qh+1.0)/2.0,0.0,1.0)
-    scores=.65*hash_score+.35*color_score
+    qh=np.asarray(qh,dtype=np.float32)
+    qh=qh-qh.mean(axis=1,keepdims=True)
+    qh/=np.maximum(np.linalg.norm(qh,axis=1,keepdims=True),1e-10)
+    # Compare matching visible artwork regions, not hidden lower card.
+    hash_score=1.0-np.count_nonzero(B!=qb[None,:,:],axis=2)/B.shape[2]
+    color_score=np.clip((np.einsum("nrd,rd->nr",H,qh)+1.0)/2.0,0.0,1.0)
+    scores=np.max(.65*hash_score+.35*color_score,axis=1)
     best=np.argsort(scores)[-10:][::-1]
     for rank,i in enumerate(best,1):
         rows.append(dict(query=q.name,rank=rank,reference=ids[i],similarity=round(float(scores[i]),4),
