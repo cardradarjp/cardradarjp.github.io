@@ -1,13 +1,13 @@
 {
-  "version": "2026-11-02-reset-draft",
+  "version": "2026-11-02-reset-draft-batch2",
   "status": "draft",
   "policy": "写真に写っているカードを現時点在庫として再登録。かがやく系のみ旧在庫数を引継ぎ。",
-  "photo_item_types": 43,
-  "photo_item_count": 111,
+  "photo_item_types": 124,
+  "photo_item_count": 235,
   "radiant_item_types": 10,
   "radiant_item_count": 38,
-  "total_types": 53,
-  "total_count": 149,
+  "total_types": 134,
+  "total_count": 273,
   "items": [
     {
       "id": 1,
@@ -21,10 +21,10 @@
     {
       "id": 2,
       "name": "ピカチュウ",
-      "qty": 8,
+      "qty": 11,
       "rarity": "P",
       "code": "133/SM-P",
-      "source": "IMG_0912.jpeg",
+      "source": "IMG_0912.jpeg + IMG_0919.jpeg",
       "note": "WCSロゴ"
     },
     {
@@ -246,11 +246,11 @@
     {
       "id": 27,
       "name": "フトゥー博士のシナリオ",
-      "qty": 1,
+      "qty": 2,
       "rarity": "SAR",
       "code": "SV4M 091/066",
-      "source": "IMG_0918.jpeg",
-      "note": ""
+      "source": "IMG_0918.jpeg + IMG_0919.jpeg",
+      "note": "2枚計上中／IMG_0918とIMG_0919が同一個体の可能性あり"
     },
     {
       "id": 28,
@@ -398,6 +398,735 @@
     },
     {
       "id": 44,
+      "name": "ピカチュウ",
+      "qty": 1,
+      "rarity": "プロモ",
+      "code": "No.025",
+      "source": "IMG_0919.jpeg",
+      "note": "旧裏/トヨタオートキャンペーン/LV.16/プロモ"
+    },
+    {
+      "id": 45,
+      "name": "ヨマワル",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "S12a 203/172",
+      "source": "IMG_0919.jpeg",
+      "note": "まどわす"
+    },
+    {
+      "id": 46,
+      "name": "ピカチュウ",
+      "qty": 4,
+      "rarity": "●",
+      "code": "No.025",
+      "source": "IMG_0919.jpeg",
+      "note": "旧裏/ポケモンジャングル・森背景/LV.14/●"
+    },
+    {
+      "id": 47,
+      "name": "ピカチュウ",
+      "qty": 2,
+      "rarity": "●",
+      "code": "旧1 No.025",
+      "source": "IMG_0919.jpeg",
+      "note": "旧裏/第1弾・紫背景/LV.12/●"
+    },
+    {
+      "id": 48,
+      "name": "ユカリ",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "M3 116/080",
+      "source": "IMG_0920.jpeg",
+      "note": ""
+    },
+    {
+      "id": 49,
+      "name": "ツツジ",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "S12a 242/172",
+      "source": "IMG_0920.jpeg",
+      "note": ""
+    },
+    {
+      "id": 50,
+      "name": "パオジアンex",
+      "qty": 1,
+      "rarity": "UR",
+      "code": "SV4a 357/190",
+      "source": "IMG_0920.jpeg",
+      "note": ""
+    },
+    {
+      "id": 51,
+      "name": "サーナイトex",
+      "qty": 4,
+      "rarity": "SSR",
+      "code": "SV4a 328/190",
+      "source": "IMG_0920.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 52,
+      "name": "テールナー",
+      "qty": 1,
+      "rarity": "CHR",
+      "code": "S11a 069/068",
+      "source": "IMG_0920.jpeg",
+      "note": ""
+    },
+    {
+      "id": 53,
+      "name": "ウミディグダ",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "SV1S 081/078",
+      "source": "IMG_0920.jpeg",
+      "note": ""
+    },
+    {
+      "id": 54,
+      "name": "カイオーガ",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "M6 030/076",
+      "source": "IMG_0920.jpeg",
+      "note": ""
+    },
+    {
+      "id": 55,
+      "name": "チルタリス",
+      "qty": 1,
+      "rarity": "CHR",
+      "code": "S11a 074/068",
+      "source": "IMG_0920.jpeg",
+      "note": ""
+    },
+    {
+      "id": 56,
+      "name": "チオンジェンex",
+      "qty": 1,
+      "rarity": "UR",
+      "code": "SV4a 355/190",
+      "source": "IMG_0921.jpeg",
+      "note": ""
+    },
+    {
+      "id": 57,
+      "name": "ペパー",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "SV1V 099/078",
+      "source": "IMG_0921.jpeg",
+      "note": ""
+    },
+    {
+      "id": 58,
+      "name": "バーベナとヘレナ",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "M2a 221/193",
+      "source": "IMG_0921.jpeg",
+      "note": ""
+    },
+    {
+      "id": 59,
+      "name": "ホミカの演奏",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "M4 119/083",
+      "source": "IMG_0921.jpeg",
+      "note": ""
+    },
+    {
+      "id": 60,
+      "name": "ミカンのまなざし",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "SV8 129/106",
+      "source": "IMG_0921.jpeg",
+      "note": ""
+    },
+    {
+      "id": 61,
+      "name": "古びたひみつのコハク",
+      "qty": 1,
+      "rarity": "C",
+      "code": "SV2a 156/165",
+      "source": "IMG_0921.jpeg",
+      "note": "マスターボールミラー"
+    },
+    {
+      "id": 62,
+      "name": "ガチガチバンド",
+      "qty": 1,
+      "rarity": "U",
+      "code": "SV2a 159/165",
+      "source": "IMG_0921.jpeg",
+      "note": "マスターボールミラー"
+    },
+    {
+      "id": 63,
+      "name": "レックウザ",
+      "qty": 1,
+      "rarity": "ミラー仕様",
+      "code": "M2a 127/193",
+      "source": "IMG_0921.jpeg",
+      "note": "ミラー/仕様要確認"
+    },
+    {
+      "id": 64,
+      "name": "ヒトカゲ",
+      "qty": 3,
+      "rarity": "P",
+      "code": "060/SV-P",
+      "source": "IMG_0921.jpeg",
+      "note": "プロモ"
+    },
+    {
+      "id": 65,
+      "name": "ポッポ",
+      "qty": 2,
+      "rarity": "AR",
+      "code": "SV3 118/108",
+      "source": "IMG_0921.jpeg",
+      "note": ""
+    },
+    {
+      "id": 66,
+      "name": "ナンジャモのタイカイデン",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "SV9 104/100",
+      "source": "IMG_0921.jpeg",
+      "note": ""
+    },
+    {
+      "id": 67,
+      "name": "ヨマワル",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "SV6a 068/064",
+      "source": "IMG_0921.jpeg",
+      "note": "むかえにいく"
+    },
+    {
+      "id": 68,
+      "name": "ゾロア",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "SV6a 072/064",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 69,
+      "name": "Nのゾロア",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "",
+      "source": "IMG_0922.jpeg",
+      "note": "型番要確認"
+    },
+    {
+      "id": 70,
+      "name": "タギングル",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "",
+      "source": "IMG_0922.jpeg",
+      "note": "型番要確認"
+    },
+    {
+      "id": 71,
+      "name": "ホシガリス",
+      "qty": 4,
+      "rarity": "AR",
+      "code": "SV1V 090/078",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 72,
+      "name": "ウェルカモ",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "SV1a 082/073",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 73,
+      "name": "ピジョン",
+      "qty": 2,
+      "rarity": "AR",
+      "code": "SV3 119/108",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 74,
+      "name": "ヤドラン",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "M5 087/081",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 75,
+      "name": "ロケット団のソーナンス",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "SV10 103/098",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 76,
+      "name": "ニャスパー",
+      "qty": 2,
+      "rarity": "AR",
+      "code": "M3 087/080",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 77,
+      "name": "ムウマ",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "M2a 202/193",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 78,
+      "name": "ドラメシヤ",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "M2a 211/193",
+      "source": "IMG_0922.jpeg",
+      "note": ""
+    },
+    {
+      "id": 79,
+      "name": "ゲコガシラ",
+      "qty": 1,
+      "rarity": "AR",
+      "code": "",
+      "source": "IMG_0922.jpeg",
+      "note": "型番要確認"
+    },
+    {
+      "id": 80,
+      "name": "ミロカロス",
+      "qty": 8,
+      "rarity": "CHR",
+      "code": "S11a 070/068",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 81,
+      "name": "サーナイト",
+      "qty": 5,
+      "rarity": "CHR",
+      "code": "S11a 072/068",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 82,
+      "name": "オーガポン みどりのめんex",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "SV8a 201/187",
+      "source": "IMG_0923.jpeg",
+      "note": "写真で型番確定"
+    },
+    {
+      "id": 83,
+      "name": "テツノブジンex",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "SV8a 213/187",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 84,
+      "name": "テツノカイナex",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "SV8a 210/187",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 85,
+      "name": "モモワロウex",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "SV8a 219/187",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 86,
+      "name": "メガルカリオex",
+      "qty": 2,
+      "rarity": "MA",
+      "code": "M2a 228/193",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 87,
+      "name": "メガルカリオex",
+      "qty": 2,
+      "rarity": "SR",
+      "code": "M1L 078/063",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 88,
+      "name": "ネオラントV",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "S12a 216/172",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 89,
+      "name": "ロトムV",
+      "qty": 2,
+      "rarity": "RR",
+      "code": "S11 037/100",
+      "source": "IMG_0923.jpeg",
+      "note": ""
+    },
+    {
+      "id": 90,
+      "name": "ウェーニバルex",
+      "qty": 1,
+      "rarity": "SSR",
+      "code": "SV4a 325/190",
+      "source": "IMG_0924.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 91,
+      "name": "キラフロルex",
+      "qty": 1,
+      "rarity": "SSR",
+      "code": "SV4a 329/190",
+      "source": "IMG_0924.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 92,
+      "name": "イキリンコex",
+      "qty": 3,
+      "rarity": "SSR",
+      "code": "SV4a 337/190",
+      "source": "IMG_0924.jpeg",
+      "note": "写真上3枚とも色違いSSR"
+    },
+    {
+      "id": 93,
+      "name": "フォレトスex",
+      "qty": 1,
+      "rarity": "SSR",
+      "code": "SV4a 320/190",
+      "source": "IMG_0924.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 94,
+      "name": "オンバーンex",
+      "qty": 1,
+      "rarity": "SSR",
+      "code": "SV4a 334/190",
+      "source": "IMG_0924.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 95,
+      "name": "テツノワダチex",
+      "qty": 1,
+      "rarity": "SSR",
+      "code": "SV4a 333/190",
+      "source": "IMG_0924.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 96,
+      "name": "ゲノセクトex",
+      "qty": 1,
+      "rarity": "特殊",
+      "code": "",
+      "source": "IMG_0924.jpeg",
+      "note": "25thロゴ/型番要確認"
+    },
+    {
+      "id": 97,
+      "name": "ザシアンV",
+      "qty": 2,
+      "rarity": "特殊",
+      "code": "",
+      "source": "IMG_0924.jpeg",
+      "note": "25thロゴ/型番要確認"
+    },
+    {
+      "id": 98,
+      "name": "N",
+      "qty": 1,
+      "rarity": "特殊",
+      "code": "",
+      "source": "IMG_0924.jpeg",
+      "note": "25thロゴ/型番要確認"
+    },
+    {
+      "id": 99,
+      "name": "ギリー",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "",
+      "source": "IMG_0924.jpeg",
+      "note": "型番要確認"
+    },
+    {
+      "id": 100,
+      "name": "MCの盛り上げ",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "",
+      "source": "IMG_0924.jpeg",
+      "note": "型番要確認"
+    },
+    {
+      "id": 101,
+      "name": "アオキ",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "SV3a 081/062",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 102,
+      "name": "トウキ",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "S5a 084/070",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 103,
+      "name": "シバ",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "S5I 079/070",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 104,
+      "name": "グラジオの決戦",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "M5 109/081",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 105,
+      "name": "タラゴン",
+      "qty": 2,
+      "rarity": "SR",
+      "code": "M3 105/080",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 106,
+      "name": "サーファー",
+      "qty": 2,
+      "rarity": "SAR",
+      "code": "M2a 249/193",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 107,
+      "name": "ひふきやろう",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "M2 107/080",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 108,
+      "name": "カキツバタ",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "SV7a 090/064",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 109,
+      "name": "ネリネ",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "SV8a 232/187",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 110,
+      "name": "怖いお兄さん",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "SV9 122/100",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 111,
+      "name": "セイジ",
+      "qty": 1,
+      "rarity": "SAR",
+      "code": "SV5M 096/071",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 112,
+      "name": "ネジキ",
+      "qty": 2,
+      "rarity": "SR",
+      "code": "S11 115/100",
+      "source": "IMG_0925.jpeg",
+      "note": ""
+    },
+    {
+      "id": 113,
+      "name": "博士の研究",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "S12a 248/172",
+      "source": "IMG_0926.jpeg",
+      "note": "ナナカマド博士"
+    },
+    {
+      "id": 114,
+      "name": "さぎょういん",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "S12 111/098",
+      "source": "IMG_0926.jpeg",
+      "note": ""
+    },
+    {
+      "id": 115,
+      "name": "メロコ",
+      "qty": 1,
+      "rarity": "SR",
+      "code": "SV8a 198/187",
+      "source": "IMG_0926.jpeg",
+      "note": ""
+    },
+    {
+      "id": 116,
+      "name": "ボールガイ",
+      "qty": 2,
+      "rarity": "SR",
+      "code": "S4a 196/190",
+      "source": "IMG_0926.jpeg",
+      "note": ""
+    },
+    {
+      "id": 117,
+      "name": "ジュン",
+      "qty": 1,
+      "rarity": "SR仕様",
+      "code": "SI 418/414",
+      "source": "IMG_0926.jpeg",
+      "note": ""
+    },
+    {
+      "id": 118,
+      "name": "ラウドボーンex",
+      "qty": 1,
+      "rarity": "SSR",
+      "code": "SV4a 324/190",
+      "source": "IMG_0926.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 119,
+      "name": "フーディンex",
+      "qty": 1,
+      "rarity": "SSR",
+      "code": "SV4a 326/190",
+      "source": "IMG_0926.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 120,
+      "name": "クエスパトラex",
+      "qty": 1,
+      "rarity": "SSR",
+      "code": "SV4a 323/190",
+      "source": "IMG_0926.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 121,
+      "name": "イダイナキバex",
+      "qty": 2,
+      "rarity": "SSR",
+      "code": "SV4a 330/190",
+      "source": "IMG_0926.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 122,
+      "name": "プクリンex",
+      "qty": 3,
+      "rarity": "SSR",
+      "code": "SV4a 336/190",
+      "source": "IMG_0926.jpeg",
+      "note": "色違い/SSR"
+    },
+    {
+      "id": 123,
+      "name": "ネオラントV",
+      "qty": 1,
+      "rarity": "RR",
+      "code": "S9 030/100",
+      "source": "IMG_0926.jpeg",
+      "note": "通常V/RR"
+    },
+    {
+      "id": 124,
+      "name": "ゼラオラV",
+      "qty": 1,
+      "rarity": "RR",
+      "code": "S12a 040/172",
+      "source": "IMG_0926.jpeg",
+      "note": "通常V/RR"
+    },
+    {
+      "id": 44,
       "name": "かがやくジラーチ",
       "qty": 3,
       "rarity": "K",
@@ -486,5 +1215,14 @@
       "source": "旧在庫から引継ぎ",
       "note": "ユーザー確認：在庫数変わりなし"
     }
+  ],
+  "duplicate_images_skipped": [
+    "IMG_0917(1).jpeg",
+    "IMG_0918(1).jpeg"
+  ],
+  "review_notes": [
+    "フトゥー博士のシナリオはIMG_0918とIMG_0919で各1枚確認。現在2枚計上だが同一個体の可能性あり。",
+    "IMG_0924のゲノセクトex・ザシアンV・N・ギリー・MCの盛り上げは型番要確認。",
+    "IMG_0922のNのゾロア・タギングル・ゲコガシラは型番要確認。"
   ]
 }
