@@ -8,7 +8,7 @@
     "fullaheadMatched": 134,
     "cloveMatched": 43,
     "bothMatched": 42,
-    "review": 18,
+    "review": 20,
     "marketMatched": 243,
     "allThreeMatched": 42
   },
@@ -6112,7 +6112,7 @@
         108
       ],
       "draftIds": [],
-      "review": null,
+      "review": "要確認：M2a 201/193の公式カード名はエレザード AR。ピカチュウではないため、名前・型番・価格の対応を再確認",
       "fullahead": null,
       "clove": null,
       "best": null,
@@ -7662,7 +7662,7 @@
         84
       ],
       "draftIds": [],
-      "review": null,
+      "review": "要確認：M2a 205/193の公式カード名はロケット団のミミッキュ AR。ルージュラではないため、名前・型番・価格の対応を再確認",
       "fullahead": null,
       "clove": null,
       "best": null,
