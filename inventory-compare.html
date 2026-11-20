@@ -1,118 +1,199 @@
 <!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f2f2f7">
-<title>買取価格比較｜前回リスト＋仮在庫</title>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7"><title>買取価格を比較｜前回リスト＋仮在庫</title>
 <style>
-:root{--bg:#f2f2f7;--card:#fff;--text:#111;--muted:#73737a;--line:#e5e5ea;--blue:#007aff;--green:#16833f;--orange:#b66a00;--red:#c62828;--chip:#f2f2f7;--shadow:0 1px 2px #0000000a,0 6px 20px #0000000a}
-@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--text:#f5f5f7;--muted:#a1a1a6;--line:#38383a;--blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--chip:#2c2c2e;--shadow:none}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-button,input,select{font:inherit}.wrap{max-width:760px;margin:auto;padding:0 12px calc(30px + env(safe-area-inset-bottom))}
-header{padding:max(14px,env(safe-area-inset-top)) 2px 10px}.top{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}.title{font-size:25px;font-weight:850;letter-spacing:-.5px}.date{font-size:10px;color:var(--muted);white-space:nowrap}
-.notice{font-size:11px;line-height:1.55;color:var(--muted);margin:8px 2px 10px}.notice b{color:var(--text)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.stat{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:9px 8px;min-width:0}.stat .v{font-weight:850;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stat .k{font-size:9px;color:var(--muted);margin-top:2px}
-.controls{display:grid;gap:7px;margin-top:10px}.search{width:100%;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:11px 12px;font-size:16px}.filters{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:6px}select{width:100%;min-width:0;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:9px 7px;font-size:12px}
-.summary{font-size:11px;color:var(--muted);margin:8px 2px 2px}.list{display:grid;gap:8px;margin-top:7px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px 13px;box-shadow:var(--shadow)}.head{display:flex;gap:8px;align-items:flex-start}.namebox{flex:1;min-width:0}.name{font-weight:820;font-size:16px;line-height:1.25}.meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}.chip{background:var(--chip);border-radius:999px;padding:4px 7px;font-size:9px;color:var(--muted)}.review{color:var(--red);font-size:10px;font-weight:700;margin-top:6px}
-.qty{display:grid;grid-template-columns:1fr 1fr;gap:5px;text-align:center;min-width:112px}.qcell{background:var(--chip);border-radius:9px;padding:5px 6px}.qcell b{display:block;font-size:14px}.qcell span{display:block;font-size:8px;color:var(--muted)}
-.prices{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}.pc{min-width:0}.pc .k{font-size:9px;color:var(--muted);margin-bottom:2px}.pc .v{font-size:16px;font-weight:850;white-space:nowrap}.pc.best .v{color:var(--green)}.pc .d{font-size:8px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}.emptyv{color:var(--muted)!important;font-weight:600!important}.stale{color:var(--orange)!important}
-.foot{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font-size:9px;color:var(--muted)}.foot a{color:var(--blue);text-decoration:none}
-.empty{text-align:center;padding:32px 8px;color:var(--muted)}.legend{font-size:9px;color:var(--muted);line-height:1.5;margin:10px 2px}
-@media(max-width:430px){.stats{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}.filters select:last-child{grid-column:1/-1}.qty{min-width:94px}.prices{grid-template-columns:1fr 1fr}.pc.best{grid-column:auto;background:var(--chip);border-radius:9px;padding:7px}.pc.best .v{font-size:18px}}
-</style>
-</head>
-<body><div class="wrap">
+:root{--bg:#f2f2f7;--card:#fff;--text:#15151a;--muted:#777783;--line:#e2e2e8;--blue:#006de5;--green:#117d47;--red:#bc3434;--amber:#ad6518;--soft:#f3f4f8;--shade:#e5f5ed}
+@media(prefers-color-scheme:dark){:root{--bg:#09090b;--card:#1c1c1f;--text:#f6f6f9;--muted:#a5a5af;--line:#38383f;--blue:#5aa9ff;--green:#4cdc9b;--red:#ff7777;--amber:#ffc174;--soft:#2a2a2e;--shade:#123a2a}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;font-size:14px}
+button,input,select{font:inherit}.wrap{max-width:1010px;margin:auto;padding:14px 12px calc(38px + env(safe-area-inset-bottom))}
+h1{font-size:26px;letter-spacing:-.7px;margin:0 0 3px}.sub{font-size:11px;color:var(--muted);line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px}.stat{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:10px 9px;min-width:0}.stat b{font-size:19px;display:block;white-space:nowrap}.stat span{font-size:10px;color:var(--muted)}
+.controls{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:11px;margin-top:12px;display:grid;gap:9px}
+input,select{width:100%;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px;font-size:15px;min-width:0}
+input[type=search]{font-size:16px}.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.actions{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.switch{background:var(--soft);border-radius:10px;padding:3px;display:inline-flex;gap:3px}
+.switch button{border:0;background:transparent;color:var(--muted);border-radius:8px;padding:8px 14px;font-weight:700}
+.switch button.active{background:var(--card);color:var(--text);box-shadow:0 1px 5px #0002}
+.export{border:1px solid var(--line);background:var(--card);color:var(--blue);font-weight:700;border-radius:10px;padding:9px 14px}
+.summary{font-size:12px;color:var(--muted);padding:12px 3px 3px;line-height:1.55}
+.list{display:grid;gap:9px;margin-top:6px}.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 13px;box-shadow:0 1px 3px #00000008}
+.itemTop{display:flex;justify-content:space-between;gap:9px;align-items:flex-start}.nm{font-weight:800;font-size:16px;line-height:1.36}.meta{color:var(--muted);font-size:11px;margin-top:2px}.qty{flex-shrink:0;text-align:right;color:var(--muted);font-size:10px}.qty b{font-size:16px;color:var(--text)}.qty small{display:block}
+.pricegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px}.price{border:1px solid var(--line);border-radius:11px;padding:9px 7px;min-width:0}.price .lab{font-size:10px;color:var(--muted)}.price .num{font-weight:850;font-size:19px;margin-top:3px;white-space:nowrap;letter-spacing:-.4px}.price .dt{font-size:9px;color:var(--muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.price.winner{background:var(--shade);border-color:var(--green)}.price.winner .num{color:var(--green)}.price.unknown .num{color:var(--muted)}.price.warn .dt{color:var(--amber)}
+.outcome{margin-top:9px;background:var(--soft);border-radius:11px;padding:9px 10px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.outcome b{font-size:12px}.outcome small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.outcome .total{font-size:16px;font-weight:850;text-align:right;white-space:nowrap}
+.links{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.links a{display:inline-flex;text-decoration:none;color:var(--blue);font-size:11px;font-weight:700;padding:7px 10px;border:1px solid var(--line);border-radius:8px}
+.review{font-size:11px;color:var(--red);font-weight:700;margin-top:6px}
+.mini{font-size:10px;color:var(--muted);line-height:1.55;margin-top:7px}
+.tablebox{overflow:auto;overscroll-behavior-x:contain;border-radius:14px;border:1px solid var(--line);background:var(--card);margin-top:8px;max-height:72vh}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:880px;font-size:12px}th{position:sticky;top:0;z-index:2;background:var(--soft);font-size:10px;color:var(--muted);white-space:nowrap}td,th{padding:12px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}td:first-child,th:first-child{text-align:left;position:sticky;left:0;background:var(--card);z-index:1;min-width:153px;max-width:170px;white-space:normal}th:first-child{z-index:3;background:var(--soft)}td:first-child b{display:block;font-size:12px}td:first-child small{font-size:10px;color:var(--muted)}.positive{color:var(--green);font-weight:750}.negative{color:var(--red)}.muted{color:var(--muted)}.fine{font-size:9px;color:var(--muted)}tr:hover td{background:var(--soft)}
+.legend{font-size:11px;color:var(--muted);line-height:1.7;margin:15px 4px}.legend b{color:var(--text)}.error{padding:24px;color:var(--red)}.empty{padding:30px;text-align:center;color:var(--muted)}.countPill{font-size:10px;padding:3px 7px;border-radius:99px;background:var(--soft);color:var(--muted)}
+@media(max-width:560px){.wrap{padding:10px 9px calc(40px + env(safe-area-inset-bottom))}h1{font-size:23px}.stats{grid-template-columns:1fr 1fr;gap:6px}.stat{padding:8px 9px}.stat b{font-size:18px}.filters{grid-template-columns:1fr 1fr}.filters select{font-size:12px;padding:9px 6px}.item{padding:10px}.pricegrid{gap:5px}.price{padding:8px 5px}.price .num{font-size:16px}.nm{font-size:15px}.price .lab{font-size:9px}.outcome .total{font-size:14px}.outcome{padding:8px}.links a{font-size:10px}}
+</style></head><body><main class="wrap">
 <header>
-  <div class="top"><div class="title">買取価格比較</div><div class="date">更新 2026/11/20</div></div>
-  <div class="notice"><b>仮在庫はまだ確定在庫ではありません。</b> 前回リストも残したまま、一般市場の参考買取＋Clove / フルアヘッドの確認できた価格を当て込んでいます。「—」は0円ではなく未照合です。</div>
-  <div class="stats">
-    <div class="stat"><div class="v" id="types">—</div><div class="k">表示種類</div></div>
-    <div class="stat"><div class="v" id="qty">—</div><div class="k">対象枚数</div></div>
-    <div class="stat"><div class="v" id="covered">—</div><div class="k">両店比較可</div></div>
-    <div class="stat"><div class="v" id="bestTotal">—</div><div class="k">比較済み最高合計</div></div>
-  </div>
-  <div class="controls">
-    <input id="q" class="search" type="search" placeholder="カード名・型番で検索">
-    <div class="filters">
-      <select id="scope"><option value="draft">仮在庫</option><option value="old">前回リスト</option><option value="both">両方</option></select>
-      <select id="match"><option value="">全て</option><option value="both">両店価格あり</option><option value="one">片方のみ</option><option value="none">未照合</option><option value="review">要確認</option></select>
-      <select id="sort"><option value="best">店舗最高価格順</option><option value="market">一般市場高い順</option><option value="gap">店差額順</option><option value="name">カード名順</option><option value="qty">枚数順</option></select>
-    </div>
-  </div>
-  <div id="sum" class="summary">読み込み中…</div>
-</header>
-<main id="list" class="list"></main><div id="empty" class="empty" style="display:none">該当カードなし</div>
-<div class="legend">価格日付はカードごとに表示。一般市場はこれまで確認したカードラッシュ・トレシア・ポケカ相場ナビ等の参考値で、確認日をカードごとに表示します。Fullaheadは11/20確認値を優先し、未更新分は10/26値。Cloveも11/19〜20の最新表を優先しています。</div>
+<h1>買取価格比較</h1>
+<div class="sub">2026/11/20保存データ｜前回リストと仮在庫は切り替え可能。参考相場と店舗買取は区別して表示します。</div>
+<div class="stats">
+ <div class="stat"><b id="sTypes">—</b><span>表示種類</span></div>
+ <div class="stat"><b id="sBoth">—</b><span>Clove・フルアヘッド両店比較</span></div>
+ <div class="stat"><b id="sPriced">—</b><span>店舗価格あり（対象枚数）</span></div>
+ <div class="stat"><b id="sTotal">—</b><span>店舗価格判明分の見込総額</span></div>
 </div>
+</header>
+<section class="controls" aria-label="検索と絞り込み">
+ <input type="search" id="q" placeholder="カード名・型番・レアリティで検索" aria-label="カード検索">
+ <div class="filters">
+  <select id="scope" aria-label="在庫"><option value="draft">仮在庫</option><option value="old">前回リスト</option><option value="both">両方（重複推定除外）</option></select>
+  <select id="match" aria-label="比較条件">
+   <option value="">すべて表示</option><option value="both">両店の価格あり</option><option value="one">片方だけ価格あり</option><option value="none">両店未照合</option><option value="clove">Cloveが高い</option><option value="fullahead">フルアヘッドが高い</option><option value="tie">同額</option><option value="marketOver">市場参考より店舗が高い</option><option value="marketUnder">市場参考より店舗が安い</option><option value="review">型番等の要確認</option><option value="old">古い・日付不明の価格あり</option>
+  </select>
+  <select id="sort" aria-label="並べ替え">
+   <option value="potential">確認優先度順</option><option value="best">店舗最高単価順</option><option value="gap">店間の単価差順</option><option value="gapTotal">店間の合計差順</option><option value="marketGap">市場参考との乖離順</option><option value="qty">枚数順</option><option value="name">名前順</option>
+  </select>
+  <select id="rarity" aria-label="レアリティ"><option value="">全レアリティ</option></select>
+ </div>
+ <div class="actions">
+  <div class="switch" aria-label="表示形式"><button type="button" id="cardBtn" class="active" aria-pressed="true">カード形式</button><button type="button" id="tableBtn" aria-pressed="false">横比較表</button></div>
+  <button type="button" class="export" id="csvBtn">表示中をCSV保存</button>
+ </div>
+</section>
+<div class="summary" id="summary">読み込み中…</div>
+<section id="cards" class="list"></section>
+<section id="tableView" class="tablebox" hidden><table><thead><tr><th>カード名・型番</th><th>枚数</th><th>一般市場※</th><th>Clove</th><th>フルアヘッド</th><th>店舗最高</th><th>店舗間差<br>(1枚)</th><th>価格判明分の合計</th></tr></thead><tbody id="tbody"></tbody></table></section>
+<p class="legend"><b>見方：</b>「一般市場」は過去に記録した参考買取であり、現在売れる確定価格ではありません。「店舗最高」はClove・フルアヘッドの判明価格だけで計算します。<b>—は0円ではなく未照合</b>、要確認のカードは合計額に入れません。保存値には古い価格や日付不明の価格が含まれます。実際の査定額は買取時点の相場・状態・枚数制限・送料・手数料によって変わります。</p>
+</main>
 <script>
+'use strict';
 const DATA='/assets/review/inventory-comparison.json?v=20261120-1252';
-let D=[];
-const q=document.querySelector('#q'),scope=document.querySelector('#scope'),match=document.querySelector('#match'),sort=document.querySelector('#sort'),list=document.querySelector('#list'),empty=document.querySelector('#empty');
-const yen=n=>'¥'+Number(n||0).toLocaleString();
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function qtyFor(z){return scope.value==='old'?z.oldQty:scope.value==='draft'?z.draftQty:Math.max(z.oldQty,z.draftQty)}
-function inScope(z){return scope.value==='old'?z.oldQty>0:scope.value==='draft'?z.draftQty>0:(z.oldQty>0||z.draftQty>0)}
-function clsDate(v){return v&&v.freshness==='current'?'':' stale'}
-function marketHtml(v){
- if(!v)return '<div class="pc"><div class="k">一般市場</div><div class="v emptyv">—</div><div class="d">未登録</div></div>';
- const d=[v.source||'参考相場',v.checked||'確認日不明'].filter(Boolean).join(' / ');
- return '<div class="pc"><div class="k">一般市場</div><div class="v">'+yen(v.price)+'</div><div class="d">'+esc(d)+'</div></div>';
+const $=id=>document.getElementById(id);
+const yen=n=>'¥'+Math.round(Number(n)||0).toLocaleString('ja-JP');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let all=[],visible=[],view='cards';
+const cleanNum=z=>String(z.code||'').replace(/\s/g,'');
+const inScope=z=>$('scope').value==='draft'?z.draftQty>0:$('scope').value==='old'?z.oldQty>0:z.oldQty>0||z.draftQty>0;
+const count=z=>$('scope').value==='draft'?z.draftQty:$('scope').value==='old'?z.oldQty:Math.max(z.oldQty,z.draftQty);
+const price=(z,k)=>z[k]&&Number.isFinite(Number(z[k].price))?Number(z[k].price):null;
+function winner(z){
+ if(z.review)return null;
+ const c=price(z,'clove'),f=price(z,'fullahead');
+ if(c===null&&f===null)return null;
+ return c!==null&&(f===null||c>f)?{price:c,name:'Clove'}:f!==null&&(c===null||f>c)?{price:f,name:'フルアヘッド'}:{price:c,name:'同額'};
 }
-function priceHtml(label,v){
- if(!v)return '<div class="pc"><div class="k">'+label+'</div><div class="v emptyv">—</div><div class="d">未照合</div></div>';
- return '<div class="pc"><div class="k">'+label+'</div><div class="v'+clsDate(v)+'">'+yen(v.price)+'</div><div class="d">'+esc(v.checked||'確認日不明')+'</div></div>'
+function gap(z){const c=price(z,'clove'),f=price(z,'fullahead');return c!==null&&f!==null?Math.abs(c-f):null}
+function diffMarket(z){const b=winner(z),m=price(z,'market');return b!==null&&m!==null?b.price-m:null}
+function oldish(z,k){const v=z[k];return !!v&&(v.freshness!=='current'||!/^2026-11-(19|20)$/.test(v.checked||''))}
+function stamp(v){
+ if(!v)return '未照合';
+ if(v.checked==='snapshot')return '保存値・日付不明';
+ if(v.checked)return v.checked.replace('2026-','');
+ return '確認日不明';
+}
+function labelDate(v){return v?'確認 '+stamp(v):'未照合'}
+function values(){
+ const s=$('q').value.trim().toLowerCase(),m=$('match').value,r=$('rarity').value;
+ let a=all.filter(inScope).filter(z=>!s||(z.name+' '+z.rarity+' '+z.code).toLowerCase().includes(s)).filter(z=>!r||z.rarity===r);
+ a=a.filter(z=>{
+  const c=price(z,'clove'),f=price(z,'fullahead'),g=gap(z),b=winner(z),md=diffMarket(z);
+  if(m==='review')return !!z.review;
+  if(m==='old')return oldish(z,'clove')||oldish(z,'fullahead');
+  if(z.review)return m==='';
+  if(m==='both')return c!==null&&f!==null;
+  if(m==='one')return (c===null)!==(f===null);
+  if(m==='none')return c===null&&f===null;
+  if(m==='clove')return c!==null&&f!==null&&c>f;
+  if(m==='fullahead')return c!==null&&f!==null&&f>c;
+  if(m==='tie')return g===0;
+  if(m==='marketOver')return md!==null&&md>0;
+  if(m==='marketUnder')return md!==null&&md<0;
+  return true;
+ });
+ const sort=$('sort').value;
+ const value=(z)=>{const b=winner(z),g=gap(z),md=diffMarket(z);
+  if(sort==='best')return b?b.price:-1;
+  if(sort==='gap')return g===null?-1:g;
+  if(sort==='gapTotal')return g===null?-1:g*count(z);
+  if(sort==='marketGap')return md===null?-1:Math.abs(md)*count(z);
+  if(sort==='qty')return count(z);
+  return (z.review?10000000:0)+(b?b.price*count(z):(price(z,'market')||0)*count(z)/2);
+ };
+ a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'ja'):value(y)-value(x)||x.name.localeCompare(y.name,'ja'));
+ return a;
+}
+function officialLinks(z){
+ const name=encodeURIComponent(z.name),code=encodeURIComponent(cleanNum(z));
+ const clove='https://base.clove.jp/prices/pokemon?title='+name;
+ const full='https://fullahead-buy.com/?shopbrand=pk&view=text';
+ const lookup='https://www.google.com/search?q='+encodeURIComponent('site:fullahead-buy.com '+z.name+' '+z.code);
+ return '<a href="'+clove+'" target="_blank" rel="noopener noreferrer">Clove公式で検索 ↗</a>'+
+ '<a href="'+full+'" target="_blank" rel="noopener noreferrer">フルアヘッド公式表 ↗</a>'+
+ '<a href="'+lookup+'" target="_blank" rel="noopener noreferrer">同カードをWeb検索 ↗</a>';
+}
+function priceBox(z,k,lab,b){
+ const v=z[k],p=price(z,k),isStore=k!=='market',isWin=isStore&&b&&v&&b.price===p;
+ const css=(isWin?' winner':'')+(p===null?' unknown':'')+(oldish(z,k)?' warn':'');
+ return '<div class="price'+css+'"><div class="lab">'+lab+(k==='market'?' ※参考':'')+'</div>'+
+ '<div class="num">'+(p===null?'—':yen(p))+'</div><div class="dt">'+esc(stamp(v))+'</div></div>';
+}
+function compareText(z){
+ const c=price(z,'clove'),f=price(z,'fullahead'),g=gap(z),md=diffMarket(z),n=count(z),b=winner(z);
+ if(z.review)return ['要確認：店舗最高の判定保留','型番・レアリティを確認してください'];
+ if(g!==null)return [g===0?'両店同額':(c>f?'Clove':'フルアヘッド')+'が '+yen(g)+'/枚 高い',g===0?'店舗間差 0円':n+'枚なら差額 '+yen(g*n)+(md===null?'':' ／ 参考相場との差 '+(md>0?'+':'−')+yen(Math.abs(md)))];
+ if(b)return [b.name+'のみ価格確認済み',md===null?'もう一方の店舗が未照合':'一般市場参考との差 '+(md>0?'+':'−')+yen(Math.abs(md))];
+ return ['両店とも未照合','一般市場の参考値があっても店舗価格ではありません'];
+}
+function cardHtml(z){
+ const n=count(z),b=winner(z),g=gap(z),msg=compareText(z);
+ return '<article class="item">'+
+ '<div class="itemTop"><div><div class="nm">'+esc(z.name)+'</div><div class="meta">'+esc(z.rarity)+' ／ '+esc(z.code||'型番未確定')+'</div></div>'+
+ '<div class="qty"><b>'+n+'</b>枚<small>前回 '+z.oldQty+' / 仮 '+z.draftQty+'</small></div></div>'+
+ (z.review?'<div class="review">⚠ '+esc(z.review)+'</div>':'')+
+ '<div class="pricegrid">'+priceBox(z,'market','一般市場',b)+priceBox(z,'clove','Clove',b)+priceBox(z,'fullahead','フルアヘッド',b)+'</div>'+
+ '<div class="outcome"><div><b>'+esc(msg[0])+'</b><small>'+esc(msg[1])+'</small></div>'+
+ '<div class="total">'+(b?yen(b.price*n):'—')+'<div class="fine">店舗価格判明分 '+(b?'計':'未算出')+'</div></div></div>'+
+ '<div class="links">'+officialLinks(z)+'</div>'+
+ '<div class="mini">出典：一般市場 '+esc(z.market?(z.market.source||'参考相場')+'（'+stamp(z.market)+'）':'未登録')+' ／ Clove '+labelDate(z.clove)+' ／ フルアヘッド '+labelDate(z.fullahead)+'</div></article>';
+}
+function tableRow(z){
+ const b=winner(z),g=gap(z),n=count(z),c=price(z,'clove'),f=price(z,'fullahead');
+ const cell=(v,obj)=>v===null?'<span class="muted">—</span>':yen(v)+(oldish(z,obj)?'<span class="fine"> ※過去値</span>':'');
+ return '<tr><td><b>'+esc(z.name)+'</b><small>'+esc(z.rarity)+' / '+esc(z.code||'型番未確定')+(z.review?' / 要確認':'')+'</small></td>'+
+ '<td>'+n+'</td><td>'+cell(price(z,'market'),'market')+'</td><td class="'+(b&&b.name==='Clove'?'positive':'')+'">'+cell(c,'clove')+'</td>'+
+ '<td class="'+(b&&b.name==='フルアヘッド'?'positive':'')+'">'+cell(f,'fullahead')+'</td>'+
+ '<td>'+(b?yen(b.price)+'<div class="fine">'+esc(b.name)+'</div>':'—')+'</td>'+
+ '<td>'+(g===null?'—':yen(g)+'<div class="fine">'+(c>f?'Clove':f>c?'フルアヘッド':'同額')+'</div>')+'</td>'+
+ '<td>'+(b?yen(b.price*n):'—')+'</td></tr>';
 }
 function render(){
- const t=q.value.trim().toLowerCase();
- let a=D.filter(z=>inScope(z)).filter(z=>!t||(z.name+' '+z.code+' '+z.rarity).toLowerCase().includes(t));
- a=a.filter(z=>{
-   const c=(z.clove?1:0)+(z.fullahead?1:0);
-   if(match.value==='both')return c===2&&!z.review;
-   if(match.value==='one')return c===1&&!z.review;
-   if(match.value==='none')return c===0&&!z.review;
-   if(match.value==='review')return !!z.review;
-   return true;
- });
- a.sort((A,B)=>{
-   if(sort.value==='name')return A.name.localeCompare(B.name,'ja');
-   if(sort.value==='market')return (B.market?.price||0)-(A.market?.price||0);
-   if(sort.value==='qty')return qtyFor(B)-qtyFor(A);
-   if(sort.value==='gap'){
-     const ag=A.clove&&A.fullahead?Math.abs(A.clove.price-A.fullahead.price):-1;
-     const bg=B.clove&&B.fullahead?Math.abs(B.clove.price-B.fullahead.price):-1;
-     return bg-ag;
-   }
-   return (B.best?.price||0)-(A.best?.price||0);
- });
- let totalQty=0,both=0,bestTotal=0,pricedQty=0;
- for(const z of a){
-   const n=qtyFor(z);totalQty+=n;
-   if(z.clove&&z.fullahead)both++;
-   if(z.best&&!z.review){bestTotal+=z.best.price*n;pricedQty+=n}
- }
- document.querySelector('#types').textContent=a.length.toLocaleString();
- document.querySelector('#qty').textContent=totalQty.toLocaleString()+'枚';
- document.querySelector('#covered').textContent=both.toLocaleString()+'種';
- document.querySelector('#bestTotal').textContent=yen(bestTotal);
- const marketCount=a.filter(z=>z.market).length; document.querySelector('#sum').textContent=a.length+'種類 / '+totalQty+'枚　一般市場 '+marketCount+'種 / 店舗価格あり '+pricedQty+'枚分';
- list.innerHTML=a.map(z=>{
-   const n=qtyFor(z);
-   const best=z.review?null:z.best;
-   const gap=z.clove&&z.fullahead?Math.abs(z.clove.price-z.fullahead.price):null;
-   return '<article class="card">'+
-    '<div class="head"><div class="namebox"><div class="name">'+esc(z.name)+'</div><div class="meta"><span class="chip">'+esc(z.rarity)+'</span><span class="chip">'+esc(z.code||'型番未確定')+'</span></div>'+(z.review?'<div class="review">要確認：'+esc(z.review)+'</div>':'')+'</div>'+
-    '<div class="qty"><div class="qcell"><b>'+z.oldQty+'</b><span>前回</span></div><div class="qcell"><b>'+z.draftQty+'</b><span>仮在庫</span></div></div></div>'+
-    '<div class="prices">'+marketHtml(z.market)+priceHtml('Clove',z.clove)+priceHtml('フルアヘッド',z.fullahead)+
-    '<div class="pc best"><div class="k">高い方</div><div class="v '+(!best?'emptyv':'')+'">'+(best?yen(best.price):'—')+'</div><div class="d">'+(best?esc(best.shop)+(gap!=null?' / 店差 '+yen(gap):''):(z.review?'照合保留':'未照合'))+'</div></div></div>'+
-    '<div class="foot"><span>対象 '+n+'枚</span><span>'+(z.oldQty&&z.draftQty?'前回＋仮在庫に存在':z.draftQty?'仮在庫のみ':'前回のみ')+'</span></div></article>'
- }).join('');
- empty.style.display=a.length?'none':'block';
+ visible=values();
+ const v=visible;let qty=0,both=0,known=0,estimate=0,market=0;
+ for(const z of v){const n=count(z),b=winner(z);qty+=n;if(gap(z)!==null&&!z.review)both++;if(price(z,'market')!==null)market++;if(b){known+=n;estimate+=b.price*n}}
+ $('sTypes').textContent=v.length+'種';$('sBoth').textContent=both+'種';$('sPriced').textContent=known+' / '+qty+'枚';$('sTotal').textContent=yen(estimate);
+ $('summary').textContent='表示 '+v.length+'種類・'+qty+'枚 ／ 市場参考 '+market+'種 ／ 両店比較 '+both+'種 ／ 店舗価格のない枚数 '+(qty-known)+'枚';
+ $('cards').innerHTML=v.length?v.map(cardHtml).join(''):'<div class="empty">条件に合うカードはありません</div>';
+ $('tbody').innerHTML=v.length?v.map(tableRow).join(''):'<tr><td colspan="8">条件に合うカードはありません</td></tr>';
+}
+function csvExport(){
+ const cols=['カード名','レアリティ','型番','対象枚数','前回枚数','仮在庫枚数','一般市場参考','一般市場確認日','市場参考出典','Clove買取','Clove確認日','フルアヘッド買取','フルアヘッド確認日','高い店舗','店舗最高単価','店舗差額/枚','店舗差額/対象枚数','店舗価格判明分合計','要確認'];
+ const rows=visible.map(z=>{const b=winner(z),g=gap(z),n=count(z);return [z.name,z.rarity,z.code,n,z.oldQty,z.draftQty,price(z,'market')??'',stamp(z.market),z.market?.source||'',price(z,'clove')??'',stamp(z.clove),price(z,'fullahead')??'',stamp(z.fullahead),b?.name||'',b?.price??'',g??'',g===null?'':g*n,b?b.price*n:'',z.review||'']});
+ const quote=s=>'"'+String(s==null?'':s).replace(/"/g,'""')+'"';
+ const blob=new Blob(['\uFEFF',cols.map(quote).join(','),'\r\n',...rows.map(r=>r.map(quote).join(',')+'\r\n')],{type:'text/csv;charset=utf-8;'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='買取比較_20261120.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function setView(next){
+ view=next;$('cards').hidden=next!=='cards';$('tableView').hidden=next!=='table';$('cardBtn').classList.toggle('active',next==='cards');$('tableBtn').classList.toggle('active',next==='table');
+ $('cardBtn').setAttribute('aria-pressed',next==='cards');$('tableBtn').setAttribute('aria-pressed',next==='table');
 }
 async function start(){
- const r=await fetch(DATA,{cache:'no-store'}); if(!r.ok){document.querySelector('#sum').textContent='データ取得失敗';return}
- const d=await r.json();D=d.rows||[];
- [q,scope,match,sort].forEach(x=>x.addEventListener(x===q?'input':'change',render));render();
+ try{
+  const res=await fetch(DATA,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);
+  const data=await res.json();all=data.rows||[];
+  const rarities=Array.from(new Set(all.map(z=>z.rarity).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ja'));
+  $('rarity').innerHTML='<option value="">全レアリティ</option>'+rarities.map(r=>'<option value="'+esc(r)+'">'+esc(r)+'</option>').join('');
+  ['q','scope','match','sort','rarity'].forEach(id=>$(id).addEventListener(id==='q'?'input':'change',render));
+  $('cardBtn').addEventListener('click',()=>setView('cards'));$('tableBtn').addEventListener('click',()=>setView('table'));$('csvBtn').addEventListener('click',csvExport);
+  setView('cards');render();
+ }catch(e){$('summary').className='error';$('summary').textContent='価格データを読み込めませんでした: '+e.message;}
 }
 start();
 </script></body></html>
