@@ -1,0 +1,6024 @@
+{
+  "generated": "2026-11-20",
+  "note": "前回リストと仮在庫を統合した比較用データ。価格が未確認の欄は0円ではなく未照合。",
+  "counts": {
+    "identities": 285,
+    "oldIdentities": 253,
+    "draftIdentities": 134,
+    "fullaheadMatched": 125,
+    "cloveMatched": 43,
+    "bothMatched": 33,
+    "review": 18
+  },
+  "rows": [
+    {
+      "id": 137,
+      "name": "アオキ",
+      "rarity": "SR",
+      "code": "SV3a 081/062",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        142
+      ],
+      "draftIds": [
+        101
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 10,
+      "name": "イーブイ",
+      "rarity": "AR",
+      "code": "SV5a 078/066",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        10
+      ],
+      "draftIds": [
+        19
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 2600,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 3200,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 3200
+      }
+    },
+    {
+      "id": 246,
+      "name": "イーブイ",
+      "rarity": "P",
+      "code": "239/S-P",
+      "oldQty": 7,
+      "draftQty": 7,
+      "oldNos": [
+        252
+      ],
+      "draftIds": [
+        43
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 300,
+        "checked": "2026-10-18",
+        "source": "Clove",
+        "freshness": "recent"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 300
+      }
+    },
+    {
+      "id": 247,
+      "name": "イーブイ",
+      "rarity": "P",
+      "code": "220/S-P",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        253
+      ],
+      "draftIds": [
+        29
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 300,
+        "checked": "2026-11-15",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 300
+      }
+    },
+    {
+      "id": 216,
+      "name": "イキリンコex",
+      "rarity": "SSR",
+      "code": "SV4a 337/190",
+      "oldQty": 1,
+      "draftQty": 3,
+      "oldNos": [
+        221
+      ],
+      "draftIds": [
+        92
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 187,
+      "name": "イダイナキバex",
+      "rarity": "SSR",
+      "code": "SV4a 330/190",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        192
+      ],
+      "draftIds": [
+        121
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 191,
+      "name": "ウェーニバルex",
+      "rarity": "SSR",
+      "code": "SV4a 325/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        196
+      ],
+      "draftIds": [
+        90
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 72,
+      "name": "ウェルカモ",
+      "rarity": "AR",
+      "code": "SV1a 082/073",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        73
+      ],
+      "draftIds": [
+        72
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 20,
+      "name": "ウミディグダ",
+      "rarity": "AR",
+      "code": "SV1S 081/078",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        20
+      ],
+      "draftIds": [
+        53
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 152,
+      "name": "オーガポン みどりのめんex",
+      "rarity": "SAR",
+      "code": "SV8a 201/187",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        157
+      ],
+      "draftIds": [
+        82
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 300,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 300
+      }
+    },
+    {
+      "id": 194,
+      "name": "オンバーンex",
+      "rarity": "SSR",
+      "code": "SV4a 334/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        199
+      ],
+      "draftIds": [
+        94
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 236,
+      "name": "かがやくアマージョ",
+      "rarity": "K",
+      "code": "S11a 009/068",
+      "oldQty": 5,
+      "draftQty": 5,
+      "oldNos": [
+        242
+      ],
+      "draftIds": [
+        48
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 234,
+      "name": "かがやくゲッコウガ",
+      "rarity": "K",
+      "code": "S12a 033/172",
+      "oldQty": 5,
+      "draftQty": 5,
+      "oldNos": [
+        240
+      ],
+      "draftIds": [
+        46
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 241,
+      "name": "かがやくサーナイト",
+      "rarity": "K",
+      "code": "S12a 055/172",
+      "oldQty": 3,
+      "draftQty": 3,
+      "oldNos": [
+        247
+      ],
+      "draftIds": [
+        53
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 232,
+      "name": "かがやくジラーチ",
+      "rarity": "K",
+      "code": "S11a 045/068",
+      "oldQty": 3,
+      "draftQty": 3,
+      "oldNos": [
+        238
+      ],
+      "draftIds": [
+        44
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 240,
+      "name": "かがやくデンヂムシ",
+      "rarity": "K",
+      "code": "S12a 039/172",
+      "oldQty": 4,
+      "draftQty": 4,
+      "oldNos": [
+        246
+      ],
+      "draftIds": [
+        52
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 235,
+      "name": "かがやくフーディン",
+      "rarity": "K",
+      "code": "S11a 031/068",
+      "oldQty": 3,
+      "draftQty": 3,
+      "oldNos": [
+        241
+      ],
+      "draftIds": [
+        47
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 237,
+      "name": "かがやくムゲンダイナ",
+      "rarity": "K",
+      "code": "S12a 115/172",
+      "oldQty": 3,
+      "draftQty": 3,
+      "oldNos": [
+        243
+      ],
+      "draftIds": [
+        49
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 233,
+      "name": "かがやくリザードン",
+      "rarity": "K",
+      "code": "S12a 015/172",
+      "oldQty": 5,
+      "draftQty": 5,
+      "oldNos": [
+        239
+      ],
+      "draftIds": [
+        45
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 238,
+      "name": "かがやくリザードン",
+      "rarity": "K",
+      "code": "S10b 011/071",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        244
+      ],
+      "draftIds": [
+        50
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 2500,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 2500
+      }
+    },
+    {
+      "id": 239,
+      "name": "かがやくルチャブル",
+      "rarity": "K",
+      "code": "S12a 078/172",
+      "oldQty": 6,
+      "draftQty": 6,
+      "oldNos": [
+        245
+      ],
+      "draftIds": [
+        51
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 131,
+      "name": "カキツバタ",
+      "rarity": "SAR",
+      "code": "SV7a 090/064",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        136
+      ],
+      "draftIds": [
+        108
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 205,
+      "name": "ガチガチバンド",
+      "rarity": "U",
+      "code": "SV2a 159/165",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        210
+      ],
+      "draftIds": [
+        62
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 600,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 600
+      }
+    },
+    {
+      "id": 192,
+      "name": "キラフロルex",
+      "rarity": "SSR",
+      "code": "SV4a 329/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        197
+      ],
+      "draftIds": [
+        91
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 50,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 50
+      }
+    },
+    {
+      "id": 188,
+      "name": "クエスパトラex",
+      "rarity": "SSR",
+      "code": "SV4a 323/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        193
+      ],
+      "draftIds": [
+        120
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 50,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 50
+      }
+    },
+    {
+      "id": 124,
+      "name": "グラジオの決戦",
+      "rarity": "SR",
+      "code": "M5 109/081",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        129
+      ],
+      "draftIds": [
+        104
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 242,
+      "name": "グレイシア",
+      "rarity": "P",
+      "code": "216/S-P",
+      "oldQty": 3,
+      "draftQty": 3,
+      "oldNos": [
+        248
+      ],
+      "draftIds": [
+        42
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 700,
+        "checked": "2026-11-15",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 700
+      }
+    },
+    {
+      "id": 209,
+      "name": "サーナイト",
+      "rarity": "CHR",
+      "code": "S11a 072/068",
+      "oldQty": 5,
+      "draftQty": 5,
+      "oldNos": [
+        214
+      ],
+      "draftIds": [
+        81
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 196,
+      "name": "サーナイトex",
+      "rarity": "SSR",
+      "code": "SV4a 328/190",
+      "oldQty": 4,
+      "draftQty": 4,
+      "oldNos": [
+        201
+      ],
+      "draftIds": [
+        51
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 300,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 300
+      }
+    },
+    {
+      "id": 129,
+      "name": "サーファー",
+      "rarity": "SAR",
+      "code": "M2a 249/193",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        134
+      ],
+      "draftIds": [
+        106
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 145,
+      "name": "さぎょういん",
+      "rarity": "SR",
+      "code": "S12 111/098",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        150
+      ],
+      "draftIds": [
+        114
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 135,
+      "name": "シバ",
+      "rarity": "SR",
+      "code": "S5I 079/070",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        140
+      ],
+      "draftIds": [
+        103
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 13,
+      "name": "ジュペッタ",
+      "rarity": "AR仕様",
+      "code": "MC 749/742",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        13
+      ],
+      "draftIds": [
+        31
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 139,
+      "name": "ジュン",
+      "rarity": "SR仕様",
+      "code": "SI 418/414",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        144
+      ],
+      "draftIds": [
+        117
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 133,
+      "name": "セイジ",
+      "rarity": "SAR",
+      "code": "SV5M 096/071",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        138
+      ],
+      "draftIds": [
+        111
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 185,
+      "name": "ゼラオラV",
+      "rarity": "RR",
+      "code": "S12a 040/172",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        190
+      ],
+      "draftIds": [
+        124
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 1,
+      "name": "ゾロア",
+      "rarity": "AR",
+      "code": "SV6a 072/064",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        1
+      ],
+      "draftIds": [
+        68
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 300,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 300
+      }
+    },
+    {
+      "id": 128,
+      "name": "タラゴン",
+      "rarity": "SR",
+      "code": "M3 105/080",
+      "oldQty": 3,
+      "draftQty": 2,
+      "oldNos": [
+        133
+      ],
+      "draftIds": [
+        105
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 214,
+      "name": "チオンジェンex",
+      "rarity": "UR",
+      "code": "SV4a 355/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        219
+      ],
+      "draftIds": [
+        56
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 208,
+      "name": "チルタリス",
+      "rarity": "CHR",
+      "code": "S11a 074/068",
+      "oldQty": 5,
+      "draftQty": 1,
+      "oldNos": [
+        213
+      ],
+      "draftIds": [
+        55
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 142,
+      "name": "ツツジ",
+      "rarity": "SAR",
+      "code": "S12a 242/172",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        147
+      ],
+      "draftIds": [
+        49
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 207,
+      "name": "テールナー",
+      "rarity": "CHR",
+      "code": "S11a 069/068",
+      "oldQty": 8,
+      "draftQty": 1,
+      "oldNos": [
+        212
+      ],
+      "draftIds": [
+        52
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 150,
+      "name": "テツノカイナex",
+      "rarity": "SAR",
+      "code": "SV8a 210/187",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        155
+      ],
+      "draftIds": [
+        84
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 300,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 300
+      }
+    },
+    {
+      "id": 151,
+      "name": "テツノブジンex",
+      "rarity": "SAR",
+      "code": "SV8a 213/187",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        156
+      ],
+      "draftIds": [
+        83
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 400,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 600,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 600
+      }
+    },
+    {
+      "id": 193,
+      "name": "テツノワダチex",
+      "rarity": "SSR",
+      "code": "SV4a 333/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        198
+      ],
+      "draftIds": [
+        95
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 136,
+      "name": "トウキ",
+      "rarity": "SR",
+      "code": "S5a 084/070",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        141
+      ],
+      "draftIds": [
+        102
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 56,
+      "name": "ドラメシヤ",
+      "rarity": "AR",
+      "code": "M2a 211/193",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        57
+      ],
+      "draftIds": [
+        78
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 80,
+      "name": "ナンジャモのタイカイデン",
+      "rarity": "AR",
+      "code": "SV9 104/100",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        81
+      ],
+      "draftIds": [
+        66
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 47,
+      "name": "ニャスパー",
+      "rarity": "AR",
+      "code": "M3 087/080",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        47
+      ],
+      "draftIds": [
+        76
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 244,
+      "name": "ニンフィア",
+      "rarity": "P",
+      "code": "237/S-P",
+      "oldQty": 4,
+      "draftQty": 4,
+      "oldNos": [
+        250
+      ],
+      "draftIds": [
+        41
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 800,
+        "checked": "2026-10-18",
+        "source": "Clove",
+        "freshness": "recent"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 800
+      }
+    },
+    {
+      "id": 221,
+      "name": "ネオラントV",
+      "rarity": "SAR",
+      "code": "S12a 216/172",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        226
+      ],
+      "draftIds": [
+        88
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 143,
+      "name": "ネジキ",
+      "rarity": "SR",
+      "code": "S11 115/100",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        148
+      ],
+      "draftIds": [
+        112
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 134,
+      "name": "ネリネ",
+      "rarity": "SAR",
+      "code": "SV8a 232/187",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        139
+      ],
+      "draftIds": [
+        109
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 300,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 300
+      }
+    },
+    {
+      "id": 147,
+      "name": "バーベナとヘレナ",
+      "rarity": "SR",
+      "code": "M2a 221/193",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        152
+      ],
+      "draftIds": [
+        58
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 212,
+      "name": "パオジアンex",
+      "rarity": "UR",
+      "code": "SV4a 357/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        217
+      ],
+      "draftIds": [
+        50
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 300,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 300
+      }
+    },
+    {
+      "id": 248,
+      "name": "ピカチュウ",
+      "rarity": "●",
+      "code": "No.025",
+      "oldQty": 4,
+      "draftQty": 4,
+      "oldNos": [
+        254
+      ],
+      "draftIds": [
+        46
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 249,
+      "name": "ピカチュウ",
+      "rarity": "●",
+      "code": "旧1 No.025",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        255
+      ],
+      "draftIds": [
+        47
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 250,
+      "name": "ピカチュウ",
+      "rarity": "プロモ",
+      "code": "No.025",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        256
+      ],
+      "draftIds": [
+        44
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 251,
+      "name": "ピカチュウ",
+      "rarity": "P",
+      "code": "197/SV-P",
+      "oldQty": 31,
+      "draftQty": 25,
+      "oldNos": [
+        257
+      ],
+      "draftIds": [
+        3
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 500,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 500
+      }
+    },
+    {
+      "id": 252,
+      "name": "ピカチュウ",
+      "rarity": "P",
+      "code": "291/SV-P",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        258
+      ],
+      "draftIds": [
+        4
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 300,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 300
+      }
+    },
+    {
+      "id": 253,
+      "name": "ピカチュウ",
+      "rarity": "P",
+      "code": "120/SV-P",
+      "oldQty": 14,
+      "draftQty": 14,
+      "oldNos": [
+        259
+      ],
+      "draftIds": [
+        1
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 700,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 700
+      }
+    },
+    {
+      "id": 59,
+      "name": "ピジョン",
+      "rarity": "AR",
+      "code": "SV3 119/108",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        60
+      ],
+      "draftIds": [
+        73
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 17,
+      "name": "ヒトカゲ",
+      "rarity": "AR",
+      "code": "SV2a 168/165",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        17
+      ],
+      "draftIds": [
+        20
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 1800,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 1800
+      }
+    },
+    {
+      "id": 198,
+      "name": "ヒトカゲ",
+      "rarity": "S",
+      "code": "SV4a 210/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        203
+      ],
+      "draftIds": [
+        39
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 800,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 800
+      }
+    },
+    {
+      "id": 199,
+      "name": "ヒトカゲ",
+      "rarity": "P",
+      "code": "060/SV-P",
+      "oldQty": 3,
+      "draftQty": 3,
+      "oldNos": [
+        204
+      ],
+      "draftIds": [
+        64
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 130,
+      "name": "ひふきやろう",
+      "rarity": "SR",
+      "code": "M2 107/080",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        135
+      ],
+      "draftIds": [
+        107
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 189,
+      "name": "フーディンex",
+      "rarity": "SSR",
+      "code": "SV4a 326/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        194
+      ],
+      "draftIds": [
+        119
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 195,
+      "name": "フォレトスex",
+      "rarity": "SSR",
+      "code": "SV4a 320/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        200
+      ],
+      "draftIds": [
+        93
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 50,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 50
+      }
+    },
+    {
+      "id": 186,
+      "name": "プクリンex",
+      "rarity": "SSR",
+      "code": "SV4a 336/190",
+      "oldQty": 3,
+      "draftQty": 3,
+      "oldNos": [
+        191
+      ],
+      "draftIds": [
+        122
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 245,
+      "name": "ブラッキー",
+      "rarity": "P",
+      "code": "161/S-P",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        251
+      ],
+      "draftIds": [
+        8
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 5000,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 5000
+      }
+    },
+    {
+      "id": 125,
+      "name": "ペパー",
+      "rarity": "SR",
+      "code": "SV1V 099/078",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        130
+      ],
+      "draftIds": [
+        57
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 138,
+      "name": "ボールガイ",
+      "rarity": "SR",
+      "code": "S4a 196/190",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        143
+      ],
+      "draftIds": [
+        116
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 62,
+      "name": "ホシガリス",
+      "rarity": "AR",
+      "code": "SV1V 090/078",
+      "oldQty": 4,
+      "draftQty": 4,
+      "oldNos": [
+        63
+      ],
+      "draftIds": [
+        71
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 22,
+      "name": "ポッポ",
+      "rarity": "AR",
+      "code": "SV3 118/108",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        22
+      ],
+      "draftIds": [
+        65
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 127,
+      "name": "ホミカの演奏",
+      "rarity": "SAR",
+      "code": "M4 119/083",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        132
+      ],
+      "draftIds": [
+        59
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 450,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 450
+      }
+    },
+    {
+      "id": 141,
+      "name": "ミカンのまなざし",
+      "rarity": "SR",
+      "code": "SV8 129/106",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        146
+      ],
+      "draftIds": [
+        60
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 210,
+      "name": "ミロカロス",
+      "rarity": "CHR",
+      "code": "S11a 070/068",
+      "oldQty": 8,
+      "draftQty": 8,
+      "oldNos": [
+        215
+      ],
+      "draftIds": [
+        80
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 45,
+      "name": "ムウマ",
+      "rarity": "AR",
+      "code": "M2a 202/193",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        45
+      ],
+      "draftIds": [
+        77
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 110,
+      "name": "メガズルズキンex",
+      "rarity": "MA",
+      "code": "M2a 231/193",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        115
+      ],
+      "draftIds": [
+        17
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 111,
+      "name": "メガディアンシーex",
+      "rarity": "MA",
+      "code": "M2a 227/193",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        116
+      ],
+      "draftIds": [
+        16
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 112,
+      "name": "メガユキメノコex",
+      "rarity": "MA",
+      "code": "M2a 224/193",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        117
+      ],
+      "draftIds": [
+        15
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 109,
+      "name": "メガルカリオex",
+      "rarity": "MA",
+      "code": "M2a 228/193",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        114
+      ],
+      "draftIds": [
+        86
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 119,
+      "name": "メガルカリオex",
+      "rarity": "SR",
+      "code": "M1L 078/063",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        124
+      ],
+      "draftIds": [
+        87
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 350,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 400,
+        "checked": "2026-11-20",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 400
+      }
+    },
+    {
+      "id": 146,
+      "name": "メロコ",
+      "rarity": "SR",
+      "code": "SV8a 198/187",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        151
+      ],
+      "draftIds": [
+        115
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 149,
+      "name": "モモワロウex",
+      "rarity": "SAR",
+      "code": "SV8a 219/187",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        154
+      ],
+      "draftIds": [
+        85
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 400,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 400
+      }
+    },
+    {
+      "id": 16,
+      "name": "ヤドラン",
+      "rarity": "AR",
+      "code": "M5 087/081",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        16
+      ],
+      "draftIds": [
+        74
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 228,
+      "name": "ヤドン",
+      "rarity": "●",
+      "code": "旧3 No.079",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        233
+      ],
+      "draftIds": [
+        21
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 229,
+      "name": "ヤドン",
+      "rarity": "●",
+      "code": "旧4 No.079",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        234
+      ],
+      "draftIds": [
+        22
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 121,
+      "name": "ユカリ",
+      "rarity": "SAR",
+      "code": "M3 116/080",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        126
+      ],
+      "draftIds": [
+        48
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 600,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 700,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 700
+      }
+    },
+    {
+      "id": 2,
+      "name": "ヨマワル",
+      "rarity": "AR",
+      "code": "SV6a 068/064",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        2
+      ],
+      "draftIds": [
+        67
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 500,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 500
+      }
+    },
+    {
+      "id": 3,
+      "name": "ヨマワル",
+      "rarity": "AR",
+      "code": "S12a 203/172",
+      "oldQty": 2,
+      "draftQty": 1,
+      "oldNos": [
+        3
+      ],
+      "draftIds": [
+        45
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 190,
+      "name": "ラウドボーンex",
+      "rarity": "SSR",
+      "code": "SV4a 324/190",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        195
+      ],
+      "draftIds": [
+        118
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 243,
+      "name": "リーフィア",
+      "rarity": "P",
+      "code": "215/S-P",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        249
+      ],
+      "draftIds": [
+        40
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": {
+        "price": 400,
+        "checked": "2026-11-15",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 400
+      }
+    },
+    {
+      "id": 18,
+      "name": "リザード",
+      "rarity": "AR",
+      "code": "SV2a 169/165",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        18
+      ],
+      "draftIds": [
+        37
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 1000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 1000
+      }
+    },
+    {
+      "id": 201,
+      "name": "リザード",
+      "rarity": "S",
+      "code": "SV4a 211/190",
+      "oldQty": 3,
+      "draftQty": 3,
+      "oldNos": [
+        206
+      ],
+      "draftIds": [
+        38
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 206,
+      "name": "レックウザ",
+      "rarity": "ミラー仕様",
+      "code": "M2a 127/193",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        211
+      ],
+      "draftIds": [
+        63
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 197,
+      "name": "レックウザEX",
+      "rarity": "P",
+      "code": "123/XY-P",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        202
+      ],
+      "draftIds": [
+        18
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 46,
+      "name": "ロケット団のソーナンス",
+      "rarity": "AR",
+      "code": "SV10 103/098",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        46
+      ],
+      "draftIds": [
+        75
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 183,
+      "name": "ロトムV",
+      "rarity": "RR",
+      "code": "S11 037/100",
+      "oldQty": 2,
+      "draftQty": 2,
+      "oldNos": [
+        188
+      ],
+      "draftIds": [
+        89
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 203,
+      "name": "古びたひみつのコハク",
+      "rarity": "C",
+      "code": "SV2a 156/165",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        208
+      ],
+      "draftIds": [
+        61
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 144,
+      "name": "博士の研究",
+      "rarity": "SR",
+      "code": "S12a 248/172",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        149
+      ],
+      "draftIds": [
+        113
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 132,
+      "name": "怖いお兄さん",
+      "rarity": "SR",
+      "code": "SV9 122/100",
+      "oldQty": 1,
+      "draftQty": 1,
+      "oldNos": [
+        137
+      ],
+      "draftIds": [
+        110
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 150,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 284,
+      "name": "MCの盛り上げ",
+      "rarity": "SR",
+      "code": "",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        100
+      ],
+      "review": "型番未確定",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 259,
+      "name": "MサーナイトEX",
+      "rarity": "30th復刻",
+      "code": "M6a 156/103",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        10
+      ],
+      "review": "現行買取表では同型番が「サーナイトEX」表記。名称要確認",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 260,
+      "name": "MレックウザEX",
+      "rarity": "RR",
+      "code": "XY6 062/078",
+      "oldQty": 0,
+      "draftQty": 2,
+      "oldNos": [],
+      "draftIds": [
+        11
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 282,
+      "name": "N",
+      "rarity": "特殊",
+      "code": "",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        98
+      ],
+      "review": "型番未確定",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 277,
+      "name": "Nのゾロア",
+      "rarity": "AR",
+      "code": "",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        69
+      ],
+      "review": "型番未確定",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 274,
+      "name": "アローラニャース",
+      "rarity": "AR",
+      "code": "M6a 115/103",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        35
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 264,
+      "name": "アンフェアスタンプ",
+      "rarity": "ACE",
+      "code": "SV5a 053/066",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        23
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 700,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 700
+      }
+    },
+    {
+      "id": 265,
+      "name": "イキリンコex",
+      "rarity": "SR",
+      "code": "SV2P 089/071",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        24
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 276,
+      "name": "カイオーガ",
+      "rarity": "AR",
+      "code": "M6 030/076",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        54
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 283,
+      "name": "ギリー",
+      "rarity": "SR",
+      "code": "",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        99
+      ],
+      "review": "型番未確定",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 279,
+      "name": "ゲコガシラ",
+      "rarity": "AR",
+      "code": "",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        79
+      ],
+      "review": "型番未確定",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 263,
+      "name": "ゲッコウガex",
+      "rarity": "SAR",
+      "code": "M6a 125/103",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        14
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 500,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 500
+      }
+    },
+    {
+      "id": 280,
+      "name": "ゲノセクトex",
+      "rarity": "特殊",
+      "code": "",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        96
+      ],
+      "review": "型番未確定",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 281,
+      "name": "ザシアンV",
+      "rarity": "特殊",
+      "code": "",
+      "oldQty": 0,
+      "draftQty": 2,
+      "oldNos": [],
+      "draftIds": [
+        97
+      ],
+      "review": "型番未確定",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 269,
+      "name": "ジニア",
+      "rarity": "SR",
+      "code": "SV1S 097/078",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        28
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 272,
+      "name": "シャンデラ",
+      "rarity": "AR",
+      "code": "M6a 112/103",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        33
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 257,
+      "name": "ゼニガメ",
+      "rarity": "P",
+      "code": "103/M-P",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        7
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 278,
+      "name": "タギングル",
+      "rarity": "AR",
+      "code": "",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        70
+      ],
+      "review": "型番未確定",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 273,
+      "name": "ニドリーナ",
+      "rarity": "AR",
+      "code": "M6a 114/103",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        34
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 285,
+      "name": "ネオラントV",
+      "rarity": "RR",
+      "code": "S9 030/100",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        123
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 275,
+      "name": "バーネット博士",
+      "rarity": "SR",
+      "code": "S8b 265/184",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        36
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 261,
+      "name": "ハッサムex",
+      "rarity": "30th復刻",
+      "code": "M6a 145/103",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        12
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 250,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 250
+      }
+    },
+    {
+      "id": 271,
+      "name": "ピィ",
+      "rarity": "AR",
+      "code": "SV3 113/108",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        32
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 254,
+      "name": "ピカチュウ",
+      "rarity": "P",
+      "code": "133/SM-P",
+      "oldQty": 0,
+      "draftQty": 11,
+      "oldNos": [],
+      "draftIds": [
+        2
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 256,
+      "name": "ピカチュウ",
+      "rarity": "-",
+      "code": "S8a 001/028",
+      "oldQty": 0,
+      "draftQty": 2,
+      "oldNos": [],
+      "draftIds": [
+        6
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 258,
+      "name": "ピカチュウ",
+      "rarity": "P",
+      "code": "024/S-P",
+      "oldQty": 0,
+      "draftQty": 3,
+      "oldNos": [],
+      "draftIds": [
+        9
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 255,
+      "name": "ピカチュウV",
+      "rarity": "-",
+      "code": "sD 028/127",
+      "oldQty": 0,
+      "draftQty": 2,
+      "oldNos": [],
+      "draftIds": [
+        5
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 270,
+      "name": "ヒガナの信頼",
+      "rarity": "SAR",
+      "code": "M6 112/076",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        30
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 900,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 900
+      }
+    },
+    {
+      "id": 268,
+      "name": "フトゥー博士のシナリオ",
+      "rarity": "SAR",
+      "code": "SV4M 091/066",
+      "oldQty": 0,
+      "draftQty": 2,
+      "oldNos": [],
+      "draftIds": [
+        27
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 266,
+      "name": "ミュウex",
+      "rarity": "SAR",
+      "code": "SV4a 347/190",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        25
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 44000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 44000
+      }
+    },
+    {
+      "id": 267,
+      "name": "メロコ",
+      "rarity": "SR",
+      "code": "SV4K 087/066",
+      "oldQty": 0,
+      "draftQty": 2,
+      "oldNos": [],
+      "draftIds": [
+        26
+      ],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 262,
+      "name": "わるいバンギラス",
+      "rarity": "30th復刻",
+      "code": "M6a 144/103",
+      "oldQty": 0,
+      "draftQty": 1,
+      "oldNos": [],
+      "draftIds": [
+        13
+      ],
+      "review": null,
+      "fullahead": {
+        "price": 500,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 500
+      }
+    },
+    {
+      "id": 122,
+      "name": "AZの安らぎ",
+      "rarity": "SAR",
+      "code": "M4 118/083",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        127
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 500,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 500
+      }
+    },
+    {
+      "id": 4,
+      "name": "Nのレシラム",
+      "rarity": "AR",
+      "code": "SV9 109/100",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        4
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 800,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 1000,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 1000
+      }
+    },
+    {
+      "id": 148,
+      "name": "アイアントex",
+      "rarity": "SAR",
+      "code": "SV8 130/106",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        153
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 1000
+      }
+    },
+    {
+      "id": 177,
+      "name": "アイアントex",
+      "rarity": "RR",
+      "code": "SV8 003/106",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        182
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 5,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 5
+      }
+    },
+    {
+      "id": 27,
+      "name": "アゲハント",
+      "rarity": "AR",
+      "code": "M2a 194/193",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        27
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 64,
+      "name": "アシレーヌ",
+      "rarity": "AR",
+      "code": "M5 085/081",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        65
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 140,
+      "name": "アセロラのいたずら",
+      "rarity": "SAR",
+      "code": "M1S 090/063",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        145
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 2000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 2000
+      }
+    },
+    {
+      "id": 69,
+      "name": "アマルルガ",
+      "rarity": "AR",
+      "code": "M3 084/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        70
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 50,
+      "name": "アラブルタケ",
+      "rarity": "AR",
+      "code": "SV4K 077/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        51
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 97,
+      "name": "イキリンコ",
+      "rarity": "AR",
+      "code": "SV2P 094/071",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        98
+      ],
+      "draftIds": [],
+      "review": "型番はイキリンコex SAR",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 217,
+      "name": "イキリンコex",
+      "rarity": "RR",
+      "code": "SV2P 065/071",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        222
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 5,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 5
+      }
+    },
+    {
+      "id": 219,
+      "name": "イキリンコex",
+      "rarity": "SAR",
+      "code": "SV2P 094/071",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        224
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 800,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 800
+      }
+    },
+    {
+      "id": 171,
+      "name": "イベルタルex",
+      "rarity": "SR",
+      "code": "M3 098/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        176
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 70,
+      "name": "イルカマン",
+      "rarity": "AR",
+      "code": "SV3 111/108",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        71
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 6,
+      "name": "インテレオン",
+      "rarity": "AR",
+      "code": "M1S 069/063",
+      "oldQty": 3,
+      "draftQty": 0,
+      "oldNos": [
+        6
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 173,
+      "name": "ウガツホムラex",
+      "rarity": "SR",
+      "code": "SV5K 085/071",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        178
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 103,
+      "name": "エテボース",
+      "rarity": "AR",
+      "code": "SV2a 196/165",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        104
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 5,
+      "name": "エレキブル",
+      "rarity": "AR",
+      "code": "S12a 180/172",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        5
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 79,
+      "name": "エレザード",
+      "rarity": "AR",
+      "code": "M2a 201/193",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        80
+      ],
+      "draftIds": [],
+      "review": "型番が別カード行と重複",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 220,
+      "name": "エンテイV",
+      "rarity": "SAR",
+      "code": "S12a 213/172",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        225
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 159,
+      "name": "エンニュートex",
+      "rarity": "SR",
+      "code": "M3 094/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        164
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 150,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 150
+      }
+    },
+    {
+      "id": 63,
+      "name": "オオタチ",
+      "rarity": "AR",
+      "code": "SV9 110/100",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        64
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 150,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 89,
+      "name": "オトシドリ",
+      "rarity": "AR",
+      "code": "SV4K 079/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        90
+      ],
+      "draftIds": [],
+      "review": "型番不整合",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 126,
+      "name": "カキツバタ",
+      "rarity": "SAR",
+      "code": "SV8a 229/187",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        131
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 300,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 300
+      }
+    },
+    {
+      "id": 53,
+      "name": "カジッチュ",
+      "rarity": "AR",
+      "code": "SV5a 077/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        54
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 86,
+      "name": "カヌチャン",
+      "rarity": "AR",
+      "code": "SV2D 083/071",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        87
+      ],
+      "draftIds": [],
+      "review": "型番不整合",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 101,
+      "name": "カビゴン",
+      "rarity": "AR",
+      "code": "SV2a 181/165",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        102
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 1000
+      }
+    },
+    {
+      "id": 28,
+      "name": "カミッチュ",
+      "rarity": "AR",
+      "code": "SV6 103/101",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        28
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 51,
+      "name": "ガラルタチフサグマ",
+      "rarity": "AR",
+      "code": "M2a 209/193",
+      "oldQty": 3,
+      "draftQty": 0,
+      "oldNos": [
+        52
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 230,
+      "name": "ガラルヤドラン",
+      "rarity": "U",
+      "code": "S5I 041/070",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        235
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 226,
+      "name": "ガラルヤドン",
+      "rarity": "C",
+      "code": "S6H 030/070",
+      "oldQty": 4,
+      "draftQty": 0,
+      "oldNos": [
+        231
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 227,
+      "name": "ガラルヤドン",
+      "rarity": "C",
+      "code": "S5I 021/070",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        232
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 165,
+      "name": "キュレムV",
+      "rarity": "RR",
+      "code": "S11 029/100",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        170
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 44,
+      "name": "キュワワー",
+      "rarity": "AR",
+      "code": "S12a 187/172",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        44
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 84,
+      "name": "キルリア",
+      "rarity": "AR",
+      "code": "SV1S 084/078",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        85
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 600,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 600
+      }
+    },
+    {
+      "id": 57,
+      "name": "グルトン",
+      "rarity": "AR",
+      "code": "SV3 120/108",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        58
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 76,
+      "name": "クワッス",
+      "rarity": "AR",
+      "code": "SV1a 081/073",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        77
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 250,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 250
+      }
+    },
+    {
+      "id": 153,
+      "name": "ゲッコウガ&ゾロアークGX",
+      "rarity": "RR",
+      "code": "SM12a 072/173",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        158
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1000,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 1000
+      }
+    },
+    {
+      "id": 158,
+      "name": "ゲンガーV",
+      "rarity": "RR仕様",
+      "code": "SGG 001/019",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        163
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 60,
+      "name": "ケンタロス",
+      "rarity": "AR",
+      "code": "M4 094/083",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        61
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 88,
+      "name": "コジョンド",
+      "rarity": "AR",
+      "code": "SV3a 072/062",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        89
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 73,
+      "name": "コダック",
+      "rarity": "AR",
+      "code": "SV2a 175/165",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        74
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1800,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 2800,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 2800
+      }
+    },
+    {
+      "id": 74,
+      "name": "コダック",
+      "rarity": "AR",
+      "code": "M2a 199/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        75
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 213,
+      "name": "コライドンex",
+      "rarity": "UR",
+      "code": "SV4a 360/190",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        218
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 500,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 500
+      }
+    },
+    {
+      "id": 40,
+      "name": "コレクレー",
+      "rarity": "AR",
+      "code": "SV3a 068/062",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        40
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 174,
+      "name": "サーフゴーex",
+      "rarity": "SR",
+      "code": "SV3a 079/062",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        179
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 180,
+      "name": "サザンドラex",
+      "rarity": "SR",
+      "code": "SV8 124/106",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        185
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 231,
+      "name": "ザシアンV",
+      "rarity": "SAR",
+      "code": "S12a 225/172",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        237
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 39,
+      "name": "ジーランス",
+      "rarity": "AR",
+      "code": "SV5K 077/071",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        39
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 8,
+      "name": "シェイミ",
+      "rarity": "AR",
+      "code": "SV9a 066/063",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        8
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 600,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 600
+      }
+    },
+    {
+      "id": 66,
+      "name": "ジュゴン",
+      "rarity": "AR",
+      "code": "M2 084/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        67
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 181,
+      "name": "シロデスナex",
+      "rarity": "SR",
+      "code": "SV8 123/106",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        186
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 161,
+      "name": "スコヴィランex",
+      "rarity": "SR",
+      "code": "SV8 120/106",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        166
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 52,
+      "name": "ストリンダー",
+      "rarity": "AR",
+      "code": "M2 089/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        53
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 170,
+      "name": "スピアーex",
+      "rarity": "SR",
+      "code": "M4 096/083",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        175
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 71,
+      "name": "スワンナ",
+      "rarity": "AR",
+      "code": "SV11W 107/086",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        72
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 42,
+      "name": "ゼルネアス",
+      "rarity": "AR",
+      "code": "M4 089/083",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        42
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 215,
+      "name": "セレビィVMAX",
+      "rarity": "HR",
+      "code": "S6K 084/070",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        220
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 34,
+      "name": "ダイノーズ",
+      "rarity": "AR",
+      "code": "M3 088/080",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        34
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 92,
+      "name": "タギングル",
+      "rarity": "AR",
+      "code": "SV1V 087/078",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        93
+      ],
+      "draftIds": [],
+      "review": "型番はボチAR",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 15,
+      "name": "ダダリン",
+      "rarity": "AR",
+      "code": "M5 088/081",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        15
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 19,
+      "name": "タマザラシ",
+      "rarity": "AR",
+      "code": "SV8 111/106",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        19
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 36,
+      "name": "チャーレム",
+      "rarity": "AR",
+      "code": "M2a 207/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        36
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 162,
+      "name": "チャーレムex",
+      "rarity": "SR",
+      "code": "SV7 120/102",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        167
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 21,
+      "name": "チラーミィ",
+      "rarity": "AR",
+      "code": "SV5K 082/071",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        21
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 102,
+      "name": "チルット",
+      "rarity": "AR",
+      "code": "SV3a 069/062",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        103
+      ],
+      "draftIds": [],
+      "review": "型番不整合",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 35,
+      "name": "チヲハウハネ",
+      "rarity": "AR",
+      "code": "SV4K 074/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        35
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 164,
+      "name": "テツノカイナex",
+      "rarity": "SR",
+      "code": "SV4M 079/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        169
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 163,
+      "name": "テツノブジンex",
+      "rarity": "SR",
+      "code": "SV4M 080/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        168
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 78,
+      "name": "デンリュウ",
+      "rarity": "AR",
+      "code": "M4 088/083",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        79
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 29,
+      "name": "ドクケイル",
+      "rarity": "AR",
+      "code": "M2a 195/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        29
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 48,
+      "name": "トゲキッス",
+      "rarity": "AR",
+      "code": "M2a 203/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        48
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 24,
+      "name": "トゲデマル",
+      "rarity": "AR",
+      "code": "M2 090/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        24
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 91,
+      "name": "ドドゲザン",
+      "rarity": "AR",
+      "code": "SV1S 088/078",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        92
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 32,
+      "name": "ドンメル",
+      "rarity": "AR",
+      "code": "M2a 198/193",
+      "oldQty": 3,
+      "draftQty": 0,
+      "oldNos": [
+        32
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 87,
+      "name": "ナカヌチャン",
+      "rarity": "AR",
+      "code": "SV2D 084/071",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        88
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 14,
+      "name": "ニダンギル",
+      "rarity": "AR",
+      "code": "M3 091/080",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        14
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 94,
+      "name": "ニャース",
+      "rarity": "AR",
+      "code": "SV2a 175/165",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        95
+      ],
+      "draftIds": [],
+      "review": "型番はコダックAR",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 85,
+      "name": "ニャオニクス",
+      "rarity": "AR",
+      "code": "M3 085/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        86
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 55,
+      "name": "ヌメイル",
+      "rarity": "AR",
+      "code": "M4 093/083",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        56
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 184,
+      "name": "ネオラントV",
+      "rarity": "SR",
+      "code": "S9 104/100",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        189
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 222,
+      "name": "ネオラントV",
+      "rarity": "SR",
+      "code": "S9 105/100",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        227
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 7,
+      "name": "ネンドール",
+      "rarity": "AR",
+      "code": "M4 090/083",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        7
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 99,
+      "name": "ノコッチ",
+      "rarity": "AR",
+      "code": "SV4K 079/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        100
+      ],
+      "draftIds": [],
+      "review": "型番不整合",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 182,
+      "name": "バイウールーV",
+      "rarity": "SR",
+      "code": "S1a 076/070",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        187
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 82,
+      "name": "ハカドッグ",
+      "rarity": "AR",
+      "code": "SV1V 088/078",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        83
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 23,
+      "name": "バチュル",
+      "rarity": "AR",
+      "code": "SV7 108/102",
+      "oldQty": 4,
+      "draftQty": 0,
+      "oldNos": [
+        23
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 96,
+      "name": "パフュートン",
+      "rarity": "AR",
+      "code": "SV1S 089/078",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        97
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 77,
+      "name": "ハラバリー",
+      "rarity": "AR",
+      "code": "SV3 112/108",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        78
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 105,
+      "name": "ピカチュウ",
+      "rarity": "AR",
+      "code": "SV2a 173/165",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        106
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1800,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 1800
+      }
+    },
+    {
+      "id": 106,
+      "name": "ピカチュウ",
+      "rarity": "AR",
+      "code": "SV8 113/106",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        107
+      ],
+      "draftIds": [],
+      "review": "型番不整合",
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 107,
+      "name": "ピカチュウ",
+      "rarity": "AR",
+      "code": "M2a 201/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        108
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 157,
+      "name": "ピカチュウ&ゼクロムGX",
+      "rarity": "RR",
+      "code": "SM12a 041/173",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        162
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 2000,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 2000
+      }
+    },
+    {
+      "id": 117,
+      "name": "ピカチュウex",
+      "rarity": "SAR",
+      "code": "SV8 132/106",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        122
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 36000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 62000,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 62000
+      }
+    },
+    {
+      "id": 54,
+      "name": "ヒスイヌメルゴン",
+      "rarity": "AR",
+      "code": "S12a 196/172",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        55
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 49,
+      "name": "ピッピ",
+      "rarity": "AR",
+      "code": "M3 086/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        49
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 400,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 500,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 500
+      }
+    },
+    {
+      "id": 204,
+      "name": "ピッピ",
+      "rarity": "C",
+      "code": "SV2a 035/165",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        209
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 30,
+      "name": "ヒビキのマグカルゴ",
+      "rarity": "AR",
+      "code": "M2a 197/193",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        30
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 33,
+      "name": "ファイアロー",
+      "rarity": "AR",
+      "code": "M3 083/080",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        33
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 150,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 150
+      }
+    },
+    {
+      "id": 202,
+      "name": "ブーバー",
+      "rarity": "C",
+      "code": "SV2a 126/165",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        207
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 9,
+      "name": "フシギダネ",
+      "rarity": "AR",
+      "code": "M1L 064/063",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        9
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 250,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 600,
+        "checked": "2026-11-20",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 600
+      }
+    },
+    {
+      "id": 178,
+      "name": "ブラックキュレムex",
+      "rarity": "SR",
+      "code": "SV7a 077/064",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        183
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 25,
+      "name": "ブロロン",
+      "rarity": "AR",
+      "code": "SV3 117/108",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        25
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 95,
+      "name": "ペルシアン",
+      "rarity": "AR",
+      "code": "M2a 210/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        96
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 43,
+      "name": "ボチ",
+      "rarity": "AR",
+      "code": "SV1V 087/078",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        43
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 200
+      }
+    },
+    {
+      "id": 75,
+      "name": "ポッチャマ",
+      "rarity": "AR",
+      "code": "M2 085/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        76
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 41,
+      "name": "ホップのオーロット",
+      "rarity": "AR",
+      "code": "M2a 204/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        41
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 179,
+      "name": "マグカルゴex",
+      "rarity": "SR",
+      "code": "SV5a 080/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        184
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 223,
+      "name": "マグマの滝壺",
+      "rarity": "UR",
+      "code": "S9 127/100",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        228
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 90,
+      "name": "マフィティフ",
+      "rarity": "AR",
+      "code": "SV1V 089/078",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        91
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 93,
+      "name": "ミガルーサ",
+      "rarity": "AR",
+      "code": "SV1S 082/078",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        94
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 123,
+      "name": "ミツルの思いやり",
+      "rarity": "SAR",
+      "code": "M1S 091/063",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        128
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 250,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 250
+      }
+    },
+    {
+      "id": 81,
+      "name": "ミミッキュ",
+      "rarity": "AR",
+      "code": "SV4a 341/190",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        82
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1400,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 1400
+      }
+    },
+    {
+      "id": 12,
+      "name": "ミュウ",
+      "rarity": "AR",
+      "code": "S12a 183/172",
+      "oldQty": 3,
+      "draftQty": 0,
+      "oldNos": [
+        12
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 104,
+      "name": "ミュウツー",
+      "rarity": "AR",
+      "code": "SV2a 183/165",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        105
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1800,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 1800
+      }
+    },
+    {
+      "id": 172,
+      "name": "ムウマージex",
+      "rarity": "SR",
+      "code": "M2 097/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        177
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 169,
+      "name": "メガエアームドex",
+      "rarity": "SR",
+      "code": "M3 099/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        174
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 120,
+      "name": "メガサーナイトex",
+      "rarity": "SAR",
+      "code": "M1S 087/063",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        125
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 7000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 7000
+      }
+    },
+    {
+      "id": 115,
+      "name": "メガジガルデex",
+      "rarity": "SAR",
+      "code": "M3 113/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        120
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1500,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 2200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 2200
+      }
+    },
+    {
+      "id": 166,
+      "name": "メガジガルデex",
+      "rarity": "SR",
+      "code": "M3 097/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        171
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 200,
+      "name": "メガシャンデラex",
+      "rarity": "SAR",
+      "code": "M5 113/081",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        205
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 900,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 900
+      }
+    },
+    {
+      "id": 175,
+      "name": "メガゼラオラex",
+      "rarity": "SR",
+      "code": "M5 096/081",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        180
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 167,
+      "name": "メガバクーダex",
+      "rarity": "SR",
+      "code": "M1L 077/063",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        172
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 150,
+        "checked": "2026-11-20",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 150
+      }
+    },
+    {
+      "id": 116,
+      "name": "メガピクシーex",
+      "rarity": "SAR",
+      "code": "M3 112/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        121
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 1200,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 2000,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 2000
+      }
+    },
+    {
+      "id": 113,
+      "name": "メガフシギバナex",
+      "rarity": "SAR",
+      "code": "M1L 087/063",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        118
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 2000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 3800,
+        "checked": "2026-11-20",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 3800
+      }
+    },
+    {
+      "id": 168,
+      "name": "メガフラエッテex",
+      "rarity": "SR",
+      "code": "M4 099/083",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        173
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 114,
+      "name": "メガミミロップex",
+      "rarity": "SR",
+      "code": "M2 100/080",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        119
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 176,
+      "name": "メガライボルトex",
+      "rarity": "SR",
+      "code": "M1S 077/063",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        181
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 100
+      }
+    },
+    {
+      "id": 118,
+      "name": "メガリザードンX ex",
+      "rarity": "MA",
+      "code": "M2a 223/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        123
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 37,
+      "name": "メテノ",
+      "rarity": "AR",
+      "code": "SV3a 070/062",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        37
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 450,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 450
+      }
+    },
+    {
+      "id": 155,
+      "name": "モクロー&アローラナッシーGX",
+      "rarity": "RR",
+      "code": "SM10b 001/054",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        160
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 800,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 800
+      }
+    },
+    {
+      "id": 100,
+      "name": "モトトカゲ",
+      "rarity": "AR",
+      "code": "SV4K 078/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        101
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 154,
+      "name": "ヤドン&コダックGX",
+      "rarity": "RR",
+      "code": "SM11 011/094",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        159
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 5000,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 5000
+      }
+    },
+    {
+      "id": 160,
+      "name": "ヤバソチャex",
+      "rarity": "SR",
+      "code": "SV5a 079/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        165
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 150,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 150
+      }
+    },
+    {
+      "id": 65,
+      "name": "ユキメノコ",
+      "rarity": "AR",
+      "code": "SV6 104/101",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        66
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 67,
+      "name": "ユキワラシ",
+      "rarity": "AR",
+      "code": "M2a 200/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        68
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 68,
+      "name": "ユキワラシ",
+      "rarity": "AR",
+      "code": "SV3a 063/062",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        69
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 250,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 250
+      }
+    },
+    {
+      "id": 98,
+      "name": "ヨクバリス",
+      "rarity": "AR",
+      "code": "SV3 121/108",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        99
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 108,
+      "name": "ライコウex",
+      "rarity": "SAR",
+      "code": "M6 108/076",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        113
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 2000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 2000
+      }
+    },
+    {
+      "id": 156,
+      "name": "ライチュウ&アローラライチュウGX",
+      "rarity": "RR",
+      "code": "SM10a 008/054",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        161
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 58,
+      "name": "ラッタ",
+      "rarity": "AR",
+      "code": "M3 092/080",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        59
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 200,
+        "checked": "2026-11-19",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 200
+      }
+    },
+    {
+      "id": 31,
+      "name": "ラビフット",
+      "rarity": "AR",
+      "code": "SV7 106/102",
+      "oldQty": 4,
+      "draftQty": 0,
+      "oldNos": [
+        31
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 38,
+      "name": "リオル",
+      "rarity": "AR",
+      "code": "M1L 068/063",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        38
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 100,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": {
+        "price": 150,
+        "checked": "2026-11-20",
+        "source": "Clove",
+        "freshness": "current"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 150
+      }
+    },
+    {
+      "id": 61,
+      "name": "リキキリン",
+      "rarity": "AR",
+      "code": "SV2D 083/071",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        62
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 26,
+      "name": "リククラゲ",
+      "rarity": "AR",
+      "code": "SV4M 068/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        26
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 83,
+      "name": "ルージュラ",
+      "rarity": "AR",
+      "code": "M2a 205/193",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        84
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 218,
+      "name": "ルミナスエネルギー",
+      "rarity": "UR",
+      "code": "SV5a 096/066",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        223
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 250,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
+      "clove": null,
+      "best": {
+        "shop": "フルアヘッド",
+        "price": 250
+      }
+    },
+    {
+      "id": 11,
+      "name": "レアコイル",
+      "rarity": "AR",
+      "code": "SV8 112/106",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        11
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": {
+        "price": 500,
+        "checked": "2026-10-26",
+        "source": "フルアヘッド",
+        "freshness": "fallback"
+      },
+      "clove": {
+        "price": 1200,
+        "checked": "snapshot",
+        "source": "Clove",
+        "freshness": "snapshot"
+      },
+      "best": {
+        "shop": "Clove",
+        "price": 1200
+      }
+    },
+    {
+      "id": 225,
+      "name": "ロストスイーパー",
+      "rarity": "UR",
+      "code": "S11 126/100",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        230
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 211,
+      "name": "災いの箱",
+      "rarity": "UR",
+      "code": "S10a 099/071",
+      "oldQty": 1,
+      "draftQty": 0,
+      "oldNos": [
+        216
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    },
+    {
+      "id": 224,
+      "name": "崩れたスタジアム",
+      "rarity": "UR",
+      "code": "S11 127/100",
+      "oldQty": 2,
+      "draftQty": 0,
+      "oldNos": [
+        229
+      ],
+      "draftIds": [],
+      "review": null,
+      "fullahead": null,
+      "clove": null,
+      "best": null
+    }
+  ]
+}
