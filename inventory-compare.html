@@ -16,16 +16,16 @@ header{padding:max(14px,env(safe-area-inset-top)) 2px 10px}.top{display:flex;ali
 .controls{display:grid;gap:7px;margin-top:10px}.search{width:100%;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:11px 12px;font-size:16px}.filters{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:6px}select{width:100%;min-width:0;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:9px 7px;font-size:12px}
 .summary{font-size:11px;color:var(--muted);margin:8px 2px 2px}.list{display:grid;gap:8px;margin-top:7px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px 13px;box-shadow:var(--shadow)}.head{display:flex;gap:8px;align-items:flex-start}.namebox{flex:1;min-width:0}.name{font-weight:820;font-size:16px;line-height:1.25}.meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}.chip{background:var(--chip);border-radius:999px;padding:4px 7px;font-size:9px;color:var(--muted)}.review{color:var(--red);font-size:10px;font-weight:700;margin-top:6px}
 .qty{display:grid;grid-template-columns:1fr 1fr;gap:5px;text-align:center;min-width:112px}.qcell{background:var(--chip);border-radius:9px;padding:5px 6px}.qcell b{display:block;font-size:14px}.qcell span{display:block;font-size:8px;color:var(--muted)}
-.prices{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}.pc{min-width:0}.pc .k{font-size:9px;color:var(--muted);margin-bottom:2px}.pc .v{font-size:16px;font-weight:850;white-space:nowrap}.pc.best .v{color:var(--green)}.pc .d{font-size:8px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}.emptyv{color:var(--muted)!important;font-weight:600!important}.stale{color:var(--orange)!important}
+.prices{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}.pc{min-width:0}.pc .k{font-size:9px;color:var(--muted);margin-bottom:2px}.pc .v{font-size:16px;font-weight:850;white-space:nowrap}.pc.best .v{color:var(--green)}.pc .d{font-size:8px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}.emptyv{color:var(--muted)!important;font-weight:600!important}.stale{color:var(--orange)!important}
 .foot{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font-size:9px;color:var(--muted)}.foot a{color:var(--blue);text-decoration:none}
 .empty{text-align:center;padding:32px 8px;color:var(--muted)}.legend{font-size:9px;color:var(--muted);line-height:1.5;margin:10px 2px}
-@media(max-width:430px){.stats{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}.filters select:last-child{grid-column:1/-1}.qty{min-width:94px}.prices{grid-template-columns:1fr 1fr}.pc.best{grid-column:1/-1;background:var(--chip);border-radius:9px;padding:7px}.pc.best .v{font-size:18px}}
+@media(max-width:430px){.stats{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}.filters select:last-child{grid-column:1/-1}.qty{min-width:94px}.prices{grid-template-columns:1fr 1fr}.pc.best{grid-column:auto;background:var(--chip);border-radius:9px;padding:7px}.pc.best .v{font-size:18px}}
 </style>
 </head>
 <body><div class="wrap">
 <header>
   <div class="top"><div class="title">買取価格比較</div><div class="date">更新 2026/11/20</div></div>
-  <div class="notice"><b>仮在庫はまだ確定在庫ではありません。</b> 前回リストも残したまま、Clove / フルアヘッドの確認できた価格だけを当て込んでいます。「—」は0円ではなく未照合です。</div>
+  <div class="notice"><b>仮在庫はまだ確定在庫ではありません。</b> 前回リストも残したまま、一般市場の参考買取＋Clove / フルアヘッドの確認できた価格を当て込んでいます。「—」は0円ではなく未照合です。</div>
   <div class="stats">
     <div class="stat"><div class="v" id="types">—</div><div class="k">表示種類</div></div>
     <div class="stat"><div class="v" id="qty">—</div><div class="k">対象枚数</div></div>
@@ -37,13 +37,13 @@ header{padding:max(14px,env(safe-area-inset-top)) 2px 10px}.top{display:flex;ali
     <div class="filters">
       <select id="scope"><option value="draft">仮在庫</option><option value="old">前回リスト</option><option value="both">両方</option></select>
       <select id="match"><option value="">全て</option><option value="both">両店価格あり</option><option value="one">片方のみ</option><option value="none">未照合</option><option value="review">要確認</option></select>
-      <select id="sort"><option value="best">最高価格順</option><option value="gap">店差額順</option><option value="name">カード名順</option><option value="qty">枚数順</option></select>
+      <select id="sort"><option value="best">店舗最高価格順</option><option value="market">一般市場高い順</option><option value="gap">店差額順</option><option value="name">カード名順</option><option value="qty">枚数順</option></select>
     </div>
   </div>
   <div id="sum" class="summary">読み込み中…</div>
 </header>
 <main id="list" class="list"></main><div id="empty" class="empty" style="display:none">該当カードなし</div>
-<div class="legend">価格日付はカードごとに表示。Fullaheadは11/20確認値を優先し、未更新分は10/26の照合値を残しています。Cloveも11/19〜20の最新パック表を優先し、個別ページしか取れないものは「snapshot」と表示しています。</div>
+<div class="legend">価格日付はカードごとに表示。一般市場はこれまで確認したカードラッシュ・トレシア・ポケカ相場ナビ等の参考値で、確認日をカードごとに表示します。Fullaheadは11/20確認値を優先し、未更新分は10/26値。Cloveも11/19〜20の最新表を優先しています。</div>
 </div>
 <script>
 const DATA='/assets/review/inventory-comparison.json?v=20261120-1252';
@@ -54,6 +54,11 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 function qtyFor(z){return scope.value==='old'?z.oldQty:scope.value==='draft'?z.draftQty:Math.max(z.oldQty,z.draftQty)}
 function inScope(z){return scope.value==='old'?z.oldQty>0:scope.value==='draft'?z.draftQty>0:(z.oldQty>0||z.draftQty>0)}
 function clsDate(v){return v&&v.freshness==='current'?'':' stale'}
+function marketHtml(v){
+ if(!v)return '<div class="pc"><div class="k">一般市場</div><div class="v emptyv">—</div><div class="d">未登録</div></div>';
+ const d=[v.source||'参考相場',v.checked||'確認日不明'].filter(Boolean).join(' / ');
+ return '<div class="pc"><div class="k">一般市場</div><div class="v">'+yen(v.price)+'</div><div class="d">'+esc(d)+'</div></div>';
+}
 function priceHtml(label,v){
  if(!v)return '<div class="pc"><div class="k">'+label+'</div><div class="v emptyv">—</div><div class="d">未照合</div></div>';
  return '<div class="pc"><div class="k">'+label+'</div><div class="v'+clsDate(v)+'">'+yen(v.price)+'</div><div class="d">'+esc(v.checked||'確認日不明')+'</div></div>'
@@ -71,6 +76,7 @@ function render(){
  });
  a.sort((A,B)=>{
    if(sort.value==='name')return A.name.localeCompare(B.name,'ja');
+   if(sort.value==='market')return (B.market?.price||0)-(A.market?.price||0);
    if(sort.value==='qty')return qtyFor(B)-qtyFor(A);
    if(sort.value==='gap'){
      const ag=A.clove&&A.fullahead?Math.abs(A.clove.price-A.fullahead.price):-1;
@@ -89,7 +95,7 @@ function render(){
  document.querySelector('#qty').textContent=totalQty.toLocaleString()+'枚';
  document.querySelector('#covered').textContent=both.toLocaleString()+'種';
  document.querySelector('#bestTotal').textContent=yen(bestTotal);
- document.querySelector('#sum').textContent=a.length+'種類 / '+totalQty+'枚　価格あり '+pricedQty+'枚分（未照合は合計に含めない）';
+ const marketCount=a.filter(z=>z.market).length; document.querySelector('#sum').textContent=a.length+'種類 / '+totalQty+'枚　一般市場 '+marketCount+'種 / 店舗価格あり '+pricedQty+'枚分';
  list.innerHTML=a.map(z=>{
    const n=qtyFor(z);
    const best=z.review?null:z.best;
@@ -97,7 +103,7 @@ function render(){
    return '<article class="card">'+
     '<div class="head"><div class="namebox"><div class="name">'+esc(z.name)+'</div><div class="meta"><span class="chip">'+esc(z.rarity)+'</span><span class="chip">'+esc(z.code||'型番未確定')+'</span></div>'+(z.review?'<div class="review">要確認：'+esc(z.review)+'</div>':'')+'</div>'+
     '<div class="qty"><div class="qcell"><b>'+z.oldQty+'</b><span>前回</span></div><div class="qcell"><b>'+z.draftQty+'</b><span>仮在庫</span></div></div></div>'+
-    '<div class="prices">'+priceHtml('Clove',z.clove)+priceHtml('フルアヘッド',z.fullahead)+
+    '<div class="prices">'+marketHtml(z.market)+priceHtml('Clove',z.clove)+priceHtml('フルアヘッド',z.fullahead)+
     '<div class="pc best"><div class="k">高い方</div><div class="v '+(!best?'emptyv':'')+'">'+(best?yen(best.price):'—')+'</div><div class="d">'+(best?esc(best.shop)+(gap!=null?' / 店差 '+yen(gap):''):(z.review?'照合保留':'未照合'))+'</div></div></div>'+
     '<div class="foot"><span>対象 '+n+'枚</span><span>'+(z.oldQty&&z.draftQty?'前回＋仮在庫に存在':z.draftQty?'仮在庫のみ':'前回のみ')+'</span></div></article>'
  }).join('');
