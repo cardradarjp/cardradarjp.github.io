@@ -5,7 +5,7 @@
 <style>
 :root{--bg:#f2f2f7;--card:#fff;--text:#15151a;--muted:#777783;--line:#e2e2e8;--blue:#006de5;--green:#117d47;--red:#bc3434;--amber:#ad6518;--soft:#f3f4f8;--shade:#e5f5ed}
 @media(prefers-color-scheme:dark){:root{--bg:#09090b;--card:#1c1c1f;--text:#f6f6f9;--muted:#a5a5af;--line:#38383f;--blue:#5aa9ff;--green:#4cdc9b;--red:#ff7777;--amber:#ffc174;--soft:#2a2a2e;--shade:#123a2a}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;font-size:14px}
+[hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;font-size:14px}
 button,input,select{font:inherit}.wrap{max-width:1010px;margin:auto;padding:14px 12px calc(38px + env(safe-area-inset-bottom))}
 h1{font-size:26px;letter-spacing:-.7px;margin:0 0 3px}.sub{font-size:11px;color:var(--muted);line-height:1.65}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:13px}.stat{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:10px 9px;min-width:0}.stat b{font-size:19px;display:block;white-space:nowrap}.stat span{font-size:10px;color:var(--muted)}
@@ -121,7 +121,7 @@ function values(){
  return a;
 }
 function officialLinks(z){
- const name=encodeURIComponent(z.name),code=encodeURIComponent(cleanNum(z));
+ const name=encodeURIComponent(z.name);
  const clove='https://base.clove.jp/prices/pokemon?title='+name;
  const full='https://fullahead-buy.com/?shopbrand=pk&view=text';
  const lookup='https://www.google.com/search?q='+encodeURIComponent('site:fullahead-buy.com '+z.name+' '+z.code);
