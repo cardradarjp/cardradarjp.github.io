@@ -5,9 +5,9 @@
     "identities": 285,
     "oldIdentities": 253,
     "draftIdentities": 134,
-    "fullaheadMatched": 125,
+    "fullaheadMatched": 134,
     "cloveMatched": 43,
-    "bothMatched": 33,
+    "bothMatched": 42,
     "review": 18
   },
   "rows": [
@@ -74,7 +74,12 @@
         43
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 350,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 300,
         "checked": "2026-10-18",
@@ -82,8 +87,8 @@
         "freshness": "recent"
       },
       "best": {
-        "shop": "Clove",
-        "price": 300
+        "shop": "フルアヘッド",
+        "price": 350
       }
     },
     {
@@ -100,7 +105,12 @@
         29
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 350,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 300,
         "checked": "2026-11-15",
@@ -108,8 +118,8 @@
         "freshness": "current"
       },
       "best": {
-        "shop": "Clove",
-        "price": 300
+        "shop": "フルアヘッド",
+        "price": 350
       }
     },
     {
@@ -615,7 +625,12 @@
         42
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 600,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 700,
         "checked": "2026-11-15",
@@ -1134,7 +1149,12 @@
         41
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 900,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 800,
         "checked": "2026-10-18",
@@ -1142,8 +1162,8 @@
         "freshness": "recent"
       },
       "best": {
-        "shop": "Clove",
-        "price": 800
+        "shop": "フルアヘッド",
+        "price": 900
       }
     },
     {
@@ -1325,7 +1345,12 @@
         3
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 500,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 500,
         "checked": "snapshot",
@@ -1333,7 +1358,7 @@
         "freshness": "snapshot"
       },
       "best": {
-        "shop": "Clove",
+        "shop": "フルアヘッド",
         "price": 500
       }
     },
@@ -1351,7 +1376,12 @@
         4
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 200,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 300,
         "checked": "snapshot",
@@ -1377,7 +1407,12 @@
         1
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 400,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 700,
         "checked": "snapshot",
@@ -1595,7 +1630,12 @@
         8
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 7000,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 5000,
         "checked": "snapshot",
@@ -1603,8 +1643,8 @@
         "freshness": "snapshot"
       },
       "best": {
-        "shop": "Clove",
-        "price": 5000
+        "shop": "フルアヘッド",
+        "price": 7000
       }
     },
     {
@@ -2120,7 +2160,12 @@
         40
       ],
       "review": null,
-      "fullahead": null,
+      "fullahead": {
+        "price": 400,
+        "checked": "2026-11-20",
+        "source": "フルアヘッド",
+        "freshness": "current"
+      },
       "clove": {
         "price": 400,
         "checked": "2026-11-15",
@@ -2128,7 +2173,7 @@
         "freshness": "current"
       },
       "best": {
-        "shop": "Clove",
+        "shop": "フルアヘッド",
         "price": 400
       }
     },
@@ -4791,9 +4836,9 @@
       },
       "clove": {
         "price": 62000,
-        "checked": "snapshot",
+        "checked": "2026-11-20",
         "source": "Clove",
-        "freshness": "snapshot"
+        "freshness": "current"
       },
       "best": {
         "shop": "Clove",
